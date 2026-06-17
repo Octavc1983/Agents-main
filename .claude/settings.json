@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir -p \"c:/Users/amiss/OneDrive - CyberArk Ltd/Apps/Agents-main/.claude/skills/table-master-details-template\" \\\\ *)"
+      "Bash(mkdir -p \"c:/Users/amiss/OneDrive - CyberArk Ltd/Apps/Agents-main/.claude/skills/table-master-details-template\" \\\\ *)",
+      "Edit(/.claude/skills/table-master-details-template/**)"
     ],
     "additionalDirectories": [
       "c:\\Users\\amiss\\OneDrive - CyberArk Ltd\\Apps\\Agents-main\\.claude\\skills"
