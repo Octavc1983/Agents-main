@@ -1,0 +1,245 @@
+// SCSS Mixins for common patterns
+// Note: These mixins support rapid prototyping and design system alignment
+
+@use './variables' as *;
+
+// Responsive Breakpoints
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'xs' {
+    @media (min-width: $breakpoint-xs) {
+      @content;
+    }
+  } @else if $breakpoint == 'sm' {
+    @media (min-width: $breakpoint-sm) {
+      @content;
+    }
+  } @else if $breakpoint == 'md' {
+    @media (min-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == 'lg' {
+    @media (min-width: $breakpoint-lg) {
+      @content;
+    }
+  } @else if $breakpoint == 'xl' {
+    @media (min-width: $breakpoint-xl) {
+      @content;
+    }
+  } @else if $breakpoint == '2xl' {
+    @media (min-width: $breakpoint-2xl) {
+      @content;
+    }
+  }
+}
+
+// Flexbox Utilities
+@mixin flex {
+  display: flex;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: flex-start;
+}
+
+@mixin flex-end {
+  display: flex;
+  align-items: flex-end;
+}
+
+// Grid Utilities
+@mixin grid-columns($count) {
+  display: grid;
+  grid-template-columns: repeat($count, 1fr);
+}
+
+@mixin grid-2 {
+  @include grid-columns(2);
+  gap: $spacing-4;
+
+  @include respond-to('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+@mixin grid-3 {
+  @include grid-columns(3);
+  gap: $spacing-4;
+
+  @include respond-to('md') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+@mixin grid-4 {
+  @include grid-columns(4);
+  gap: $spacing-4;
+
+  @include respond-to('lg') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include respond-to('md') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Typography Styles
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@mixin heading-1 {
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+}
+
+@mixin heading-2 {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+}
+
+@mixin heading-3 {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+}
+
+@mixin heading-4 {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+}
+
+@mixin body-large {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+}
+
+@mixin body-normal {
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+}
+
+@mixin body-small {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+}
+
+@mixin caption {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+  color: $color-text-secondary;
+}
+
+// Interaction Utilities
+@mixin interactive-hover {
+  transition: all $transition-base;
+
+  &:hover {
+    background-color: var(--color-bg-secondary);
+  }
+
+  &:active {
+    background-color: var(--color-bg-tertiary);
+  }
+}
+
+@mixin focus-outline {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+// Component Patterns
+@mixin surface {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-light);
+  border-radius: $border-radius-base;
+}
+
+@mixin surface-elevated {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-light);
+  border-radius: $border-radius-base;
+  box-shadow: var(--shadow-sm);
+}
+
+@mixin surface-overlay {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-light);
+  border-radius: $border-radius-base;
+  box-shadow: var(--shadow-md);
+}
+
+@mixin disabled-state {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+// Utility for common padding/margins
+@mixin pad-uniform($size) {
+  padding: $size;
+}
+
+@mixin pad-x($size) {
+  padding-left: $size;
+  padding-right: $size;
+}
+
+@mixin pad-y($size) {
+  padding-top: $size;
+  padding-bottom: $size;
+}
+
+@mixin gap-x($size) {
+  column-gap: $size;
+}
+
+@mixin gap-y($size) {
+  row-gap: $size;
+}
+
+@mixin gap-uniform($size) {
+  gap: $size;
+}

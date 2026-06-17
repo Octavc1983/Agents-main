@@ -1,0 +1,270 @@
+// Global Styles
+// Import all SCSS partials and define global rules
+
+@use './variables' as *;
+@use './mixins' as *;
+@use './reset';
+@use './typography';
+
+// Global Layout Utilities
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $spacing-4;
+  padding-right: $spacing-4;
+
+  @include respond-to('md') {
+    padding-left: $spacing-6;
+    padding-right: $spacing-6;
+  }
+}
+
+// Flex Utilities
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  @include flex-col;
+}
+
+.flex-center {
+  @include flex-center;
+}
+
+.flex-between {
+  @include flex-between;
+}
+
+.flex-start {
+  display: flex;
+  align-items: flex-start;
+}
+
+.flex-end {
+  display: flex;
+  align-items: flex-end;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+// Grid Utilities
+.grid {
+  display: grid;
+}
+
+.grid-2 {
+  @include grid-2;
+}
+
+.grid-3 {
+  @include grid-3;
+}
+
+.grid-4 {
+  @include grid-4;
+}
+
+// Gap Utilities
+.gap-1 {
+  @include gap-uniform($spacing-1);
+}
+
+.gap-2 {
+  @include gap-uniform($spacing-2);
+}
+
+.gap-3 {
+  @include gap-uniform($spacing-3);
+}
+
+.gap-4 {
+  @include gap-uniform($spacing-4);
+}
+
+.gap-6 {
+  @include gap-uniform($spacing-6);
+}
+
+.gap-8 {
+  @include gap-uniform($spacing-8);
+}
+
+// Padding Utilities
+.p-2 {
+  @include pad-uniform($spacing-2);
+}
+
+.p-4 {
+  @include pad-uniform($spacing-4);
+}
+
+.p-6 {
+  @include pad-uniform($spacing-6);
+}
+
+.p-8 {
+  @include pad-uniform($spacing-8);
+}
+
+.px-4 {
+  @include pad-x($spacing-4);
+}
+
+.px-6 {
+  @include pad-x($spacing-6);
+}
+
+.py-4 {
+  @include pad-y($spacing-4);
+}
+
+.py-6 {
+  @include pad-y($spacing-6);
+}
+
+// Margin Utilities
+.m-0 {
+  margin: 0;
+}
+
+.m-4 {
+  margin: $spacing-4;
+}
+
+.m-6 {
+  margin: $spacing-6;
+}
+
+.mt-2 {
+  margin-top: $spacing-2;
+}
+
+.mt-4 {
+  margin-top: $spacing-4;
+}
+
+.mt-6 {
+  margin-top: $spacing-6;
+}
+
+.mb-2 {
+  margin-bottom: $spacing-2;
+}
+
+.mb-4 {
+  margin-bottom: $spacing-4;
+}
+
+.mb-6 {
+  margin-bottom: $spacing-6;
+}
+
+// Width Utilities
+.w-full {
+  width: 100%;
+}
+
+.w-auto {
+  width: auto;
+}
+
+.max-w-prose {
+  max-width: 65ch;
+}
+
+// Display Utilities
+.hidden {
+  display: none;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+// Overflow Utilities
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+// Background Utilities
+.bg-primary {
+  background-color: var(--color-bg-primary);
+}
+
+.bg-secondary {
+  background-color: var(--color-bg-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--color-bg-tertiary);
+}
+
+// Border Utilities
+.border {
+  border: 1px solid var(--color-border);
+}
+
+.rounded {
+  border-radius: $border-radius-base;
+}
+
+.rounded-md {
+  border-radius: $border-radius-md;
+}
+
+.rounded-lg {
+  border-radius: $border-radius-lg;
+}
+
+.rounded-full {
+  border-radius: $border-radius-full;
+}
+
+// Shadow Utilities
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-base {
+  box-shadow: var(--shadow-base);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+// Screen Reader Only
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

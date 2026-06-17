@@ -1,0 +1,53 @@
+// Design System Colors - Extracted from Figma IDIRA Design System
+// Tab-specific colors and states
+
+// Horizontal Tabs
+$color-tab-line: #283f67;
+$color-tab-text-idle: #ffffff;
+$color-tab-text-selected: #7a80ff;
+
+// Vertical Tabs
+$color-tab-vertical-text-idle: #ffffff;
+$color-tab-vertical-text-sub-idle: #d6e3fb;
+$color-tab-vertical-bg-idle: #17243b00;
+$color-tab-vertical-bg-selected-1: #223658;
+$color-tab-vertical-bg-selected-2: #1d2d49;
+$color-tab-vertical-bg-selected-radial-1: #8756d8;
+$color-tab-vertical-bg-selected-radial-2: #662afc;
+
+// Semantic color aliases
+$color-primary: #7a80ff;
+$color-primary-dark: #8756d8;
+$color-primary-darker: #662afc;
+$color-background-dark: #17243b;
+$color-background-darker: #223658;
+$color-background-darkest: #1d2d49;
+$color-text-light: #ffffff;
+$color-text-muted: #d6e3fb;
+$color-border-dark: #283f67;
+
+// IDIRA Dark theme tokens — from Dark.tokens.json (Figma: Scans-UX-Production)
+$color-page-background: #0F1827;
+$color-surface-idle: #17243B;
+$color-divider-1: #283F67;
+
+// Navigation sidebar tokens
+$color-nav-text-idle: #BBC2D0;
+$color-nav-text-selected: #FFFFFF;
+$color-nav-bg-selected: #223658;
+$color-nav-side-line-selected: #FFFFFF;
+$color-nav-icon-idle: #AEB8CC;
+$color-nav-icon-selected: #FFFFFF;
+
+// Button tokens
+$color-btn-primary-idle: #3E68FF;
+
+// Status icon tokens
+$color-status-success: #00C898;
+$color-status-warning: #FFB45D;
+$color-status-error: #F22267;
+$color-status-idle: #6C6E83;
+
+// Table tokens
+$color-table-bg-hover: #17243B;
+$color-table-line-idle: #283F67;

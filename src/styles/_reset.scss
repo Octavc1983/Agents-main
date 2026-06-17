@@ -1,0 +1,132 @@
+// CSS Reset
+// Normalize and reset default browser styles
+
+@use './variables' as *;
+@use './mixins' as *;
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+  color: $color-text-primary;
+  background-color: $color-bg-primary;
+}
+
+// Typography Reset
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $color-primary-dark;
+  }
+
+  &:focus-visible {
+    @include focus-outline;
+  }
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  &:focus-visible {
+    @include focus-outline;
+  }
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+  &:focus-visible {
+    @include focus-outline;
+  }
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+// Remove default form appearances
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: $color-primary;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: $color-text-tertiary;
+}
+
+// Scrollbar Styling (optional, can be customized per design)
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $color-bg-secondary;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-neutral-300;
+  border-radius: $border-radius-base;
+
+  &:hover {
+    background: $color-neutral-400;
+  }
+}
+
+// Selection Styling
+::selection {
+  background-color: $color-primary-light;
+  color: $color-primary-dark;
+}

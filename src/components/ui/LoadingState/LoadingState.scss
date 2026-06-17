@@ -1,0 +1,36 @@
+// LoadingState Component Styles
+
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.loading-state {
+  @include flex-center;
+  @include flex-col;
+  padding: $spacing-12 $spacing-6;
+  gap: $spacing-4;
+  min-height: 300px;
+}
+
+.loading-state__spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-bg-secondary);
+  border-top-color: var(--color-primary);
+  border-radius: $border-radius-full;
+  animation: spinner-rotate 1s linear infinite;
+}
+
+@keyframes spinner-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-state__message {
+  @include body-normal;
+  margin: 0;
+  color: var(--color-text-secondary);
+}

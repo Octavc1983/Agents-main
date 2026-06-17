@@ -1,0 +1,66 @@
+// Design System Tokens Index
+// Central import point for all design tokens
+
+@forward './_colors.scss';
+@forward './_typography.scss';
+@forward './_spacing.scss';
+@forward './_radius.scss';
+@forward './_shadows.scss';
+
+@use './_colors.scss' as *;
+@use './_typography.scss' as *;
+@use './_spacing.scss' as *;
+@use './_radius.scss' as *;
+@use './_shadows.scss' as *;
+
+// Export as CSS custom properties for runtime use
+:root {
+  // ── Tab line & text ─────────────────────────────────────────────────────
+  --color-tab-line: #{$color-tab-line};
+  --color-tab-text-idle: #{$color-tab-text-idle};
+  --color-tab-text-selected: #{$color-tab-text-selected};
+
+  // ── Vertical tab colours ─────────────────────────────────────────────────
+  --color-tab-vertical-text-idle: #{$color-tab-vertical-text-idle};
+  --color-tab-vertical-text-sub-idle: #{$color-tab-vertical-text-sub-idle};
+  --color-tab-vertical-bg-idle: #{$color-tab-vertical-bg-idle};
+  --color-tab-vertical-bg-selected-1: #{$color-tab-vertical-bg-selected-1};
+  --color-tab-vertical-bg-selected-2: #{$color-tab-vertical-bg-selected-2};
+  --color-tab-vertical-bg-selected-radial-1: #{$color-tab-vertical-bg-selected-radial-1};
+  --color-tab-vertical-bg-selected-radial-2: #{$color-tab-vertical-bg-selected-radial-2};
+
+  // ── Primary brand colours ────────────────────────────────────────────────
+  --color-primary: #{$color-primary};
+  --color-primary-dark: #{$color-primary-dark};
+  --color-primary-darker: #{$color-primary-darker};
+
+  // ── Background (dark theme) ───────────────────────────────────────────────
+  --color-background-dark: #{$color-background-dark};
+  --color-background-darker: #{$color-background-darker};
+  --color-background-darkest: #{$color-background-darkest};
+
+  // ── Text & border (dark theme) ────────────────────────────────────────────
+  --color-text-light: #{$color-text-light};
+  --color-text-muted: #{$color-text-muted};
+  --color-border-dark: #{$color-border-dark};
+
+  // ── Spacing ───────────────────────────────────────────────────────────────
+  --spacing-xs: #{$spacing-xs};
+  --spacing-sm: #{$spacing-sm};
+  --spacing-md: #{$spacing-md};
+  --spacing-lg: #{$spacing-lg};
+  --spacing-xl: #{$spacing-xl};
+  --tab-indicator-height: #{$tab-indicator-height};
+
+  // ── Border radius ─────────────────────────────────────────────────────────
+  --border-radius-sm: #{$border-radius-sm};
+  --border-radius-md: #{$border-radius-md};
+  --border-radius-lg: #{$border-radius-lg};
+  --border-radius-xl: #{$border-radius-xl};
+  --border-radius-full: #{$border-radius-full};
+
+  // ── Shadows ───────────────────────────────────────────────────────────────
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+}

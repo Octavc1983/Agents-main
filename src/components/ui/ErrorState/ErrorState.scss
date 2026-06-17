@@ -1,0 +1,38 @@
+// ErrorState Component Styles
+
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.error-state {
+  @include flex-center;
+  @include flex-col;
+  padding: $spacing-12 $spacing-6;
+  text-align: center;
+  gap: $spacing-4;
+  min-height: 300px;
+  background-color: #fef2f2;
+  border-radius: $border-radius-base;
+  border: 1px solid #fecaca;
+}
+
+.error-state__icon {
+  font-size: 48px;
+  color: var(--color-danger);
+}
+
+.error-state__title {
+  @include heading-4;
+  margin: 0;
+  color: var(--color-danger);
+}
+
+.error-state__message {
+  @include body-normal;
+  margin: 0;
+  color: var(--color-text-secondary);
+  max-width: 400px;
+}
+
+.error-state__action {
+  margin-top: $spacing-4;
+}

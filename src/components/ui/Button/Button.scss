@@ -1,0 +1,110 @@
+// Button Component Styles
+// Placeholder component for Infra Design System integration
+// When replaced with actual DS Button, remove this file
+
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.button {
+  @include body-normal;
+  font-weight: $font-weight-medium;
+  padding: $spacing-3 $spacing-6;
+  border-radius: $border-radius-base;
+  transition: all $transition-base;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-2;
+  white-space: nowrap;
+  user-select: none;
+
+  &:focus-visible {
+    @include focus-outline;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// Variants
+.button--primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-primary-dark);
+  }
+}
+
+.button--secondary {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-neutral-100);
+  }
+}
+
+.button--tertiary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-primary-light);
+  }
+}
+
+.button--danger {
+  background-color: var(--color-danger);
+  color: var(--color-text-inverse);
+
+  &:hover:not(:disabled) {
+    background-color: darken(#dc3545, 10%);
+  }
+}
+
+// Sizes
+.button--sm {
+  font-size: $font-size-sm;
+  padding: $spacing-2 $spacing-4;
+}
+
+.button--md {
+  font-size: $font-size-base;
+  padding: $spacing-3 $spacing-6;
+}
+
+.button--lg {
+  font-size: $font-size-lg;
+  padding: $spacing-4 $spacing-8;
+}
+
+// States
+.button--disabled {
+  @include disabled-state;
+  opacity: 0.5;
+}
+
+.button--loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.button__loader {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}

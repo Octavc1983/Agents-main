@@ -1,0 +1,134 @@
+// Typography Scale Utilities
+// Provides predefined typography styles for consistent text styling
+
+@use './variables' as *;
+@use './mixins' as *;
+
+// Heading Styles
+.heading-1 {
+  @include heading-1;
+}
+
+.heading-2 {
+  @include heading-2;
+}
+
+.heading-3 {
+  @include heading-3;
+}
+
+.heading-4 {
+  @include heading-4;
+}
+
+// Body Styles
+.body-large {
+  @include body-large;
+}
+
+.body-normal {
+  @include body-normal;
+}
+
+.body-small {
+  @include body-small;
+}
+
+// Caption
+.caption {
+  @include caption;
+}
+
+// Text Utilities
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.text-truncate {
+  @include text-truncate;
+}
+
+.text-clamp-2 {
+  @include text-clamp(2);
+}
+
+.text-clamp-3 {
+  @include text-clamp(3);
+}
+
+// Color Utilities
+.text-primary {
+  color: $color-text-primary;
+}
+
+.text-secondary {
+  color: $color-text-secondary;
+}
+
+.text-tertiary {
+  color: $color-text-tertiary;
+}
+
+.text-success {
+  color: $color-success;
+}
+
+.text-warning {
+  color: $color-warning;
+}
+
+.text-danger {
+  color: $color-danger;
+}
+
+// Font Weight Utilities
+.font-light {
+  font-weight: $font-weight-light;
+}
+
+.font-normal {
+  font-weight: $font-weight-normal;
+}
+
+.font-medium {
+  font-weight: $font-weight-medium;
+}
+
+.font-semibold {
+  font-weight: $font-weight-semibold;
+}
+
+.font-bold {
+  font-weight: $font-weight-bold;
+}
+
+// Line Height Utilities
+.line-height-tight {
+  line-height: $line-height-tight;
+}
+
+.line-height-normal {
+  line-height: $line-height-normal;
+}
+
+.line-height-relaxed {
+  line-height: $line-height-relaxed;
+}
+
+// Monospace / Code
+.font-mono {
+  font-family: $font-family-mono;
+  font-size: $font-size-sm;
+}

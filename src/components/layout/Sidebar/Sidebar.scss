@@ -1,0 +1,321 @@
+// Sidebar Component Styles
+// IDIRA Design System — dark sidebar
+// Tokens: Dark.tokens.json (Figma: Scans-UX-Production)
+
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+@use '../../../design-system/tokens/_colors.scss' as *;
+
+// --- Sidebar shell -----------------------------------------------------------
+
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  background-color: $color-background-dark;          // #17243B Surface.bg-idle
+  border-right: 1px solid $color-divider-1;           // #283F67
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: width $transition-base, min-width $transition-base;
+  flex-shrink: 0;
+  z-index: 50;
+
+  &.sidebar--closed {
+    width: 56px;
+    min-width: 56px;
+
+    .sidebar__label,
+    .sidebar__logo-text,
+    .sidebar__section-title,
+    .sidebar__space-name,
+    .sidebar__chevron {
+      display: none;
+    }
+
+    .sidebar__logo {
+      justify-content: center;
+      padding: $spacing-4 0;
+    }
+
+    .sidebar__collapse-btn {
+      display: none;
+    }
+
+    .sidebar__link {
+      justify-content: center;
+      padding: $spacing-2 0;
+    }
+
+    .sidebar__nav {
+      padding: $spacing-2 $spacing-2;
+    }
+
+    .sidebar__space-selector {
+      justify-content: center;
+      padding: $spacing-2;
+    }
+
+    .sidebar__apps-btn {
+      display: none;
+    }
+  }
+}
+
+// --- Brand / logo area -------------------------------------------------------
+
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  padding: $spacing-4 $spacing-3;
+  border-bottom: 1px solid $color-divider-1;
+  flex-shrink: 0;
+  gap: $spacing-2;
+}
+
+.sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  text-decoration: none;
+  flex: 1;
+  min-width: 0;
+}
+
+.sidebar__logo-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar__logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+}
+
+.sidebar__logo-title {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  color: $color-text-light;
+  line-height: 1.2;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+}
+
+.sidebar__logo-subtitle {
+  font-size: 9px;
+  font-weight: $font-weight-normal;
+  color: $color-nav-text-idle;                        // #BBC2D0
+  line-height: 1.2;
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sidebar__collapse-btn {
+  background: none;
+  border: none;
+  padding: $spacing-1;
+  cursor: pointer;
+  color: $color-nav-icon-idle;                        // #AEB8CC
+  border-radius: $border-radius-sm;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: color $transition-fast, background-color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    background-color: rgba($color-text-light, 0.07);
+  }
+}
+
+// --- Space selector ----------------------------------------------------------
+
+.sidebar__space-selector {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-3 $spacing-3;
+  border-bottom: 1px solid $color-divider-1;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($color-text-light, 0.04);
+  }
+}
+
+.sidebar__space-icon-wrap {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  background-color: $color-btn-primary-idle;          // #3E68FF
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: $color-text-light;
+}
+
+.sidebar__space-name {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar__apps-btn {
+  background: none;
+  border: none;
+  padding: $spacing-1;
+  cursor: pointer;
+  color: $color-nav-icon-idle;
+  border-radius: $border-radius-sm;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+  }
+}
+
+// --- Nav area ----------------------------------------------------------------
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: $spacing-2 $spacing-2;
+  gap: 2px;
+  overflow-y: auto;
+}
+
+.sidebar__section-title {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-nav-text-idle;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: $spacing-3 $spacing-3 $spacing-1;
+  white-space: nowrap;
+}
+
+// --- Nav item ----------------------------------------------------------------
+
+.sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-2 $spacing-3;
+  border-radius: $border-radius-sm;
+  color: $color-nav-text-idle;                        // #BBC2D0
+  text-decoration: none;
+  transition: background-color $transition-fast, color $transition-fast;
+  white-space: nowrap;
+  overflow: hidden;
+  min-height: 36px;
+  position: relative;
+
+  &:hover:not(&--active) {
+    background-color: rgba($color-text-light, 0.06);
+    color: $color-text-light;
+
+    .sidebar__icon svg {
+      color: $color-text-light;
+    }
+  }
+
+  // Active / selected state — solid fill, white accent line
+  &--active {
+    background-color: $color-nav-bg-selected;         // #223658 solid
+    color: $color-nav-text-selected;                  // #FFFFFF
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      bottom: 20%;
+      width: 3px;
+      border-radius: 0 2px 2px 0;
+      background-color: $color-nav-side-line-selected; // #FFFFFF
+    }
+
+    .sidebar__icon svg {
+      color: $color-nav-icon-selected;                // #FFFFFF
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-btn-primary-idle;
+    outline-offset: 2px;
+  }
+}
+
+// --- Icon -------------------------------------------------------------------
+
+.sidebar__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+
+  svg {
+    color: $color-nav-icon-idle;                      // #AEB8CC
+    transition: color $transition-fast;
+  }
+}
+
+.sidebar__link--active .sidebar__icon svg {
+  color: $color-nav-icon-selected;                    // #FFFFFF
+}
+
+// --- Label ------------------------------------------------------------------
+
+.sidebar__label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.sidebar__link--active .sidebar__label {
+  font-weight: $font-weight-medium;
+}
+
+// --- Chevron (expandable items) ---------------------------------------------
+
+.sidebar__chevron {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: $color-nav-icon-idle;
+  opacity: 0.7;
+}
+
+// --- Footer area ------------------------------------------------------------
+
+.sidebar__footer {
+  border-top: 1px solid $color-divider-1;
+  padding: $spacing-2 $spacing-2;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}

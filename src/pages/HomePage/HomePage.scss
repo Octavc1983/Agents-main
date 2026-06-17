@@ -1,0 +1,116 @@
+// HomePage Styles
+
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.home-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.home-page__hero {
+  @include flex-col;
+  gap: $spacing-6;
+  margin-bottom: $spacing-12;
+  text-align: center;
+}
+
+.home-page__title {
+  @include heading-1;
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.home-page__subtitle {
+  @include body-large;
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.home-page__section {
+  margin-bottom: $spacing-12;
+}
+
+.home-page__section-title {
+  @include heading-2;
+  margin: 0 0 $spacing-6 0;
+  color: var(--color-text-primary);
+}
+
+.home-page__grid {
+  @include grid-3;
+  margin-bottom: $spacing-8;
+}
+
+.home-page__features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-4;
+
+  @include respond-to('sm') {
+    grid-template-columns: 1fr;
+  }
+
+  li {
+    @include body-normal;
+    padding: $spacing-3;
+    padding-left: $spacing-6;
+    position: relative;
+    color: var(--color-text-primary);
+
+    &::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--color-success);
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+
+.home-page__steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+
+  li {
+    @include body-normal;
+    color: var(--color-text-primary);
+    padding-left: 0;
+
+    strong {
+      color: var(--color-primary);
+    }
+  }
+}
+
+.home-page__list {
+  list-style: none;
+  padding: 0;
+  margin: $spacing-4 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+
+  li {
+    @include body-normal;
+    color: var(--color-text-primary);
+    padding-left: 0;
+  }
+}
+
+.code-inline {
+  @include body-small;
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border-light);
+  border-radius: $border-radius-base;
+  padding: $spacing-1 $spacing-2;
+  font-family: $font-family-mono;
+  color: var(--color-danger);
+}

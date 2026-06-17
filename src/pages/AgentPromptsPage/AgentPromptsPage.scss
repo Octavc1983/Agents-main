@@ -1,0 +1,183 @@
+// AgentPromptsPage Styles
+
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// ─── Page Layout ─────────────────────────────────────────────────────────────
+
+.agent-prompts-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+// ─── Header ──────────────────────────────────────────────────────────────────
+
+.agent-prompts-page__header {
+  margin-bottom: $spacing-6;
+}
+
+.agent-prompts-page__title {
+  @include heading-1;
+  margin: 0 0 $spacing-3 0;
+  color: var(--color-text-primary);
+}
+
+.agent-prompts-page__subtitle {
+  @include body-large;
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+// ─── Search ───────────────────────────────────────────────────────────────────
+
+.agent-prompts-page__search-wrapper {
+  margin-bottom: $spacing-6;
+}
+
+.agent-prompts-page__search {
+  width: 100%;
+  height: 38px;
+  padding: $spacing-2 $spacing-4;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: $border-radius-base;
+  outline: none;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: var(--color-text-tertiary);
+  }
+
+  &:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-light);
+  }
+}
+
+.agent-prompts-page__results-count {
+  @include caption;
+  margin: $spacing-2 0 0 0;
+  color: var(--color-text-secondary);
+}
+
+// ─── Grid ─────────────────────────────────────────────────────────────────────
+
+.agent-prompts-page__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $spacing-6;
+}
+
+// ─── Card ─────────────────────────────────────────────────────────────────────
+
+.agent-prompts-page__card {
+  // Card itself handles surface styling via card--elevated
+}
+
+.agent-prompts-page__card-title {
+  @include heading-3;
+  margin: 0 0 $spacing-2 0;
+  color: var(--color-text-primary);
+}
+
+.agent-prompts-page__card-description {
+  @include body-normal;
+  margin: 0 0 $spacing-5 0;
+  color: var(--color-text-secondary);
+}
+
+// ─── Section Label ────────────────────────────────────────────────────────────
+
+.agent-prompts-page__section-label {
+  @include body-small;
+  margin-bottom: $spacing-2;
+  font-weight: $font-weight-semibold;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+// ─── Agents List ──────────────────────────────────────────────────────────────
+
+.agent-prompts-page__agents-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+  margin-bottom: $spacing-5;
+}
+
+// ─── Agent Tag ────────────────────────────────────────────────────────────────
+
+.agent-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-1 $spacing-3;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  border-radius: $border-radius-full;
+  white-space: nowrap;
+  line-height: $line-height-tight;
+}
+
+// ─── When To Use ──────────────────────────────────────────────────────────────
+
+.agent-prompts-page__when-to-use {
+  @include body-normal;
+  margin: 0 0 $spacing-5 0;
+  color: var(--color-text-primary);
+  font-style: italic;
+}
+
+// ─── Prompt Block ─────────────────────────────────────────────────────────────
+
+.agent-prompts-page__prompt-block {
+  margin: 0 0 $spacing-5 0;
+  padding: $spacing-4;
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border-light);
+  border-radius: $border-radius-base;
+  font-family: $font-family-mono;
+  font-size: $font-size-sm;
+  line-height: $line-height-relaxed;
+  color: var(--color-text-primary);
+  white-space: pre-wrap;
+  overflow-x: auto;
+
+  code {
+    font-family: inherit;
+    font-size: inherit;
+    background: none;
+    padding: 0;
+  }
+}
+
+// ─── Card Footer ──────────────────────────────────────────────────────────────
+
+.agent-prompts-page__card-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: $spacing-3;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.agent-prompts-page__copy-btn {
+  min-width: 110px;
+}
+
+// ─── Responsive ──────────────────────────────────────────────────────────────
+
+@include respond-to('sm') {
+  .agent-prompts-page {
+    max-width: 100%;
+  }
+
+  .agent-prompts-page__card-footer {
+    justify-content: flex-start;
+  }
+}

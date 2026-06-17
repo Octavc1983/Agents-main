@@ -1,0 +1,11 @@
+// Design System Border Radius Tokens
+
+$border-radius-none: 0;
+$border-radius-sm: 2px;
+$border-radius-md: 4px;
+$border-radius-lg: 8px;
+$border-radius-xl: 12px;
+$border-radius-full: 9999px;
+
+// Tab-specific radius alias
+$tab-border-radius: $border-radius-md;
