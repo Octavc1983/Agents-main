@@ -83,6 +83,18 @@ export const sidebarLinks: SidebarLink[] = [
     isActive: false,
   },
   {
+    label: 'Account',
+    href: '/account',
+    icon: 'Settings',
+    isActive: false,
+  },
+  {
+    label: 'AB Testing',
+    href: '/ab-testing',
+    icon: 'Reports',
+    isActive: false,
+  },
+  {
     label: 'Design System Preview',
     href: '/design-system-preview',
     icon: 'Telescope',

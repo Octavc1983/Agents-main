@@ -97,6 +97,53 @@ export interface HeaderConfig {
   subtitle?: string;
 }
 
+// --- AB Testing types --------------------------------------------------------
+
+export type ABTestStatus = 'running' | 'completed' | 'draft' | 'paused';
+
+export interface ABTest {
+  id: string;
+  name: string;
+  status: ABTestStatus;
+  variants: string[];
+  trafficSplit: number[];
+  conversionRate: number;
+  uplift: number;
+  startDate: string;
+  endDate: string | null;
+  owner: string;
+  hypothesis: string;
+  tags: string[];
+}
+
+// --- Account Settings types --------------------------------------------------
+
+export interface AccountUser {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  avatarUrl: string;
+  role: string;
+  is2faEnabled: boolean;
+}
+
+export interface AccountOrganization {
+  id: string;
+  name: string;
+  taxId: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    country: string;
+  };
+}
+
+export type AccountSettingsTab = 'profile' | 'security' | 'organization';
+
 // --- Scans types -------------------------------------------------------------
 
 export type ScanStatus = 'completed' | 'running' | 'failed' | 'pending' | 'stopped';

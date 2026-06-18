@@ -12,6 +12,8 @@ import { DesignSystemPreviewPage } from '../pages/DesignSystemPreviewPage/Design
 import { AssetsTablePage } from '../pages/AssetsTablePage/AssetsTablePage';
 import { AgentPromptsPage } from '../pages/AgentPromptsPage/AgentPromptsPage';
 import { ScansPage } from '../pages/ScansPage/ScansPage';
+import { AccountSettingsPage } from '../pages/AccountSettingsPage/AccountSettingsPage';
+import { ABTestingPage } from '../pages/ABTestingPage/ABTestingPage';
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +47,14 @@ export const router = createBrowserRouter([
       {
         path: 'scans',
         element: <ScansPage />,
+      },
+      {
+        path: 'account',
+        element: <AccountSettingsPage />,
+      },
+      {
+        path: 'ab-testing',
+        element: <ABTestingPage />,
       },
     ],
   },
