@@ -45,6 +45,30 @@ Agents are located in the `.claude/agents/` folder. Each agent has a focused res
 - [**Prototype Documentation Agent**](.claude/agents/prototype-documentation-agent.md)  
   Documents completed prototypes for UX, Product, and R&D review.
 
+### Figma MCP Agents
+
+- [**Figma MCP Scanner Agent**](.claude/agents/figma-mcp-scanner-agent.md)  
+  Reads Figma frame structure and extracts components, variables, and icons — does not map or implement.
+
+- [**Figma to Infra Mapping Agent**](.claude/agents/figma-to-infra-mapping-agent.md)  
+  Maps Figma frame elements to existing Infra/DS components, tokens, and SVG icons.
+
+- [**Figma Design System Extractor Agent**](.claude/agents/figma-design-system-extractor.agent.md)  
+  Extracts DS components from Figma and generates a prototype component library under `src/design-system/`.
+
+- [**Figma Navigation Sidebar Extractor Agent**](.claude/agents/figma-navigation-sidebar-extractor.agent.md)  
+  Extracts navigation structure from Figma sidebar for project nav config.
+
+### Navigation & Shell Agents
+
+- [**Application Shell Navigation Agent**](.claude/agents/application-shell-navigation-agent.md)  
+  Protects the AppShell architecture; adds routes and sidebar items correctly without breaking existing structure.
+
+### Detection Agents
+
+- [**Infra Component Detection Agent**](.claude/agents/infra-component-detection-agent.md)  
+  Detects matching Infra components and tokens from a visual reference (screenshot or Figma).
+
 ## Recommended POC Agent Set
 
 For the initial setup, use these core agents:

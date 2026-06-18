@@ -12,7 +12,7 @@
  *   'default' | 'loading' | 'empty' | 'error'
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import type { ComponentState, Scan, ScanStatus } from '../../types/prototype.types';
 import { mockScans, mockScanFindings } from '../../mock/scansMockData';
 import { LoadingState } from '../../components/ui/LoadingState/LoadingState';
@@ -257,7 +257,9 @@ export const ScansPage: React.FC = () => {
 
   const [selectedItem, setSelectedItem] = useState<Scan | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [isDetailsClosing, setIsDetailsClosing] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
+  const closingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const filteredScans = useMemo<Scan[]>(() => {
     if (!searchQuery.trim()) return mockScans;
@@ -271,14 +273,22 @@ export const ScansPage: React.FC = () => {
   }, [searchQuery]);
 
   const handleRowClick = (scan: Scan) => {
+    // Cancel any in-progress close animation before opening a new selection
+    if (closingTimerRef.current) clearTimeout(closingTimerRef.current);
+    setIsDetailsClosing(false);
     setSelectedItem(scan);
     setIsDetailsOpen(true);
     setActiveTab('overview');
   };
 
   const handleCloseDetails = () => {
-    setIsDetailsOpen(false);
-    setSelectedItem(null);
+    if (closingTimerRef.current) clearTimeout(closingTimerRef.current);
+    setIsDetailsClosing(true);
+    closingTimerRef.current = setTimeout(() => {
+      setIsDetailsOpen(false);
+      setIsDetailsClosing(false);
+      setSelectedItem(null);
+    }, 220);
   };
 
   const toggleCheckbox = (id: string) => {
@@ -356,7 +366,11 @@ export const ScansPage: React.FC = () => {
           </div>
 
           {/* ── Master-Details content area ───────────────────────────── */}
-          <div className={`scans-content${isDetailsOpen ? ' scans-content--details-open' : ''}`}>
+          <div className={[
+            'scans-content',
+            isDetailsOpen ? 'scans-content--details-open' : '',
+            isDetailsClosing ? 'scans-content--details-closing' : '',
+          ].filter(Boolean).join(' ')}>
 
             {/* Master list */}
             <section className="scans-content__master">
@@ -483,9 +497,9 @@ export const ScansPage: React.FC = () => {
               </div>
             </section>
 
-            {/* Details panel — rendered only when open */}
-            {isDetailsOpen && selectedItem && (
-              <aside className="scans-content__details">
+            {/* Details panel — rendered while open or animating closed */}
+            {(isDetailsOpen || isDetailsClosing) && selectedItem && (
+              <aside className={`scans-content__details${isDetailsClosing ? ' scans-content__details--closing' : ''}`}>
                 <DetailsPanel
                   scan={selectedItem}
                   activeTab={activeTab}

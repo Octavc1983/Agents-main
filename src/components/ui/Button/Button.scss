@@ -2,6 +2,7 @@
 // Placeholder component for Infra Design System integration
 // When replaced with actual DS Button, remove this file
 
+@use 'sass:color';
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
@@ -64,7 +65,7 @@
   color: var(--color-text-inverse);
 
   &:hover:not(:disabled) {
-    background-color: darken(#dc3545, 10%);
+    background-color: color.adjust(#dc3545, $lightness: -10%);
   }
 }
 

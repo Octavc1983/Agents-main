@@ -1,0 +1,646 @@
+// CardListMasterDetailsTemplate styles
+// Page Composition Template — not a DS component
+// Layout: 30% card list / 70% details panel
+// Tokens: src/styles/_variables.scss, src/design-system/tokens/_colors.scss
+
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+@use '../../design-system/tokens/_colors.scss' as *;
+
+// ── Page shell ────────────────────────────────────────────────────────────────
+
+.cardListMDT {
+  @include flex-col;
+  background-color: $color-page-background;
+  min-height: 100%;
+  padding: $spacing-6 $spacing-8;
+  gap: 0;
+  position: relative; // establishes stacking context for filter panel
+
+  @include respond-to('md') {
+    padding: $spacing-5 $spacing-6;
+  }
+
+  @include respond-to('sm') {
+    padding: $spacing-4;
+  }
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+
+.cardListMDT__header {
+  @include flex-col;
+  gap: $spacing-1;
+  margin-bottom: $spacing-5;
+}
+
+.cardListMDT__title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  margin: 0;
+  line-height: $line-height-tight;
+}
+
+.cardListMDT__description {
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  margin: 0;
+  line-height: $line-height-normal;
+}
+
+// ── Toolbar ───────────────────────────────────────────────────────────────────
+
+.cardListMDT__toolbar {
+  @include flex-between;
+  gap: $spacing-3;
+  margin-bottom: $spacing-3;
+  flex-wrap: wrap;
+}
+
+.cardListMDT__toolbarLeft {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  flex-wrap: wrap;
+}
+
+.cardListMDT__toolbarRight {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  flex-shrink: 0;
+}
+
+// ── Filter button ─────────────────────────────────────────────────────────────
+
+.cardListMDT__filtersButton {
+  display: flex;
+  align-items: center;
+  gap: $spacing-1;
+  padding: $spacing-1 $spacing-3;
+  background: none;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-sm;
+  color: $color-nav-text-idle;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  transition: border-color $transition-fast, color $transition-fast;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: $color-nav-text-idle;
+    color: $color-text-light;
+  }
+
+  &--active {
+    border-color: $color-primary;
+    color: $color-primary;
+  }
+}
+
+.cardListMDT__filtersCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 $spacing-1;
+  background-color: $color-primary;
+  color: $color-text-light;
+  font-size: 10px;
+  font-weight: $font-weight-semibold;
+  border-radius: $border-radius-full;
+  line-height: 1;
+}
+
+// ── Search ────────────────────────────────────────────────────────────────────
+
+.cardListMDT__searchWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cardListMDT__searchIcon {
+  position: absolute;
+  left: $spacing-2;
+  color: $color-nav-text-idle;
+  pointer-events: none;
+}
+
+.cardListMDT__searchInput {
+  background-color: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-sm;
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  padding: $spacing-1 $spacing-6 $spacing-1 $spacing-6;
+  min-width: 200px;
+  transition: border-color $transition-fast;
+
+  &::placeholder {
+    color: $color-nav-text-idle;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+}
+
+.cardListMDT__searchClear {
+  position: absolute;
+  right: $spacing-2;
+  background: none;
+  border: none;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: $color-text-light;
+  }
+}
+
+// ── Item counter ──────────────────────────────────────────────────────────────
+
+.cardListMDT__itemCount {
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  white-space: nowrap;
+}
+
+// ── Toolbar right ─────────────────────────────────────────────────────────────
+
+.cardListMDT__updatedAt {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  white-space: nowrap;
+}
+
+.cardListMDT__refreshBtn {
+  background: none;
+  border: none;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  padding: $spacing-1;
+  display: flex;
+  align-items: center;
+  border-radius: $border-radius-sm;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+  }
+}
+
+// ── Active filter chips ───────────────────────────────────────────────────────
+
+.cardListMDT__activeFilters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacing-2;
+  margin-bottom: $spacing-3;
+}
+
+.cardListMDT__filterChip {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  padding: $spacing-1 $spacing-2;
+  background-color: rgba($color-primary, 0.12);
+  border: 1px solid rgba($color-primary, 0.3);
+  border-radius: $border-radius-full;
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+
+  strong {
+    color: $color-text-light;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.cardListMDT__filterChipLabel {
+  white-space: nowrap;
+}
+
+.cardListMDT__filterChipRemove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  margin-left: 2px;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+  }
+}
+
+.cardListMDT__clearAll {
+  background: none;
+  border: none;
+  padding: $spacing-1 $spacing-2;
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color $transition-fast;
+  white-space: nowrap;
+
+  &:hover {
+    color: $color-text-light;
+  }
+}
+
+// ── Content: 30 / 70 split ────────────────────────────────────────────────────
+
+.cardListMDT__content {
+  display: grid;
+  grid-template-columns: minmax(260px, 30%) minmax(0, 70%);
+  gap: $spacing-4;
+  flex: 1;
+  min-height: 0;
+  align-items: start;
+
+  @include respond-to('md') {
+    grid-template-columns: minmax(220px, 35%) minmax(0, 65%);
+  }
+
+  @include respond-to('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ── Left: master card list ────────────────────────────────────────────────────
+
+.cardListMDT__masterList {
+  @include flex-col;
+  gap: $spacing-2;
+  overflow-y: auto;
+  max-height: calc(100vh - 220px);
+  padding-right: $spacing-1;
+
+  scrollbar-width: thin;
+  scrollbar-color: $color-divider-1 transparent;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-divider-1;
+    border-radius: $border-radius-full;
+  }
+}
+
+// ── No results (inside master list) ──────────────────────────────────────────
+
+.cardListMDT__noResults {
+  padding: $spacing-6 $spacing-4;
+}
+
+// ── Card ──────────────────────────────────────────────────────────────────────
+
+.cardListMDT__card {
+  position: relative;
+  display: block;
+  width: 100%;
+  background-color: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-base;
+  padding: $spacing-3 $spacing-4;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color $transition-fast, border-color $transition-fast;
+  overflow: hidden;
+
+  &:hover {
+    background-color: $color-table-bg-hover;
+    border-color: $color-primary;
+  }
+
+  &--selected {
+    border-color: $color-primary;
+    background-color: $color-table-bg-hover;
+  }
+}
+
+.cardListMDT__cardSelectedBar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: $color-primary;
+  border-radius: $border-radius-sm 0 0 $border-radius-sm;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: selectedBarIn $transition-fast;
+  }
+}
+
+@keyframes selectedBarIn {
+  from { opacity: 0; transform: scaleY(0.5); }
+  to   { opacity: 1; transform: scaleY(1); }
+}
+
+.cardListMDT__cardInner {
+  display: flex;
+  gap: $spacing-3;
+  align-items: flex-start;
+}
+
+.cardListMDT__cardIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  color: $color-nav-text-idle;
+}
+
+.cardListMDT__cardBody {
+  @include flex-col;
+  gap: $spacing-1;
+  min-width: 0;
+  flex: 1;
+}
+
+.cardListMDT__cardTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-2;
+}
+
+.cardListMDT__cardTitle {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-light;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+.cardListMDT__cardStatus {
+  flex-shrink: 0;
+}
+
+.cardListMDT__cardSubtitle {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardListMDT__cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  margin-top: $spacing-1;
+}
+
+.cardListMDT__cardChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-1;
+  margin-top: $spacing-1;
+}
+
+// ── Right: details panel ──────────────────────────────────────────────────────
+
+.cardListMDT__details {
+  background-color: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-base;
+  min-height: 400px;
+  overflow: hidden;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: detailsIn $transition-base;
+  }
+}
+
+@keyframes detailsIn {
+  from { opacity: 0; transform: translateX(8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+// ── Empty details state ───────────────────────────────────────────────────────
+
+.cardListMDT__emptyDetails {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 300px;
+}
+
+// ── Filters panel overlay ─────────────────────────────────────────────────────
+
+.cardListMDT__filtersPanelBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background-color: rgba($color-page-background, 0.5);
+}
+
+.cardListMDT__filtersPanel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 320px;
+  z-index: 50;
+  background-color: $color-surface-idle;
+  border-left: 1px solid $color-divider-1;
+  display: flex;
+  flex-direction: column;
+  box-shadow: $shadow-lg;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: filtersPanelIn $transition-base ease-out both;
+  }
+
+  @include respond-to('sm') {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid $color-divider-1;
+  }
+}
+
+@keyframes filtersPanelIn {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardListMDT__filtersPanel {
+    animation: none;
+  }
+}
+
+.cardListMDT__filtersPanelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-4 $spacing-5;
+  border-bottom: 1px solid $color-divider-1;
+  flex-shrink: 0;
+}
+
+.cardListMDT__filtersPanelTitle {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+}
+
+.cardListMDT__filtersPanelClose {
+  background: none;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-sm;
+  color: $color-nav-icon-idle;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color $transition-fast, border-color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    border-color: $color-nav-text-idle;
+  }
+}
+
+.cardListMDT__filtersPanelBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: $spacing-5;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+
+  scrollbar-width: thin;
+  scrollbar-color: $color-divider-1 transparent;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-divider-1;
+    border-radius: $border-radius-full;
+  }
+}
+
+// ── Filter group ──────────────────────────────────────────────────────────────
+
+.cardListMDT__filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+}
+
+.cardListMDT__filterGroupTitle {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-nav-icon-idle;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.cardListMDT__filterOptions {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+}
+
+.cardListMDT__filterOption {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-2 $spacing-3;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: rgba($color-text-light, 0.05);
+  }
+
+  &--checked {
+    background-color: rgba($color-primary, 0.08);
+  }
+}
+
+.cardListMDT__filterCheckbox {
+  width: 14px;
+  height: 14px;
+  accent-color: $color-primary;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.cardListMDT__filterOptionLabel {
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+
+  .cardListMDT__filterOption--checked & {
+    color: $color-text-light;
+  }
+}
+
+// ── Filters panel footer ──────────────────────────────────────────────────────
+
+.cardListMDT__filtersPanelFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-4 $spacing-5;
+  border-top: 1px solid $color-divider-1;
+  flex-shrink: 0;
+  gap: $spacing-3;
+}
+
+.cardListMDT__filtersClearBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+  }
+}
+
+.cardListMDT__filtersPanelActions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}

@@ -1,0 +1,467 @@
+// TableFiltersTemplate styles
+// Page Composition Template — not a DS component
+// Tokens: src/styles/_variables.scss, src/design-system/tokens/_colors.scss
+
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+@use '../../design-system/tokens/_colors.scss' as *;
+
+// ── Page shell ────────────────────────────────────────────────────────────────
+
+.tableFiltersTemplate {
+  @include flex-col;
+  background-color: $color-page-background;
+  min-height: 100%;
+  padding: $spacing-6 $spacing-8;
+  gap: 0;
+
+  @include respond-to('md') {
+    padding: $spacing-5 $spacing-6;
+  }
+
+  @include respond-to('sm') {
+    padding: $spacing-4;
+  }
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+
+.tableFiltersTemplate__header {
+  @include flex-col;
+  gap: $spacing-1;
+  margin-bottom: $spacing-5;
+}
+
+.tableFiltersTemplate__title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  margin: 0;
+  line-height: $line-height-tight;
+}
+
+.tableFiltersTemplate__description {
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  margin: 0;
+  line-height: $line-height-normal;
+}
+
+// ── Toolbar ───────────────────────────────────────────────────────────────────
+
+.tableFiltersTemplate__toolbar {
+  @include flex-col;
+  gap: $spacing-2;
+  margin-bottom: $spacing-3;
+}
+
+.tableFiltersTemplate__toolbarMain {
+  @include flex-between;
+  gap: $spacing-3;
+}
+
+.tableFiltersTemplate__toolbarLeft {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  flex-wrap: wrap;
+}
+
+.tableFiltersTemplate__toolbarRight {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  flex-shrink: 0;
+}
+
+// ── Filter button ─────────────────────────────────────────────────────────────
+
+.tableFiltersTemplate__filterBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  background-color: transparent;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-sm;
+  color: $color-nav-text-idle;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+  padding: $spacing-1 $spacing-3;
+  cursor: pointer;
+  transition: border-color $transition-fast, color $transition-fast;
+
+  &:hover {
+    border-color: $color-primary;
+    color: $color-text-light;
+  }
+
+  &--active {
+    border-color: $color-primary;
+    color: $color-primary;
+  }
+}
+
+.tableFiltersTemplate__filterCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-primary;
+  color: $color-text-light;
+  border-radius: $border-radius-full;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 $spacing-1;
+  line-height: 1;
+}
+
+// ── Search ────────────────────────────────────────────────────────────────────
+
+.tableFiltersTemplate__searchWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.tableFiltersTemplate__searchIcon {
+  position: absolute;
+  left: $spacing-2;
+  color: $color-nav-text-idle;
+  pointer-events: none;
+}
+
+.tableFiltersTemplate__searchInput {
+  background-color: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-sm;
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  padding: $spacing-1 $spacing-6 $spacing-1 $spacing-6;
+  min-width: 220px;
+  transition: border-color $transition-fast;
+
+  &::placeholder {
+    color: $color-nav-text-idle;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+
+  // Remove native search clear button (varies by browser)
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+}
+
+.tableFiltersTemplate__searchClear {
+  position: absolute;
+  right: $spacing-2;
+  background: none;
+  border: none;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: $color-text-light;
+  }
+}
+
+// ── Item counter ──────────────────────────────────────────────────────────────
+
+.tableFiltersTemplate__itemCount {
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  white-space: nowrap;
+}
+
+// ── Updated at / refresh ──────────────────────────────────────────────────────
+
+.tableFiltersTemplate__updatedAt {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  white-space: nowrap;
+}
+
+.tableFiltersTemplate__refreshBtn {
+  background: none;
+  border: none;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  padding: $spacing-1;
+  display: flex;
+  align-items: center;
+  border-radius: $border-radius-sm;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+  }
+}
+
+// ── Active filter chips ───────────────────────────────────────────────────────
+
+.tableFiltersTemplate__chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+.tableFiltersTemplate__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  background-color: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-full;
+  padding: $spacing-1 $spacing-2;
+  font-size: $font-size-xs;
+  color: $color-text-light;
+}
+
+.tableFiltersTemplate__chipLabel {
+  line-height: 1;
+}
+
+.tableFiltersTemplate__chipRemove {
+  background: none;
+  border: none;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+  }
+}
+
+.tableFiltersTemplate__clearAll {
+  background: none;
+  border: none;
+  color: $color-primary;
+  cursor: pointer;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  padding: $spacing-1 $spacing-2;
+  transition: opacity $transition-fast;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// ── Content area ──────────────────────────────────────────────────────────────
+
+.tableFiltersTemplate__content {
+  display: flex;
+  gap: $spacing-4;
+  flex: 1;
+  min-height: 0;
+}
+
+// ── Table area ────────────────────────────────────────────────────────────────
+
+.tableFiltersTemplate__table {
+  flex: 1;
+  min-width: 0;
+  transition: flex $transition-base;
+
+  &--narrowed {
+    flex: 1;
+  }
+}
+
+.tableFiltersTemplate__tableWrap {
+  overflow-x: auto;
+}
+
+.tableFiltersTemplate__tableEl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $font-size-sm;
+}
+
+.tableFiltersTemplate__th {
+  padding: $spacing-2 $spacing-3;
+  text-align: left;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-nav-text-idle;
+  border-bottom: 1px solid $color-table-line-idle;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  &--hidden {
+    display: none;
+  }
+
+  &--actions {
+    width: 1%;
+    white-space: nowrap;
+  }
+}
+
+.tableFiltersTemplate__row {
+  border-bottom: 1px solid $color-table-line-idle;
+  transition: background-color $transition-fast;
+
+  &--clickable {
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color-table-bg-hover;
+    }
+  }
+}
+
+.tableFiltersTemplate__td {
+  padding: $spacing-3;
+  color: $color-text-light;
+  vertical-align: middle;
+
+  &--hidden {
+    display: none;
+  }
+
+  &--actions {
+    width: 1%;
+    white-space: nowrap;
+    text-align: right;
+  }
+}
+
+// ── Filters panel ─────────────────────────────────────────────────────────────
+
+$filters-panel-width: 260px;
+
+.tableFiltersTemplate__filtersPanel {
+  display: flex;
+  flex-direction: column;
+  width: $filters-panel-width;
+  flex-shrink: 0;
+  background-color: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-base;
+  overflow: hidden;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: filtersPanelIn $transition-base;
+  }
+}
+
+@keyframes filtersPanelIn {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.tableFiltersTemplate__filtersPanelHeader {
+  @include flex-between;
+  padding: $spacing-3 $spacing-4;
+  border-bottom: 1px solid $color-divider-1;
+}
+
+.tableFiltersTemplate__filtersPanelTitle {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+}
+
+.tableFiltersTemplate__filtersPanelClose {
+  background: none;
+  border: none;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+  }
+}
+
+.tableFiltersTemplate__filtersPanelBody {
+  @include flex-col;
+  gap: $spacing-4;
+  padding: $spacing-4;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.tableFiltersTemplate__filterGroup {
+  @include flex-col;
+  gap: $spacing-2;
+}
+
+.tableFiltersTemplate__filterGroupLabel {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-nav-text-idle;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tableFiltersTemplate__filterGroupOptions {
+  @include flex-col;
+  gap: $spacing-2;
+}
+
+.tableFiltersTemplate__filterOption {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  cursor: pointer;
+}
+
+.tableFiltersTemplate__filterInput {
+  accent-color: $color-primary;
+  cursor: pointer;
+}
+
+.tableFiltersTemplate__filterOptionLabel {
+  font-size: $font-size-sm;
+  color: $color-text-light;
+}
+
+.tableFiltersTemplate__filtersPanelFooter {
+  @include flex-between;
+  padding: $spacing-3 $spacing-4;
+  border-top: 1px solid $color-divider-1;
+  gap: $spacing-2;
+}
+
+.tableFiltersTemplate__filtersClearBtn {
+  background: none;
+  border: none;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  font-size: $font-size-sm;
+  padding: $spacing-1 $spacing-2;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+  }
+}
+
+.tableFiltersTemplate__filtersPanelActions {
+  display: flex;
+  gap: $spacing-2;
+}

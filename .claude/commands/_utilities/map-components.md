@@ -19,7 +19,7 @@ Component Mapping Agent
 Expected file:
 
 ```text
-.claude/agents/component-mapping-agent.md
+.claude/agents/_core/component-mapping-agent.md
 ```
 
 ---
@@ -31,7 +31,7 @@ Component Mapping Skill
 Expected file:
 
 ```text
-.claude/skills/component-mapping/SKILL.md
+.claude/skills/_core/component-mapping/SKILL.md
 ```
 
 ---
@@ -131,6 +131,26 @@ Examples:
 2. Confirm the detected page type.
 3. Run the full mapping workflow below.
 4. Stop after the mapping report.
+
+---
+
+## Intake Gate
+
+Do not continue until all minimum required fields are provided.
+
+Do not inspect the project.
+
+Do not generate a component mapping.
+
+Do not create files.
+
+Do not guess missing critical information.
+
+If Figma source or screenshot is missing, state that visual mapping and Pixel Perfect review cannot be completed — but continue with requirement-based mapping if the other minimum fields are present.
+
+If route is missing, ask whether the page needs a route before adding navigation or router changes.
+
+If component scope is missing, do not modify components broadly.
 
 ---
 

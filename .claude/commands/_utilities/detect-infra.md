@@ -35,6 +35,96 @@ Analyze the visual structure and map it to existing Infra / DS components and to
 
 ---
 
+## Required User Intake Before Running
+
+Before starting, verify that the user has provided the required inputs for this command.
+
+This command requires a visual input. It cannot run from a written requirement alone.
+
+### Required intake fields
+
+```text
+Visual input:              Screenshot, Figma link, or Figma frame name
+Goal:                      What to analyze (e.g. full page mapping / component mapping / token mapping)
+Known constraints:         e.g. SVG icons only, no new DS components, no inline styles
+```
+
+### Optional fields
+
+```text
+Target page or component:  If absent, scope is whole-screen analysis
+```
+
+If `Target page or component` is absent, state that the scope will be the full visible screen and continue.
+
+### Minimum required fields
+
+The command cannot continue without:
+
+```text
+Visual input
+Goal
+Known constraints
+```
+
+### Missing information response
+
+If visual input is missing, stop and respond only with:
+
+```markdown
+### Missing Required Information
+
+Before I can run `detect-infra`, please provide the missing fields below.
+
+\`\`\`text
+Visual input:              [Attach screenshot or paste Figma link / frame name]
+Goal:                      [What to analyze]
+Known constraints:         [e.g. SVG icons only, no new DS components]
+Target page or component:  [Optional — leave blank for whole-screen analysis]
+\`\`\`
+
+### Why This Is Needed
+
+`detect-infra` analyzes a visual reference and maps it to existing Infra / DS components and tokens. Without a screenshot or Figma source, there is nothing to analyze and I cannot safely produce a mapping.
+```
+
+Do not inspect the project.
+Do not analyze components.
+Do not produce a mapping.
+Do not generate code.
+Do not continue until a visual input is provided.
+
+### Optional clarifying questions
+
+If the visual input is provided but the goal is ambiguous, ask up to 3 focused questions before continuing.
+
+Examples:
+1. Should I map only the components, or also produce a full token mapping?
+2. Should I stop after the mapping report, or continue to implementation guidance?
+3. Is there a specific section of the screen to focus on?
+
+### After intake is complete
+
+1. Confirm the visual input received.
+2. Confirm the analysis goal.
+3. Run the visual analysis workflow below.
+4. Stop after the mapping report unless the user explicitly asks to continue to implementation.
+
+---
+
+## Intake Gate
+
+Do not inspect the project.
+Do not analyze any visual element.
+Do not produce a component mapping.
+Do not generate a token mapping.
+Do not generate code.
+Do not continue until a visual input (screenshot or Figma source) is provided.
+
+If no visual input is provided, this command cannot run. State this clearly and wait.
+
+---
+
 ## Main Responsibilities
 
 ### 1. Analyze the visual input

@@ -517,7 +517,8 @@ $details-panel-width: 440px;
   &__master {
     flex: 1;
     min-width: 0;
-    transition: flex $transition-base;
+    // width transition gives the expand-back effect when details close
+    transition: width $transition-base, min-width $transition-base;
   }
 
   &__details {
@@ -528,12 +529,24 @@ $details-panel-width: 440px;
 
     // Slide-in animation
     animation: details-slide-in $transition-base ease-out both;
+
+    &--closing {
+      animation: details-slide-out 220ms ease-in both;
+    }
   }
 
   &--details-open {
     .scans-content__master {
-      // Master list narrows; let flex handle remaining space
       min-width: 0;
+    }
+  }
+
+  // While closing, remove the panel width from layout so master expands back
+  &--details-closing {
+    .scans-content__details {
+      // Keep panel visible during exit animation but pull it out of flow width-wise
+      margin-left: auto;
+      width: $details-panel-width;
     }
   }
 }
@@ -549,8 +562,20 @@ $details-panel-width: 440px;
   }
 }
 
+@keyframes details-slide-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .scans-content__details {
+  .scans-content__details,
+  .scans-content__details--closing {
     animation: none;
   }
 }
