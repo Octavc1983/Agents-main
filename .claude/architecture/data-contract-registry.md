@@ -37,6 +37,19 @@ _None yet. Candidates are identified when the same transformation appears in 2+ 
 
 ---
 
+## Design System Package Types
+
+Shared UI-level types (component prop types, theme types, icon types) come from `@cyberark/design-system/types`, not from `src/`. Do not re-declare DS prop shapes locally in `src/types/`.
+
+| Type | Import | Status |
+|---|---|---|
+| Component prop types (ButtonProps, CardProps, etc.) | `@cyberark/design-system/types` | Active |
+| Theme types (ThemeMode, etc.) | `@cyberark/design-system/types` | Active |
+
+---
+
 ## Notes
 
 The Scans domain is the first candidate for a shared API contract. The mock data in `src/mock/prototypeMockData.ts` already defines a `Scan` entity with consistent fields. A `ScansApi` contract should be proposed when a second consumer (e.g. a Findings page or Dashboard) appears.
+
+Domain types in `src/types/prototype.types.ts` are project-level (Scan, ABTest, AccountUser, etc.) and are NOT part of the `@cyberark/design-system` package. They remain in `src/`.

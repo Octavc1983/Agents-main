@@ -17,7 +17,7 @@ import {
   CollapseIcon,
   ChevronRightIcon,
   ChevronDownIcon,
-} from '@/assets/icons/NavIcons';
+} from '@cyberark/design-system/icons';
 import {
   AccessIcon,
   ManageIcon,
@@ -25,7 +25,7 @@ import {
   AuditIcon,
   SetupIcon,
   CommandCenterIcon,
-} from '@/icons/spaces/index';
+} from '@cyberark/design-system/icons';
 import './Sidebar.scss';
 
 // ── Space icon resolver ───────────────────────────────────────────────────────

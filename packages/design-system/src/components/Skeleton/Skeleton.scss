@@ -1,0 +1,24 @@
+@use '../../theme/styles/tokens' as *;
+
+@keyframes skeleton-pulse {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+.skeleton {
+  display: inline-block;
+  background: $color-skeleton-bg;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+
+  &--rect   { border-radius: $border-radius-sm; width: 100%; height: 16px; display: block; }
+  &--text   { border-radius: 4px; width: 100%; height: 14px; display: block; }
+  &--circle { border-radius: 50%; width: 36px; height: 36px; }
+}
+
+.skeleton-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+  width: 100%;
+}

@@ -1,0 +1,46 @@
+@use '../../theme/styles/tokens' as *;
+
+.horizontal-tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.horizontal-tabs__container {
+  display: flex;
+  gap: $tab-horizontal-gap;
+  border-bottom: 1px solid $color-tab-line;
+}
+
+.horizontal-tabs__tab {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: $tab-horizontal-padding-y $tab-horizontal-padding-x;
+  cursor: pointer;
+  position: relative;
+  transition: all $tab-indicator-transition;
+  outline: none;
+  font-family: $font-family-base;
+  font-size: $font-size-tab-main;
+  font-weight: $font-weight-tab-main;
+  line-height: $line-height-tab-main;
+  color: $color-tab-text-idle;
+
+  &:hover:not(.horizontal-tabs__tab--disabled) { opacity: 0.8; }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: -2px;
+  }
+
+  &--selected {
+    color: $color-tab-text-selected;
+    border-bottom: $tab-indicator-height solid $color-tab-text-selected;
+    padding-bottom: calc(#{$tab-horizontal-padding-y} - #{$tab-indicator-height});
+  }
+
+  &--disabled { cursor: not-allowed; opacity: 0.5; }
+}
+
+.horizontal-tabs__label { display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

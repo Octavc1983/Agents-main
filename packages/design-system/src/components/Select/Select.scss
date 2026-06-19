@@ -1,0 +1,101 @@
+@use '../../theme/styles/tokens' as *;
+
+.select-field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+  width: 100%;
+  position: relative;
+}
+
+.select-field__label {
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-input-label;
+}
+
+.select-field__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-2;
+  background: $color-input-bg;
+  border: 1px solid $color-input-border;
+  border-radius: $border-radius-sm;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  color: $color-input-text;
+  cursor: pointer;
+  transition: border-color $transition-fast;
+  text-align: left;
+
+  &--md { height: 32px; padding: 0 $spacing-2; }
+  &--sm { height: 26px; padding: 0 $spacing-2; }
+
+  &:hover:not(.select-field__trigger--disabled) { border-color: rgba($color-primary, 0.5); }
+  &--open, &:focus-visible { border-color: $color-input-border-focused; outline: none; }
+  &--error { border-color: $color-input-border-error !important; }
+  &--disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.select-field__value { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.select-field__value--placeholder { color: $color-input-placeholder; }
+.select-field__chevron { display: inline-flex; flex-shrink: 0; color: $color-nav-icon-idle; transition: transform $transition-fast; }
+
+.select-field__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: $color-select-dropdown-bg;
+  border: 1px solid $color-input-border;
+  border-radius: $border-radius-sm;
+  overflow: hidden;
+  box-shadow: $shadow-md;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.select-field__search {
+  display: flex;
+  align-items: center;
+  gap: $spacing-1;
+  padding: $spacing-2;
+  border-bottom: 1px solid $color-select-search-border;
+  color: $color-nav-icon-idle;
+}
+
+.select-field__search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: $font-size-sm;
+  font-family: $font-family-base;
+  color: $color-input-text;
+  &::placeholder { color: $color-input-placeholder; }
+}
+
+.select-field__option {
+  display: block;
+  width: 100%;
+  padding: $spacing-2 $spacing-3;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-size: $font-size-sm;
+  font-family: $font-family-base;
+  color: $color-select-item-text;
+  cursor: pointer;
+  transition: background $transition-fast;
+
+  &:hover:not(.select-field__option--disabled) { background: $color-select-item-hover; }
+  &--selected { background: $color-select-item-selected; color: $color-select-item-text-selected; }
+  &--disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.select-field__empty { padding: $spacing-3; text-align: center; font-size: $font-size-sm; color: $color-nav-text-idle; }
+
+.select-field__hint { font-size: $font-size-xs; color: $color-input-hint; &--error { color: $color-input-error; } }

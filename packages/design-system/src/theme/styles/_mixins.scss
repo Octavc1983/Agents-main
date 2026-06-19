@@ -1,0 +1,58 @@
+@use 'tokens' as *;
+
+// Focus ring
+@mixin focus-ring($color: $color-btn-secondary-border) {
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: 2px;
+  }
+}
+
+// Visually hidden (accessible)
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Truncate text
+@mixin truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// Input base
+@mixin input-base {
+  display: flex;
+  align-items: center;
+  background: $color-input-bg;
+  border: 1px solid $color-input-border;
+  border-radius: $border-radius-sm;
+  color: $color-input-text;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  transition: border-color $transition-fast, background $transition-fast;
+
+  &:hover:not(:disabled) {
+    border-color: rgba($color-primary, 0.5);
+  }
+
+  &:focus-within {
+    border-color: $color-input-border-focused;
+    background: $color-input-bg-focused;
+    outline: none;
+  }
+
+  &:has(input:disabled) {
+    background: $color-input-disabled-bg;
+    border-color: $color-input-border;
+    cursor: not-allowed;
+  }
+}

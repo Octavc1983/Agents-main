@@ -1,0 +1,20 @@
+@use '../../theme/styles/tokens' as *;
+
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-12 $spacing-6;
+  text-align: center;
+  gap: $spacing-4;
+  min-height: 300px;
+  background-color: rgba(242, 34, 103, 0.06);
+  border-radius: $border-radius-base;
+  border: 1px solid rgba(242, 34, 103, 0.3);
+}
+
+.error-state__icon { display: flex; align-items: center; justify-content: center; }
+.error-state__title { margin: 0; font-family: $font-family-base; font-size: $font-size-lg; font-weight: $font-weight-semibold; color: $color-status-error; }
+.error-state__message { margin: 0; font-size: $font-size-sm; color: $color-nav-text-idle; max-width: 400px; line-height: $line-height-normal; }
+.error-state__action { margin-top: $spacing-4; }

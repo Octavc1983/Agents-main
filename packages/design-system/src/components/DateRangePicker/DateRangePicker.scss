@@ -1,0 +1,108 @@
+@use '../../theme/styles/tokens' as *;
+
+.drp {
+  display: flex;
+  align-items: flex-start;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-base;
+  background: $color-background-darker;
+  overflow: hidden;
+  font-family: $font-family-button;
+}
+
+.drp__presets {
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+  border-right: 1px solid $color-divider-1;
+  padding: $spacing-2 0;
+  flex-shrink: 0;
+}
+
+.drp__preset {
+  height: 32px;
+  padding: 0 $spacing-3;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: $font-family-button;
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  text-align: left;
+  white-space: nowrap;
+  transition: background-color $transition-fast, color $transition-fast;
+  &:hover { color: $color-text-light; background: $color-btn-hover-overlay; }
+  &:focus-visible { outline: 2px solid $color-btn-primary-idle; outline-offset: -2px; }
+  &--active { background: $color-btn-primary-idle; color: $color-neutral-0; font-weight: $font-weight-semibold; }
+}
+
+.drp__calendars { display: flex; padding: $spacing-3; }
+
+.drp-month {
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  & + & { margin-left: $spacing-4; padding-left: $spacing-4; border-left: 1px solid $color-divider-1; }
+}
+
+.drp-month__header { display: flex; align-items: center; justify-content: space-between; padding: 0 $spacing-1; }
+.drp-month__title { display: flex; gap: $spacing-1; font-size: $font-size-xs; font-weight: $font-weight-semibold; }
+.drp-month__title-name { color: $color-text-light; }
+.drp-month__title-year { color: $color-nav-text-idle; }
+
+.drp-month__nav-btn {
+  background: none; border: none; cursor: pointer; color: $color-nav-icon-idle; display: flex; align-items: center; padding: 2px; border-radius: $border-radius-sm; transition: color $transition-fast;
+  &:hover { color: $color-text-light; }
+  &:focus-visible { outline: 2px solid $color-btn-primary-idle; }
+}
+
+.drp-month__days-header { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.drp-month__day-label { display: flex; align-items: center; justify-content: center; height: 24px; font-size: $font-size-xs; color: $color-nav-icon-idle; font-weight: $font-weight-medium; }
+.drp-month__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+
+.drp-day {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; font-size: $font-size-xs; color: $color-nav-text-idle;
+  background: none; border: none; border-radius: $border-radius-full; cursor: pointer;
+  transition: background-color $transition-fast, color $transition-fast;
+  &:hover:not(.drp-day--selected):not(.drp-day--outside) { background: $color-btn-hover-overlay; color: $color-text-light; }
+  &:focus-visible { outline: 2px solid $color-btn-primary-idle; outline-offset: 2px; }
+  &--outside { color: rgba($color-nav-text-idle, 0.3); cursor: default; pointer-events: none; }
+  &--today:not(.drp-day--selected) { border: 1px solid $color-btn-secondary-border; color: $color-btn-secondary-text; }
+  &--in-range { background: $color-btn-hover-overlay; border-radius: 0; color: $color-text-light; }
+  &--selected { background: $color-btn-primary-idle; color: $color-neutral-0; border-radius: $border-radius-full; font-weight: $font-weight-semibold; z-index: 1; }
+}
+
+.drp-time-scroll {
+  display: flex; gap: $spacing-1; border: 1px solid $color-divider-1; border-radius: $border-radius-base;
+  overflow: hidden; background: $color-background-darker; max-height: 140px; overflow-y: auto; margin-top: $spacing-2;
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: $color-divider-1; border-radius: $border-radius-full; }
+}
+.drp-time-scroll__col { display: flex; flex-direction: column; flex: 1; }
+.drp-time-scroll__item {
+  height: 28px; display: flex; align-items: center; justify-content: center; font-size: $font-size-xs; color: $color-nav-text-idle; background: none; border: none; cursor: pointer; font-family: $font-family-button; transition: background-color $transition-fast, color $transition-fast;
+  &:hover { background: $color-btn-hover-overlay; color: $color-text-light; }
+  &--selected { background: $color-btn-primary-idle; color: $color-neutral-0; font-weight: $font-weight-semibold; }
+}
+
+.drp-dt-row { display: flex; align-items: center; gap: $spacing-2; margin-bottom: $spacing-2; }
+.drp-dt-row__label { font-size: $font-size-xs; color: $color-nav-text-idle; width: 32px; flex-shrink: 0; }
+.drp-dt-row__fields { display: flex; gap: $spacing-2; flex: 1; }
+.drp-dt-row__field {
+  flex: 1; display: flex; align-items: center; justify-content: space-between; height: 32px; padding: 0 $spacing-2;
+  background: $color-background-dark; border: 1px solid $color-divider-1; border-radius: $border-radius-sm; cursor: pointer; color: $color-nav-text-idle; font-family: $font-family-button; font-size: $font-size-xs; gap: $spacing-2; transition: border-color $transition-fast;
+  &:hover { border-color: $color-btn-secondary-border; }
+  &:focus-visible { outline: 2px solid $color-btn-primary-idle; outline-offset: 2px; }
+}
+.drp-dt-row__field-text { flex: 1; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: $color-nav-text-idle; }
+
+.drp-dialog-overlay { position: fixed; inset: 0; z-index: 300; display: flex; align-items: center; justify-content: center; }
+.drp-dialog { background: $color-background-darker; border: 1px solid $color-divider-1; border-radius: $border-radius-base; box-shadow: $shadow-lg; width: 360px; display: flex; flex-direction: column; overflow: hidden; }
+.drp-dialog__header { display: flex; align-items: center; justify-content: space-between; padding: $spacing-4 $spacing-4 $spacing-3; border-bottom: 1px solid $color-divider-1; }
+.drp-dialog__title { font-size: $font-size-sm; font-weight: $font-weight-semibold; color: $color-text-light; font-family: $font-family-button; }
+.drp-dialog__close { background: none; border: none; cursor: pointer; color: $color-nav-icon-idle; display: flex; align-items: center; padding: 2px; border-radius: $border-radius-sm; transition: color $transition-fast; &:hover { color: $color-text-light; } &:focus-visible { outline: 2px solid $color-btn-primary-idle; } }
+.drp-dialog__body { padding: $spacing-4; display: flex; flex-direction: column; }
+.drp-dialog__footer { display: flex; justify-content: flex-end; gap: $spacing-2; padding: $spacing-3 $spacing-4; border-top: 1px solid $color-divider-1; }

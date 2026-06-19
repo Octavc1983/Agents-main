@@ -1,0 +1,57 @@
+@use '../../theme/styles/tokens' as *;
+
+.action-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background-color: $color-background-darker;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-md;
+  padding: $spacing-1;
+  min-width: 160px;
+  overflow: hidden;
+}
+
+.action-menu__item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  width: 100%;
+  height: 32px;
+  padding: 0 $spacing-2;
+  background: transparent;
+  border: none;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  font-family: $font-family-button;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+  color: $color-nav-text-idle;
+  text-align: left;
+  transition: background-color $transition-fast, color $transition-fast;
+
+  &:hover:not(.action-menu__item--disabled):not(.action-menu__item--selected) {
+    background-color: $color-btn-hover-overlay;
+    color: $color-text-light;
+  }
+
+  &:focus-visible { outline: 2px solid $color-btn-primary-idle; outline-offset: -2px; }
+
+  &--selected { background-color: $color-btn-primary-idle; color: $color-neutral-0; }
+  &--selected:hover { background-color: $color-btn-primary-hover; }
+  &--disabled { pointer-events: none; color: $color-btn-disabled-text; }
+}
+
+.action-menu__item-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: $color-nav-icon-idle;
+  transition: color $transition-fast;
+  .action-menu__item:hover & { color: $color-text-light; }
+}
+
+.action-menu__item-label { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

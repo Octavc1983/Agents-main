@@ -1,0 +1,43 @@
+@use '../../theme/styles/tokens' as *;
+
+.icard {
+  border-radius: $border-radius-lg;
+  border: 2px solid $color-card-stroke;
+  background: $color-background-dark;
+  box-shadow: 0 2px 10px 0 rgba(0,0,0,0.15);
+  backdrop-filter: blur(7.18px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-4;
+  padding: $spacing-4;
+  transition: border-color $transition-fast, background-color $transition-fast, box-shadow $transition-fast;
+
+  &--fixed { width: 180px; height: 150px; }
+  &--auto { width: auto; height: auto; }
+
+  &--hover, &--selected {
+    border-color: $color-card-stroke-hover-dark;
+    background: $color-background-darker;
+    box-shadow: 0 0 25px 0 $color-card-glow-dark;
+  }
+
+  &--interactive {
+    cursor: pointer;
+    &:hover, &:focus-visible {
+      border-color: $color-card-stroke-hover-dark;
+      background: $color-background-darker;
+      box-shadow: 0 0 25px 0 $color-card-glow-dark;
+      outline: none;
+    }
+  }
+
+  &--bg-gradient-light-to-dark { background: linear-gradient(113deg, $color-background-dark 3.51%, $color-background-darkest 111.71%); }
+  &--bg-gradient-dark-to-light { background: linear-gradient(293deg, $color-background-dark 3.51%, $color-background-darkest 111.71%); }
+
+  &__header { display: flex; flex-direction: column; gap: 2px; width: 100%; }
+  &__title { font-family: $font-family-button; font-size: $font-size-sm; font-weight: $font-weight-semibold; color: $color-text-light; }
+  &__subtitle { font-family: $font-family-button; font-size: $font-size-xs; color: $color-nav-text-idle; }
+  &__content { width: 100%; }
+}

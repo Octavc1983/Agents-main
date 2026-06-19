@@ -30,7 +30,7 @@ import {
   HealthDiagnosticsNavIcon,
   DeploymentNavIcon,
   LicenseUsageNavIcon,
-} from '@/icons/navigation';
+} from '@cyberark/design-system/icons';
 
 export type SpaceId =
   | 'commandCenter'

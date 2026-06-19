@@ -1,0 +1,25 @@
+@use '../../theme/styles/tokens' as *;
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: $font-family-button;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-sm;
+  line-height: 19px;
+  color: $color-btn-link-text;
+  text-decoration: underline;
+  transition: color $transition-fast;
+  user-select: none;
+  &:hover:not(.text-link--disabled) { color: $color-btn-secondary-border; }
+  &:focus-visible { outline: 2px solid $color-btn-secondary-border; outline-offset: 2px; border-radius: 2px; }
+}
+
+.text-link__icon { display: inline-flex; align-items: center; width: 16px; height: 16px; flex-shrink: 0; }
+.text-link__label { min-width: 0; }
+.text-link--disabled { pointer-events: none; color: $color-btn-link-disabled; }

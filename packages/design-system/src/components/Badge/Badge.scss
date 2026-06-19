@@ -1,0 +1,56 @@
+@use '../../theme/styles/tokens' as *;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  padding: 0 $spacing-2;
+  border-radius: $border-radius-pill;
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  line-height: 1;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.badge__icon { display: inline-flex; align-items: center; flex-shrink: 0; }
+.badge__label { line-height: 1; }
+
+// ── Fill variant ──────────────────────────────────────────
+.badge--fill {
+  &.badge--critical { background: $color-severity-critical; color: #fff; }
+  &.badge--high     { background: $color-severity-high;     color: #fff; }
+  &.badge--medium   { background: $color-severity-medium;   color: #fff; }
+  &.badge--low      { background: $color-severity-low;      color: #fff; }
+  &.badge--info     { background: $color-primary;           color: #fff; }
+  &.badge--success  { background: $color-status-success;    color: #fff; }
+  &.badge--warning  { background: $color-status-warning;    color: #fff; }
+  &.badge--neutral  { background: rgba(255,255,255,0.08);   color: $color-text-light; }
+}
+
+// ── Stroke variant ────────────────────────────────────────
+.badge--stroke {
+  background: transparent;
+  &.badge--critical { border-color: $color-severity-critical; color: $color-severity-critical; }
+  &.badge--high     { border-color: $color-severity-high;     color: $color-severity-high; }
+  &.badge--medium   { border-color: $color-severity-medium;   color: $color-severity-medium; }
+  &.badge--low      { border-color: $color-severity-low;      color: $color-severity-low; }
+  &.badge--info     { border-color: $color-primary;           color: $color-primary; }
+  &.badge--success  { border-color: $color-status-success;    color: $color-status-success; }
+  &.badge--warning  { border-color: $color-status-warning;    color: $color-status-warning; }
+  &.badge--neutral  { border-color: rgba(255,255,255,0.2);    color: $color-text-light; }
+}
+
+// ── Subtle variant ────────────────────────────────────────
+.badge--subtle {
+  &.badge--critical { background: rgba($color-severity-critical, 0.15); color: $color-severity-critical; }
+  &.badge--high     { background: rgba($color-severity-high, 0.15);     color: $color-severity-high; }
+  &.badge--medium   { background: rgba($color-severity-medium, 0.15);   color: $color-severity-medium; }
+  &.badge--low      { background: rgba($color-severity-low, 0.15);      color: $color-severity-low; }
+  &.badge--info     { background: rgba($color-primary, 0.15);           color: $color-primary; }
+  &.badge--success  { background: rgba($color-status-success, 0.15);    color: $color-status-success; }
+  &.badge--warning  { background: rgba($color-status-warning, 0.15);    color: $color-status-warning; }
+  &.badge--neutral  { background: rgba(255,255,255,0.06);               color: $color-nav-text-idle; }
+}

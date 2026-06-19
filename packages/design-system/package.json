@@ -1,0 +1,31 @@
+{
+  "name": "@cyberark/design-system",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    },
+    "./theme": {
+      "import": "./src/theme/index.ts",
+      "types": "./src/theme/index.ts"
+    },
+    "./icons": {
+      "import": "./src/icons/index.ts",
+      "types": "./src/icons/index.ts"
+    },
+    "./styles": "./src/theme/styles/index.scss",
+    "./types": {
+      "import": "./src/types/index.ts",
+      "types": "./src/types/index.ts"
+    }
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "peerDependencies": {
+    "react": ">=19",
+    "react-dom": ">=19"
+  }
+}

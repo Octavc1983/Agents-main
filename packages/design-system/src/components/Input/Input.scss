@@ -1,0 +1,92 @@
+@use '../../theme/styles/tokens' as *;
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+  width: 100%;
+}
+
+.input-field__label {
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-input-label;
+  line-height: $line-height-normal;
+}
+
+.input-field__wrap {
+  display: flex;
+  align-items: center;
+  background: $color-input-bg;
+  border: 1px solid $color-input-border;
+  border-radius: $border-radius-sm;
+  transition: border-color $transition-fast, background $transition-fast;
+  position: relative;
+
+  &--md { height: 32px; padding: 0 $spacing-2; }
+  &--sm { height: 26px; padding: 0 $spacing-2; }
+
+  &:hover:not(.input-field__wrap--disabled) { border-color: rgba($color-primary, 0.5); }
+
+  &:focus-within {
+    border-color: $color-input-border-focused;
+    background: $color-input-bg-focused;
+  }
+
+  &--error { border-color: $color-input-border-error !important; }
+
+  &--disabled {
+    background: $color-input-disabled-bg;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.input-field__input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  color: $color-input-text;
+  line-height: $line-height-normal;
+
+  &::placeholder { color: $color-input-placeholder; }
+  &:disabled { cursor: not-allowed; color: $color-input-disabled-text; }
+
+  // Hide browser search clear button
+  &[type="search"]::-webkit-search-cancel-button { display: none; }
+}
+
+.input-field__icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: $color-nav-icon-idle;
+
+  &--left { margin-right: $spacing-1; }
+  &--right { margin-left: $spacing-1; }
+}
+
+.input-field__hint {
+  font-size: $font-size-xs;
+  color: $color-input-hint;
+  line-height: $line-height-normal;
+  &--error { color: $color-input-error; }
+}
+
+.input-field__clear-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: $color-nav-icon-idle;
+  border-radius: 2px;
+  &:hover { color: $color-text-light; }
+}

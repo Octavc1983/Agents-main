@@ -1,0 +1,63 @@
+@use '../../theme/styles/tokens' as *;
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  height: 22px;
+  padding: 0 $spacing-2;
+  background: $color-chip-bg;
+  border: 1px solid $color-chip-border;
+  border-radius: $border-radius-pill;
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $color-chip-text;
+  white-space: nowrap;
+  transition: background $transition-fast, border-color $transition-fast;
+
+  &:hover:not(.chip--disabled) {
+    background: $color-chip-bg-hover;
+    border-color: $color-chip-border-hover;
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &--overflow {
+    background: transparent;
+    border-color: $color-chip-border;
+    color: $color-nav-text-idle;
+
+    &:hover {
+      background: $color-chip-bg-hover;
+    }
+  }
+}
+
+.chip__label {
+  line-height: 1;
+  max-width: 160px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.chip__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: $color-chip-remove;
+  line-height: 1;
+  margin-left: 1px;
+  border-radius: 2px;
+
+  &:hover { color: $color-text-light; }
+  &:disabled { cursor: not-allowed; }
+}

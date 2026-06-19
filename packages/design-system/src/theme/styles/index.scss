@@ -1,0 +1,84 @@
+// @cyberark/design-system/styles — global entry point
+// Import this once in your app root: import '@cyberark/design-system/styles';
+
+@use 'tokens' as *;
+
+:root {
+  // ── Primary ────────────────────────────────────────────────────────────────
+  --color-primary:        #{$color-primary};
+  --color-primary-dark:   #{$color-primary-dark};
+  --color-primary-darker: #{$color-primary-darker};
+  --color-primary-light:  #{$color-primary-light};
+
+  // ── Background ─────────────────────────────────────────────────────────────
+  --color-page-background:     #{$color-page-background};
+  --color-surface-idle:        #{$color-surface-idle};
+  --color-background-dark:     #{$color-background-dark};
+  --color-background-darker:   #{$color-background-darker};
+  --color-background-darkest:  #{$color-background-darkest};
+
+  // ── Text ───────────────────────────────────────────────────────────────────
+  --color-text-light:  #{$color-text-light};
+  --color-text-muted:  #{$color-text-muted};
+  --color-border-dark: #{$color-border-dark};
+  --color-divider-1:   #{$color-divider-1};
+
+  // ── Nav ────────────────────────────────────────────────────────────────────
+  --color-nav-text-idle:           #{$color-nav-text-idle};
+  --color-nav-text-selected:       #{$color-nav-text-selected};
+  --color-nav-bg-selected:         #{$color-nav-bg-selected};
+  --color-nav-side-line-selected:  #{$color-nav-side-line-selected};
+  --color-nav-icon-idle:           #{$color-nav-icon-idle};
+  --color-nav-icon-selected:       #{$color-nav-icon-selected};
+
+  // ── Status ─────────────────────────────────────────────────────────────────
+  --color-status-success: #{$color-status-success};
+  --color-status-warning: #{$color-status-warning};
+  --color-status-error:   #{$color-status-error};
+  --color-status-idle:    #{$color-status-idle};
+
+  // ── Spacing ────────────────────────────────────────────────────────────────
+  --spacing-0:  #{$spacing-0};
+  --spacing-1:  #{$spacing-1};
+  --spacing-2:  #{$spacing-2};
+  --spacing-3:  #{$spacing-3};
+  --spacing-4:  #{$spacing-4};
+  --spacing-5:  #{$spacing-5};
+  --spacing-6:  #{$spacing-6};
+  --spacing-7:  #{$spacing-7};
+  --spacing-8:  #{$spacing-8};
+  --spacing-10: #{$spacing-10};
+  --spacing-12: #{$spacing-12};
+  --spacing-16: #{$spacing-16};
+  --spacing-20: #{$spacing-20};
+
+  // ── Border Radius ──────────────────────────────────────────────────────────
+  --border-radius-none: #{$border-radius-none};
+  --border-radius-sm:   #{$border-radius-sm};
+  --border-radius-base: #{$border-radius-base};
+  --border-radius-md:   #{$border-radius-md};
+  --border-radius-lg:   #{$border-radius-lg};
+  --border-radius-full: #{$border-radius-full};
+
+  // ── Shadows ────────────────────────────────────────────────────────────────
+  --shadow-xs:   #{$shadow-xs};
+  --shadow-sm:   #{$shadow-sm};
+  --shadow-base: #{$shadow-base};
+  --shadow-md:   #{$shadow-md};
+  --shadow-lg:   #{$shadow-lg};
+
+  // ── Transitions ────────────────────────────────────────────────────────────
+  --transition-fast: #{$transition-fast};
+  --transition-base: #{$transition-base};
+  --transition-slow: #{$transition-slow};
+
+  // ── Font sizes ─────────────────────────────────────────────────────────────
+  --font-size-xs:   #{$font-size-xs};
+  --font-size-sm:   #{$font-size-sm};
+  --font-size-base: #{$font-size-base};
+  --font-size-lg:   #{$font-size-lg};
+  --font-size-xl:   #{$font-size-xl};
+  --font-size-2xl:  #{$font-size-2xl};
+  --font-size-3xl:  #{$font-size-3xl};
+  --font-size-4xl:  #{$font-size-4xl};
+}
