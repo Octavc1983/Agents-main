@@ -24,7 +24,7 @@
 - **After**: `1px solid $color-border-dark` (#283f67 IDIRA dark blue border)
 
 ### Brand / logo area (new)
-- Added `sidebar__brand` block at top with CyberArkLogoIcon SVG + "CyberArk / Identity Security" text
+- Added `sidebar__brand` block at top with IDIRALogoIcon SVG + "IDIRA / Identity Security" text
 - Border-bottom: `$color-border-dark`
 
 ### Nav item idle state

@@ -1,2 +1,2 @@
-// Re-export shim — ThemeProvider has moved to @cyberark/design-system
-export { ThemeProvider, useThemeMode, type ThemeMode, type ThemeContextValue } from '@cyberark/design-system/theme';
+// Re-export shim — ThemeProvider has moved to @idira/design-system
+export { ThemeProvider, useThemeMode, type ThemeMode, type ThemeContextValue } from '@idira/design-system/theme';

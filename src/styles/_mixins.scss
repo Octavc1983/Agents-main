@@ -1,7 +1,7 @@
 // SCSS Mixins for common patterns
 // Note: These mixins support rapid prototyping and design system alignment
 
-@use './variables' as *;
+@use 'tokens' as *;
 
 // Responsive Breakpoints
 @mixin respond-to($breakpoint) {

@@ -54,3 +54,37 @@ Use this agent after Prompt Optimization, Component Mapping, and Page Structure 
 
 ### Next Steps
 ```
+
+---
+
+## Modal Routing Rule
+
+Before building or opening a modal, classify its purpose:
+
+- User input, creation, editing, or configuration → `FormDialogService`
+- Information, warning, confirmation, error, success, permission, or destructive action → `SystemNoticeService`
+
+When classification is unclear, ask one focused question only:
+> Is this modal for user input and editing, or for a system message, warning, confirmation, or status?
+
+**Never create a one-off modal implementation when an approved Modal Service already exists.**
+
+### Architecture Boundary
+
+| Layer | Location | Responsibility |
+|---|---|---|
+| DS Modal primitive | `packages/design-system/src/components/Modal/` | Visual shell, backdrop, a11y, focus trap |
+| ModalProvider | `src/app/services/modal/ModalProvider.tsx` | Renders active modal from service |
+| FormDialogService | `src/app/services/modal/FormDialogService.ts` | Creation, editing, forms, configuration |
+| SystemNoticeService | `src/app/services/modal/SystemNoticeService.ts` | Information, warnings, confirmations, status |
+
+### Import Rule
+
+```ts
+// ✅ Correct
+import { Modal } from '@idira/design-system';
+import { formDialogService, systemNoticeService } from '@/app/services/modal';
+
+// ❌ Never import directly from package internals
+import { Modal } from 'packages/design-system/src/components/Modal/Modal';
+```

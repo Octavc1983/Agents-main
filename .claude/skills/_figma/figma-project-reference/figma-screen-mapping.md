@@ -155,7 +155,7 @@ Prototype state switcher visible in header (top-right) — buttons: default / lo
 
 ### Icon gaps
 - All icons are SVG recreations — not exported from Figma; visual accuracy is approximate
-- CyberArk logo SVG in sidebar brand area is a prototype placeholder
+- IDIRA logo SVG in sidebar brand area is a prototype placeholder
 
 ### Component state gaps
 - Running progress animation is CSS `animation: spin` — not confirmed from Figma
@@ -171,7 +171,7 @@ Prototype state switcher visible in header (top-right) — buttons: default / lo
 1. Frame node 592-25414 in "Scans-UX-Production" is a Scans list / dashboard screen (common pattern in security products)
 2. Sidebar design matches IDIRA DS dark navy theme already present in `_colors.scss`
 3. Table layout with findings summary is standard for a Scans dashboard
-4. 5 scan types (Vulnerability, Compliance, Configuration, Network, Identity) are reasonable CyberArk domain types
+4. 5 scan types (Vulnerability, Compliance, Configuration, Network, Identity) are reasonable IDIRA domain types
 5. Progress bar shown inline for running scans
 6. Stats row at top is a standard security dashboard pattern
 7. Sidebar width of 240px is consistent with IDIRA DS component dimensions

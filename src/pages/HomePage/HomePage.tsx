@@ -5,8 +5,8 @@
 
 import type React from 'react';
 import { Link } from 'react-router-dom';
-import { Card } from '@cyberark/design-system';
-import { Button } from '@cyberark/design-system';
+import { Card } from '@idira/design-system';
+import { Button } from '@idira/design-system';
 import './HomePage.scss';
 
 export const HomePage: React.FC = () => {

@@ -1,12 +1,12 @@
 # Design System Package Registry
 
-Documents the `@cyberark/design-system` external package structure, ownership boundaries, import rules, and what stays in `src/`.
+Documents the `@idira/design-system` external package structure, ownership boundaries, import rules, and what stays in `src/`.
 
 ---
 
 ## Package Overview
 
-All generic UI components, tokens, icons, and theme infrastructure have been extracted from `src/` into the `@cyberark/design-system` package. The source lives at `packages/design-system/` in the monorepo. Consumers always import from the published package name — never from the source path.
+All generic UI components, tokens, icons, and theme infrastructure have been extracted from `src/` into the `@idira/design-system` package. The source lives at `packages/design-system/` in the monorepo. Consumers always import from the published package name — never from the source path.
 
 ---
 
@@ -14,11 +14,11 @@ All generic UI components, tokens, icons, and theme infrastructure have been ext
 
 | Entry Point | Contents | Usage |
 |---|---|---|
-| `@cyberark/design-system` | All UI components | `import { Button, Card, Chip, ... } from '@cyberark/design-system'` |
-| `@cyberark/design-system/theme` | ThemeProvider, useThemeMode | `import { ThemeProvider, useThemeMode } from '@cyberark/design-system/theme'` |
-| `@cyberark/design-system/icons` | All SVG icon components (NavIcons, SpaceIcons) | `import { SomeIcon } from '@cyberark/design-system/icons'` |
-| `@cyberark/design-system/styles` | Global CSS custom properties (design tokens) | `import '@cyberark/design-system/styles'` — **once only, in app root** |
-| `@cyberark/design-system/types` | Shared component and theme TypeScript types | `import type { ButtonProps, ... } from '@cyberark/design-system/types'` |
+| `@idira/design-system` | All UI components | `import { Button, Card, Chip, ... } from '@idira/design-system'` |
+| `@idira/design-system/theme` | ThemeProvider, useThemeMode | `import { ThemeProvider, useThemeMode } from '@idira/design-system/theme'` |
+| `@idira/design-system/icons` | All SVG icon components (NavIcons, SpaceIcons) | `import { SomeIcon } from '@idira/design-system/icons'` |
+| `@idira/design-system/styles` | Global CSS custom properties (design tokens) | `import '@idira/design-system/styles'` — **once only, in app root** |
+| `@idira/design-system/types` | Shared component and theme TypeScript types | `import type { ButtonProps, ... } from '@idira/design-system/types'` |
 
 ---
 
@@ -26,30 +26,30 @@ All generic UI components, tokens, icons, and theme infrastructure have been ext
 
 | Component | Entry Point | Notes |
 |---|---|---|
-| Button | `@cyberark/design-system` | main / secondary / text variants |
-| FilterButton | `@cyberark/design-system` | |
-| IconButton | `@cyberark/design-system` | |
-| SplitButton | `@cyberark/design-system` | |
-| Card | `@cyberark/design-system` | icard BEM, dark/light/gradient |
-| Input | `@cyberark/design-system` | |
-| Select | `@cyberark/design-system` | |
-| Checkbox | `@cyberark/design-system` | |
-| Chip | `@cyberark/design-system` | |
-| Badge | `@cyberark/design-system` | |
-| Skeleton | `@cyberark/design-system` | use for loading states |
-| Tabs | `@cyberark/design-system` | |
-| Accordion | `@cyberark/design-system` | |
-| ActionMenu | `@cyberark/design-system` | |
-| CopyButton | `@cyberark/design-system` | |
-| SelectionBar | `@cyberark/design-system` | bulk action toolbar |
-| DateRangePicker | `@cyberark/design-system` | |
-| EmptyState | `@cyberark/design-system` | |
-| ErrorState | `@cyberark/design-system` | |
-| LoadingState | `@cyberark/design-system` | |
-| ThemeProvider | `@cyberark/design-system/theme` | Wrap app root once |
-| useThemeMode | `@cyberark/design-system/theme` | Hook for reading/setting theme mode |
-| NavIcons | `@cyberark/design-system/icons` | Inline SVG React components |
-| SpaceIcons | `@cyberark/design-system/icons` | Inline SVG React components |
+| Button | `@idira/design-system` | main / secondary / text variants |
+| FilterButton | `@idira/design-system` | |
+| IconButton | `@idira/design-system` | |
+| SplitButton | `@idira/design-system` | |
+| Card | `@idira/design-system` | icard BEM, dark/light/gradient |
+| Input | `@idira/design-system` | |
+| Select | `@idira/design-system` | |
+| Checkbox | `@idira/design-system` | |
+| Chip | `@idira/design-system` | |
+| Badge | `@idira/design-system` | |
+| Skeleton | `@idira/design-system` | use for loading states |
+| Tabs | `@idira/design-system` | |
+| Accordion | `@idira/design-system` | |
+| ActionMenu | `@idira/design-system` | |
+| CopyButton | `@idira/design-system` | |
+| SelectionBar | `@idira/design-system` | bulk action toolbar |
+| DateRangePicker | `@idira/design-system` | |
+| EmptyState | `@idira/design-system` | |
+| ErrorState | `@idira/design-system` | |
+| LoadingState | `@idira/design-system` | |
+| ThemeProvider | `@idira/design-system/theme` | Wrap app root once |
+| useThemeMode | `@idira/design-system/theme` | Hook for reading/setting theme mode |
+| NavIcons | `@idira/design-system/icons` | Inline SVG React components |
+| SpaceIcons | `@idira/design-system/icons` | Inline SVG React components |
 
 ---
 
@@ -79,16 +79,16 @@ The following are application-layer concerns and must NOT be moved to the DS pac
 
 ```ts
 // DS components
-import { Button, Card, Chip, Skeleton } from '@cyberark/design-system';
+import { Button, Card, Chip, Skeleton } from '@idira/design-system';
 
 // DS theme
-import { ThemeProvider, useThemeMode } from '@cyberark/design-system/theme';
+import { ThemeProvider, useThemeMode } from '@idira/design-system/theme';
 
 // DS icons (SVG only)
-import { SomeNavIcon } from '@cyberark/design-system/icons';
+import { SomeNavIcon } from '@idira/design-system/icons';
 
 // DS shared types
-import type { ButtonProps } from '@cyberark/design-system/types';
+import type { ButtonProps } from '@idira/design-system/types';
 
 // Domain types (project-level, stays in src/)
 import type { Scan, ScanStatus } from '../../types/prototype.types';
@@ -111,7 +111,7 @@ import { Button } from '../../../packages/design-system/src/components/Button';
 
 ## Token / Styling Rules
 
-- Global CSS custom properties (design tokens) are injected once via `import '@cyberark/design-system/styles'` in the app root (`src/app/App.tsx` or equivalent).
+- Global CSS custom properties (design tokens) are injected once via `import '@idira/design-system/styles'` in the app root (`src/app/App.tsx` or equivalent).
 - All SCSS in `src/` must reference CSS custom property variables (e.g. `var(--color-primary)`) or DS-defined SCSS token variables.
 - Do not hardcode hex colors, spacing, radius, shadows, or typography values.
 - Do not create new SCSS tokens in `src/` unless explicitly approved and there is no DS equivalent.
@@ -121,7 +121,7 @@ import { Button } from '../../../packages/design-system/src/components/Button';
 ## Icon Rules
 
 - SVG icons only. No icon libraries (Heroicons, FontAwesome, etc.), no PNG/JPG, no emoji, no icon fonts.
-- All icons must be imported from `@cyberark/design-system/icons`.
+- All icons must be imported from `@idira/design-system/icons`.
 - Do not add new icons directly to `src/assets/icons/` — they belong in `packages/design-system/`.
 
 ---

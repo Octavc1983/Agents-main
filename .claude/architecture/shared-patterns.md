@@ -10,7 +10,7 @@ Patterns identified across pages that are candidates for extraction but not yet 
 - ScansPage (status filter, provider filter, search)
 
 ### Pattern
-Search input + status filter + cloud provider filter + active filter chips + count display + clear-all action. Uses `Input`, `Select`, `Chip`, `FilterButton` imported from `@cyberark/design-system`.
+Search input + status filter + cloud provider filter + active filter chips + count display + clear-all action. Uses `Input`, `Select`, `Chip`, `FilterButton` imported from `@idira/design-system`.
 
 ### Extraction Readiness
 Not yet — only one consumer. Revisit when a second filter-based page is created.
@@ -26,7 +26,7 @@ Level 2 — Shared Feature Component candidate
 - ScansPage (scan status: completed / running / failed / pending / stopped)
 
 ### Pattern
-Chip with color-coded background and optional icon based on status enum value. Uses `Chip` imported from `@cyberark/design-system`.
+Chip with color-coded background and optional icon based on status enum value. Uses `Chip` imported from `@idira/design-system`.
 
 ### Extraction Readiness
 Candidate. Need to verify other pages use similar status chips before extracting.

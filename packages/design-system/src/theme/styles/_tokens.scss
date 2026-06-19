@@ -1,6 +1,6 @@
 // ─── IDIRA Design System — SCSS Tokens ───────────────────────────────────────
 // Single source of truth for all design tokens.
-// Application SCSS must use: @use '@cyberark/design-system/styles/tokens' as *;
+// Application SCSS must use: @use '@idira/design-system/styles/tokens' as *;
 
 // ── Colors ───────────────────────────────────────────────────────────────────
 $color-primary:          #7a80ff;
@@ -240,6 +240,9 @@ $border-radius-pill: 100px;
 $border-radius-full: 9999px;
 
 $tab-border-radius: 4px;
+
+// ── Overlay ───────────────────────────────────────────────────────────────────
+$color-overlay-backdrop: rgba(0, 0, 0, 0.30);
 
 // ── Shadows ───────────────────────────────────────────────────────────────────
 $shadow-xs:   0 1px 2px 0 rgba(0,0,0,0.05);

@@ -15,8 +15,8 @@
  */
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { Button, LoadingState, EmptyState, ErrorState } from '@cyberark/design-system';
-import { FilterIcon, SearchIcon, CloseIcon, RefreshIcon } from '@cyberark/design-system/icons';
+import { Button, LoadingState, EmptyState, ErrorState } from '@idira/design-system';
+import { FilterIcon, SearchIcon, CloseIcon, RefreshIcon } from '@idira/design-system/icons';
 import type {
   TableFiltersTemplateProps,
   TableFilterGroup,

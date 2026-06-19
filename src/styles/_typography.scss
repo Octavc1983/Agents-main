@@ -1,7 +1,7 @@
 // Typography Scale Utilities
 // Provides predefined typography styles for consistent text styling
 
-@use './variables' as *;
+@use 'tokens' as *;
 @use './mixins' as *;
 
 // Heading Styles

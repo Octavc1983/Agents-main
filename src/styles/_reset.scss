@@ -1,7 +1,7 @@
 // CSS Reset
 // Normalize and reset default browser styles
 
-@use './variables' as *;
+@use 'tokens' as *;
 @use './mixins' as *;
 
 *,

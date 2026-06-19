@@ -1,7 +1,7 @@
 // Global Styles
 // Import all SCSS partials and define global rules
 
-@use './variables' as *;
+@use 'tokens' as *;
 @use './mixins' as *;
 @use './reset';
 @use './typography';

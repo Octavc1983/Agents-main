@@ -1,8 +1,8 @@
 // TableFiltersTemplate styles
 // Page Composition Template — not a DS component
-// Tokens: src/styles/_variables.scss, src/design-system/tokens/_colors.scss
+// Tokens: @idira/design-system/styles/tokens
 
-@use '../../styles/variables' as *;
+@use 'tokens' as *;
 @use '../../styles/mixins' as *;
 
 // ── Page shell ────────────────────────────────────────────────────────────────

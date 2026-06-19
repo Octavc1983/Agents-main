@@ -24,11 +24,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@cyberark/design-system": ["./packages/design-system/src/index.ts"],
-      "@cyberark/design-system/theme": ["./packages/design-system/src/theme/index.ts"],
-      "@cyberark/design-system/icons": ["./packages/design-system/src/icons/index.ts"],
-      "@cyberark/design-system/styles": ["./packages/design-system/src/theme/styles/index.scss"],
-      "@cyberark/design-system/types": ["./packages/design-system/src/types/index.ts"]
+      "@idira/design-system": ["./packages/design-system/src/index.ts"],
+      "@idira/design-system/theme": ["./packages/design-system/src/theme/index.ts"],
+      "@idira/design-system/icons": ["./packages/design-system/src/icons/index.ts"],
+      "@idira/design-system/styles": ["./packages/design-system/src/theme/styles/index.scss"],
+      "@idira/design-system/types": ["./packages/design-system/src/types/index.ts"]
     }
   },
   "include": ["src", "packages/design-system/src"]

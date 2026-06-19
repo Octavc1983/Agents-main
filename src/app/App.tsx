@@ -6,12 +6,15 @@
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
 import { ThemeProvider } from '../providers/ThemeProvider';
+import { ModalProvider } from './services/modal';
 import '../styles/globals.scss';
 
 function App() {
   return (
     <ThemeProvider>
-      <RouterProvider router={router} />
+      <ModalProvider>
+        <RouterProvider router={router} />
+      </ModalProvider>
     </ThemeProvider>
   );
 }

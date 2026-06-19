@@ -12,6 +12,7 @@ export * from './components/EmptyState';
 export * from './components/ErrorState';
 export * from './components/Input';
 export * from './components/LoadingState';
+export * from './components/Modal';
 export * from './components/Select';
 export * from './components/SelectionBar';
 export * from './components/Skeleton';
