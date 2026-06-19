@@ -1,5 +1,6 @@
 // ── Components ────────────────────────────────────────────────────────────────
 export * from './components/Accordion';
+export * from './components/Alert';
 export * from './components/ActionMenu';
 export * from './components/Badge';
 export * from './components/Button';
@@ -13,6 +14,9 @@ export * from './components/ErrorState';
 export * from './components/Input';
 export * from './components/LoadingState';
 export * from './components/Modal';
+export * from './components/ProgressBar';
+export * from './components/RadioButton';
+export * from './components/SearchInput';
 export * from './components/Select';
 export * from './components/SelectionBar';
 export * from './components/Skeleton';

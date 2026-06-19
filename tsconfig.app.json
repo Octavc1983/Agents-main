@@ -21,9 +21,8 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "ignoreDeprecations": "6.0",
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["./src/*"],
       "@idira/design-system": ["./packages/design-system/src/index.ts"],
       "@idira/design-system/theme": ["./packages/design-system/src/theme/index.ts"],
       "@idira/design-system/icons": ["./packages/design-system/src/icons/index.ts"],

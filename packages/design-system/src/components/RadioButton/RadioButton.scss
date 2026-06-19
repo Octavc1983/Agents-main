@@ -1,0 +1,107 @@
+@use '../../theme/styles/tokens' as *;
+
+.radio-button {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2;
+  cursor: pointer;
+  user-select: none;
+
+  &--disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+}
+
+// ── Control wrapper ───────────────────────────────────────────────────────────
+
+.radio-button__control {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.radio-button__input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: inherit;
+  width: 100%;
+  height: 100%;
+}
+
+.radio-button__circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: $border-radius-full;
+  border: 1.5px solid $color-input-border;
+  background: $color-input-bg;
+  transition: border-color $transition-fast, background $transition-fast, box-shadow $transition-fast;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: $border-radius-full;
+    background: $color-primary;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity $transition-fast, transform $transition-fast;
+  }
+}
+
+// ── States ────────────────────────────────────────────────────────────────────
+
+// Hover
+.radio-button:not(.radio-button--disabled):hover .radio-button__circle {
+  border-color: $color-primary;
+  background: $color-input-bg-focused;
+}
+
+// Focus-visible
+.radio-button__input:focus-visible + .radio-button__circle {
+  outline: 2px solid $color-primary;
+  outline-offset: 2px;
+}
+
+// Checked
+.radio-button__input:checked + .radio-button__circle {
+  border-color: $color-primary;
+  background: transparent;
+
+  &::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Checked + hover
+.radio-button:not(.radio-button--disabled):hover .radio-button__input:checked + .radio-button__circle {
+  border-color: $color-btn-primary-hover;
+  box-shadow: 0 0 0 3px rgba(122, 128, 255, 0.18);
+}
+
+// Disabled checked
+.radio-button--disabled .radio-button__input:checked + .radio-button__circle {
+  border-color: $color-btn-disabled-border;
+
+  &::after { background: $color-btn-disabled-text; }
+}
+
+// ── Label ─────────────────────────────────────────────────────────────────────
+
+.radio-button__label {
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  color: $color-text-light;
+  line-height: $line-height-normal;
+
+  .radio-button--disabled & { color: $color-btn-disabled-text; }
+}

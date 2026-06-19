@@ -1,0 +1,103 @@
+@use '../../theme/styles/tokens' as *;
+
+.progress-bar {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+  width: 100%;
+}
+
+// ── Header row ────────────────────────────────────────────────────────────────
+
+.progress-bar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-3;
+}
+
+.progress-bar__label {
+  display: flex;
+  align-items: baseline;
+  gap: $spacing-2;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+}
+
+.progress-bar__count {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+}
+
+.progress-bar__action {
+  flex-shrink: 0;
+}
+
+// ── Track row ─────────────────────────────────────────────────────────────────
+
+.progress-bar__track-row {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+.progress-bar__inline-pct {
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+  flex-shrink: 0;
+  min-width: 28px;
+}
+
+.progress-bar__track {
+  flex: 1;
+  height: 6px;
+  border-radius: $border-radius-pill;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  border-radius: $border-radius-pill;
+  background: $color-btn-primary-idle;
+  transition: width 0.3s ease;
+
+  .progress-bar--paused & { background: rgba(255, 255, 255, 0.35); }
+  .progress-bar--failed & { background: $color-status-error; }
+  .progress-bar--done  & { background: $color-btn-primary-idle; }
+}
+
+.progress-bar__pct {
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+  flex-shrink: 0;
+  min-width: 32px;
+  text-align: right;
+}
+
+// ── Footer ────────────────────────────────────────────────────────────────────
+
+.progress-bar__footer {
+  min-height: 1em;
+}
+
+.progress-bar__sublabel {
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+}
+
+.progress-bar__status {
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+
+  &--failed { color: $color-status-error; }
+  &--paused { color: $color-text-muted; }
+  &--done   { color: $color-status-success; }
+  &--active { color: $color-text-muted; }
+}

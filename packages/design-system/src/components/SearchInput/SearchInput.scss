@@ -1,0 +1,87 @@
+@use '../../theme/styles/tokens' as *;
+
+.search-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 32px;
+  border: 1px solid $color-input-border;
+  border-radius: $border-radius-sm;
+  background: $color-input-bg;
+  transition: border-color $transition-fast, background $transition-fast, box-shadow $transition-fast;
+
+  &:hover:not(.search-input--disabled) {
+    border-color: rgba(255, 255, 255, 0.25);
+    background: $color-input-bg-focused;
+  }
+
+  &:focus-within:not(.search-input--disabled) {
+    border-color: $color-input-border-focused;
+    background: $color-input-bg-focused;
+    box-shadow: 0 0 0 3px rgba(122, 128, 255, 0.15);
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// ── Search icon ───────────────────────────────────────────────────────────────
+
+.search-input__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: $spacing-2;
+  color: $color-input-placeholder;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+// ── Text field ────────────────────────────────────────────────────────────────
+
+.search-input__field {
+  flex: 1;
+  height: 100%;
+  padding: 0 $spacing-2;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  color: $color-input-text;
+  min-width: 0;
+
+  &::placeholder { color: $color-input-placeholder; }
+
+  // Hide browser-native clear button on search inputs
+  &::-webkit-search-cancel-button { display: none; }
+  &::-webkit-search-decoration   { display: none; }
+}
+
+// ── Clear button ──────────────────────────────────────────────────────────────
+
+.search-input__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-right: $spacing-1;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-input-placeholder;
+  cursor: pointer;
+  padding: 0;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    background: $color-btn-hover-overlay;
+  }
+}

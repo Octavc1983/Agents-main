@@ -1,35 +1,379 @@
-// Header Component Styles
-
 @use 'tokens' as *;
-@use '../../../styles/mixins' as *;
+
+// ── Header shell ──────────────────────────────────────────────────────────────
 
 .header {
-  background-color: var(--color-bg-primary);
-  border-bottom: 1px solid var(--color-border-light);
-  padding: $spacing-6 0;
+  display: flex;
+  width: 100%;
+  padding: 0 $spacing-12; // 0 48px
+  height: 52px;
+  justify-content: space-between;
+  align-items: center;
+  background: $color-background-dark;
+  border-bottom: 1px solid $color-border-dark;
   position: sticky;
   top: 0;
-  z-index: 100;
-}
-
-.header__container {
-  @include pad-x($spacing-6);
-}
-
-.header__content {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-2;
+  z-index: 200;
+  flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .header__title {
-  @include heading-2;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
   margin: 0;
-  color: var(--color-text-primary);
+  white-space: nowrap;
 }
 
-.header__subtitle {
-  @include body-normal;
-  margin: 0;
-  color: var(--color-text-secondary);
+// ── Right-side actions ────────────────────────────────────────────────────────
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-1;
+}
+
+.header__divider {
+  width: 1px;
+  height: 20px;
+  background: $color-border-dark;
+  margin: 0 $spacing-2;
+  flex-shrink: 0;
+}
+
+// ── Icon button (base) ────────────────────────────────────────────────────────
+
+.header-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  padding: $spacing-1 $spacing-2;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  white-space: nowrap;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    background: $color-btn-hover-overlay;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+
+  &--ai {
+    padding: $spacing-1;
+    border-radius: $border-radius-base;
+
+    &:hover { background: rgba(255, 255, 255, 0.06); }
+  }
+}
+
+// ── Bell badge ────────────────────────────────────────────────────────────────
+
+.header-icon-btn__bell-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.header-icon-btn__badge {
+  position: absolute;
+  top: -5px;
+  right: -6px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  background: $color-btn-primary-idle;
+  border-radius: $border-radius-full;
+  font-size: 10px;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  pointer-events: none;
+}
+
+// ── Help dropdown ─────────────────────────────────────────────────────────────
+
+.header-help {
+  position: relative;
+}
+
+.header-help__dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 210px;
+  background: $color-background-darker;
+  border: 1px solid $color-border-dark;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-md;
+  z-index: 300;
+  padding: $spacing-1 0;
+}
+
+.header-help__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-2;
+  padding: $spacing-2 $spacing-3;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  text-decoration: none;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    background: $color-btn-hover-overlay;
+  }
+
+  svg { flex-shrink: 0; opacity: 0.6; }
+}
+
+// ── Avatar ────────────────────────────────────────────────────────────────────
+
+.header-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: $border-radius-full;
+  background: $color-primary;
+  color: $color-text-light;
+  font-family: $font-family-base;
+  font-size: 11px;
+  font-weight: $font-weight-semibold;
+  flex-shrink: 0;
+  user-select: none;
+
+  &--large {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+}
+
+// ── User trigger ──────────────────────────────────────────────────────────────
+
+.header-user {
+  position: relative;
+}
+
+.header-user__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-1 $spacing-2 $spacing-1 $spacing-1;
+  background: none;
+  border: none;
+  border-radius: $border-radius-base;
+  cursor: pointer;
+  transition: background $transition-fast;
+
+  &:hover { background: $color-btn-hover-overlay; }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+.header-user__name {
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  color: $color-text-light;
+  white-space: nowrap;
+}
+
+// ── User dropdown ─────────────────────────────────────────────────────────────
+
+.header-user__dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 260px;
+  background: $color-background-darker;
+  border: 1px solid $color-border-dark;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-lg;
+  z-index: 300;
+  overflow: hidden;
+}
+
+.header-user__profile {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-3;
+  padding: $spacing-3;
+  position: relative;
+}
+
+.header-user__profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.header-user__full-name {
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-user__profile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  color: $color-primary;
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
+}
+
+.header-user__close {
+  position: absolute;
+  top: $spacing-2;
+  right: $spacing-2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-text-muted;
+  cursor: pointer;
+  padding: 0;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    background: $color-btn-hover-overlay;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+.header-user__divider {
+  height: 1px;
+  background: $color-border-dark;
+}
+
+.header-user__section {
+  padding: $spacing-1 0;
+}
+
+.header-user__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-2 $spacing-3;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+
+  &--section-label {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    font-weight: $font-weight-medium;
+  }
+
+  &--action {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 0;
+    transition: color $transition-fast, background $transition-fast;
+
+    &:hover {
+      color: $color-text-light;
+      background: $color-btn-hover-overlay;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-primary;
+      outline-offset: 2px;
+    }
+  }
+
+  &--signout {
+    color: $color-status-error;
+    justify-content: flex-start;
+  }
+}
+
+// ── Theme toggle ──────────────────────────────────────────────────────────────
+
+.header-user__theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+    border-radius: $border-radius-pill;
+  }
+}
+
+.header-user__theme-track {
+  display: flex;
+  align-items: center;
+  width: 44px;
+  height: 24px;
+  border-radius: $border-radius-pill;
+  background: $color-background-darkest;
+  border: 1px solid $color-border-dark;
+  padding: 3px;
+  transition: background $transition-fast;
+
+  .header-user__theme-toggle--dark & {
+    background: $color-primary;
+  }
+}
+
+.header-user__theme-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: $border-radius-full;
+  background: $color-background-dark;
+  transition: transform $transition-fast;
+
+  .header-user__theme-toggle--dark & {
+    transform: translateX(20px);
+  }
 }

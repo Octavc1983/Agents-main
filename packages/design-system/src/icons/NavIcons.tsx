@@ -435,6 +435,28 @@ export const ServiceMoveIcon: React.FC<IconProps> = ({ size = 24, className }) =
   </svg>
 );
 
+// ── Search & Filter ───────────────────────────────────────────────────────────
+
+export const SearchInputIcon: React.FC<IconProps> = ({ size = 16, className }) => (
+  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <g clipPath="url(#search-clip)">
+      <path d="M11.6667 11.6667L14.6667 14.6667M13.3333 7.33337C13.3333 4.01967 10.6471 1.33337 7.33334 1.33337C4.01963 1.33337 1.33334 4.01967 1.33334 7.33337C1.33334 10.6471 4.01963 13.3334 7.33334 13.3334C10.6471 13.3334 13.3333 10.6471 13.3333 7.33337Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </g>
+    <defs>
+      <clipPath id="search-clip"><rect width="16" height="16" fill="white" /></clipPath>
+    </defs>
+  </svg>
+);
+
+export const FilterSettingsIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M3 7H6M12 7H21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <circle cx="9" cy="7" r="3" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M3 17H18M24 17H21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <circle cx="15" cy="17" r="3" stroke="currentColor" strokeWidth="1.5" />
+  </svg>
+);
+
 // ── Nav aliases (backward compat) ─────────────────────────────────────────────
 export { HomeIcon as HomeNavIcon };
 export { ScansIcon as ScansNavIcon };
