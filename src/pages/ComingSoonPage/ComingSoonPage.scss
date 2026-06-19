@@ -1,0 +1,29 @@
+@use '../../styles/variables' as *;
+
+.coming-soon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: $spacing-4;
+
+  &__illustration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      max-width: 400px;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__label {
+    font-size: $font-size-base;
+    font-weight: $font-weight-normal;
+    color: $color-nav-text-idle;
+    margin: 0;
+  }
+}

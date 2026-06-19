@@ -14,9 +14,72 @@ All files are in `.claude/`.
 
 ---
 
-## Recommended Entry Points
+## Automatic Workflow Routing
 
-**Start with UX Flow Commands.** These manage the full workflow for you.
+**Natural language first. Slash commands are optional helpers, not required entry points.**
+
+When a user makes a UX/UI request, Claude must:
+
+1. Inspect the user's message, attached screenshots, Figma links, page names, routes, and file references.
+2. Detect the likely workflow automatically.
+3. Select the smallest safe internal workflow.
+4. Ask only for missing critical information.
+5. Continue with the selected workflow.
+6. Preserve the existing AppShell, Sidebar, Header, Router, Infra, Design System, tokens, and SVG icon system.
+
+Claude must never ask:
+```text
+Which command do you want to run?
+Please use /ux-add-page.
+Please run /map-components first.
+```
+
+The internal routing owner is `.claude/agents/_core/workflow-orchestrator-agent.md`.
+The routing methodology is `.claude/skills/_core/auto-workflow-routing/SKILL.md`.
+
+### Routing Table
+
+| User Intent | Common Signals | Workflow |
+|---|---|---|
+| Create a page | build, create, generate, implement, recreate, pixel perfect | Create New Page |
+| Edit a page | fix, edit, update, refine, correct, improve | Edit Existing Page |
+| Add an interaction | add flow, add filters, add search, add dialog, add tabs | Add Flow to Existing Page |
+| UX review | review, audit, edge cases, what is wrong, usability | UX Audit |
+| QA / cleanup | imports, dead code, SCSS, telemetry, exceptions, runtime, build | QA Code Review |
+| Navigation | sidebar, menu, navigation, route, AppShell, active item | Navigation Workflow |
+| Template | table template, master details, form, dialog, dashboard | Page Composition Template |
+| Figma | Figma link, frame, tokens, alignment, sync | Figma Workflow |
+
+### Image and Screenshot Rules
+
+If a screenshot is attached and the user says build / create / generate / implement / recreate / pixel perfect → **Create New Page**.
+
+If a screenshot is attached and the user says fix / edit / update / refine / correct / improve → **Edit Existing Page**.
+
+### Missing Information Rule
+
+When critical fields are missing, Claude must identify the workflow first, then respond:
+
+```markdown
+### Missing Required Information
+
+I identified this request as: [WORKFLOW_TYPE]
+
+Before I continue, please fill the missing fields below:
+
+[ONLY MISSING REQUIRED FIELDS]
+
+### Why I'm Asking
+I already identified the correct workflow. I need this to continue safely without guessing or modifying the wrong files.
+```
+
+---
+
+## Entry Points
+
+**Natural language** is now the recommended entry point. Describe what you want and Claude will route automatically.
+
+**Slash commands** are still available as optional helpers for focused or repeatable tasks.
 
 | Command | Purpose |
 |---|---|
@@ -66,26 +129,56 @@ Utility and template commands are still available for focused tasks — see [`.c
     ux-add-flow-to-page.md
     ux-review-page.md
     ux-fix-generated-page.md
-    _utilities/        figma, mapping, review, setup commands
+    build-component-from-image.md
+    figma-reference.md
+    _utilities/        figma, mapping, review, QA, setup commands
     _templates/        page creation commands
-    _archive/          superseded commands
 
   agents/
     README.md
-    _core/             navigation, page-builder, DS review, UX review
+    _core/             router, learning, architecture, telemetry, navigation, page-builder, DS review, UX review
     _figma/            Figma scanning, mapping, alignment, extraction
     _infra/            component detection, states, navigation integration
     _documentation/    PM / UX / R&D review packages
-    _archive/          deprecated or out-of-scope agents
 
   skills/
     README.md
-    _core/             application shell, component mapping, DS review, UX flow
+    _core/             routing, learning, architecture, telemetry, component mapping, DS review, UX flow, QA
     _figma/            Figma MCP, Figma-to-React, tokens, navigation, alignment
     _templates/        page composition templates (not DS components)
     _infra/            visual mapping, token mapping, SVG icons, state patterns
     _documentation/    review packages, prompt library
-    _archive/          deprecated skills
+
+  quality/
+    lessons/
+      lesson-candidates.md   active candidates under review
+      approved-lessons.md    promoted and applied lessons
+      rejected-lessons.md    rejected candidates with reason
+    evals/
+      workflow-router-evals.md
+      page-build-evals.md
+      ux-flow-evals.md
+      qa-regression-evals.md
+      telemetry-ux-evals.md
+    reports/
+      latest-qa-report.md
+      latest-ux-audit.md
+      latest-architecture-review.md
+
+  architecture/
+    component-registry.md      known shared components and candidates
+    data-contract-registry.md  known shared types and API contracts
+    feature-api-registry.md    feature-level API shapes
+    shared-patterns.md         patterns identified, not yet extracted
+    decisions/
+      ADR-001.md               SVG-only icon system
+      ADR-002.md               SCSS token system, no inline styles
+
+  content/
+    terminology-registry.md    approved product terms and preferred forms
+    ux-writing-style-guide.md  voice, tone, grammar, mechanics
+    approved-microcopy-patterns.md  reusable approved copy blocks
+    deprecated-terms.md        retired terms — must not reappear in UI
 ```
 
 ---
@@ -95,18 +188,26 @@ Utility and template commands are still available for focused tasks — see [`.c
 Full index: [`.claude/agents/README.md`](.claude/agents/README.md)
 
 ### `_core/`
+- `workflow-orchestrator-agent.md` — **top-level router**: detects intent from natural language, screenshots, Figma links; selects and delegates to correct workflow automatically
+- `template-recognition-and-lifecycle-agent.md` — **template detector**: matches requests and screenshots to existing registered templates, loads template logic automatically, creates Draft Template Candidates when no match exists
+- `skeleton-loading-intelligence-agent.md` — **skeleton loading**: generates layout-aware skeleton states matching real page structure, using existing tokens and DS patterns only
+- `continuous-improvement-agent.md` — **learning loop**: identifies recurring mistakes, creates evidence-based lesson candidates, adds regression checks, proposes controlled workflow updates
+- `shared-architecture-agent.md` — **reuse detector**: finds repeated UI patterns, domain data shapes, duplicated logic, and API contract opportunities; produces safe extraction proposals
+- `telemetry-driven-ux-recommendation-agent.md` — **behavioral analysis**: converts approved telemetry into observed/heuristic/experiment recommendations with confidence levels, guardrail metrics, and privacy guards
+- `technical-writing-agent.md` — **terminology and copy review**: checks all user-facing text against terminology registry, style guide, deprecated terms, and approved microcopy patterns
 - `application-shell-navigation-agent.md` — protects AppShell/Router; adds routes and nav safely
 - `component-mapping-agent.md` — maps requirements to existing Infra/DS components
 - `prototype-page-builder-agent.md` — creates and refactors React prototype pages
 - `design-system-review-agent.md` — DS compliance: components, tokens, icons, no inline styles
 - `ux-flow-review-agent.md` — UX clarity, state coverage, interaction completeness
 - `ux-expert-page-audit-agent.md` — deep UX audit of an existing page: flow, states, edge cases, component misuse; audit only
+- `code-quality-qa-agent.md` — import validation, dead code, SCSS, telemetry, runtime safety
 
 ### `_figma/`
 - `figma-mcp-scanner-agent.md` — reads Figma frame, extracts structure
 - `figma-to-infra-mapping-agent.md` — maps Figma output to Infra/DS components and tokens
-- `figma-navigation-sidebar-extractor.agent.md` — extracts sidebar nav from Figma
-- `figma-design-system-extractor.agent.md` — extracts DS components from Figma
+- `figma-navigation-sidebar-extractor-agent.md` — extracts sidebar nav from Figma
+- `figma-design-system-extractor-agent.md` — extracts DS components from Figma
 - `figma-alignment-agent.md` — visual gap report: React vs Figma
 
 ### `_infra/`
@@ -124,10 +225,19 @@ Full index: [`.claude/agents/README.md`](.claude/agents/README.md)
 Full index: [`.claude/skills/README.md`](.claude/skills/README.md)
 
 ### `_core/`
+- `auto-workflow-routing/` — **intent detection and routing**: classifies requests, applies image/Figma rules, selects downstream workflow
+- `template-recognition-and-lifecycle/` — **template detection**: matches requests and screenshots to the template registry, loads template logic, creates Draft Template Candidates; runs before component mapping
+- `skeleton-loading-intelligence/` — **layout-aware skeleton loading**: maps skeleton to real page regions, enforces token-only styling, runs after page implementation
+- `continuous-quality-learning/` — **learning loop skill**: evidence threshold, lesson candidate creation, regression evaluation, controlled promotion
+- `shared-component-and-data-architecture/` — **reuse detection**: scans for repeated UI, data shapes, adapters, API contracts; maintains architecture registries
+- `telemetry-driven-ux-optimization/` — **behavioral signals to recommendations**: pattern detection library, guardrail metrics, privacy guard, experiment backlog
+- `ux-content-alignment/` — **terminology and copy alignment**: checks user-facing text against terminology registry, style guide, deprecated terms; runs before UX review
+- `template-ingestion/` — **template ingestion**: converts screenshots/Figma to registered reusable template specifications; runs before implementation when a new template is proposed
 - `application-shell-navigation/` — route and nav wiring workflow
 - `component-mapping/` — requirement-to-component mapping
 - `design-system-review/` — DS compliance workflow
 - `ux-flow-validation/` — UX flow review workflow
+- `code-quality-qa/` — QA, dead code, telemetry, runtime safety workflow
 
 ### `_figma/`
 - `figma-mcp-scan/` — Figma frame extraction
@@ -167,6 +277,38 @@ Full index: [`.claude/commands/README.md`](.claude/commands/README.md)
 
 ---
 
+## Workflow Intelligence Lifecycle
+
+Every substantial page or flow moves through this pipeline:
+
+```text
+Natural Language Request
+→ Workflow Router               (auto-workflow-routing + workflow-orchestrator-agent)
+→ Template Recognition          (template-recognition-and-lifecycle-agent + skill)
+→ Architecture Discovery        (shared-architecture-agent + shared-component-and-data-architecture)
+→ Component Mapping             (component-mapping-agent)
+→ Implementation or Review      (prototype-page-builder-agent / ux-expert-page-audit-agent)
+→ Skeleton Loading States       (skeleton-loading-intelligence-agent + skill)
+→ UX Content Alignment          (ux-content-alignment + technical-writing-agent)
+→ QA / Runtime Validation       (code-quality-qa-agent + code-quality-qa skill)
+→ UX Audit                      (ux-expert-page-audit-agent + ux-flow-review-agent)
+→ Telemetry Analysis            (telemetry-driven-ux-recommendation-agent, when data exists)
+→ Continuous Learning Review    (continuous-quality-learning + continuous-improvement-agent)
+→ Lesson Candidate / Regression (quality/lessons/ + quality/evals/)
+```
+
+Registries consulted at every stage:
+```text
+.claude/architecture/            — component, data, API reuse decisions
+.claude/architecture/template-registry.md  — registered templates and detection matrix
+.claude/architecture/templates/  — full template specifications
+.claude/architecture/template-candidates/  — draft candidates awaiting approval
+.claude/content/                 — terminology, style, microcopy, deprecated terms
+.claude/quality/                 — lessons, evals, reports
+```
+
+---
+
 ## Core Rules
 
 These apply across all commands, agents, and skills:
@@ -181,3 +323,4 @@ These apply across all commands, agents, and skills:
 - **No debug UI** — state controls are code constants, not visible buttons
 - **Stop after mapping** — mapping commands stop before implementation
 - **No Pixel Perfect claims** without a gap report
+- **Terminology first** — check terminology-registry and deprecated-terms before finalizing any user-facing text

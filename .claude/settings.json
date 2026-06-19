@@ -3,7 +3,14 @@
     "allow": [
       "Bash(mkdir -p \"c:/Users/amiss/OneDrive - CyberArk Ltd/Apps/Agents-main/.claude/skills/table-master-details-template\" \\\\ *)",
       "Edit(/.claude/skills/table-master-details-template/**)",
-      "Edit(/.claude/skills/visual-to-infra-mapping/**)"
+      "Edit(/.claude/skills/visual-to-infra-mapping/**)",
+      "Edit(/.claude/skills/_core/**)",
+      "Bash(cp \".claude/agents/_figma/figma-navigation-sidebar-extractor.agent.md\" \".claude/agents/_figma/figma-navigation-sidebar-extractor-agent.md\")",
+      "Bash(rm \".claude/agents/_figma/figma-navigation-sidebar-extractor.agent.md\")",
+      "Bash(ls .claude/quality/)",
+      "Bash(ls .claude/quality/lessons/ .claude/quality/evals/ .claude/quality/reports/)",
+      "Bash(ls .claude/architecture/)",
+      "Bash(ls .claude/content/)"
     ],
     "additionalDirectories": [
       "c:\\Users\\amiss\\OneDrive - CyberArk Ltd\\Apps\\Agents-main\\.claude\\skills"

@@ -19,6 +19,10 @@ export type ISplitButtonSize = 'sm' | 'md' | 'lg';
 
 export type CardVariant = 'default' | 'elevated' | 'outlined';
 
+// IDIRA Design System card types
+export type ICardVariant = 'default' | 'hover' | 'selected';
+export type ICardBackground = 'solid' | 'gradient-light-to-dark' | 'gradient-dark-to-light';
+
 // Common Prop Types
 export interface BaseProps {
   className?: string;

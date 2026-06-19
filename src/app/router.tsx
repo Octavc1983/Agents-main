@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { AppShell } from '../components/layout/AppShell/AppShell';
 import { HomePage } from '../pages/HomePage/HomePage';
+import { ComingSoonPage } from '../pages/ComingSoonPage/ComingSoonPage';
 
 export const router = createBrowserRouter([
   {
@@ -10,6 +11,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: '*',
+        element: <ComingSoonPage />,
       },
     ],
   },

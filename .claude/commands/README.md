@@ -1,16 +1,14 @@
 # Claude Commands
 
-Commands are located in `.claude/commands/`. They are invoked with `/command-name`.
+Commands are in `.claude/commands/`. Invoked with `/command-name`.
 
-There are two layers:
+**Natural language is the recommended entry point.** Commands are optional helpers for focused or repeatable tasks.
 
 ---
 
 ## UX Flow Commands
 
-**Start here.** Use these when you are working on a UX/UI task.
-
-Each command manages a complete workflow — collects your intent, then orchestrates agents, skills, and utility commands internally. You do not need to run utility commands manually.
+End-to-end workflows. Each manages intake, orchestration, and validation internally.
 
 | Command | Purpose |
 |---|---|
@@ -20,48 +18,30 @@ Each command manages a complete workflow — collects your intent, then orchestr
 | `/ux-review-page` | Review a page: UX, DS, Figma alignment, state coverage |
 | `/ux-fix-generated-page` | Fix a page that Claude generated incorrectly |
 
-### Typical UX workflow
+### Typical workflow
 
 ```
 /ux-add-page             → create the page
-/ux-add-flow-to-page     → add details panel, dialog, filters, etc.
+/ux-add-flow-to-page     → add details panel, dialog, filters
 /ux-review-page          → UX + DS review before sharing
 /ux-edit-page            → apply feedback
 ```
 
-### How UX Flow Commands orchestrate the rest
+---
 
-```
-/ux-add-page
-  ├── /figma-scan              (if Figma source exists)
-  ├── /map-components          (always)
-  ├── /detect-infra            (if screenshot exists)
-  ├── /create-[template]       (based on selected template)
-  ├── /connect-navigation      (if sidebar entry needed)
-  ├── /add-states              (always)
-  ├── /review-design-system    (always)
-  └── /review-ux-flow          (always)
+## Build Commands
 
-/ux-review-page
-  ├── /review-ux-flow
-  ├── /review-design-system
-  ├── /figma-align             (if Figma source exists)
-  └── /create-review-package   (if PM / R&D review requested)
-
-/ux-fix-generated-page
-  ├── /map-components
-  ├── /detect-infra            (if reference exists)
-  ├── /create-[template]       (targeted rebuild)
-  ├── /add-states
-  ├── /review-design-system
-  └── /review-ux-flow
-```
+| Command | Purpose |
+|---|---|
+| `/build-component-from-image` | Build a pixel-perfect component from a screenshot |
+| `/figma-reference` | Load Figma-to-React reference docs |
+| `/ingest-template` | Convert a screenshot or Figma reference into a reusable Template specification — runs before any single-page build |
 
 ---
 
 ## Utility Commands — `_utilities/`
 
-Use for focused internal steps, debugging, or when a UX Flow Command is too broad.
+For focused steps, debugging, or when a UX Flow Command is too broad.
 
 ### Figma
 
@@ -89,11 +69,13 @@ Use for focused internal steps, debugging, or when a UX Flow Command is too broa
 |---|---|
 | `/connect-navigation` | Wire a page to the router and sidebar |
 | `/add-states` | Add loading, empty, error, and edge case states |
+| `/generate-skeleton-loading` | Generate layout-aware skeleton loading for a page or template |
 
-### Review
+### Review & QA
 
 | Command | Purpose |
 |---|---|
+| `/qa-code-review` | QA + code review: imports, styles, routing, telemetry, runtime |
 | `/review-design-system` | DS compliance review |
 | `/review-ux-flow` | UX flow review |
 | `/review-icons` | SVG icon system review |
@@ -109,7 +91,7 @@ Use for focused internal steps, debugging, or when a UX Flow Command is too broa
 
 ## Template Commands — `_templates/`
 
-Use when you need to create a specific page type directly, without the full `/ux-add-page` intake flow.
+Create a specific page type directly, without the full `/ux-add-page` intake flow.
 
 | Command | Template |
 |---|---|
@@ -123,22 +105,7 @@ Use when you need to create a specific page type directly, without the full `/ux
 
 ---
 
-## Archive — `_archive/`
-
-Commands that are superseded, rarely used, or replaced by a UX Flow Command. Kept for reference.
-
-| Command | Notes |
-|---|---|
-| `/start-prototype-page` | Superseded by `/ux-add-page` |
-| `/extract-figma-navigation` | Superseded by `/figma-sync-navigation` |
-| `/create-prototype-documentation` | Superseded by `/create-review-package` |
-| `/create-agent-prompts-page` | One-off utility, not part of standard workflow |
-
----
-
 ## Global Restrictions
-
-These apply to every command:
 
 - Do not modify the official Infra library
 - Do not create new DS components

@@ -2,15 +2,15 @@
  * Sidebar — Spaces Navigation
  * PRD: Spaces Navigation System
  *
- * Item type is inferred from data (no explicit 'type' field):
- *   split    = !!path && !!children
- *   dropdown = !path && !!children
- *   button   = !!path && !children
+ * Item type is read from the explicit NavItem.type field:
+ *   button   = navigates directly; no children
+ *   split    = navigates directly AND can expand children
+ *   dropdown = expands/collapses only; no direct navigation path
  */
 
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import type { NavItem, SpaceSchema } from '@/navigation/navConfig';
+import type { NavItem, NavItemType, SpaceSchema } from '@/navigation/navConfig';
 import { spacesRegistry, getDefaultPathForSpace } from '@/navigation/navConfig';
 import {
   IDIRALogoIcon,
@@ -46,12 +46,10 @@ const SpaceIconEl: React.FC<{ spaceId: string; size?: number }> = ({ spaceId, si
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-type ItemType = 'button' | 'dropdown' | 'split';
+type ItemType = NavItemType;
 
 function getItemType(item: NavItem): ItemType {
-  if (item.path && item.children?.length) return 'split';
-  if (!item.path && item.children?.length) return 'dropdown';
-  return 'button';
+  return item.type;
 }
 
 function containsPath(items: NavItem[], pathname: string): boolean {
@@ -323,6 +321,15 @@ export const Sidebar: React.FC = () => {
   );
 
   const activeSpace = spacesRegistry.find(s => s.id === activeSpaceId) ?? null;
+
+  // Reset manually-opened nodes when switching to a different space
+  const prevSpaceIdRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (prevSpaceIdRef.current !== null && prevSpaceIdRef.current !== activeSpaceId) {
+      setOpenIds(new Set());
+    }
+    prevSpaceIdRef.current = activeSpaceId;
+  }, [activeSpaceId]);
 
   const ancestorIds = useMemo(() => {
     if (!activeSpace) return new Set<string>();
