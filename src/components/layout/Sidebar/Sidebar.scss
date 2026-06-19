@@ -1,94 +1,68 @@
-// Sidebar Component Styles
-// IDIRA Design System — dark sidebar
-// Tokens: Dark.tokens.json (Figma: Scans-UX-Production)
+// Sidebar — Spaces Navigation
+// PRD: Spaces Navigation System
 
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
-@use '../../../design-system/tokens/_colors.scss' as *;
 
-// --- Sidebar shell -----------------------------------------------------------
+// ── Shell ─────────────────────────────────────────────────────────────────────
 
 .sidebar {
   width: 240px;
   min-width: 240px;
-  background-color: $color-background-dark;          // #17243B Surface.bg-idle
-  border-right: 1px solid $color-divider-1;           // #283F67
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 36px;
   height: 100vh;
+  padding: 32px 0 28px;
   position: sticky;
   top: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   transition: width $transition-base, min-width $transition-base;
   flex-shrink: 0;
+  align-self: stretch;
   z-index: 50;
 
-  &.sidebar--closed {
+  border-radius: 0 16px 16px 0;
+  border-right: 1.5px solid rgba(34, 54, 88, 0.50);
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.00) 100%),
+    linear-gradient(354deg, #3E68FF -37.88%, #17243B 32.81%);
+  box-shadow: 10.253px 12.303px 20.506px 0px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(7.18px);
+
+  &--collapsed {
     width: 56px;
     min-width: 56px;
-
-    .sidebar__label,
-    .sidebar__logo-text,
-    .sidebar__section-title,
-    .sidebar__space-name,
-    .sidebar__chevron {
-      display: none;
-    }
-
-    .sidebar__logo {
-      justify-content: center;
-      padding: $spacing-4 0;
-    }
-
-    .sidebar__collapse-btn {
-      display: none;
-    }
-
-    .sidebar__link {
-      justify-content: center;
-      padding: $spacing-2 0;
-    }
-
-    .sidebar__nav {
-      padding: $spacing-2 $spacing-2;
-    }
-
-    .sidebar__space-selector {
-      justify-content: center;
-      padding: $spacing-2;
-    }
-
-    .sidebar__apps-btn {
-      display: none;
-    }
   }
 }
 
-// --- Brand / logo area -------------------------------------------------------
+// ── Brand ─────────────────────────────────────────────────────────────────────
 
 .sidebar__brand {
   display: flex;
   align-items: center;
+  gap: $spacing-2;
   padding: $spacing-4 $spacing-3;
   border-bottom: 1px solid $color-divider-1;
   flex-shrink: 0;
-  gap: $spacing-2;
+  min-height: 56px;
+  width: 100%;
 }
 
 .sidebar__logo {
   display: flex;
   align-items: center;
-  gap: $spacing-3;
+  gap: $spacing-2;
   text-decoration: none;
   flex: 1;
   min-width: 0;
-}
+  color: $color-text-light;
 
-.sidebar__logo-icon {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
+  .sidebar--collapsed & {
+    justify-content: center;
+    flex: none;
+  }
 }
 
 .sidebar__logo-text {
@@ -102,27 +76,25 @@
   font-size: $font-size-sm;
   font-weight: $font-weight-bold;
   color: $color-text-light;
-  line-height: 1.2;
-  white-space: nowrap;
   letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
 .sidebar__logo-subtitle {
   font-size: 9px;
-  font-weight: $font-weight-normal;
-  color: $color-nav-text-idle;                        // #BBC2D0
-  line-height: 1.2;
-  white-space: nowrap;
+  color: $color-nav-text-idle;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.sidebar__collapse-btn {
+.sidebar__collapse-btn,
+.sidebar__expand-btn {
   background: none;
   border: none;
   padding: $spacing-1;
   cursor: pointer;
-  color: $color-nav-icon-idle;                        // #AEB8CC
+  color: $color-nav-icon-idle;
   border-radius: $border-radius-sm;
   display: flex;
   align-items: center;
@@ -133,29 +105,75 @@
     color: $color-text-light;
     background-color: rgba($color-text-light, 0.07);
   }
-}
 
-// --- Space selector ----------------------------------------------------------
-
-.sidebar__space-selector {
-  display: flex;
-  align-items: center;
-  gap: $spacing-2;
-  padding: $spacing-3 $spacing-3;
-  border-bottom: 1px solid $color-divider-1;
-  flex-shrink: 0;
-  cursor: pointer;
-
-  &:hover {
-    background-color: rgba($color-text-light, 0.04);
+  &:focus-visible {
+    outline: 2px solid $color-btn-primary-idle;
+    outline-offset: 2px;
   }
 }
 
-.sidebar__space-icon-wrap {
+.sidebar__expand-btn {
+  align-self: center;
+  margin: $spacing-2 auto 0;
+}
+
+// ── Space area ────────────────────────────────────────────────────────────────
+
+.sidebar__space-area {
+  flex-shrink: 0;
+  border-bottom: 1px solid $color-divider-1;
+  width: 100%;
+}
+
+// ── Space switcher ────────────────────────────────────────────────────────────
+
+.space-switcher {
+  position: relative;
+}
+
+.space-switcher__option-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.space-switcher__btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-3;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $color-text-light;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: rgba($color-text-light, 0.05);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-btn-primary-idle;
+    outline-offset: -2px;
+  }
+
+  .sidebar--collapsed & {
+    justify-content: center;
+    padding: $spacing-2;
+  }
+}
+
+.space-switcher__icon-wrap {
   width: 24px;
   height: 24px;
   border-radius: 5px;
-  background-color: $color-btn-primary-idle;          // #3E68FF
+  background-color: $color-btn-primary-idle;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -163,83 +181,153 @@
   color: $color-text-light;
 }
 
-.sidebar__space-name {
+.space-switcher__label {
+  flex: 1;
   font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
-  color: $color-text-light;
-  flex: 1;
+  text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.sidebar__apps-btn {
-  background: none;
-  border: none;
-  padding: $spacing-1;
-  cursor: pointer;
+.space-switcher__arrow {
+  flex-shrink: 0;
   color: $color-nav-icon-idle;
-  border-radius: $border-radius-sm;
   display: flex;
   align-items: center;
-  flex-shrink: 0;
-  transition: color $transition-fast;
+}
 
-  &:hover {
-    color: $color-text-light;
+.space-switcher__dropdown {
+  position: absolute;
+  left: $spacing-2;
+  right: $spacing-2;
+  top: calc(100% + 4px);
+  background-color: $color-background-darker;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-md;
+  z-index: 100;
+  overflow: hidden;
+  min-width: 160px;
+
+  .sidebar--collapsed & {
+    left: calc(100% + 4px);
+    right: auto;
+    top: 0;
+    min-width: 180px;
   }
 }
 
-// --- Nav area ----------------------------------------------------------------
-
-.sidebar__nav {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: $spacing-2 $spacing-2;
-  gap: 2px;
-  overflow-y: auto;
-}
-
-.sidebar__section-title {
-  font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-  color: $color-nav-text-idle;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: $spacing-3 $spacing-3 $spacing-1;
-  white-space: nowrap;
-}
-
-// --- Nav item ----------------------------------------------------------------
-
-.sidebar__link {
+.space-switcher__option {
   display: flex;
   align-items: center;
   gap: $spacing-2;
+  width: 100%;
   padding: $spacing-2 $spacing-3;
-  border-radius: $border-radius-sm;
-  color: $color-nav-text-idle;                        // #BBC2D0
-  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $color-nav-text-idle;
+  font-size: $font-size-sm;
+  text-align: left;
   transition: background-color $transition-fast, color $transition-fast;
-  white-space: nowrap;
-  overflow: hidden;
-  min-height: 36px;
+
+  &:hover {
+    background-color: rgba($color-text-light, 0.07);
+    color: $color-text-light;
+  }
+
+  &--active {
+    color: $color-text-light;
+    background-color: rgba($color-primary, 0.15);
+  }
+}
+
+.space-switcher__option-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.space-switcher__empty {
+  display: block;
+  padding: $spacing-3;
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  text-align: center;
+}
+
+// ── Nav tree ──────────────────────────────────────────────────────────────────
+
+.sidebar__nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: $spacing-2;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  width: 100%;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-divider-1;
+    border-radius: $border-radius-full;
+  }
+}
+
+.sidebar__empty-hint {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  padding: $spacing-4 $spacing-3;
+  text-align: center;
+  margin: 0;
+}
+
+// ── Nav item ──────────────────────────────────────────────────────────────────
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  min-height: 34px;
+  padding: $spacing-1 $spacing-2;
+  border-radius: $border-radius-sm;
+  color: $color-nav-text-idle;
+  text-decoration: none;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
   position: relative;
+  transition: background-color $transition-fast, color $transition-fast;
 
   &:hover:not(&--active) {
     background-color: rgba($color-text-light, 0.06);
     color: $color-text-light;
-
-    .sidebar__icon svg {
-      color: $color-text-light;
-    }
   }
 
-  // Active / selected state — solid fill, white accent line
+  &:focus-visible {
+    outline: 2px solid $color-btn-primary-idle;
+    outline-offset: 2px;
+  }
+
   &--active {
-    background-color: $color-nav-bg-selected;         // #223658 solid
-    color: $color-nav-text-selected;                  // #FFFFFF
+    background-color: $color-nav-bg-selected;
+    color: $color-nav-text-selected;
+    font-weight: $font-weight-medium;
 
     &::before {
       content: '';
@@ -249,73 +337,218 @@
       bottom: 20%;
       width: 3px;
       border-radius: 0 2px 2px 0;
-      background-color: $color-nav-side-line-selected; // #FFFFFF
-    }
-
-    .sidebar__icon svg {
-      color: $color-nav-icon-selected;                // #FFFFFF
+      background-color: $color-primary;
     }
   }
+
+  &--active-path {
+    color: rgba($color-text-light, 0.85);
+  }
+}
+
+// Split item: inner link + expand btn side by side
+.nav-item__split-link {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
 
   &:focus-visible {
     outline: 2px solid $color-btn-primary-idle;
-    outline-offset: 2px;
+    border-radius: $border-radius-sm;
   }
 }
 
-// --- Icon -------------------------------------------------------------------
-
-.sidebar__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 18px;
-  height: 18px;
-
-  svg {
-    color: $color-nav-icon-idle;                      // #AEB8CC
-    transition: color $transition-fast;
-  }
-}
-
-.sidebar__link--active .sidebar__icon svg {
-  color: $color-nav-icon-selected;                    // #FFFFFF
-}
-
-// --- Label ------------------------------------------------------------------
-
-.sidebar__label {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-normal;
-  line-height: 1.4;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  flex: 1;
-}
-
-.sidebar__link--active .sidebar__label {
-  font-weight: $font-weight-medium;
-}
-
-// --- Chevron (expandable items) ---------------------------------------------
-
-.sidebar__chevron {
+.nav-item__icon {
   display: flex;
   align-items: center;
   flex-shrink: 0;
   color: $color-nav-icon-idle;
-  opacity: 0.7;
+
+  .nav-item--active & {
+    color: $color-nav-text-selected;
+  }
 }
 
-// --- Footer area ------------------------------------------------------------
+.nav-item__label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-.sidebar__footer {
-  border-top: 1px solid $color-divider-1;
-  padding: $spacing-2 $spacing-2;
+.nav-item__indent-line {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 100%;
+  background-color: $color-divider-1;
+  pointer-events: none;
+}
+
+.nav-item__expand-btn {
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: $color-nav-icon-idle;
+  border-radius: $border-radius-sm;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: color $transition-fast, background-color $transition-fast;
+  line-height: 0;
+
+  &:hover {
+    color: $color-text-light;
+    background-color: rgba($color-text-light, 0.08);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-btn-primary-idle;
+  }
+}
+
+.nav-item__badge {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  background-color: $color-btn-primary-idle;
+  color: $color-text-light;
+  border-radius: $border-radius-full;
+  padding: 1px 6px;
+  flex-shrink: 0;
+  line-height: 1.6;
+}
+
+.nav-item__children {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
+  border-left: 1px solid $color-divider-1;
+  margin-left: $spacing-4;
+}
+
+.nav-item__split-divider {
+  width: 1px;
+  height: 16px;
+  background-color: $color-divider-1;
   flex-shrink: 0;
+  margin: 0 2px;
+}
+
+// ── Level indentation ─────────────────────────────────────────────────────────
+// Children containers use border-left + margin-left for tree lines.
+// Item padding stays flat — no cascading indentation.
+
+.nav-item--level-2 { padding-left: $spacing-3; }
+.nav-item--level-3 { padding-left: $spacing-2; }
+.nav-item--level-4 { padding-left: $spacing-2; }
+
+// ── Collapsed: space icon buttons ─────────────────────────────────────────────
+
+.sidebar__space-icon-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    background: none;
+    border: none;
+    padding: $spacing-2;
+    cursor: pointer;
+    color: $color-nav-icon-idle;
+    border-radius: $border-radius-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    transition: color $transition-fast, background-color $transition-fast;
+
+    &:hover {
+      color: $color-text-light;
+      background-color: rgba($color-text-light, 0.08);
+    }
+  }
+
+  &--active button {
+    color: $color-primary;
+    background-color: rgba($color-primary, 0.12);
+  }
+}
+
+.sidebar__space-initials {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  color: $color-nav-icon-idle;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+
+  .sidebar__space-icon-btn--active & {
+    color: $color-primary;
+  }
+}
+
+.sidebar__flyout-wrap {
+  position: absolute;
+  left: calc(100% + 4px);
+  top: 0;
+  z-index: 200;
+}
+
+// ── Collapsed flyout ──────────────────────────────────────────────────────────
+
+.nav-flyout {
+  background-color: $color-background-darker;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-md;
+  min-width: 200px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: $spacing-2 0;
+}
+
+.nav-flyout__header {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-nav-text-idle;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: $spacing-2 $spacing-3 $spacing-1;
+}
+
+.flyout-item {
+  display: block;
+  width: 100%;
+  padding: $spacing-2 $spacing-3;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  text-align: left;
+  transition: background-color $transition-fast, color $transition-fast;
+
+  &:hover {
+    background-color: rgba($color-text-light, 0.07);
+    color: $color-text-light;
+  }
+
+  &--active {
+    color: $color-text-light;
+    background-color: $color-nav-bg-selected;
+  }
+}
+
+.flyout-group {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  padding: $spacing-2 $spacing-3 $spacing-1;
+  font-weight: $font-weight-semibold;
+  letter-spacing: 0.05em;
 }

@@ -216,15 +216,20 @@ export const CyberArkLogoIcon: React.FC<SvgIconProps> = ({ size = 28, className,
 );
 
 // --- IDIRA logo (sidebar brand) ---
+// Hexagonal mark — exact shape from IDIRA Design System Figma
 
-export const IDIRALogoIcon: React.FC<SvgIconProps> = ({ size = 32, className, 'aria-label': ariaLabel }) => (
-  <svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+export const IDIRALogoIcon: React.FC<SvgIconProps & { color?: string }> = ({
+  size = 32,
+  className,
+  'aria-label': ariaLabel,
+  color = 'currentColor',
+}) => (
+  <svg width={size} height={size} viewBox="0 0 108 124" fill="none" xmlns="http://www.w3.org/2000/svg"
     className={className} aria-label={ariaLabel} role="img" aria-hidden={!ariaLabel}>
-    {/* IDIRA eye/lens logomark — stylised abstract */}
-    <rect width="32" height="32" rx="7" fill="#3E68FF" />
-    <ellipse cx="16" cy="16" rx="9" ry="6" stroke="white" strokeWidth="1.8" />
-    <circle cx="16" cy="16" r="3" fill="white" />
-    <circle cx="16" cy="16" r="1.2" fill="#3E68FF" />
+    <path
+      d="M108 31L86.002 44L54.0049 25L22.0078 44V81L54 98.9971V62.3271L86 44V80.6631L54.002 98.998L54.0049 99V124L0.00976562 93L0 31L54.0049 0L108 31Z"
+      fill={color}
+    />
   </svg>
 );
 
@@ -242,11 +247,18 @@ export const AppsGridIcon: React.FC<SvgIconProps> = ({ size = 16, className, 'ar
 
 // --- Collapse arrow icon ---
 
-export const CollapseIcon: React.FC<SvgIconProps> = ({ size = 16, className, 'aria-label': ariaLabel }) => (
-  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+export const CollapseIcon: React.FC<SvgIconProps> = ({ size = 24, className, 'aria-label': ariaLabel }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
     className={className} aria-label={ariaLabel} role="img" aria-hidden={!ariaLabel}>
-    <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M14 3v10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path fillRule="evenodd" d="M16.25 5C16.6642 5 17 5.34822 17 5.77778L17 18.2222C17 18.6518 16.6642 19 16.25 19C15.8358 19 15.5 18.6518 15.5 18.2222L15.5 5.77778C15.5 5.34822 15.8358 5 16.25 5Z" fill="currentColor" />
+    <path fillRule="evenodd" d="M7.22323 16.4697C6.93034 16.7626 6.93034 17.2374 7.22323 17.5303C7.51613 17.8232 7.991 17.8232 8.28389 17.5303L12.8259 12.9883C13.0568 12.7574 13.0568 12.3839 12.8259 12.153L8.28389 7.53033C7.991 7.23744 7.51613 7.23744 7.22323 7.53033C6.93034 7.82322 6.93034 8.2981 7.22323 8.59099L11.2132 12.5707L7.22323 16.4697Z" fill="currentColor" />
+  </svg>
+);
+
+export const DotsGridIcon: React.FC<SvgIconProps> = ({ size = 24, className, 'aria-label': ariaLabel }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+    className={className} aria-label={ariaLabel} role="img" aria-hidden={!ariaLabel}>
+    <path d="M11.9958 18H12.0048M17.9998 18H18.0087M5.99976 18H6.00874M11.9958 12H12.0048M11.9998 6H12.0087M17.9998 12H18.0087M17.9998 6H18.0087M5.99976 12H6.00874M5.99976 6H6.00874" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -357,5 +369,55 @@ export const CloseIcon: React.FC<SvgIconProps> = ({ size = 16, className, 'aria-
   <svg width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
     className={className} aria-label={ariaLabel} role="img" aria-hidden={!ariaLabel}>
     <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+
+// ── Navigation aliases (used by navConfig spacesRegistry) ─────────────────────
+
+export const HomeNavIcon = HomeIcon;
+export const InfrastructureNavIcon = InfrastructureIcon;
+export const PoliciesNavIcon = PoliciesIcon;
+export const ScansNavIcon = ScansIcon;
+
+export const IdentitiesNavIcon: React.FC<SvgIconProps> = ({ size = 20, className, 'aria-label': ariaLabel }) => (
+  <svg width={size} height={size} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+    className={className} aria-label={ariaLabel} role="img" aria-hidden={!ariaLabel}>
+    <circle cx="10" cy="7" r="3" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="4.5" cy="8.5" r="2" stroke="currentColor" strokeWidth="1.3" />
+    <circle cx="15.5" cy="8.5" r="2" stroke="currentColor" strokeWidth="1.3" />
+    <path d="M5 17c0-2.761 2.239-4 5-4s5 1.239 5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M1.5 17c0-1.657 1.343-3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+    <path d="M18.5 17c0-1.657-1.343-3-3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+  </svg>
+);
+
+export const RulesNavIcon: React.FC<SvgIconProps> = ({ size = 20, className, 'aria-label': ariaLabel }) => (
+  <svg width={size} height={size} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+    className={className} aria-label={ariaLabel} role="img" aria-hidden={!ariaLabel}>
+    <path d="M4 5h12M4 8.5h8M4 12h10M4 15.5h6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    <circle cx="15.5" cy="14.5" r="3" stroke="currentColor" strokeWidth="1.3" />
+    <path d="M14.5 14.5l.8.8 1.4-1.4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+export const ApplicationsAccessReviewNavIcon: React.FC<SvgIconProps> = ({ size = 20, className, 'aria-label': ariaLabel }) => (
+  <svg width={size} height={size} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+    className={className} aria-label={ariaLabel} role="img" aria-hidden={!ariaLabel}>
+    <rect x="2" y="3" width="11" height="14" rx="1" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M5 7h5M5 10h5M5 13h3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    <circle cx="15" cy="14.5" r="3" stroke="currentColor" strokeWidth="1.3" />
+    <path d="M14 14.5l.8.8 1.4-1.4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+export const AppsAndSecuredItemsNavIcon: React.FC<SvgIconProps> = ({ size = 20, className, 'aria-label': ariaLabel }) => (
+  <svg width={size} height={size} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+    className={className} aria-label={ariaLabel} role="img" aria-hidden={!ariaLabel}>
+    <rect x="2" y="2" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
+    <rect x="11" y="2" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
+    <rect x="2" y="11" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
+    <path d="M14.5 11v-1a2 2 0 0 0-4 0v1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+    <rect x="11" y="11" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
+    <circle cx="14.5" cy="14.5" r="1" fill="currentColor" />
   </svg>
 );

@@ -1,0 +1,112 @@
+@use '../../../styles/variables' as *;
+
+.split-btn {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: stretch;
+  border-radius: $border-radius-base;
+  overflow: hidden;
+  font-family: $font-family-button;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-sm;
+  line-height: 19px;
+  user-select: none;
+
+  &:focus-within {
+    outline: 2px solid $color-btn-secondary-border;
+    outline-offset: 2px;
+  }
+}
+
+// ─── Sizes ───────────────────────────────────────────────────────────────────
+
+.split-btn--lg { height: 34px; }
+.split-btn--md { height: 28px; }
+.split-btn--sm { height: 24px; }
+
+// ─── Shared button parts ─────────────────────────────────────────────────────
+
+.split-btn__label,
+.split-btn__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: background-color $transition-fast, color $transition-fast;
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+
+  &:focus-visible { outline: none; }
+}
+
+.split-btn__label {
+  padding: 0 $spacing-3;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.split-btn__arrow {
+  padding: 0 $spacing-2;
+  flex-shrink: 0;
+  width: 28px;
+}
+
+.split-btn__divider {
+  width: 1px;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+// ─── Primary variant ─────────────────────────────────────────────────────────
+
+.split-btn--primary {
+  .split-btn__label,
+  .split-btn__arrow { background: $color-btn-primary-idle; color: $color-neutral-0; }
+
+  .split-btn__divider { background: rgba(255, 255, 255, 0.3); }
+
+  .split-btn__label--hover { background: $color-btn-primary-hover; }
+  .split-btn__arrow--hover { background: $color-btn-primary-hover; }
+
+  .split-btn__label:active:not(:disabled) { background: $color-btn-primary-pressed; }
+  .split-btn__arrow:active:not(:disabled) { background: $color-btn-primary-pressed; }
+}
+
+// ─── Secondary variant ───────────────────────────────────────────────────────
+
+.split-btn--secondary {
+  border: 1px solid $color-btn-secondary-border;
+
+  .split-btn__label,
+  .split-btn__arrow { background: transparent; color: $color-btn-secondary-text; }
+
+  .split-btn__divider { background: $color-btn-secondary-border; }
+
+  .split-btn__label--hover { background: $color-btn-hover-overlay; }
+  .split-btn__arrow--hover { background: $color-btn-hover-overlay; }
+
+  .split-btn__label:active:not(:disabled) { background: $color-btn-secondary-pressed-bg; }
+  .split-btn__arrow:active:not(:disabled) { background: $color-btn-secondary-pressed-bg; }
+}
+
+// ─── Disabled ────────────────────────────────────────────────────────────────
+
+.split-btn--disabled {
+  pointer-events: none;
+
+  &.split-btn--primary {
+    .split-btn__label,
+    .split-btn__arrow { background: $color-btn-disabled-bg; color: $color-btn-disabled-text; }
+    .split-btn__divider { background: rgba(196, 196, 196, 0.3); }
+  }
+
+  &.split-btn--secondary {
+    border-color: $color-btn-disabled-border;
+
+    .split-btn__label,
+    .split-btn__arrow { background: $color-btn-disabled-bg; color: $color-btn-disabled-text; }
+    .split-btn__divider { background: $color-btn-disabled-border; }
+  }
+}

@@ -1,0 +1,128 @@
+@use '../../../styles/variables' as *;
+
+// ─── Accordion container ──────────────────────────────────────────────────────
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+// ─── Item ─────────────────────────────────────────────────────────────────────
+
+.accordion-item {
+  background-color: $color-background-darker;
+  border-radius: $border-radius-base;
+  overflow: hidden;
+}
+
+// ─── Header row ───────────────────────────────────────────────────────────────
+
+.accordion-item__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-height: 44px;
+  transition: background-color $transition-fast;
+
+  .accordion-item:hover & {
+    background-color: $color-nav-bg-selected;
+  }
+}
+
+.accordion-item__trigger {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $spacing-2;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  min-height: 44px;
+  padding: $spacing-2 $spacing-3;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: $color-text-light;
+  font-family: $font-family-button;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  text-align: left;
+  transition: color $transition-fast;
+
+  &:focus-visible {
+    outline: 2px solid $color-btn-primary-idle;
+    outline-offset: -2px;
+  }
+}
+
+.accordion-item__chevron {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: $color-nav-icon-idle;
+}
+
+.accordion-item__title {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ─── Actions area ─────────────────────────────────────────────────────────────
+
+.accordion-item__actions {
+  display: flex;
+  align-items: center;
+  padding-right: $spacing-2;
+  flex-shrink: 0;
+}
+
+.accordion-item__more-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: $color-nav-icon-idle;
+  border-radius: $border-radius-sm;
+  transition: color $transition-fast, background-color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    background-color: rgba($color-text-light, 0.08);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-btn-primary-idle;
+    outline-offset: -2px;
+  }
+}
+
+// ─── Panel (expanded content) ─────────────────────────────────────────────────
+
+.accordion-item__panel {
+  border-top: 1px solid $color-divider-1;
+}
+
+.accordion-item__content {
+  padding: $spacing-3;
+}
+
+// ─── Placeholder (empty content slot) ────────────────────────────────────────
+
+.accordion-item__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 140px;
+  background-color: $color-surface-idle;
+  border-radius: $border-radius-sm;
+  color: $color-nav-icon-idle;
+}

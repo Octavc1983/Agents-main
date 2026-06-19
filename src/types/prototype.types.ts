@@ -9,6 +9,14 @@ export type ComponentState = 'default' | 'loading' | 'empty' | 'error' | 'succes
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
+// IDIRA Design System button types
+export type IButtonVariant = 'main' | 'secondary' | 'text';
+export type IButtonSize = 'sm' | 'md' | 'lg';
+export type IFilterButtonState = 'default' | 'hover' | 'pressed' | 'selected' | 'disabled';
+export type IIconButtonSize = 16 | 24 | 32;
+export type ISplitButtonVariant = 'primary' | 'secondary';
+export type ISplitButtonSize = 'sm' | 'md' | 'lg';
+
 export type CardVariant = 'default' | 'elevated' | 'outlined';
 
 // Common Prop Types
