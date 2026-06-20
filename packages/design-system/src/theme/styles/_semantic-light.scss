@@ -1,0 +1,883 @@
+// ─── IDIRA Design System — Semantic Tokens: Light Theme ──────────────────────
+@use 'primitives' as *;
+
+// ── Global / Text ─────────────────────────────────────────────────────────────
+$color-text-title:        $primitive-light-blue-750;
+$color-text-running:      $primitive-light-blue-900;
+$color-text-secondary:    $primitive-global-darkblue-500;
+$color-text-hint:         $primitive-dark-gray-500;
+$color-text-disabled:     $primitive-dark-gray-300;
+$color-text-inverse:      $primitive-white;
+$color-text-success:      $primitive-light-green-500;
+$color-text-warning:      $primitive-light-yellow-500;
+$color-text-error:        $primitive-light-red-500;
+$color-text-info:         $primitive-light-blue-500;
+// aliases
+$color-text-light:        $primitive-light-blue-900;
+$color-text-muted:        $primitive-global-darkblue-500;
+$color-neutral-0:         $primitive-white;
+
+// ── Global / Icons ────────────────────────────────────────────────────────────
+$color-icon-idle:         $primitive-light-blue-900;
+$color-icon-disabled:     $primitive-dark-gray-300;
+$color-icon-inverse:      $primitive-white;
+
+// ── Global / Status icons ─────────────────────────────────────────────────────
+$color-status-info-icon:     $primitive-light-blue-500;
+$color-status-info-bg:       $primitive-global-lightblue-600;
+$color-status-success-icon:  $primitive-light-green-500;
+$color-status-success-bg:    $primitive-light-green-100;
+$color-status-error-icon:    $primitive-light-red-500;
+$color-status-error-bg:      $primitive-light-red-100;
+$color-status-warning-icon:  $primitive-light-yellow-500;
+$color-status-warning-bg:    $primitive-light-yellow-100;
+$color-status-idle-icon:     $primitive-global-darkblue-300;
+$color-status-idle-bg:       $primitive-light-gray-300;
+$color-status-startup-icon:  $primitive-light-blue-700;
+$color-status-startup-bg:    $primitive-dark-blue-100;
+// Status-icons / Other
+$color-status-arrange-icon:  $primitive-light-green-800;
+$color-status-arrange-bg:    $primitive-light-green-800;
+$color-status-pause-icon:    $primitive-others-light-06;
+$color-status-pause-bg:      $primitive-others-light-06;
+$color-status-security-icon: $primitive-others-light-07;
+$color-status-security-bg:   $primitive-others-light-07;
+$color-status-calendar-icon: $primitive-others-light-08;
+// shorthand aliases
+$color-status-success:       $primitive-light-green-500;
+$color-status-warning:       $primitive-light-yellow-500;
+$color-status-error:         $primitive-light-red-500;
+$color-status-idle:          $primitive-global-darkblue-300;
+
+// ── Global / Surface ──────────────────────────────────────────────────────────
+$color-surface-idle:          $primitive-white;
+// aliases
+$color-background-dark:       $primitive-global-lightblue-200;
+$color-background-darker:     $primitive-white;
+$color-background-darkest:    $primitive-white;
+
+// ── Global / Borders ──────────────────────────────────────────────────────────
+$color-divider-1:   $primitive-global-lightblue-650;
+$color-border-dark: $primitive-global-lightblue-650;
+
+// ── Global / Background ───────────────────────────────────────────────────────
+$color-page-background:   $primitive-global-bg-light;
+$color-overlay-backdrop:  rgba(0, 0, 0, 0.60);
+
+// ── Global / Spaces logos ─────────────────────────────────────────────────────
+$color-space-command-center-1: #FF333A;
+$color-space-command-center-2: #FF9D84;
+$color-space-command-center-3: #FF5371;
+$color-space-access-1:         #0000C0;
+$color-space-access-2:         #52C8EF;
+$color-space-access-3:         #0033E0;
+$color-space-risk-1:           #F39200;
+$color-space-risk-2:           #F3A714;
+$color-space-risk-3:           #FFEA00;
+$color-space-manage-1:         #009B76;
+$color-space-manage-2:         rgba(#00ADA5, 0.80);
+$color-space-manage-3:         #38DCBE;
+$color-space-audit-1:          #8F0078;
+$color-space-audit-2:          #A52D97;
+$color-space-audit-3:          #E99CE0;
+$color-space-setup-1:          #8916F6;
+$color-space-setup-2:          #AC59FF;
+$color-space-setup-3:          #DCBCF6;
+
+// ── Global / Branding ─────────────────────────────────────────────────────────
+$color-brand-icon-blue:    $primitive-brand-logo-blue;
+$color-brand-icon-dark:    $primitive-brand-logo-dark;
+$color-brand-text:         $primitive-brand-logo-dark;
+$color-brand-tagline:      $primitive-brand-logo-dark;
+$color-brand-tagline-gray: $primitive-brand-logo-gray;
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+$color-nav-text-idle:          $primitive-global-darkblue-400;
+$color-nav-text-selected:      $primitive-light-blue-700;
+$color-nav-bg-selected:        $primitive-global-lightblue-600;
+$color-nav-side-line-selected: $primitive-light-blue-600;
+$color-nav-icon-idle:          $primitive-global-darkblue-400;
+$color-nav-icon-selected:      $primitive-light-blue-600;
+
+// ── Primary ───────────────────────────────────────────────────────────────────
+$color-primary:        $primitive-light-blue-500;
+$color-primary-dark:   $primitive-light-blue-700;
+$color-primary-darker: $primitive-light-blue-800;
+$color-primary-light:  $primitive-global-lightblue-600;
+
+// ── Accordion ─────────────────────────────────────────────────────────────────
+$color-accordion-bg:                $primitive-global-lightblue-200;
+$color-accordion-bg-hover:          $primitive-global-lightblue-600;
+$color-accordion-bg-selected-hover: $primitive-white;
+$color-accordion-bg-selected:       $primitive-white;
+$color-accordion-stroke:            $primitive-global-lightblue-650;
+$color-accordion-stroke-hover:      $primitive-light-blue-100;
+$color-accordion-text:              $primitive-light-blue-900;
+$color-accordion-icon:              $primitive-global-darkblue-300;
+
+// ── Anchor Links ──────────────────────────────────────────────────────────────
+$color-anchor-text-idle:      $primitive-global-darkblue-500;
+$color-anchor-text-hover:     $primitive-light-blue-600;
+$color-anchor-text-selected:  $primitive-light-blue-700;
+$color-anchor-text-disabled:  $primitive-dark-gray-200;
+$color-anchor-line-selected:  $primitive-light-blue-700;
+$color-anchor-bg-hover:       transparent;
+$color-anchor-bg-selected:    transparent;
+$color-anchor-separator:      $primitive-dark-gray-200;
+
+// ── Buttons / Primary ─────────────────────────────────────────────────────────
+$color-btn-primary-idle:         $primitive-light-blue-500;
+$color-btn-primary-hover:        $primitive-light-blue-600;
+$color-btn-primary-pressed:      $primitive-light-blue-700;
+$color-btn-primary-text:         $primitive-white;
+$color-btn-primary-text-disabled:$primitive-dark-gray-400;
+$color-btn-primary-disabled-bg:  $primitive-dark-gray-200;
+
+// ── Buttons / Secondary ───────────────────────────────────────────────────────
+$color-btn-secondary-bg-idle:    $primitive-white;
+$color-btn-secondary-bg-hover:   $primitive-global-lightblue-600;
+$color-btn-secondary-bg-selected:$primitive-global-lightblue-700;
+$color-btn-secondary-bg-disabled:$primitive-white;
+$color-btn-secondary-text-idle:  $primitive-light-blue-500;
+$color-btn-secondary-text-hover: $primitive-light-blue-600;
+$color-btn-secondary-text-selected:$primitive-light-blue-700;
+$color-btn-secondary-text-disabled:$primitive-dark-gray-200;
+$color-btn-secondary-stroke-idle:    $primitive-light-blue-500;
+$color-btn-secondary-stroke-hover:   $primitive-light-blue-600;
+$color-btn-secondary-stroke-selected:$primitive-light-blue-700;
+$color-btn-secondary-stroke-disabled:$primitive-dark-gray-300;
+// aliases
+$color-btn-secondary-border:         $primitive-light-blue-500;
+$color-btn-secondary-text:           $primitive-light-blue-500;
+$color-btn-hover-overlay:            $primitive-global-lightblue-600;
+$color-btn-secondary-pressed-bg:     $primitive-global-lightblue-700;
+$color-btn-disabled-bg:              $primitive-dark-gray-200;
+$color-btn-disabled-text:            $primitive-dark-gray-400;
+$color-btn-disabled-border:          $primitive-dark-gray-300;
+
+// ── Buttons / Text Button ─────────────────────────────────────────────────────
+$color-btn-text-bg-hover:     $primitive-global-lightblue-600;
+$color-btn-text-bg-selected:  $primitive-global-lightblue-700;
+$color-btn-text-bg-disabled:  $primitive-white;
+$color-btn-text-idle:         $primitive-light-blue-500;
+$color-btn-text-hover:        $primitive-light-blue-600;
+$color-btn-text-selected:     $primitive-light-blue-700;
+$color-btn-text-disabled:     $primitive-dark-gray-200;
+
+// ── Buttons / Filter Button ───────────────────────────────────────────────────
+$color-btn-filter-text-idle:     $primitive-light-blue-900;
+$color-btn-filter-icon-idle:     $primitive-white;
+$color-btn-filter-icon-hover:    $primitive-light-blue-600;
+$color-btn-filter-icon-pressed:  $primitive-light-blue-700;
+$color-btn-filter-icon-selected: $primitive-light-blue-700;
+$color-btn-filter-icon-disabled: $primitive-dark-gray-200;
+// aliases
+$color-btn-filter-hover-text:    $primitive-light-blue-600;
+$color-btn-filter-pressed-text:  $primitive-light-blue-700;
+$color-btn-filter-selected-text: $primitive-light-blue-700;
+
+// ── Buttons / Icon Button ─────────────────────────────────────────────────────
+$color-btn-icon-idle:     $primitive-global-darkblue-300;
+$color-btn-icon-hover:    $primitive-light-blue-600;
+$color-btn-icon-pressed:  $primitive-light-blue-700;
+$color-btn-icon-selected: $primitive-light-blue-700;
+$color-btn-icon-disabled: $primitive-dark-gray-200;
+$color-btn-icon-hover-bg:   rgba(#C9D3E6, 0.50);
+$color-btn-icon-pressed-bg: rgba(#C9D3E6, 0.30);
+
+// ── Buttons / Split button ────────────────────────────────────────────────────
+$color-split-primary-text:          $primitive-white;
+$color-split-primary-text-disabled: $primitive-dark-gray-400;
+$color-split-primary-fill-idle:     $primitive-light-blue-500;
+$color-split-primary-fill-hover:    $primitive-light-blue-600;
+$color-split-primary-fill-selected: $primitive-light-blue-700;
+$color-split-primary-bg-disabled:   $primitive-dark-gray-200;
+$color-split-secondary-text-idle:     $primitive-light-blue-500;
+$color-split-secondary-text-hover:    $primitive-light-blue-600;
+$color-split-secondary-text-selected: $primitive-light-blue-700;
+$color-split-secondary-text-disabled: $primitive-dark-gray-200;
+$color-split-secondary-fill-idle:     $primitive-white;
+$color-split-secondary-fill-hover:    $primitive-global-lightblue-600;
+$color-split-secondary-fill-selected: $primitive-global-lightblue-700;
+$color-split-secondary-stroke-disabled:$primitive-dark-gray-300;
+
+// ── Buttons / Select button ───────────────────────────────────────────────────
+$color-btn-select-bg-selected-disabled: $primitive-bw-200;
+
+// ── Link ──────────────────────────────────────────────────────────────────────
+$color-btn-link-text:     $primitive-light-blue-500;
+$color-btn-link-disabled: $primitive-dark-gray-300;
+
+// ── Bulk / Action dialog ──────────────────────────────────────────────────────
+$color-bulk-dialog-card-stroke:    $primitive-global-lightblue-650;
+$color-bulk-dialog-stroke:         $primitive-light-blue-200;
+$color-bulk-dialog-separator:      $primitive-white;
+$color-bulk-dialog-text:           $primitive-light-blue-750;
+$color-bulk-dialog-icon:           $primitive-white;
+$color-bulk-dialog-text-sub:       $primitive-global-darkblue-500;
+$color-bulk-dialog-bg-gradient-1:  $primitive-light-gray-50;
+$color-bulk-dialog-bg-gradient-2:  $primitive-light-gray-50;
+
+// ── Bulk / Bar ────────────────────────────────────────────────────────────────
+$color-bulk-bar-separator:         $primitive-light-blue-100;
+$color-bulk-bar-text:              $primitive-global-darkblue-500;
+$color-bulk-bar-gradient-stop-1:   $primitive-global-lightblue-450;
+$color-bulk-bar-gradient-stop-2:   $primitive-global-lightblue-450;
+$color-bulk-bar-stroke:            $primitive-global-lightblue-650;
+
+// ── Calendar ──────────────────────────────────────────────────────────────────
+$color-cal-text-idle:             $primitive-light-blue-900;
+$color-cal-text-selected:         $primitive-light-blue-500;
+$color-cal-text-hover:            $primitive-light-blue-500;
+$color-cal-text-labels:           $primitive-global-darkblue-500;
+$color-cal-text-disabled:         $primitive-dark-gray-300;
+$color-cal-icon-idle:             $primitive-global-darkblue-300;
+$color-cal-bg-idle:               $primitive-white;
+$color-cal-bg-default:            $primitive-white;
+$color-cal-bg-hover:              $primitive-global-lightblue-450;
+$color-cal-bg-numbers-hover:      $primitive-light-gray-200;
+$color-cal-bg-number-selected:    $primitive-global-lightblue-200;
+$color-cal-bg-selected:           transparent;
+$color-cal-bg-selected-day:       $primitive-white;
+$color-cal-bg-in-range:           $primitive-global-lightblue-200;
+$color-cal-stroke-idle:           $primitive-light-gray-300;
+$color-cal-stroke-selected-idle:  $primitive-global-lightblue-200;
+$color-cal-stroke-selected:       $primitive-global-darkblue-500;
+// Time range
+$color-cal-tr-bg-idle:            transparent;
+$color-cal-tr-bg-selected:        transparent;
+$color-cal-tr-text-idle:          $primitive-global-darkblue-500;
+$color-cal-tr-text-selected:      $primitive-light-blue-750;
+
+// ── Cards ─────────────────────────────────────────────────────────────────────
+$color-card-bg:                   $primitive-white;
+$color-card-bg-hover:             $primitive-white;
+$color-card-stroke:               $primitive-global-lightblue-600;
+$color-card-gradient-stop-1:      $primitive-white;
+$color-card-gradient-stop-2:      $primitive-white;
+$color-card-stroke-hover-gradient-1: $primitive-light-blue-100;
+$color-card-stroke-hover-gradient-2: $primitive-light-blue-100;
+$color-card-stroke-selected-gradient-1: $primitive-light-blue-500;
+$color-card-stroke-selected-gradient-2: $primitive-light-blue-300;
+$color-card-glow-shadow:          $primitive-global-lightblue-700;
+// legacy aliases
+$color-card-stroke-hover-light:   $primitive-light-blue-100;
+$color-card-stroke-hover-dark:    rgba(108, 149, 248, 0.50);
+$color-card-glow-light:           $primitive-global-lightblue-700;
+$color-card-glow-dark:            rgba(46, 107, 255, 0.15);
+$color-background-dark:           $primitive-global-lightblue-200;
+$color-background-darker:         $primitive-white;
+$color-background-darkest:        $primitive-white;
+
+// ── Checkbox ──────────────────────────────────────────────────────────────────
+$color-checkbox-bg-idle:          $primitive-global-lightblue-200;
+$color-checkbox-bg-idle-hover:    $primitive-global-lightblue-200;
+$color-checkbox-bg-selected:      $primitive-dark-blue-500;
+$color-checkbox-bg-selected-hover:$primitive-light-blue-600;
+$color-checkbox-stroke-idle:      $primitive-light-blue-100;
+$color-checkbox-stroke-idle-hover:$primitive-light-blue-500;
+$color-checkbox-bg-disabled:      $primitive-dark-gray-200;
+$color-checkbox-stroke-disabled:  $primitive-dark-gray-200;
+$color-checkbox-stroke-selected:  $primitive-dark-blue-500;
+$color-checkbox-stroke-hover:     $primitive-light-blue-600;
+$color-checkbox-text:             $primitive-light-blue-900;
+$color-checkbox-icon-checked:     $primitive-white;
+$color-checkbox-icon-disabled:    $primitive-white;
+$color-checkbox-icon:             $primitive-global-darkblue-300;
+
+// ── Charts ────────────────────────────────────────────────────────────────────
+$color-chart-tooltip-bg:          $primitive-white;
+$color-chart-tooltip-stroke:      $primitive-global-lightblue-650;
+$color-chart-tooltip-text:        $primitive-light-blue-900;
+$color-chart-legend-bg:           $primitive-white;
+$color-chart-donut-bg:            $primitive-global-lightblue-650;
+$color-chart-donut-stroke:        $primitive-white;
+$color-chart-axis-y-line:         $primitive-global-lightblue-650;
+$color-chart-vertical-bars:       $primitive-light-blue-400;
+
+// ── Chips ─────────────────────────────────────────────────────────────────────
+$color-chip-bg:            $primitive-white;
+$color-chip-bg-hover:      $primitive-global-lightblue-600;
+$color-chip-bg-disabled:   $primitive-light-gray-300;
+$color-chip-border:        $primitive-light-blue-100;
+$color-chip-border-hover:  $primitive-light-blue-100;
+$color-chip-border-disabled:$primitive-light-gray-300;
+$color-chip-text:          $primitive-light-blue-900;
+$color-chip-text-disabled: $primitive-dark-gray-300;
+$color-chip-icon:          $primitive-global-darkblue-300;
+$color-chip-icon-hover:    $primitive-light-blue-600;
+$color-chip-icon-disabled: $primitive-global-darkblue-300;
+$color-chip-remove:        $primitive-global-darkblue-400;
+// legacy aliases
+$color-chip-disabled-bg:   $primitive-light-gray-300;
+$color-chip-disabled-text: $primitive-dark-gray-300;
+
+// ── Copy ──────────────────────────────────────────────────────────────────────
+$color-copy-text:          $primitive-light-green-900;
+$color-copy-icon:          $primitive-light-green-600;
+$color-copy-stroke:        $primitive-light-green-600;
+$color-copy-bg:            $primitive-light-green-100;
+// legacy aliases
+$color-copy-badge-bg:      $primitive-light-green-100;
+$color-copy-badge-border:  $primitive-light-green-600;
+$color-copy-badge-text:    $primitive-light-green-900;
+
+// ── Contextual / Local ────────────────────────────────────────────────────────
+$color-contextual-title:     $primitive-light-blue-900;
+$color-contextual-subtitle:  $primitive-global-darkblue-500;
+$color-contextual-icons:     $primitive-global-darkblue-300;
+
+// ── Contextual / In-app ───────────────────────────────────────────────────────
+$color-inapp-bg:     $primitive-light-gray-50;
+$color-inapp-text:   $primitive-others-light-08;
+$color-inapp-stroke: $primitive-others-light-08;
+
+// ── Contextual / Info ─────────────────────────────────────────────────────────
+$color-contextual-info-icon:   $primitive-light-blue-500;
+$color-contextual-info-stroke: transparent;
+$color-contextual-info-bg:     $primitive-global-lightblue-600;
+
+// ── Contextual / Success ──────────────────────────────────────────────────────
+$color-contextual-success-icon:   $primitive-light-green-500;
+$color-contextual-success-stroke: transparent;
+$color-contextual-success-bg:     $primitive-light-green-100;
+
+// ── Contextual / Warning ──────────────────────────────────────────────────────
+$color-contextual-warning-icon:   $primitive-light-yellow-500;
+$color-contextual-warning-stroke: transparent;
+$color-contextual-warning-bg:     $primitive-light-yellow-100;
+
+// ── Contextual / Attention (Error) ────────────────────────────────────────────
+$color-contextual-error-icon:   $primitive-light-red-500;
+$color-contextual-error-stroke: transparent;
+$color-contextual-error-bg:     $primitive-light-red-100;
+
+// ── Dialog ────────────────────────────────────────────────────────────────────
+$color-dialog-bg:          $primitive-white;
+$color-dialog-icon:        $primitive-light-blue-500;
+$color-dialog-separator:   $primitive-light-blue-500;
+$color-dialog-close-icon:  $primitive-global-darkblue-300;
+$color-dialog-text:        $primitive-light-blue-750;
+
+// ── Form Footer ───────────────────────────────────────────────────────────────
+$color-footer-bg:   $primitive-light-gray-50;
+$color-footer-line: $primitive-light-blue-100;
+
+// ── Table ─────────────────────────────────────────────────────────────────────
+$color-table-bg-hover:  $primitive-global-lightblue-400;
+$color-table-line-idle: $primitive-global-lightblue-700;
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+$color-tab-line:                          $primitive-global-lightblue-700;
+$color-tab-text-idle:                     $primitive-global-darkblue-400;
+$color-tab-text-selected:                 $primitive-light-blue-600;
+$color-tab-vertical-text-idle:            $primitive-global-darkblue-400;
+$color-tab-vertical-text-sub-idle:        $primitive-global-darkblue-300;
+$color-tab-vertical-bg-idle:              transparent;
+$color-tab-vertical-bg-selected-1:        $primitive-global-lightblue-500;
+$color-tab-vertical-bg-selected-2:        $primitive-global-lightblue-400;
+$color-tab-vertical-bg-selected-radial-1: $primitive-light-blue-400;
+$color-tab-vertical-bg-selected-radial-2: $primitive-light-blue-600;
+
+// ── Input ─────────────────────────────────────────────────────────────────────
+$color-input-bg:             $primitive-white;
+$color-input-bg-focused:     $primitive-global-lightblue-100;
+$color-input-border:         $primitive-global-lightblue-700;
+$color-input-border-focused: $primitive-light-blue-600;
+$color-input-border-error:   $primitive-light-red-500;
+$color-input-text:           $primitive-black;
+$color-input-placeholder:    $primitive-global-darkblue-300;
+$color-input-label:          $primitive-global-darkblue-400;
+$color-input-hint:           $primitive-global-darkblue-300;
+$color-input-error:          $primitive-light-red-500;
+$color-input-disabled-bg:    $primitive-global-lightblue-400;
+$color-input-disabled-text:  $primitive-global-darkblue-300;
+
+// ── Select ────────────────────────────────────────────────────────────────────
+$color-select-dropdown-bg:        $primitive-white;
+$color-select-item-hover:         $primitive-global-lightblue-400;
+$color-select-item-selected:      $primitive-global-lightblue-500;
+$color-select-item-text:          $primitive-black;
+$color-select-item-text-selected: $primitive-light-blue-600;
+$color-select-search-border:      $primitive-global-lightblue-700;
+
+// ── Severity ──────────────────────────────────────────────────────────────────
+$color-severity-critical: $primitive-light-red-500;
+$color-severity-high:     $primitive-light-yellow-500;
+$color-severity-medium:   $primitive-light-blue-500;
+$color-severity-low:      $primitive-light-blue-400;
+
+// ── Skeleton ──────────────────────────────────────────────────────────────────
+$color-skeleton-bg: $primitive-global-lightblue-400;
+
+// ── Badge ─────────────────────────────────────────────────────────────────────
+$color-badge-critical-bg:     rgba(227,13,13,0.10);
+$color-badge-critical-text:   $primitive-light-red-500;
+$color-badge-critical-border: $primitive-light-red-500;
+$color-badge-high-bg:         rgba(245,188,88,0.15);
+$color-badge-high-text:       $primitive-light-yellow-600;
+$color-badge-high-border:     $primitive-light-yellow-600;
+$color-badge-medium-bg:       rgba(46,107,255,0.10);
+$color-badge-medium-text:     $primitive-light-blue-600;
+$color-badge-medium-border:   $primitive-light-blue-600;
+$color-badge-low-bg:          rgba(108,149,248,0.10);
+$color-badge-low-text:        $primitive-light-blue-400;
+$color-badge-low-border:      $primitive-light-blue-400;
+$color-badge-info-bg:         rgba(11,83,255,0.08);
+$color-badge-info-text:       $primitive-light-blue-600;
+$color-badge-info-border:     $primitive-light-blue-600;
+$color-badge-success-bg:      rgba(0,166,126,0.10);
+$color-badge-success-text:    $primitive-light-green-500;
+$color-badge-success-border:  $primitive-light-green-500;
+$color-badge-neutral-bg:      $primitive-global-lightblue-400;
+$color-badge-neutral-text:    $primitive-global-darkblue-400;
+$color-badge-neutral-border:  $primitive-global-lightblue-700;
+
+// ── Action Menu ───────────────────────────────────────────────────────────────
+$color-action-menu-text-idle:     $primitive-light-blue-900;
+$color-action-menu-text-hover:    $primitive-light-blue-500;
+$color-action-menu-text-selected: $primitive-light-blue-500;
+$color-action-menu-text-disabled: $primitive-dark-gray-300;
+$color-action-menu-icon-idle:     $primitive-light-blue-900;
+$color-action-menu-icon-hover:    $primitive-light-blue-500;
+$color-action-menu-icon-selected: $primitive-light-blue-500;
+$color-action-menu-icon-disabled: $primitive-dark-gray-300;
+$color-action-menu-bg-hover:      $primitive-global-lightblue-200;
+$color-action-menu-bg-selected:   $primitive-white;
+$color-action-menu-gradient:      $primitive-white;
+
+// ── Header / User menu ────────────────────────────────────────────────────────
+$color-header-text:         $primitive-light-blue-750;
+$color-header-text-label:   $primitive-global-darkblue-100;
+$color-header-labels:       $primitive-global-darkblue-300;
+$color-header-icon:         $primitive-global-darkblue-300;
+$color-header-hover:        $primitive-global-lightblue-650;
+$color-header-pressed:      $primitive-light-blue-700;
+$color-header-separator:    $primitive-global-lightblue-600;
+$color-header-avatar:       $primitive-light-blue-500;
+$color-header-bg:           $primitive-white;
+$color-header-stroke:       transparent;
+
+// ── Header / Help ─────────────────────────────────────────────────────────────
+$color-help-text-idle:         $primitive-light-blue-500;
+$color-help-text-hover:        $primitive-light-blue-600;
+$color-help-text-selected:     $primitive-light-blue-700;
+$color-help-icon-idle:         $primitive-light-blue-500;
+$color-help-icon-notification: $primitive-white;
+$color-help-icon-hover:        $primitive-light-blue-600;
+$color-help-icon-selected:     $primitive-light-blue-700;
+$color-help-bg-idle:           $primitive-dark-darkblue-950;
+$color-help-bg-hover:          $primitive-dark-darkblue-800;
+$color-help-bg-selected:       $primitive-dark-darkblue-900;
+
+// ── Input / input field ───────────────────────────────────────────────────────
+$color-input-text-label:           $primitive-global-darkblue-500;
+$color-input-text-label-disabled:  $primitive-dark-gray-300;
+$color-input-text-label-focus:     $primitive-light-blue-500;
+$color-input-text-label-error:     $primitive-dark-red-500;
+$color-input-text-default:         $primitive-light-blue-900;
+$color-input-text-disabled:        $primitive-dark-gray-300;
+$color-input-text-hint:            $primitive-dark-gray-500;
+$color-input-icon-info:            $primitive-global-darkblue-300;
+$color-input-text-readonly:        $primitive-light-blue-900;
+$color-input-stroke-idle:          $primitive-global-lightblue-650;
+$color-input-stroke-hover:         $primitive-light-blue-500;
+$color-input-stroke-focus:         $primitive-dark-blue-500;
+$color-input-stroke-error:         $primitive-dark-red-500;
+$color-input-stroke-disabled:      $primitive-dark-gray-200;
+$color-input-bg-selected:          transparent;
+
+// ── Input / advisory text ─────────────────────────────────────────────────────
+$color-advisory-text:       $primitive-global-darkblue-500;
+$color-advisory-error:      $primitive-light-red-500;
+$color-advisory-counter:    $primitive-global-darkblue-500;
+$color-advisory-icon-error: $primitive-light-red-500;
+$color-advisory-icon-idle:  $primitive-global-darkblue-500;
+
+// ── Input / listbox ───────────────────────────────────────────────────────────
+$color-listbox-text-idle:      $primitive-light-blue-900;
+$color-listbox-text-selected:  $primitive-light-blue-500;
+$color-listbox-text-disabled:  $primitive-dark-gray-300;
+$color-listbox-text-label:     $primitive-global-darkblue-500;
+$color-listbox-text-search:    rgba(#616A8B, 0.50);
+$color-listbox-icon-idle:      $primitive-light-blue-900;
+$color-listbox-icon-selected:  $primitive-light-blue-500;
+$color-listbox-icon-search:    $primitive-global-darkblue-300;
+$color-listbox-icon-disabled:  $primitive-dark-gray-300;
+$color-listbox-bg-idle:        $primitive-white;
+$color-listbox-bg-hover:       $primitive-global-lightblue-200;
+$color-listbox-bg-selected:    $primitive-white;
+$color-listbox-bg-disabled:    $primitive-white;
+$color-listbox-bg-holder:      $primitive-white;
+$color-listbox-stroke-idle:    $primitive-global-lightblue-650;
+$color-listbox-stroke-holder:  transparent;
+
+// ── Input / text area ─────────────────────────────────────────────────────────
+$color-textarea-bg-idle:         $primitive-white;
+$color-textarea-bg-hover:        $primitive-white;
+$color-textarea-bg-selected:     $primitive-white;
+$color-textarea-bg-disabled:     rgba(#000000, 0.05);
+$color-textarea-bg-error:        $primitive-white;
+$color-textarea-stroke-idle:     $primitive-global-lightblue-650;
+$color-textarea-stroke-hover:    $primitive-light-blue-900;
+$color-textarea-stroke-selected: $primitive-light-blue-500;
+$color-textarea-stroke-error:    $primitive-light-red-500;
+$color-textarea-stroke-disabled: $primitive-dark-gray-300;
+$color-textarea-text-idle:       $primitive-light-blue-900;
+$color-textarea-text-selected:   $primitive-light-blue-900;
+$color-textarea-text-disabled:   $primitive-dark-gray-300;
+$color-textarea-text-error:      $primitive-light-red-500;
+$color-textarea-icon-resize:     $primitive-global-lightblue-650;
+
+// ── Input / search & filter ───────────────────────────────────────────────────
+$color-search-bg-idle:          transparent;
+$color-search-bg-hover:         transparent;
+$color-search-bg-selected:      transparent;
+$color-search-stroke-idle:      $primitive-global-lightblue-650;
+$color-search-stroke-hover:     $primitive-light-blue-900;
+$color-search-stroke-selected:  $primitive-light-blue-500;
+$color-search-stroke-filled:    $primitive-global-lightblue-650;
+$color-search-icon:             $primitive-global-darkblue-500;
+$color-search-text:             $primitive-global-darkblue-500;
+$color-search-text-selected:    $primitive-light-blue-900;
+$color-search-text-idle:        $primitive-light-blue-900;
+
+// ── KPI ───────────────────────────────────────────────────────────────────────
+$color-kpi-lines:       $primitive-dark-darkblue-600;
+$color-kpi-icon-bg:     $primitive-dark-darkblue-750;
+$color-kpi-hover-bg:    $primitive-dark-darkblue-750;
+$color-kpi-selected-bg: $primitive-dark-darkblue-650;
+
+// ── Labels (base) ─────────────────────────────────────────────────────────────
+$color-label-text-dark:  $primitive-black;
+$color-label-text-idle:  $primitive-white;
+$color-label-icon-idle:  $primitive-white;
+$color-label-icon-dark:  $primitive-black;
+$color-label-bg-hover:   $primitive-global-lightblue-600;
+
+// ── Labels / Warning ──────────────────────────────────────────────────────────
+$color-label-warning-text:        $primitive-black;
+$color-label-warning-icon:        $primitive-black;
+$color-label-warning-text-line:   $primitive-black;
+$color-label-warning-icon-line:   $primitive-black;
+$color-label-warning-bg:          $primitive-light-yellow-500;
+$color-label-warning-bg-line:     $primitive-light-yellow-100;
+$color-label-warning-stroke-line: $primitive-light-yellow-500;
+$color-label-warning-bg-hover:    $primitive-light-yellow-200;
+
+// ── Labels / Approved ─────────────────────────────────────────────────────────
+$color-label-approved-text-line:   $primitive-black;
+$color-label-approved-icon-line:   $primitive-black;
+$color-label-approved-stroke-line: $primitive-light-green-500;
+$color-label-approved-bg:          $primitive-light-green-300;
+$color-label-approved-bg-line:     $primitive-light-green-100;
+$color-label-approved-bg-hover:    $primitive-light-green-300;
+
+// ── Labels / Error ────────────────────────────────────────────────────────────
+$color-label-error-text-line:   $primitive-black;
+$color-label-error-icon-line:   $primitive-black;
+$color-label-error-bg:          $primitive-light-red-500;
+$color-label-error-bg-line:     $primitive-light-red-100;
+$color-label-error-stroke-line: $primitive-light-red-500;
+$color-label-error-bg-hover:    $primitive-light-red-200;
+
+// ── Labels / Info ─────────────────────────────────────────────────────────────
+$color-label-info-text-line:   $primitive-black;
+$color-label-info-icon-line:   $primitive-black;
+$color-label-info-bg:          $primitive-global-lightblue-600;
+$color-label-info-bg-line:     $primitive-light-gray-50;
+$color-label-info-stroke-line: $primitive-global-lightblue-650;
+$color-label-info-bg-hover:    $primitive-global-lightblue-650;
+
+// ── Labels / Low ──────────────────────────────────────────────────────────────
+$color-label-low-text-line:   $primitive-black;
+$color-label-low-icon-line:   $primitive-black;
+$color-label-low-bg:          $primitive-others-light-12;
+$color-label-low-bg-line:     $primitive-global-lightblue-100;
+$color-label-low-stroke-line: $primitive-light-blue-500;
+$color-label-low-bg-hover:    $primitive-light-blue-200;
+
+// ── Labels / Status ───────────────────────────────────────────────────────────
+$color-label-status-text-line:   $primitive-black;
+$color-label-status-icon-line:   $primitive-black;
+$color-label-status-bg:          $primitive-others-dark-05;
+$color-label-status-bg-line:     $primitive-purple-100;
+$color-label-status-stroke-line: $primitive-purple-500;
+$color-label-status-bg-hover:    $primitive-purple-200;
+
+// ── Lazy loading ──────────────────────────────────────────────────────────────
+$color-lazy-bg:        $primitive-global-darkblue-700;
+$color-lazy-failed:    $primitive-light-yellow-500;
+$color-lazy-text-icon: $primitive-white;
+
+// ── Lazy loading / Loading animation ──────────────────────────────────────────
+$color-loading-green:  $primitive-others-light-04;
+$color-loading-purple: $primitive-others-light-07;
+$color-loading-blue-1: $primitive-light-blue-600;
+$color-loading-blue-2: $primitive-others-light-12;
+$color-loading-shadow: $primitive-global-lightblue-900;
+
+// ── Navigation / Side navigation ──────────────────────────────────────────────
+$color-sidenav-text-space-top:         $primitive-light-blue-750;
+$color-sidenav-icon-buttons-top:       $primitive-global-darkblue-300;
+$color-sidenav-divider-top:            $primitive-global-lightblue-650;
+$color-sidenav-icon-nav-idle:          $primitive-light-blue-900;
+$color-sidenav-icon-nav-hover:         $primitive-light-blue-500;
+$color-sidenav-icon-nav-selected:      $primitive-light-blue-500;
+$color-sidenav-icon-nav-selected-bg:   $primitive-global-lightblue-600;
+$color-sidenav-icon-nav-hover-overlay: $primitive-global-lightblue-700;
+$color-sidenav-text-category-idle:     $primitive-light-blue-900;
+$color-sidenav-text-category-hover:    $primitive-light-blue-500;
+$color-sidenav-text-category-selected: $primitive-light-blue-500;
+$color-sidenav-bg-category-hover:      $primitive-global-lightblue-200;
+$color-sidenav-bg-category-hover-sub:  $primitive-global-lightblue-200;
+$color-sidenav-bg-category-selected:   $primitive-light-blue-500;
+$color-sidenav-divider-category:       $primitive-global-lightblue-650;
+$color-sidenav-side-line-idle:         $primitive-light-blue-100;
+$color-sidenav-side-line-hover:        $primitive-light-blue-100;
+$color-sidenav-side-line-selected:     $primitive-light-blue-500;
+$color-sidenav-bg-fill-gradient-1:     $primitive-others-light-14;
+$color-sidenav-bg-fill-gradient-2:     $primitive-white;
+$color-sidenav-stroke-gradient-1:      transparent;
+$color-sidenav-stroke-gradient-2:      transparent;
+$color-sidenav-bg-fill-3:              rgba(#FFFFFF, 0.50);
+
+// ── Navigation / Navigator ────────────────────────────────────────────────────
+$color-navigator-text-title:               $primitive-light-blue-750;
+$color-navigator-text-title-selected:      $primitive-light-blue-500;
+$color-navigator-text-description:         $primitive-global-darkblue-500;
+$color-navigator-text-description-selected:$primitive-light-blue-900;
+$color-navigator-bg-hover:                 $primitive-global-lightblue-600;
+$color-navigator-stroke:                   $primitive-light-blue-100;
+$color-navigator-bg-fill-1:               transparent;
+$color-navigator-bg-fill-2:               transparent;
+$color-navigator-bg-fill-3:               transparent;
+$color-navigator-bg-fill-4:               rgba(#3772FF, 0.03);
+$color-navigator-bg-fill-light:           $primitive-white;
+
+// ── Generic page-level aliases ────────────────────────────────────────────────
+$color-text-primary:    $primitive-light-blue-900;
+$color-border-light:    $primitive-light-blue-100;
+$color-bg-primary:      $primitive-white;
+$color-bg-secondary:    $primitive-global-lightblue-200;
+$color-text-tertiary:   $primitive-global-darkblue-500;
+$color-bg-tertiary:     $primitive-global-lightblue-400;
+$color-neutral-300:     $primitive-global-lightblue-600;
+$color-neutral-400:     $primitive-global-lightblue-700;
+$color-success:         $primitive-light-green-500;
+$color-warning:         $primitive-light-yellow-500;
+$color-danger:          $primitive-light-red-500;
+
+// ── Radio Button ──────────────────────────────────────────────────────────────
+$color-radio-bg-idle:              $primitive-white;
+$color-radio-bg-idle-hover:        $primitive-global-lightblue-600;
+$color-radio-bg-selected:          $primitive-white;
+$color-radio-bg-selected-hover:    $primitive-global-lightblue-600;
+$color-radio-bg-disabled:          $primitive-bw-200;
+$color-radio-stroke-idle:          $primitive-global-darkblue-100;
+$color-radio-stroke-idle-hover:    $primitive-light-blue-600;
+$color-radio-selected-hover:       $primitive-light-blue-500;
+$color-radio-stroke-disabled:      $primitive-global-darkblue-500;
+$color-radio-stroke-selected:      $primitive-light-blue-500;
+$color-radio-text:                 $primitive-light-blue-900;
+
+// ── Side Filter ───────────────────────────────────────────────────────────────
+$color-side-filter-title:          $primitive-light-blue-900;
+$color-side-filter-icons:          $primitive-global-darkblue-300;
+$color-side-filter-line:           $primitive-global-lightblue-650;
+
+// ── Side Filter / Filter Pills ────────────────────────────────────────────────
+$color-filter-pill-text-icons:     $primitive-light-blue-900;
+$color-filter-pill-bg-idle:        $primitive-light-gray-50;
+$color-filter-pill-bg-hover:       $primitive-global-lightblue-200;
+$color-filter-pill-stroke:         $primitive-global-lightblue-650;
+$color-filter-pill-stroke-hover:   $primitive-light-blue-100;
+$color-filter-pill-selected-stroke:$primitive-light-blue-500;
+$color-filter-pill-bg-selected:    $primitive-global-lightblue-650;
+
+// ── Split View ────────────────────────────────────────────────────────────────
+$color-split-view-text:            $primitive-light-blue-900;
+$color-split-view-text-value:      $primitive-light-blue-900;
+$color-split-view-text-label:      $primitive-global-darkblue-500;
+$color-split-view-stroke:          rgba(#FFFFFF, 0.00);
+$color-split-view-gradient-1:      $primitive-white;
+$color-split-view-gradient-2:      $primitive-white;
+
+// ── System Message ────────────────────────────────────────────────────────────
+$color-system-msg-info-separator:    $primitive-light-blue-500;
+$color-system-msg-success-separator: $primitive-light-green-500;
+$color-system-msg-warning-separator: $primitive-light-yellow-500;
+$color-system-msg-fail-separator:    $primitive-light-red-500;
+
+// ── Skeleton ──────────────────────────────────────────────────────────────────
+$color-skeleton-bg-new:     $primitive-global-lightblue-200;
+$color-skeleton-line:       $primitive-global-lightblue-650;
+
+// ── Scroll ────────────────────────────────────────────────────────────────────
+$color-scroll-bg:           $primitive-global-lightblue-600;
+$color-scroll-handle:       $primitive-light-blue-100;
+$color-scroll-handle-hover: $primitive-light-blue-300;
+
+// ── Slot ─────────────────────────────────────────────────────────────────────
+$color-slot-bg:             rgba(#2E6BFF, 0.20);
+$color-slot-icon:           $primitive-light-blue-500;
+
+// ── Progress Bar ─────────────────────────────────────────────────────────────
+$color-progress-bg:          $primitive-global-lightblue-450;
+$color-progress-handle:      $primitive-light-blue-500;
+$color-progress-text:        $primitive-light-blue-900;
+$color-progress-text-sub:    $primitive-global-darkblue-500;
+$color-progress-text-error:  $primitive-light-red-500;
+$color-progress-text-success:$primitive-light-green-600;
+
+// ── Tabs / Horizontal ─────────────────────────────────────────────────────────
+$color-tab-text-hover:               $primitive-others-light-08;
+$color-tab-text-selected-new:        $primitive-others-light-08;
+$color-tab-icon-number-idle:         $primitive-global-darkblue-500;
+$color-tab-icon-number-hover:        $primitive-global-darkblue-500;
+$color-tab-icon-number-selected:     $primitive-global-darkblue-500;
+$color-tab-icon-number-disabled:     $primitive-global-darkblue-500;
+$color-tab-stroke-hover:             $primitive-others-light-08;
+$color-tab-stroke-selected:          $primitive-others-light-08;
+$color-tab-disabled:                 $primitive-dark-gray-300;
+
+// ── Tabs / Vertical ──────────────────────────────────────────────────────────
+$color-vtab-icon:                    $primitive-global-darkblue-300;
+$color-vtab-text-idle-new:           $primitive-light-blue-750;
+$color-vtab-text-hover:              $primitive-light-blue-750;
+$color-vtab-text-selected:           $primitive-light-blue-500;
+$color-vtab-text-disabled:           $primitive-dark-gray-300;
+$color-vtab-text-group-idle:         $primitive-light-blue-750;
+$color-vtab-text-group-hover:        $primitive-light-blue-750;
+$color-vtab-text-group-selected:     $primitive-light-blue-500;
+$color-vtab-bg-idle:                 $primitive-white;
+$color-vtab-bg-hover:                $primitive-global-lightblue-550;
+$color-vtab-stroke:                  $primitive-global-lightblue-650;
+$color-vtab-bg-selected-1:           $primitive-global-lightblue-450;
+$color-vtab-bg-selected-2:           $primitive-global-lightblue-450;
+
+// ── Tags ─────────────────────────────────────────────────────────────────────
+$color-tag-bg:              $primitive-global-lightblue-600;
+$color-tag-bg-hover:        $primitive-global-lightblue-600;
+$color-tag-stroke-hover:    $primitive-light-blue-400;
+$color-tag-text:            $primitive-light-blue-900;
+
+// ── Tables ───────────────────────────────────────────────────────────────────
+$color-table-text-default:            $primitive-light-blue-900;
+$color-table-text-labels:             $primitive-global-darkblue-500;
+$color-table-bg-idle:                 transparent;
+$color-table-bg-selected:             $primitive-global-lightblue-700;
+$color-table-bg-grouping-idle:        $primitive-global-lightblue-100;
+$color-table-bg-grouping-hover:       $primitive-global-lightblue-300;
+$color-table-line-selected:           $primitive-light-blue-100;
+$color-table-fat-stroke-idle:         $primitive-global-lightblue-650;
+$color-table-fat-stroke-hover:        $primitive-light-blue-100;
+$color-table-fat-stroke-selected:     $primitive-light-blue-100;
+$color-table-fat-bg-idle:             $primitive-white;
+$color-table-fat-bg-hover:            $primitive-global-lightblue-600;
+$color-table-fat-bg-selected:         $primitive-global-lightblue-700;
+
+// ── Timeline ─────────────────────────────────────────────────────────────────
+$color-timeline-text-title:           $primitive-light-blue-900;
+$color-timeline-text-sub:             $primitive-global-darkblue-500;
+$color-timeline-dot:                  $primitive-light-blue-500;
+$color-timeline-line:                 $primitive-global-lightblue-650;
+
+// ── Tool Bar ─────────────────────────────────────────────────────────────────
+$color-toolbar-divider:               $primitive-global-darkblue-200;
+
+// ── Tooltip ──────────────────────────────────────────────────────────────────
+$color-tooltip-bg:                    $primitive-white;
+$color-tooltip-stroke:                rgba(#FFFFFF, 0.00);
+$color-tooltip-text:                  $primitive-light-blue-900;
+
+// ── Callout ──────────────────────────────────────────────────────────────────
+$color-callout-bg:                    $primitive-white;
+$color-callout-stroke:                rgba(#FFFFFF, 0.00);
+$color-callout-icon:                  $primitive-global-darkblue-300;
+
+// ── Toggle ───────────────────────────────────────────────────────────────────
+$color-toggle-bg-idle:                $primitive-global-lightblue-600;
+$color-toggle-bg-hover:               $primitive-global-lightblue-600;
+$color-toggle-bg-disabled:            $primitive-light-gray-300;
+$color-toggle-nub-idle:               $primitive-light-blue-500;
+$color-toggle-nub-hover:              $primitive-light-blue-600;
+$color-toggle-nub-disabled:           $primitive-light-blue-200;
+$color-toggle-bg-off-idle:            $primitive-bw-200;
+$color-toggle-bg-off-hover:           $primitive-global-lightblue-600;
+$color-toggle-bg-off-disabled:        $primitive-light-gray-300;
+$color-toggle-nob-off:                $primitive-white;
+$color-toggle-nob-off-hover:          $primitive-light-gray-50;
+$color-toggle-nob-off-disabled:       $primitive-light-gray-200;
+$color-toggle-text:                   $primitive-light-blue-900;
+
+// ── Upload Field ─────────────────────────────────────────────────────────────
+$color-upload-bg:                     $primitive-white;
+$color-upload-bg-selected:            $primitive-global-lightblue-100;
+$color-upload-bg-hover:               $primitive-global-lightblue-200;
+$color-upload-stroke-idle:            $primitive-global-lightblue-650;
+$color-upload-stroke-hover:           $primitive-light-blue-100;
+$color-upload-stroke-focus:           $primitive-light-blue-500;
+$color-upload-stroke-error:           $primitive-light-red-500;
+$color-upload-stroke-success:         $primitive-light-green-500;
+$color-upload-stroke-disabled:        $primitive-global-darkblue-200;
+$color-upload-icon-bg-idle:           $primitive-global-lightblue-650;
+$color-upload-icon-bg-disabled:       $primitive-light-gray-300;
+$color-upload-icon:                   $primitive-light-blue-500;
+$color-upload-icon-disabled:          $primitive-global-darkblue-300;
+$color-upload-text-default:           $primitive-light-blue-500;
+$color-upload-text-label:             $primitive-light-blue-900;
+$color-upload-text-sub:               $primitive-global-darkblue-500;
+$color-upload-text-disabled:          $primitive-global-darkblue-300;
+$color-upload-text-importing:         $primitive-light-blue-500;
+
+// ── Toast ────────────────────────────────────────────────────────────────────
+$color-toast-text-icon:               $primitive-light-blue-900;
+$color-toast-icon:                    $primitive-light-green-500;
+$color-toast-stroke:                  $primitive-light-green-500;
+$color-toast-bg:                      $primitive-light-green-100;
+$color-toast-inapp-bg:                $primitive-white;
+$color-toast-inapp-text:              $primitive-others-light-08;
+$color-toast-inapp-stroke:            $primitive-others-light-08;
+$color-toast-inapp-icon:              $primitive-global-darkblue-300;
+
+// ── Wizard ───────────────────────────────────────────────────────────────────
+$color-wizard-line-idle:              $primitive-light-gray-700;
+$color-wizard-line-side:              $primitive-global-lightblue-650;
+$color-wizard-line-visited:           $primitive-others-light-08;
+$color-wizard-text-title-current:     $primitive-others-light-08;
+$color-wizard-text-title-current-hover:$primitive-light-blue-600;
+$color-wizard-text-number-current:    $primitive-white;
+$color-wizard-bg-number-current:      $primitive-others-light-08;
+$color-wizard-bg-number-current-hover:$primitive-light-blue-600;
+$color-wizard-text-title-visited:     $primitive-global-darkblue-500;
+$color-wizard-text-title-visited-hover:$primitive-light-blue-500;
+$color-wizard-text-number-visited:    $primitive-others-light-08;
+$color-wizard-stroke-number-visited:  $primitive-others-light-08;
+$color-wizard-bg-number-visited:      $primitive-white;
+$color-wizard-text-number-visited-hover:$primitive-others-light-08;
+$color-wizard-stroke-number-visited-hover:$primitive-others-light-08;
+$color-wizard-bg-number-visited-hover:$primitive-global-lightblue-200;
+$color-wizard-text-title-not-visited: $primitive-light-blue-900;
+$color-wizard-text-title-not-visited-hover:$primitive-light-blue-500;
+$color-wizard-text-number-not-visited:$primitive-light-gray-700;
+$color-wizard-stroke-not-visited:     $primitive-light-gray-700;
+$color-wizard-bg-number-not-visited:  $primitive-white;
+$color-wizard-text-number-not-visited-hover:$primitive-light-gray-700;
+$color-wizard-stroke-not-visited-hover:$primitive-light-gray-700;
+$color-wizard-bg-number-not-visited-hover:$primitive-global-lightblue-200;
+$color-wizard-text-title-error:       $primitive-global-darkblue-500;
+$color-wizard-text-title-error-hover: $primitive-light-blue-500;
+$color-wizard-text-title-error-current:$primitive-others-light-08;
+$color-wizard-text-title-error-current-hover:$primitive-others-light-08;
+$color-wizard-icon-error:             $primitive-light-red-500;
+$color-wizard-stroke-error:           $primitive-light-red-500;
+$color-wizard-bg-number-error:        $primitive-light-red-100;
+$color-wizard-icon-error-hover:       $primitive-light-red-500;
+$color-wizard-stroke-error-hover:     $primitive-light-red-500;
+$color-wizard-bg-number-error-hover:  $primitive-light-red-200;
+$color-wizard-text-disabled:          $primitive-bw-300;
+$color-wizard-text-disabled-hover:    $primitive-bw-300;
+$color-wizard-text-number-disabled:   $primitive-dark-gray-300;
+$color-wizard-bg-number-disabled:     $primitive-light-gray-200;
+$color-wizard-stroke-number-disabled-hover:$primitive-dark-gray-300;

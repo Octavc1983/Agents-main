@@ -1,0 +1,372 @@
+@use 'tokens' as *;
+
+// ── Panel shell ───────────────────────────────────────────────────────────────
+
+.annotation-panel {
+  position: fixed;
+  top: 88px; // header height
+  right: 0;
+  bottom: 0;
+  width: 360px;
+  background: $color-background-darker;
+  border-left: 1px solid $color-border-dark;
+  display: flex;
+  flex-direction: column;
+  z-index: 400;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+
+.annotation-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-4 $spacing-5;
+  border-bottom: 1px solid $color-border-dark;
+  flex-shrink: 0;
+}
+
+.annotation-panel__title {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+}
+
+.annotation-panel__header-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+}
+
+.annotation-panel__toggle {
+  background: none;
+  border: none;
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  padding: $spacing-1 $spacing-2;
+  border-radius: $border-radius-sm;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover { color: $color-text-light; background: $color-btn-hover-overlay; }
+  &--active { color: $color-severity-low; }
+}
+
+.annotation-panel__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover { color: $color-text-light; background: $color-btn-hover-overlay; }
+}
+
+// ── Placement hint bar ────────────────────────────────────────────────────────
+
+.annotation-panel__placing-hint {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+  padding: $spacing-3 $spacing-5;
+  background: rgba(133, 159, 255, 0.08);
+  border-bottom: 1px solid $color-border-dark;
+  font-size: $font-size-xs;
+  color: $color-severity-low;
+  flex-shrink: 0;
+
+  svg { flex-shrink: 0; margin-top: 1px; }
+
+  span { flex: 1; }
+}
+
+.annotation-panel__placing-hint-ok {
+  width: 100%;
+  color: $color-status-success;
+  font-size: $font-size-xs;
+}
+
+.annotation-panel__placing-cancel {
+  background: none;
+  border: none;
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  flex-shrink: 0;
+  transition: color $transition-fast;
+
+  &:hover { color: $color-status-error; }
+}
+
+// ── Compose area ──────────────────────────────────────────────────────────────
+
+.annotation-panel__compose {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $spacing-3;
+  padding: $spacing-4 $spacing-5;
+  border-bottom: 1px solid $color-border-dark;
+  flex-shrink: 0;
+}
+
+// ── Pin placement row ─────────────────────────────────────────────────────────
+
+.annotation-panel__pin-row {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+.annotation-pin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-1 $spacing-3;
+  border: 1px solid $color-border-dark;
+  border-radius: $border-radius-pill;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  background: rgba(255, 255, 255, 0.04);
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  transition: background $transition-fast, color $transition-fast, border-color $transition-fast;
+
+  &:hover { color: $color-text-light; background: $color-btn-hover-overlay; }
+
+  &--active {
+    color: $color-severity-low;
+    border-color: $color-severity-low;
+    background: rgba(133, 159, 255, 0.12);
+  }
+
+  &--placed {
+    color: $color-status-success;
+    border-color: $color-status-success;
+    background: rgba(0, 200, 120, 0.10);
+  }
+
+  &--remove {
+    padding: $spacing-1;
+    border-radius: $border-radius-full;
+    border-color: transparent;
+    background: none;
+
+    &:hover { color: $color-status-error; background: rgba(242, 34, 103, 0.10); border-color: $color-status-error; }
+  }
+}
+
+.annotation-panel__severity-row {
+  display: flex;
+  gap: $spacing-2;
+}
+
+.annotation-severity-btn {
+  padding: $spacing-1 $spacing-3;
+  border-radius: $border-radius-pill;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  border: 1px solid transparent;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.06);
+  color: $color-nav-text-idle;
+  transition: background $transition-fast, color $transition-fast, border-color $transition-fast;
+
+  &:hover { color: $color-text-light; background: $color-btn-hover-overlay; }
+
+  &--info.annotation-severity-btn--active {
+    background: rgba(133, 159, 255, 0.15);
+    color: $color-severity-low;
+    border-color: $color-severity-low;
+  }
+  &--warning.annotation-severity-btn--active {
+    background: rgba(255, 180, 93, 0.15);
+    color: $color-status-warning;
+    border-color: $color-status-warning;
+  }
+  &--critical.annotation-severity-btn--active {
+    background: rgba(242, 34, 103, 0.15);
+    color: $color-status-error;
+    border-color: $color-status-error;
+  }
+}
+
+.annotation-panel__textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: $color-input-bg;
+  border: 1px solid $color-input-border;
+  border-radius: $border-radius-base;
+  color: $color-input-text;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  line-height: $line-height-normal;
+  padding: $spacing-2 $spacing-3;
+  resize: vertical;
+  outline: none;
+  transition: border-color $transition-fast;
+
+  &::placeholder { color: $color-input-placeholder; }
+  &:focus { border-color: $color-input-border-focused; }
+}
+
+// ── Annotation list ───────────────────────────────────────────────────────────
+
+.annotation-panel__list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  padding: $spacing-4 $spacing-5;
+}
+
+.annotation-panel__empty {
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  text-align: center;
+  margin-top: $spacing-8;
+}
+
+// ── Single annotation item ────────────────────────────────────────────────────
+
+.annotation-item {
+  background: $color-background-dark;
+  border: 1px solid $color-border-dark;
+  border-radius: $border-radius-base;
+  padding: $spacing-3 $spacing-4;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+
+  &--resolved {
+    opacity: 0.55;
+  }
+
+  &--info    { border-left: 3px solid $color-severity-low; }
+  &--warning { border-left: 3px solid $color-status-warning; }
+  &--critical { border-left: 3px solid $color-status-error; }
+}
+
+.annotation-item__meta {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  flex-wrap: wrap;
+}
+
+.annotation-item__number-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  border-radius: $border-radius-full;
+  background: $color-primary;
+  color: $color-text-light;
+  font-size: 10px;
+  font-weight: $font-weight-semibold;
+  border: none;
+  padding: 0 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background $transition-fast;
+
+  &:hover { background: $color-btn-primary-hover; }
+}
+
+.annotation-item__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: $border-radius-full;
+  background: $color-primary;
+  color: $color-text-light;
+  font-size: 9px;
+  font-weight: $font-weight-semibold;
+  flex-shrink: 0;
+}
+
+.annotation-item__author {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+}
+
+.annotation-item__time {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  margin-left: auto;
+}
+
+.annotation-item__badge {
+  font-size: 10px;
+  font-weight: $font-weight-semibold;
+  padding: 1px $spacing-2;
+  border-radius: $border-radius-pill;
+
+  &--info    { background: rgba(133, 159, 255, 0.15); color: $color-severity-low; }
+  &--warning { background: rgba(255, 180, 93, 0.15);  color: $color-status-warning; }
+  &--critical { background: rgba(242, 34, 103, 0.15); color: $color-status-error; }
+}
+
+.annotation-item__text {
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  line-height: $line-height-normal;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.annotation-item__edited {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  font-style: italic;
+  margin: 0;
+}
+
+.annotation-item__edit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $spacing-2;
+}
+
+.annotation-item__edit-actions {
+  display: flex;
+  gap: $spacing-2;
+}
+
+.annotation-item__actions {
+  display: flex;
+  gap: $spacing-3;
+  margin-top: $spacing-1;
+}
+
+.annotation-item__action-btn {
+  background: none;
+  border: none;
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  padding: 0;
+  transition: color $transition-fast;
+
+  &:hover { color: $color-text-light; }
+
+  &--delete:hover { color: $color-status-error; }
+}

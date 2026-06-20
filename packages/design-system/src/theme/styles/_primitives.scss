@@ -1,0 +1,354 @@
+// ─── IDIRA Design System — Primitives ────────────────────────────────────────
+// Raw color scales + layout tokens. Imported by semantic files only.
+
+// ── Color Primitives ─────────────────────────────────────────────────────────
+
+// Light / Primary Blue
+$primitive-light-blue-100: #AEC7F6;
+$primitive-light-blue-200: #B1CBFB;
+$primitive-light-blue-300: #89ADF9;
+$primitive-light-blue-400: #6C95F8;
+$primitive-light-blue-500: #2E6BFF;
+$primitive-light-blue-600: #0B53FF;
+$primitive-light-blue-650: #2B54D3;
+$primitive-light-blue-700: #0041DD;
+$primitive-light-blue-750: #153B94;
+$primitive-light-blue-800: #122C8D;
+$primitive-light-blue-850: #0A1F75;
+$primitive-light-blue-900: #122052;
+
+// Light / System Light / Green
+$primitive-light-green-100: #E3FBE4;
+$primitive-light-green-200: #AAF3C5;
+$primitive-light-green-300: #82E1AD;
+$primitive-light-green-400: #65C69A;
+$primitive-light-green-500: #00A67E;
+$primitive-light-green-600: #3E8C7B;
+$primitive-light-green-700: #327571;
+$primitive-light-green-800: #255A5F;
+$primitive-light-green-900: #003D2F;
+
+// Light / System Light / Red
+$primitive-light-red-100: #FFDFE0;
+$primitive-light-red-200: #F2B8A1;
+$primitive-light-red-300: #E88972;
+$primitive-light-red-400: #DD5F4E;
+$primitive-light-red-500: #E30D0D;
+$primitive-light-red-600: #B32725;
+$primitive-light-red-700: #961F27;
+$primitive-light-red-800: #781728;
+$primitive-light-red-900: #631128;
+
+// Light / System Light / Yellow
+$primitive-light-yellow-100: #FFEDD0;
+$primitive-light-yellow-200: #FBE3A2;
+$primitive-light-yellow-300: #F8CF77;
+$primitive-light-yellow-400: #F5BC58;
+$primitive-light-yellow-500: #FF9900;
+$primitive-light-yellow-600: #CF7E2D;
+$primitive-light-yellow-700: #A35400;
+$primitive-light-yellow-800: #7A3F00;
+$primitive-light-yellow-900: #B86200;
+
+// Dark / Primary Blue
+$primitive-dark-blue-10:  #E8EDFF;
+$primitive-dark-blue-100: #C2CFFF;
+$primitive-dark-blue-200: #ADBFFF;
+$primitive-dark-blue-250: #99AFFF;
+$primitive-dark-blue-300: #859FFF;
+$primitive-dark-blue-350: #708FFF;
+$primitive-dark-blue-400: #5177FF;
+$primitive-dark-blue-500: #3E68FF;
+$primitive-dark-blue-600: #3960E9;
+$primitive-dark-blue-750: #3050BE;
+$primitive-dark-blue-800: #274093;
+$primitive-dark-blue-850: #0023A3;
+$primitive-dark-blue-900: #1D3068;
+
+// Dark / Dark Blue
+$primitive-dark-darkblue-100: #7B98CC;
+$primitive-dark-darkblue-200: #6C8DC6;
+$primitive-dark-darkblue-300: #5D82C0;
+$primitive-dark-darkblue-400: #4F76BA;
+$primitive-dark-darkblue-500: #456CB0;
+$primitive-dark-darkblue-600: #395A93;
+$primitive-dark-darkblue-650: #335184;
+$primitive-dark-darkblue-700: #2E4876;
+$primitive-dark-darkblue-750: #283F67;
+$primitive-dark-darkblue-800: #223658;
+$primitive-dark-darkblue-850: #1D2D49;
+$primitive-dark-darkblue-900: #17243B;
+$primitive-dark-darkblue-950: #1E2938;
+
+// Dark / System Dark / Green
+$primitive-dark-green-100: #CCF4EA;
+$primitive-dark-green-200: #99E9D6;
+$primitive-dark-green-300: #66DEC1;
+$primitive-dark-green-400: #33D3AD;
+$primitive-dark-green-500: #00C898;
+$primitive-dark-green-600: #00A37D;
+$primitive-dark-green-700: #007A5E;
+$primitive-dark-green-800: #00523F;
+$primitive-dark-green-900: #003D2F;
+
+// Dark / System Dark / Red
+$primitive-dark-red-100: #FCD3E1;
+$primitive-dark-red-200: #FAA7C2;
+$primitive-dark-red-300: #F77AA4;
+$primitive-dark-red-400: #F54E85;
+$primitive-dark-red-500: #F22267;
+$primitive-dark-red-600: #E70D56;
+$primitive-dark-red-700: #C10B48;
+$primitive-dark-red-800: #9A0939;
+$primitive-dark-red-900: #74072B;
+
+// Dark / System Dark / Yellow
+$primitive-dark-yellow-100: #FFF0DF;
+$primitive-dark-yellow-200: #FFE1BE;
+$primitive-dark-yellow-300: #FFD29E;
+$primitive-dark-yellow-400: #FFC37D;
+$primitive-dark-yellow-500: #FFB45D;
+$primitive-dark-yellow-600: #FFA033;
+$primitive-dark-yellow-700: #FF8D0A;
+$primitive-dark-yellow-800: #E07800;
+$primitive-dark-yellow-900: #B86200;
+
+// Global / Black & White
+$primitive-black:     #000000;
+$primitive-white:     #FFFFFF;
+$primitive-bw-100:    #F5F5F5;
+$primitive-bw-200:    #C4C4C4;
+$primitive-bw-300:    #999999;
+$primitive-bw-400:    #939393;
+$primitive-bw-500:    #666666;
+$primitive-bw-600:    #626262;
+$primitive-bw-700:    #333333;
+$primitive-bw-800:    #313131;
+
+// Global / Dark Gray
+$primitive-dark-gray-100: #CFD1D4;
+$primitive-dark-gray-200: #D0D0D0;
+$primitive-dark-gray-300: #A3A3A3;
+$primitive-dark-gray-400: #9FA3A9;
+$primitive-dark-gray-500: #6F747D;
+$primitive-dark-gray-600: #555C6A;
+$primitive-dark-gray-700: #3F4652;
+$primitive-dark-gray-800: #383D47;
+$primitive-dark-gray-900: #1C1F23;
+
+// Global / Light Gray
+$primitive-light-gray-50:  #FAFBFF;
+$primitive-light-gray-100: #E8EBEF;
+$primitive-light-gray-200: #F2F2F2;
+$primitive-light-gray-300: #E5E5E5;
+$primitive-light-gray-400: #DEDFE4;
+$primitive-light-gray-500: #E1E3F2;
+$primitive-light-gray-600: #D1D6E0;
+$primitive-light-gray-700: #BBC2D0;
+$primitive-light-gray-750: #AEB8CC;
+$primitive-light-gray-800: #A4ADC1;
+$primitive-light-gray-900: #A5AFC3;
+
+// Global / Dark Blue
+$primitive-global-darkblue-100: #8D99B1;
+$primitive-global-darkblue-200: #9C9FB4;
+$primitive-global-darkblue-300: #6C6E83;
+$primitive-global-darkblue-400: #717A8E;
+$primitive-global-darkblue-500: #616A8B;
+$primitive-global-darkblue-600: #4E5170;
+$primitive-global-darkblue-700: #36395E;
+$primitive-global-darkblue-800: #22244B;
+$primitive-global-darkblue-900: #14163E;
+
+// Global / Light Blue
+$primitive-global-lightblue-100: #F4F8FF;
+$primitive-global-lightblue-200: #F1F5FB;
+$primitive-global-lightblue-300: #ECF2FB;
+$primitive-global-lightblue-400: #EAECF3;
+$primitive-global-lightblue-450: #EAF0FF;
+$primitive-global-lightblue-500: #EAEEF7;
+$primitive-global-lightblue-550: #F3F5FE;
+$primitive-global-lightblue-600: #E3EBFF;
+$primitive-global-lightblue-650: #D8E3FD;
+$primitive-global-lightblue-700: #D6E3FB;
+$primitive-global-lightblue-800: #E0E7F5;
+$primitive-global-lightblue-900: #C9D3E6;
+
+// Global / Background
+$primitive-global-bg-dark:  #0F1827;
+$primitive-global-bg-light: #FFFFFF;
+
+// Global / Purple
+$primitive-purple-100: #D7D9FF;
+$primitive-purple-200: #BDC0FF;
+$primitive-purple-300: #A2A6FF;
+$primitive-purple-400: #888DFF;
+$primitive-purple-500: #7A80FF;
+$primitive-purple-600: #7076E9;
+$primitive-purple-700: #5A61BE;
+$primitive-purple-800: #454C93;
+$primitive-purple-900: #2F3768;
+
+// Global / Charts Light
+$primitive-charts-light-data-01: #304FFE;
+$primitive-charts-light-data-02: #0091EA;
+$primitive-charts-light-data-03: #009CB4;
+$primitive-charts-light-data-04: #810F9A;
+$primitive-charts-light-data-05: #C45BE7;
+$primitive-charts-light-data-06: #FF4081;
+$primitive-charts-light-data-07: #C51162;
+$primitive-charts-light-data-08: #E3734D;
+$primitive-charts-light-data-09: #BA894C;
+
+// Global / Charts Dark
+$primitive-charts-dark-data-01: #304FFE;
+$primitive-charts-dark-data-02: #29AEFF;
+$primitive-charts-dark-data-03: #14A2AB;
+$primitive-charts-dark-data-04: #4BDCE1;
+$primitive-charts-dark-data-05: #8756D8;
+$primitive-charts-dark-data-06: #C45BE7;
+$primitive-charts-dark-data-07: #EB2980;
+$primitive-charts-dark-data-08: #FFA0B0;
+$primitive-charts-dark-data-09: #BA894C;
+
+// Global / Others Light
+$primitive-others-light-01: #015A44;
+$primitive-others-light-02: #057E46;
+$primitive-others-light-03: #169F3B;
+$primitive-others-light-04: #1DB647;
+$primitive-others-light-05: #05A87D;
+$primitive-others-light-06: #A52D97;
+$primitive-others-light-07: #6F3EAB;
+$primitive-others-light-08: #6167EC;
+$primitive-others-light-09: #739AF8;
+$primitive-others-light-10: #162F8D;
+$primitive-others-light-11: #335AD3;
+$primitive-others-light-12: #3772FF;
+$primitive-others-light-13: #0E9AF0;
+$primitive-others-light-14: #5ABDFC;
+$primitive-others-light-15: #5FCCEF;
+
+// Global / Others Dark
+$primitive-others-dark-01: #CDB6FF;
+$primitive-others-dark-02: #C45BE7;
+$primitive-others-dark-03: #BF1FFD;
+$primitive-others-dark-04: #8756D8;
+$primitive-others-dark-05: #888DFF;
+$primitive-others-dark-06: #304FFE;
+$primitive-others-dark-07: #7CD7FF;
+$primitive-others-dark-08: #29AEFF;
+$primitive-others-dark-09: #14A2AB;
+$primitive-others-dark-10: #4BDCE1;
+$primitive-others-dark-11: #FFA63F;
+$primitive-others-dark-12: #FFA0B0;
+$primitive-others-dark-13: #FF4E78;
+$primitive-others-dark-14: #EB2980;
+$primitive-others-dark-15: #662AFC;
+
+// Global / Brand
+$primitive-brand-logo-dark:  #141414;
+$primitive-brand-logo-gray:  #807C7B;
+$primitive-brand-logo-blue:  #265BFF;
+$primitive-brand-logo-white: #FFFFFF;
+
+// ─── Layout Tokens ────────────────────────────────────────────────────────────
+
+// ── Typography ────────────────────────────────────────────────────────────────
+$font-family-base:   'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-family-mono:   'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+$font-family-button: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-family-display:'Titillium Web', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-family-heading: 'Titillium Web', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+$font-size-xs:   0.75rem;
+$font-size-sm:   0.875rem;
+$font-size-base: 1rem;
+$font-size-lg:   1.125rem;
+$font-size-xl:   1.25rem;
+$font-size-2xl:  1.5rem;
+$font-size-3xl:  1.875rem;
+$font-size-4xl:  2.25rem;
+
+$font-weight-light:    300;
+$font-weight-normal:   400;
+$font-weight-medium:   500;
+$font-weight-semibold: 600;
+$font-weight-bold:     700;
+$font-weight-regular:  400;
+
+$line-height-tight:   1.2;
+$line-height-normal:  1.5;
+$line-height-relaxed: 1.75;
+
+// ── Spacing ───────────────────────────────────────────────────────────────────
+$spacing-0:  0;
+$spacing-1:  0.25rem;
+$spacing-2:  0.5rem;
+$spacing-3:  0.75rem;
+$spacing-4:  1rem;
+$spacing-5:  1.25rem;
+$spacing-6:  1.5rem;
+$spacing-7:  1.75rem;
+$spacing-8:  2rem;
+$spacing-10: 2.5rem;
+$spacing-12: 3rem;
+$spacing-16: 4rem;
+$spacing-20: 5rem;
+
+$spacing-unit: 4px;
+$spacing-xs:   8px;
+$spacing-sm:   12px;
+$spacing-md:   16px;
+$spacing-lg:   24px;
+$spacing-xl:   32px;
+
+// ── Border Radius ─────────────────────────────────────────────────────────────
+$border-radius-none: 0;
+$border-radius-sm:   0.25rem;
+$border-radius-base: 0.5rem;
+$border-radius-md:   0.75rem;
+$border-radius-lg:   1rem;
+$border-radius-pill: 100px;
+$border-radius-full: 9999px;
+
+// ── Shadows ───────────────────────────────────────────────────────────────────
+$shadow-xs:   0 1px 2px 0 rgba(0,0,0,0.05);
+$shadow-sm:   0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);
+$shadow-base: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+$shadow-md:   0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+$shadow-lg:   0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+
+// ── Component Layout Tokens ───────────────────────────────────────────────────
+
+// Tabs
+$tab-horizontal-gap:        0;
+$tab-horizontal-padding-x:  $spacing-3;
+$tab-horizontal-padding-y:  $spacing-3;
+$tab-indicator-height:      2px;
+$tab-indicator-transition:  150ms ease-in-out;
+$tab-vertical-gap:          $spacing-1;
+$tab-vertical-padding-x:    $spacing-3;
+$tab-vertical-padding-y:    $spacing-2;
+$tab-border-radius:         $border-radius-base;
+$tab-hover-shadow:          none;
+$font-size-tab-main:        0.875rem;
+$font-size-tab-sub:         0.75rem;
+$font-weight-tab-main:      400;
+$font-weight-tab-sub:       400;
+$line-height-tab-main:      1.4;
+$line-height-tab-sub:       1.35;
+
+// Breakpoints (xs alias)
+$breakpoint-xs: 480px;
+
+// ── Transitions ───────────────────────────────────────────────────────────────
+$transition-fast: 150ms ease-in-out;
+$transition-base: 250ms ease-in-out;
+$transition-slow: 350ms ease-in-out;
+
+// ── Breakpoints ───────────────────────────────────────────────────────────────
+$breakpoint-sm:  640px;
+$breakpoint-md:  768px;
+$breakpoint-lg:  1024px;
+$breakpoint-xl:  1280px;
+$breakpoint-2xl: 1536px;

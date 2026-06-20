@@ -1,0 +1,168 @@
+@use 'tokens' as *;
+
+// ── Overlay capture layer ──────────────────────────────────────────────────────
+// Sits above page content, below panel. Only pointer-interactive during placement mode.
+
+.annotation-overlay {
+  position: fixed;
+  top: 88px; // below Header
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 350;
+  pointer-events: none; // pass-through by default
+
+  &--placing {
+    pointer-events: all;
+    cursor: crosshair;
+  }
+
+  &--dragging {
+    // Prevent text selection and cursor flicker during drag
+    pointer-events: all;
+    cursor: grabbing;
+    user-select: none;
+  }
+}
+
+// ── Pin badge ─────────────────────────────────────────────────────────────────
+
+.annotation-overlay__pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  border-radius: $border-radius-full;
+  background: $color-status-error;
+  color: $color-text-light;
+  font-size: 11px;
+  font-weight: $font-weight-semibold;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  pointer-events: all;
+  transition: transform $transition-fast, box-shadow $transition-fast;
+  z-index: 352;
+  padding: 0 4px;
+  user-select: none;
+
+  &:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 3px;
+  }
+
+  &--resolved {
+    background: $color-nav-text-idle;
+    opacity: 0.55;
+  }
+
+  &--pending {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px dashed rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+    animation: pin-pulse 1s ease-in-out infinite;
+    cursor: none;
+  }
+
+  &--dragging {
+    cursor: grabbing;
+    transform: translate(-50%, -50%) scale(1.25);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.65);
+    opacity: 0.9;
+    transition: none; // disable transition during drag for instant tracking
+  }
+
+  // Show grab cursor on hover when not in any special mode
+  &:not(&--resolved):not(&--pending):not(&--dragging) {
+    cursor: grab;
+  }
+}
+
+@keyframes pin-pulse {
+  0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+  50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.15); }
+}
+
+// ── Callout popup ─────────────────────────────────────────────────────────────
+
+.annotation-overlay__callout {
+  position: absolute;
+  width: 260px;
+  background: $color-background-darker;
+  border: 1px solid $color-border-dark;
+  border-radius: $border-radius-base;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  padding: $spacing-3 $spacing-4;
+  z-index: 360;
+  pointer-events: all;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+
+  &--info     { border-left: 3px solid $color-severity-low; }
+  &--warning  { border-left: 3px solid $color-status-warning; }
+  &--critical { border-left: 3px solid $color-status-error; }
+}
+
+.annotation-overlay__callout-header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+.annotation-overlay__callout-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  border-radius: $border-radius-full;
+  background: $color-primary;
+  color: $color-text-light;
+  font-size: 10px;
+  font-weight: $font-weight-semibold;
+  flex-shrink: 0;
+  padding: 0 3px;
+}
+
+.annotation-overlay__callout-author {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  flex: 1;
+}
+
+.annotation-overlay__callout-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover { color: $color-text-light; background: $color-btn-hover-overlay; }
+}
+
+.annotation-overlay__callout-text {
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  line-height: $line-height-normal;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
