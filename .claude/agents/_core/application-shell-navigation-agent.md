@@ -246,6 +246,22 @@ Level:
 
 ---
 
+## Screenshot Navigation Sync Rule
+
+When a navigation screenshot or Figma reference is provided and an item is detected that does not exist in `spacesRegistry`:
+
+1. Identify the exact Space, parent, level, and sibling position from the screenshot.
+2. Determine the item type (button / split / dropdown) from visual evidence.
+3. Infer route from proven sibling patterns, or mark as `routeStatus: 'needs-route'`.
+4. Insert the item at the exact detected position.
+5. Run `validate-spaces-navigation` after every change.
+6. Do not delete existing items based on screenshot absence alone.
+7. Report all changes before applying.
+
+Use tool: `reconcile-navigation-screenshot.tool.md`
+
+---
+
 ## Example Prompt
 
 ```

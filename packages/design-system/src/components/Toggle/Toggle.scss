@@ -1,0 +1,93 @@
+@use '../../theme/styles/tokens' as *;
+
+// ── Toggle ────────────────────────────────────────────────────────────────────
+
+$toggle-track-w:  40px;
+$toggle-track-h:  22px;
+$toggle-thumb-sz: 16px;
+$toggle-travel:   calc(#{$toggle-track-w} - #{$toggle-thumb-sz} - 6px);
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2;
+  cursor: pointer;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+
+  &--disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// ── Labels ────────────────────────────────────────────────────────────────────
+
+.toggle__label {
+  font-weight: $font-weight-normal;
+  transition: color $transition-fast;
+  user-select: none;
+
+  &--active { color: $color-text-light; }
+}
+
+// ── Track / Thumb ─────────────────────────────────────────────────────────────
+
+.toggle__track-wrap { position: relative; display: inline-block; }
+
+.toggle__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.toggle__track {
+  display: flex;
+  align-items: center;
+  width: $toggle-track-w;
+  height: $toggle-track-h;
+  border-radius: $border-radius-full;
+  background: $color-background-darker;
+  border: 1.5px solid $color-border-dark;
+  padding: 2px 3px;
+  box-sizing: border-box;
+  transition: background $transition-fast, border-color $transition-fast;
+  position: relative;
+
+  .toggle__input:checked ~ & {
+    background: $color-btn-primary-idle;
+    border-color: $color-btn-primary-idle;
+  }
+
+  .toggle__input:focus-visible ~ & {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+
+  .toggle:hover:not(.toggle--disabled) & {
+    border-color: rgba($color-primary, 0.6);
+  }
+}
+
+.toggle__thumb {
+  width: $toggle-thumb-sz;
+  height: $toggle-thumb-sz;
+  border-radius: $border-radius-full;
+  background: $color-text-light;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+  transform: translateX(0);
+  transition: transform $transition-fast;
+
+  .toggle__input:checked ~ .toggle__track & {
+    transform: translateX($toggle-travel);
+  }
+}

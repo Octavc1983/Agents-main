@@ -1,0 +1,153 @@
+@use '../../theme/styles/tokens' as *;
+
+// ── Stepper ───────────────────────────────────────────────────────────────────
+
+.stepper {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+
+  &--vertical {
+    flex-direction: column;
+  }
+
+  &--horizontal {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+// ── Step ──────────────────────────────────────────────────────────────────────
+
+.stepper__step {
+  display: flex;
+  align-items: flex-start;
+
+  .stepper--horizontal & {
+    align-items: center;
+    flex: 1;
+
+    &:last-child { flex: none; }
+  }
+}
+
+// ── Indicator column (circle + connector) ─────────────────────────────────────
+
+.stepper__indicator-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+
+  .stepper--horizontal & {
+    flex-direction: row;
+    align-items: center;
+    flex: 1;
+  }
+}
+
+// ── Circle ────────────────────────────────────────────────────────────────────
+
+.stepper__circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: $border-radius-full;
+  border: 1.5px solid $color-border-dark;
+  background: transparent;
+  flex-shrink: 0;
+  transition: background $transition-fast, border-color $transition-fast;
+
+  .stepper--horizontal & {
+    width: 24px;
+    height: 24px;
+  }
+
+  .stepper__step--pending & {
+    border-color: $color-border-dark;
+    color: $color-text-muted;
+  }
+
+  .stepper__step--active & {
+    border-color: $color-primary;
+    background: $color-primary;
+    color: $color-text-light;
+  }
+
+  .stepper__step--completed & {
+    border-color: $color-border-dark;
+    color: $color-text-muted;
+    opacity: 0.55;
+  }
+
+  .stepper__step--disabled & {
+    border-color: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.2);
+    opacity: 0.45;
+  }
+
+  .stepper__step--error & {
+    border-color: $color-status-error;
+    color: $color-status-error;
+  }
+}
+
+.stepper__number {
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  line-height: 1;
+}
+
+// ── Connector line ────────────────────────────────────────────────────────────
+
+.stepper__connector {
+  display: block;
+  background: $color-border-dark;
+
+  .stepper--vertical & {
+    width: 1px;
+    flex: 1;
+    min-height: 20px;
+    margin: 4px 0;
+  }
+
+  .stepper--horizontal & {
+    height: 1px;
+    flex: 1;
+    margin: 0 4px;
+  }
+
+  .stepper__step--active & { background: $color-primary; opacity: 0.35; }
+  .stepper__step--error &  { background: $color-status-error; opacity: 0.35; }
+}
+
+// ── Label ─────────────────────────────────────────────────────────────────────
+
+.stepper__label {
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  line-height: 28px; // aligns with circle height
+  padding-left: $spacing-3;
+
+  .stepper--horizontal & {
+    display: none; // horizontal shows circles+lines only (compact)
+  }
+
+  .stepper__step--active & {
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+  }
+
+  .stepper__step--error & {
+    color: $color-status-error;
+  }
+
+  .stepper__step--disabled & {
+    opacity: 0.4;
+  }
+}

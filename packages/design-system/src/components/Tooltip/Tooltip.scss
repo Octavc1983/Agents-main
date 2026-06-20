@@ -1,0 +1,72 @@
+@use '../../theme/styles/tokens' as *;
+
+// ── Tooltip ───────────────────────────────────────────────────────────────────
+
+.tooltip {
+  position: absolute;
+  z-index: 9000;
+  max-width: 240px;
+  padding: $spacing-xs $spacing-sm;
+  background: $color-background-darker;
+  border: 1px solid $color-border-dark;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-md;
+  font-family: $font-family-base;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-normal;
+  color: $color-text-light;
+  line-height: $line-height-normal;
+  pointer-events: none;
+  white-space: normal;
+  word-wrap: break-word;
+  animation: tooltip-in $transition-fast forwards;
+
+  @media (prefers-reduced-motion: reduce) { animation: none; }
+}
+
+@keyframes tooltip-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+// ── Arrow ─────────────────────────────────────────────────────────────────────
+
+.tooltip__arrow {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: $color-background-darker;
+  border: 1px solid $color-border-dark;
+
+  .tooltip--top & {
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    border-top: none;
+    border-left: none;
+  }
+
+  .tooltip--bottom & {
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    border-bottom: none;
+    border-right: none;
+  }
+
+  .tooltip--left & {
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    border-top: none;
+    border-left: none;
+  }
+
+  .tooltip--right & {
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    border-bottom: none;
+    border-right: none;
+  }
+}

@@ -1,0 +1,65 @@
+@use 'tokens' as *;
+
+.migrations-page {
+  padding: $spacing-6 $spacing-8;
+  max-width: 1400px;
+}
+
+.migrations-page__title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin: 0 0 $spacing-6;
+}
+
+.migrations-page__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-5;
+}
+
+// ── Migration card ────────────────────────────────────────────────────────────
+
+.migration-card {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  width: 280px;
+  padding: $spacing-5;
+  background-color: $color-bg-primary;
+  border: 1px solid $color-border-light;
+  border-radius: $border-radius-base;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    border-color: $color-primary-light;
+    box-shadow: $shadow-sm;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+.migration-card__header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+.migration-card__title {
+  flex: 1;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.migration-card__description {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+  margin: 0;
+}

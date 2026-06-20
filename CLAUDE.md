@@ -164,3 +164,75 @@ Rules:
 6. Recurring mistakes must create lesson candidates and regression evaluation cases.
 7. Do not silently modify permanent workflow rules, CLAUDE.md, AGENTS.md, core Skills, or core Agents from a single mistake.
 8. Do not modify `src/` during workflow or infrastructure setup.
+
+## Dark Mode Readiness Rule
+
+Every new UI screen, component, template, dialog, wizard, dashboard, table, form, configuration page, loading state, empty state, and error state must be compatible with the Design System dark theme.
+
+Before implementation:
+1. Inspect `@idira/design-system` dark-theme tokens and public component APIs.
+2. Use semantic Design System tokens only.
+3. Do not hardcode light-only colors.
+4. Do not add page-local theme values.
+5. Ensure hover, focus, selected, disabled, loading, empty, and error states have valid dark-theme behavior.
+
+When a screenshot or existing screen must be converted:
+use `convert-screen-to-dark`.
+
+## Card-First Tile Rule
+
+When visual tiles, blocks, widgets, KPI panels, or repeated content surfaces are detected, always inspect and reuse the existing Design System Card component before creating any local container or component.
+
+## DS Components Are Consume-Only
+
+Existing `@idira/design-system` components must be consumed through public APIs only.
+
+Do not visually override, recolor, restyle, or mutate Design System components from application code.
+
+When a required appearance or behavior is missing, report a Design System gap and request a new approved variant instead of creating local overrides.
+
+## No Silent Fallback Rule
+
+When an approved Design System component, token, icon, mock-data contract, localization key, state pattern, or API contract is missing, do not invent a local replacement.
+
+Stop and report a structured gap.
+
+Use only approved public APIs, centralized mock data, and approved localization resources.
+
+## Mock Data Rule
+
+Mock data must be typed, centralized, reusable, domain-specific, and stored outside page/component JSX.
+
+Mock data must never exist inside the Design System package.
+
+## Localization Rule
+
+All user-facing copy, including visible text and accessibility labels, must use the approved localization system.
+
+Do not hardcode user-facing copy in JSX, TSX, page templates, dialogs, forms, navigation, loading states, error states, or feature code.
+
+## Minimal Layer Rule
+
+Use the smallest valid DOM, component, state, and styling structure.
+
+Do not create wrappers, abstractions, hooks, providers, services, or SCSS layers unless they own meaningful behavior, semantics, accessibility, state, layout responsibility, or proven reuse.
+
+No speculative abstractions. No wrapper-only styling. No DS component restyling through wrappers.
+
+## Screenshot Navigation Sync Rule
+
+When a navigation screenshot or Figma reference contains an item missing from `spacesRegistry`, add it in the exact detected Space, hierarchy level, item type, and sibling position.
+
+Do not append blindly, flatten hierarchy, or place items in another Space.
+
+Infer routes only from proven sibling route patterns. Otherwise create the item as route-pending and report the missing route decision.
+
+## Existing Page Protection
+
+When a requested page already exists, do not create or regenerate it.
+
+First inspect the current page and related route, navigation, state, services, components, mocks, localization, and tests.
+
+Provide a delta report and wait for user approval.
+
+After approval, apply only the approved additions or corrections while preserving all unrelated layout, logic, routes, navigation, state behavior, DS usage, and accessibility behavior.

@@ -324,3 +324,53 @@ These apply across all commands, agents, and skills:
 - **Stop after mapping** — mapping commands stop before implementation
 - **No Pixel Perfect claims** without a gap report
 - **Terminology first** — check terminology-registry and deprecated-terms before finalizing any user-facing text
+
+## Dark Mode Readiness Rule
+
+Every new UI screen, component, template, dialog, wizard, dashboard, table, form, configuration page, loading state, empty state, and error state must be compatible with the Design System dark theme.
+
+Before implementation:
+1. Inspect `@idira/design-system` dark-theme tokens and public component APIs.
+2. Use semantic Design System tokens only.
+3. Do not hardcode light-only colors.
+4. Do not add page-local theme values.
+
+When a screenshot or existing screen must be converted: use `convert-screen-to-dark`.
+
+## Card-First Tile Rule
+
+When visual tiles, blocks, widgets, KPI panels, or repeated content surfaces are detected, always inspect and reuse the existing Design System Card component before creating any local container or component.
+
+## DS Components Are Consume-Only
+
+Existing `@idira/design-system` components must be consumed through public APIs only. Do not visually override, recolor, restyle, or mutate Design System components from application code.
+
+## No Silent Fallback Rule
+
+When an approved DS component, token, icon, mock-data contract, localization key, or state pattern is missing, stop and report a structured gap. Do not invent a local replacement.
+
+## Mock Data Rule
+
+Mock data must be typed, centralized, reusable, domain-specific, and stored outside page/component JSX. Never inside the Design System package.
+
+## Localization Rule
+
+All user-facing copy must use the approved localization system. Do not hardcode user-facing copy in JSX, TSX, templates, dialogs, forms, or navigation.
+
+## Minimal Layer Rule
+
+Use the smallest valid DOM, component, state, and styling structure. No speculative abstractions. No wrapper-only styling. No DS component restyling through wrappers.
+
+## Screenshot Navigation Sync Rule
+
+When a navigation screenshot or Figma reference contains an item missing from `spacesRegistry`, add it in the exact detected Space, hierarchy level, item type, and sibling position.
+
+Do not append blindly, flatten hierarchy, or place items in another Space.
+
+Infer routes only from proven sibling route patterns. Otherwise mark as route-pending and report.
+
+## Existing Page Protection
+
+When a requested page already exists, do not create or regenerate it.
+
+Inspect the current page first. Provide a delta report. Wait for user approval. Apply only the approved delta. Preserve all unrelated logic, routes, navigation, DS usage, and state behavior.

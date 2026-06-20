@@ -1,0 +1,102 @@
+@use '../../theme/styles/tokens' as *;
+
+// ── Footer shell ──────────────────────────────────────────────────────────────
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+
+  &--page {
+    padding: 0 $spacing-12; // 0 48px — matches Header
+    height: 52px;
+    background: $color-background-dark;
+    border-top: 1px solid $color-border-dark;
+    flex-shrink: 0;
+  }
+
+  &--embedded {
+    padding: 0 $spacing-4;
+    height: 48px;
+    background: $color-background-darkest;
+    border-top: 1px solid $color-border-dark;
+    border-radius: 0 0 $border-radius-base $border-radius-base;
+  }
+}
+
+.footer__left {
+  flex: 1;
+  min-width: 0;
+}
+
+.footer__actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+// ── Footer buttons ────────────────────────────────────────────────────────────
+
+.footer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 $spacing-3;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  transition: color $transition-fast, background $transition-fast, border-color $transition-fast;
+  white-space: nowrap;
+
+  &--disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  &--text {
+    background: none;
+    border: none;
+    color: $color-nav-text-idle;
+
+    &:hover:not(.footer-btn--disabled) { color: $color-text-light; }
+    &:focus-visible { outline: 2px solid $color-primary; outline-offset: 2px; }
+  }
+
+  &--secondary {
+    background: none;
+    border: 1px solid $color-btn-secondary-border;
+    color: $color-btn-secondary-text;
+
+    &:hover:not(.footer-btn--disabled) {
+      background: $color-btn-hover-overlay;
+      border-color: $color-primary;
+      color: $color-text-light;
+    }
+    &:focus-visible { outline: 2px solid $color-primary; outline-offset: 2px; }
+  }
+
+  &--primary {
+    background: $color-btn-primary-idle;
+    border: none;
+    color: $color-text-light;
+
+    &:hover:not(.footer-btn--disabled) { background: $color-btn-primary-hover; }
+    &:active:not(.footer-btn--disabled) { background: $color-btn-primary-pressed; }
+    &:focus-visible { outline: 2px solid $color-primary; outline-offset: 2px; }
+  }
+
+  &--danger {
+    background: $color-status-error;
+    border: none;
+    color: $color-text-light;
+
+    &:hover:not(.footer-btn--disabled) { background: darken(#F22267, 8%); }
+    &:focus-visible { outline: 2px solid $color-status-error; outline-offset: 2px; }
+  }
+}

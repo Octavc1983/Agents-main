@@ -1,32 +1,52 @@
 /**
  * Sidebar — Spaces Navigation
- * PRD: Spaces Navigation System
  *
- * Item type is read from the explicit NavItem.type field:
+ * Item type rules:
  *   button   = navigates directly; no children
- *   split    = navigates directly AND can expand children
- *   dropdown = expands/collapses only; no direct navigation path
+ *   split    = navigates AND expands children
+ *   dropdown = expands only; no navigation path
+ *
+ * Collapsed mode renders:
+ *   IDIRA logo (expand trigger)
+ *   Active Space icon (SpaceSwitcher trigger)
+ *   Level-1 icons of active Space only
  */
 
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import type { NavItem, NavItemType, SpaceSchema } from '@/navigation/navConfig';
-import { spacesRegistry, getDefaultPathForSpace } from '@/navigation/navConfig';
+import type { NavItem, SpaceId, SpaceSchema } from '@/navigation/navConfig';
+import {
+  spacesRegistry,
+  getDefaultPathForSpace,
+  resolveActiveNavigationState,
+  validateSpacesRegistry,
+} from '@/navigation/navConfig';
 import {
   IDIRALogoIcon,
   CollapseIcon,
   ChevronRightIcon,
   ChevronDownIcon,
+  DotsGridIcon,
 } from '@idira/design-system/icons';
 import {
   AccessIcon,
   ManageIcon,
   RiskIcon,
-  AuditIcon,
+  AuditSpaceIcon,
   SetupIcon,
   CommandCenterIcon,
 } from '@idira/design-system/icons';
 import './Sidebar.scss';
+
+if (process.env.NODE_ENV !== 'production') {
+  validateSpacesRegistry(spacesRegistry);
+}
 
 // ── Space icon resolver ───────────────────────────────────────────────────────
 
@@ -34,7 +54,7 @@ const SPACE_ICON_MAP: Record<string, React.FC<{ size?: number }>> = {
   access: AccessIcon,
   manage: ManageIcon,
   risk: RiskIcon,
-  audit: AuditIcon,
+  audit: AuditSpaceIcon,
   setup: SetupIcon,
   commandCenter: CommandCenterIcon,
 };
@@ -46,12 +66,6 @@ const SpaceIconEl: React.FC<{ spaceId: string; size?: number }> = ({ spaceId, si
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-type ItemType = NavItemType;
-
-function getItemType(item: NavItem): ItemType {
-  return item.type;
-}
-
 function containsPath(items: NavItem[], pathname: string): boolean {
   for (const item of items) {
     if (item.path === pathname) return true;
@@ -60,28 +74,9 @@ function containsPath(items: NavItem[], pathname: string): boolean {
   return false;
 }
 
-function getAncestorIds(items: NavItem[], pathname: string, acc: string[] = []): string[] {
-  for (const item of items) {
-    if (item.children?.length) {
-      const found = getAncestorIds(item.children, pathname, [...acc, item.id]);
-      if (found.length > acc.length) return found;
-    }
-    if (item.path === pathname) return acc;
-  }
-  return [];
-}
+// ── Expanded nav item ─────────────────────────────────────────────────────────
 
-function getActiveSpaceId(spaces: SpaceSchema[], pathname: string): string | null {
-  for (const space of spaces) {
-    if (pathname.startsWith(`/${space.id}`)) return space.id;
-    if (containsPath(space.items, pathname)) return space.id;
-  }
-  return spaces[0]?.id ?? null;
-}
-
-// ── Nav item renderer ─────────────────────────────────────────────────────────
-
-interface NavItemProps {
+interface NavItemRowProps {
   item: NavItem;
   activeRoute: string;
   openIds: Set<string>;
@@ -89,54 +84,44 @@ interface NavItemProps {
   depth?: number;
 }
 
-const NavItemRow: React.FC<NavItemProps> = ({
+const NavItemRow: React.FC<NavItemRowProps> = ({
   item, activeRoute, openIds, onToggle, depth = 0,
 }) => {
-  const type = getItemType(item);
+  const type = item.type;
   const isOpen = openIds.has(item.id);
   const hasChildren = !!item.children?.length;
   const isActive = item.path === activeRoute;
   const isActivePath = !isActive && hasChildren && containsPath(item.children!, activeRoute);
-
   const Icon = item.icon as React.FC<{ size?: number }> | undefined;
 
   const rowClass = [
     'nav-item',
+    `nav-item--${type}`,
+    hasChildren ? 'nav-item--has-children' : '',
+    isOpen ? 'nav-item--open' : '',
     isActive ? 'nav-item--active' : '',
     isActivePath ? 'nav-item--active-path' : '',
-    depth === 0 ? 'nav-item--level-2' : depth === 1 ? 'nav-item--level-3' : 'nav-item--level-4',
+    `nav-item--depth-${Math.min(depth + 1, 4)}`,
   ].filter(Boolean).join(' ');
 
-  const expandBtn = hasChildren ? (
-    <button
-      type="button"
-      className="nav-item__expand-btn"
-      onClick={e => { e.stopPropagation(); e.preventDefault(); onToggle(item.id); }}
-      aria-label={isOpen ? `Collapse ${item.label}` : `Expand ${item.label}`}
-      aria-expanded={isOpen}
-    >
-      {isOpen ? <ChevronDownIcon size={12} /> : <ChevronRightIcon size={12} />}
-    </button>
-  ) : null;
-
-  const iconEl = Icon ? (
-    <span className="nav-item__icon">
-      <Icon size={16} />
-    </span>
-  ) : null;
-
+  const iconEl = Icon ? <span className="nav-item__icon"><Icon size={16} /></span> : null;
   const labelEl = <span className="nav-item__label">{item.label}</span>;
+  const chevronEl = (
+    <span className="nav-item__expand-indicator" aria-hidden="true">
+      {isOpen ? <ChevronDownIcon size={12} /> : <ChevronRightIcon size={12} />}
+    </span>
+  );
 
   let row: React.ReactNode;
 
   if (type === 'button') {
     row = (
       <Link to={item.path!} className={rowClass} aria-current={isActive ? 'page' : undefined}>
-        {iconEl}
-        {labelEl}
+        {iconEl}{labelEl}
       </Link>
     );
   } else if (type === 'dropdown') {
+    // Single button — chevron is a non-interactive span (fixes nested-button invalid HTML)
     row = (
       <button
         type="button"
@@ -144,26 +129,30 @@ const NavItemRow: React.FC<NavItemProps> = ({
         onClick={() => onToggle(item.id)}
         aria-expanded={isOpen}
       >
-        {iconEl}
-        {labelEl}
-        {expandBtn}
+        {iconEl}{labelEl}{chevronEl}
       </button>
     );
   } else {
-    // split: label navigates, divider, arrow expands independently
+    // split: Link navigates, separate button expands
     row = (
       <div className={rowClass}>
         <Link
           to={item.path!}
           className="nav-item__split-link"
           aria-current={isActive ? 'page' : undefined}
-          onClick={e => e.stopPropagation()}
         >
-          {iconEl}
-          {labelEl}
+          {iconEl}{labelEl}
         </Link>
         <span className="nav-item__split-divider" aria-hidden="true" />
-        {expandBtn}
+        <button
+          type="button"
+          className="nav-item__expand-btn"
+          onClick={e => { e.stopPropagation(); onToggle(item.id); }}
+          aria-label={isOpen ? `Collapse ${item.label}` : `Expand ${item.label}`}
+          aria-expanded={isOpen}
+        >
+          {isOpen ? <ChevronDownIcon size={12} /> : <ChevronRightIcon size={12} />}
+        </button>
       </div>
     );
   }
@@ -189,11 +178,267 @@ const NavItemRow: React.FC<NavItemProps> = ({
   );
 };
 
-// ── Space switcher ────────────────────────────────────────────────────────────
+// ── Collapsed item flyout ─────────────────────────────────────────────────────
+
+interface CollapsedFlyoutMenuProps {
+  rootItem: NavItem;
+  activeRoute: string;
+  onNavigate: (path: string) => void;
+  onClose: () => void;
+}
+
+const CollapsedFlyoutMenu: React.FC<CollapsedFlyoutMenuProps> = ({
+  rootItem, activeRoute, onNavigate, onClose,
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Focus first item on open
+    const first = ref.current?.querySelector<HTMLElement>('[role="menuitem"]');
+    first?.focus();
+  }, []);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { onClose(); }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const items = Array.from(
+          ref.current?.querySelectorAll<HTMLElement>('[role="menuitem"]') ?? [],
+        );
+        const idx = items.indexOf(document.activeElement as HTMLElement);
+        const next = e.key === 'ArrowDown'
+          ? items[(idx + 1) % items.length]
+          : items[(idx - 1 + items.length) % items.length];
+        next?.focus();
+      }
+    };
+    const onMouseDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) onClose();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('mousedown', onMouseDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('mousedown', onMouseDown);
+    };
+  }, [onClose]);
+
+  const renderItems = (items: NavItem[], depth = 0): React.ReactNode =>
+    items.map(item => (
+      <React.Fragment key={item.id}>
+        {item.path ? (
+          <button
+            type="button"
+            role="menuitem"
+            className={[
+              'collapsed-flyout__item',
+              `collapsed-flyout__item--depth-${Math.min(depth, 3)}`,
+              item.path === activeRoute ? 'collapsed-flyout__item--active' : '',
+            ].filter(Boolean).join(' ')}
+            onClick={() => { onNavigate(item.path!); onClose(); }}
+          >
+            {item.label}
+          </button>
+        ) : (
+          <div className={`collapsed-flyout__group collapsed-flyout__group--depth-${Math.min(depth, 2)}`}>
+            {item.label}
+          </div>
+        )}
+        {item.children && renderItems(item.children, depth + 1)}
+      </React.Fragment>
+    ));
+
+  return (
+    <div ref={ref} className="collapsed-flyout" role="menu" aria-label={rootItem.label}>
+      {/* For split items: first entry navigates to the parent path */}
+      {rootItem.type === 'split' && rootItem.path && (
+        <button
+          type="button"
+          role="menuitem"
+          className={[
+            'collapsed-flyout__item collapsed-flyout__item--parent',
+            rootItem.path === activeRoute ? 'collapsed-flyout__item--active' : '',
+          ].filter(Boolean).join(' ')}
+          onClick={() => { onNavigate(rootItem.path!); onClose(); }}
+        >
+          {rootItem.label}
+        </button>
+      )}
+      {rootItem.children && renderItems(rootItem.children)}
+    </div>
+  );
+};
+
+// ── Collapsed level-1 item ────────────────────────────────────────────────────
+
+interface CollapsedNavItemProps {
+  item: NavItem;
+  activeRoute: string;
+  activeLevelOneItemId: string | null;
+  onNavigate: (path: string) => void;
+}
+
+const CollapsedNavItem: React.FC<CollapsedNavItemProps> = ({
+  item, activeRoute, activeLevelOneItemId, onNavigate,
+}) => {
+  const [flyoutOpen, setFlyoutOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const Icon = item.icon as React.FC<{ size?: number }> | undefined;
+  const isActive = item.id === activeLevelOneItemId;
+  const hasChildren = Boolean(item.children?.length);
+
+  const handleClick = () => {
+    if (item.type === 'button' && item.path) {
+      onNavigate(item.path);
+      return;
+    }
+    setFlyoutOpen(prev => !prev);
+  };
+
+  const handleClose = useCallback(() => {
+    setFlyoutOpen(false);
+    triggerRef.current?.focus();
+  }, []);
+
+  return (
+    <div className="collapsed-nav-item">
+      <button
+        ref={triggerRef}
+        type="button"
+        className={[
+          'collapsed-nav-item__trigger',
+          isActive ? 'collapsed-nav-item__trigger--active' : '',
+        ].filter(Boolean).join(' ')}
+        aria-label={item.label}
+        aria-current={isActive ? 'page' : undefined}
+        aria-haspopup={hasChildren ? 'menu' : undefined}
+        aria-expanded={hasChildren ? flyoutOpen : undefined}
+        onClick={handleClick}
+        title={item.label}
+      >
+        {Icon && <Icon size={24} />}
+      </button>
+
+      {hasChildren && flyoutOpen && (
+        <CollapsedFlyoutMenu
+          rootItem={item}
+          activeRoute={activeRoute}
+          onNavigate={onNavigate}
+          onClose={handleClose}
+        />
+      )}
+    </div>
+  );
+};
+
+// ── Spaces overlay ────────────────────────────────────────────────────────────
+
+interface SpacesOverlayProps {
+  spaces: SpaceSchema[];
+  activeSpaceId: SpaceId | null;
+  isCollapsed: boolean;
+  onSelect: (space: SpaceSchema) => void;
+  onClose: () => void;
+  triggerRef: React.RefObject<HTMLButtonElement | null>;
+}
+
+const SpacesOverlay: React.FC<SpacesOverlayProps> = ({
+  spaces, activeSpaceId, isCollapsed, onSelect, onClose, triggerRef,
+}) => {
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Focus active item or first item on open
+    const items = Array.from(
+      overlayRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]') ?? [],
+    );
+    const activeIdx = spaces.findIndex(s => s.spaceId === activeSpaceId);
+    (items[activeIdx] ?? items[0])?.focus();
+  }, [activeSpaceId, spaces]);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const items = Array.from(
+        overlayRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]') ?? [],
+      );
+      const idx = items.indexOf(document.activeElement as HTMLElement);
+      if (e.key === 'Escape') {
+        onClose();
+        triggerRef.current?.focus();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        items[(idx + 1) % items.length]?.focus();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        items[(idx - 1 + items.length) % items.length]?.focus();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        items[0]?.focus();
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        items[items.length - 1]?.focus();
+      }
+    };
+    const onMouseDown = (e: MouseEvent) => {
+      if (
+        overlayRef.current && !overlayRef.current.contains(e.target as Node) &&
+        triggerRef.current && !triggerRef.current.contains(e.target as Node)
+      ) {
+        onClose();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('mousedown', onMouseDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('mousedown', onMouseDown);
+    };
+  }, [onClose, triggerRef]);
+
+  return (
+    <div
+      ref={overlayRef}
+      className={`spaces-overlay${isCollapsed ? ' spaces-overlay--collapsed' : ' spaces-overlay--expanded'}`}
+      role="menu"
+      aria-label="Switch space"
+    >
+      <div className="spaces-overlay__header">Spaces</div>
+      <div className="spaces-overlay__list">
+        {spaces.map((space, index) => (
+          <React.Fragment key={space.id}>
+            {index > 0 && <span className="spaces-overlay__divider" aria-hidden="true" />}
+            <button
+              type="button"
+              role="menuitem"
+              className={[
+                'spaces-overlay__option',
+                space.spaceId === activeSpaceId ? 'spaces-overlay__option--active' : '',
+              ].filter(Boolean).join(' ')}
+              onClick={() => { onSelect(space); onClose(); }}
+            >
+              <span className="spaces-overlay__option-icon">
+                <SpaceIconEl spaceId={space.id} size={28} />
+              </span>
+              <span className="spaces-overlay__option-content">
+                <span className="spaces-overlay__option-label">{space.label}</span>
+                {space.description && (
+                  <span className="spaces-overlay__option-description">{space.description}</span>
+                )}
+              </span>
+            </button>
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// ── Space switcher trigger ────────────────────────────────────────────────────
 
 interface SpaceSwitcherProps {
   spaces: SpaceSchema[];
-  activeSpaceId: string | null;
+  activeSpaceId: SpaceId | null;
   isCollapsed: boolean;
   onSelect: (space: SpaceSchema) => void;
 }
@@ -202,31 +447,25 @@ const SpaceSwitcher: React.FC<SpaceSwitcherProps> = ({
   spaces, activeSpaceId, isCollapsed, onSelect,
 }) => {
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const active = spaces.find(s => s.spaceId === activeSpaceId);
 
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, []);
-
-  const active = spaces.find(s => s.id === activeSpaceId);
+  const handleClose = useCallback(() => setOpen(false), []);
 
   return (
-    <div className="space-switcher" ref={ref}>
+    <div className="space-switcher">
       <button
+        ref={btnRef}
         type="button"
         className="space-switcher__btn"
         onClick={() => setOpen(v => !v)}
         aria-label={`Current space: ${active?.label ?? 'None'}. Switch space`}
         aria-expanded={open}
-        aria-haspopup="listbox"
+        aria-haspopup="menu"
       >
         {active && (
           <span className="space-switcher__icon-wrap">
-            <SpaceIconEl spaceId={active.id} size={24} />
+            <SpaceIconEl spaceId={active.id} size={isCollapsed ? 32 : 24} />
           </span>
         )}
         {!isCollapsed && (
@@ -234,73 +473,23 @@ const SpaceSwitcher: React.FC<SpaceSwitcherProps> = ({
             <span className="space-switcher__label-wrap">
               <span className="space-switcher__label">{active?.label ?? 'Select Space'}</span>
             </span>
-            <span className="space-switcher__arrow">
-              <ChevronDownIcon size={12} />
+            <span className="space-switcher__arrow" aria-hidden="true">
+              <DotsGridIcon size={16} />
             </span>
           </>
         )}
       </button>
 
       {open && (
-        <div className="space-switcher__dropdown" role="listbox" aria-label="Select space">
-          {spaces.map(space => (
-            <button
-              key={space.id}
-              type="button"
-              role="option"
-              aria-selected={space.id === activeSpaceId}
-              className={`space-switcher__option${space.id === activeSpaceId ? ' space-switcher__option--active' : ''}`}
-              onClick={() => { onSelect(space); setOpen(false); }}
-            >
-              <span className="space-switcher__option-icon">
-                <SpaceIconEl spaceId={space.id} size={20} />
-              </span>
-              <span>{space.label}</span>
-            </button>
-          ))}
-        </div>
+        <SpacesOverlay
+          spaces={spaces}
+          activeSpaceId={activeSpaceId}
+          isCollapsed={isCollapsed}
+          onSelect={onSelect}
+          onClose={handleClose}
+          triggerRef={btnRef}
+        />
       )}
-    </div>
-  );
-};
-
-// ── Collapsed flyout ──────────────────────────────────────────────────────────
-
-interface FlyoutProps {
-  space: SpaceSchema;
-  activeRoute: string;
-  onNavigate: (route: string) => void;
-}
-
-const CollapsedFlyout: React.FC<FlyoutProps> = ({ space, activeRoute, onNavigate }) => {
-  const renderItems = (items: NavItem[], depth = 0): React.ReactNode =>
-    items.map(item => (
-      <div key={item.id}>
-        {item.path ? (
-          <button
-            type="button"
-            className={[
-              'flyout-item',
-              `flyout-item--depth-${Math.min(depth, 3)}`,
-              item.path === activeRoute ? 'flyout-item--active' : '',
-            ].filter(Boolean).join(' ')}
-            onClick={() => onNavigate(item.path!)}
-          >
-            {item.label}
-          </button>
-        ) : (
-          <div className={`flyout-group flyout-group--depth-${Math.min(depth, 3)}`}>
-            {item.label}
-          </div>
-        )}
-        {item.children && renderItems(item.children, depth + 1)}
-      </div>
-    ));
-
-  return (
-    <div className="nav-flyout" role="navigation" aria-label={`${space.label} navigation`}>
-      <div className="nav-flyout__header">{space.label}</div>
-      {renderItems(space.items)}
     </div>
   );
 };
@@ -312,18 +501,27 @@ export const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [openIds, setOpenIds] = useState<Set<string>>(new Set());
-  const [flyoutSpaceId, setFlyoutSpaceId] = useState<string | null>(null);
-  const flyoutTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const activeSpaceId = useMemo(
-    () => getActiveSpaceId(spacesRegistry, location.pathname),
-    [location.pathname]
+  const rawNavigation = useMemo(
+    () => resolveActiveNavigationState(location.pathname),
+    [location.pathname],
   );
 
-  const activeSpace = spacesRegistry.find(s => s.id === activeSpaceId) ?? null;
+  // When the current path has no navConfig match, keep the last known space/item
+  // so the sidebar doesn't lose its context on sub-pages or unregistered routes.
+  const lastKnownNavRef = useRef(rawNavigation);
+  if (rawNavigation.activeSpaceId !== null) {
+    lastKnownNavRef.current = rawNavigation;
+  }
+  const activeNavigation = rawNavigation.activeSpaceId !== null
+    ? rawNavigation
+    : { ...lastKnownNavRef.current, activeItemId: rawNavigation.activeItemId };
+
+  const activeSpaceId = activeNavigation.activeSpaceId;
+  const activeSpace = spacesRegistry.find(s => s.spaceId === activeSpaceId) ?? null;
 
   // Reset manually-opened nodes when switching to a different space
-  const prevSpaceIdRef = useRef<string | null>(null);
+  const prevSpaceIdRef = useRef<SpaceId | null>(null);
   useEffect(() => {
     if (prevSpaceIdRef.current !== null && prevSpaceIdRef.current !== activeSpaceId) {
       setOpenIds(new Set());
@@ -331,14 +529,9 @@ export const Sidebar: React.FC = () => {
     prevSpaceIdRef.current = activeSpaceId;
   }, [activeSpaceId]);
 
-  const ancestorIds = useMemo(() => {
-    if (!activeSpace) return new Set<string>();
-    return new Set(getAncestorIds(activeSpace.items, location.pathname));
-  }, [activeSpace, location.pathname]);
-
   const effectiveOpenIds = useMemo(
-    () => new Set([...openIds, ...ancestorIds]),
-    [openIds, ancestorIds]
+    () => new Set([...openIds, ...activeNavigation.activeAncestorIds]),
+    [openIds, activeNavigation.activeAncestorIds],
   );
 
   const handleToggle = useCallback((id: string) => {
@@ -353,16 +546,6 @@ export const Sidebar: React.FC = () => {
     navigate(getDefaultPathForSpace(space.id));
   }, [navigate]);
 
-  const handleFlyoutEnter = useCallback((spaceId: string) => {
-    if (flyoutTimer.current) clearTimeout(flyoutTimer.current);
-    setFlyoutSpaceId(spaceId);
-  }, []);
-
-  const handleFlyoutLeave = useCallback(() => {
-    if (flyoutTimer.current) clearTimeout(flyoutTimer.current);
-    flyoutTimer.current = setTimeout(() => setFlyoutSpaceId(null), 150);
-  }, []);
-
   return (
     <aside
       className={`sidebar${isCollapsed ? ' sidebar--collapsed' : ''}`}
@@ -370,41 +553,42 @@ export const Sidebar: React.FC = () => {
     >
       {/* Brand */}
       <div className="sidebar__brand">
-        <Link to="/" className="sidebar__logo" aria-label="Home">
-          <IDIRALogoIcon size={28} />
-          {!isCollapsed && (
-            <span className="sidebar__logo-text">
-              <span className="sidebar__logo-title">IDIRA</span>
-              <span className="sidebar__logo-subtitle">BY PALO ALTO NETWORKS</span>
-            </span>
-          )}
-        </Link>
-        {!isCollapsed && (
+        {isCollapsed ? (
           <button
             type="button"
-            className="sidebar__collapse-btn"
-            onClick={() => setIsCollapsed(true)}
-            aria-label="Collapse sidebar"
+            className="sidebar__logo-btn"
+            onClick={() => setIsCollapsed(false)}
+            aria-label="Expand sidebar"
           >
-            <CollapseIcon size={14} />
+            <IDIRALogoIcon size={40} />
           </button>
+        ) : (
+          <>
+            <Link to="/" className="sidebar__logo" aria-label="Home">
+              <IDIRALogoIcon size={28} />
+              <span className="sidebar__logo-text">
+                <span className="sidebar__logo-title">IDIRA</span>
+                <span className="sidebar__logo-subtitle">BY PALO ALTO NETWORKS</span>
+              </span>
+            </Link>
+            <button
+              type="button"
+              className="sidebar__collapse-btn"
+              onClick={() => setIsCollapsed(true)}
+              aria-label="Collapse sidebar"
+            >
+              <CollapseIcon size={14} />
+            </button>
+          </>
         )}
       </div>
 
-      {isCollapsed && (
-        <button
-          type="button"
-          className="sidebar__expand-btn"
-          onClick={() => setIsCollapsed(false)}
-          aria-label="Expand sidebar"
-        >
-          <ChevronRightIcon size={14} />
-        </button>
-      )}
+      {/* Collapsed divider */}
+      {isCollapsed && <span className="sidebar__collapsed-divider" aria-hidden="true" />}
 
-      {/* Space Switcher */}
-      {spacesRegistry.length > 0 && !isCollapsed && (
-        <div className="sidebar__space-area">
+      {/* Space switcher — always rendered, adapts layout per mode */}
+      {spacesRegistry.length > 0 && (
+        <div className={`sidebar__space-area${isCollapsed ? ' sidebar__space-area--collapsed' : ''}`}>
           <SpaceSwitcher
             spaces={spacesRegistry}
             activeSpaceId={activeSpaceId}
@@ -414,51 +598,28 @@ export const Sidebar: React.FC = () => {
         </div>
       )}
 
-      {/* Navigation tree */}
+      {/* Navigation */}
       <nav className="sidebar__nav" aria-label="Space navigation">
-        {activeSpace && !isCollapsed &&
-          activeSpace.items.map(item => (
-            <NavItemRow
-              key={item.id}
-              item={item}
-              activeRoute={location.pathname}
-              openIds={effectiveOpenIds}
-              onToggle={handleToggle}
-            />
-          ))
-        }
+        {/* Expanded: full tree */}
+        {!isCollapsed && activeSpace && activeSpace.items.map(item => (
+          <NavItemRow
+            key={item.id}
+            item={item}
+            activeRoute={location.pathname}
+            openIds={effectiveOpenIds}
+            onToggle={handleToggle}
+          />
+        ))}
 
-        {/* Collapsed: icon per space + flyout */}
-        {isCollapsed && spacesRegistry.map(space => (
-          <div
-            key={space.id}
-            className={`sidebar__space-icon-btn${space.id === activeSpaceId ? ' sidebar__space-icon-btn--active' : ''}`}
-            onMouseEnter={() => handleFlyoutEnter(space.id)}
-            onMouseLeave={handleFlyoutLeave}
-          >
-            <button
-              type="button"
-              aria-label={space.label}
-              title={space.label}
-              onClick={() => handleSpaceSelect(space)}
-            >
-              <SpaceIconEl spaceId={space.id} size={24} />
-            </button>
-
-            {flyoutSpaceId === space.id && space.items.length > 0 && (
-              <div
-                className="sidebar__flyout-wrap"
-                onMouseEnter={() => handleFlyoutEnter(space.id)}
-                onMouseLeave={handleFlyoutLeave}
-              >
-                <CollapsedFlyout
-                  space={space}
-                  activeRoute={location.pathname}
-                  onNavigate={route => { navigate(route); setFlyoutSpaceId(null); }}
-                />
-              </div>
-            )}
-          </div>
+        {/* Collapsed: level-1 icons of active space only */}
+        {isCollapsed && activeSpace && activeSpace.items.map(item => (
+          <CollapsedNavItem
+            key={item.id}
+            item={item}
+            activeRoute={location.pathname}
+            activeLevelOneItemId={activeNavigation.activeLevelOneItemId}
+            onNavigate={path => navigate(path)}
+          />
         ))}
       </nav>
     </aside>

@@ -9,10 +9,16 @@ interface IconProps {
 // ── Branding ──────────────────────────────────────────────────────────────────
 
 export const IDIRALogoIcon: React.FC<IconProps> = ({ size = 32, className, 'aria-label': ariaLabel }) => (
-  <svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-label={ariaLabel} aria-hidden={!ariaLabel}>
-    <path d="M16 2L28.7 9.5V24.5L16 32L3.3 24.5V9.5L16 2Z" fill="#7a80ff" />
-    <path d="M16 7L23.9 11.5V20.5L16 25L8.1 20.5V11.5L16 7Z" fill="#1d2d49" />
-    <text x="16" y="20" textAnchor="middle" fill="#7a80ff" fontSize="9" fontWeight="700" fontFamily="Open Sans, sans-serif">ID</text>
+  <svg width={size * (25 / 32)} height={size} viewBox="0 0 25 32" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-label={ariaLabel} aria-hidden={!ariaLabel}>
+    <g clipPath="url(#idira-logo-clip)">
+      <path d="M12.5532 23.1107V28.9078L0.0543188 21.7194L0.052002 7.34258L12.5532 0.154175L25.052 7.34258L19.9599 10.3571L12.5532 5.95128L5.14644 10.3571V18.9368L12.5532 23.1107Z" fill="#265BFF" />
+      <path d="M12.552 23.1107L19.9594 18.8587V10.3571L12.552 14.6067V23.1107Z" fill="#265BFF" />
+    </g>
+    <defs>
+      <clipPath id="idira-logo-clip">
+        <rect width="25" height="32" fill="white" />
+      </clipPath>
+    </defs>
   </svg>
 );
 
@@ -55,20 +61,6 @@ export const AppsGridIcon: React.FC<IconProps> = ({ size = 16, className }) => (
     <rect x="10" y="1" width="5" height="5" rx="1" fill="currentColor" />
     <rect x="1" y="10" width="5" height="5" rx="1" fill="currentColor" />
     <rect x="10" y="10" width="5" height="5" rx="1" fill="currentColor" />
-  </svg>
-);
-
-export const DotsGridIcon: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
-    <circle cx="5" cy="5" r="1.5" fill="currentColor" />
-    <circle cx="12" cy="5" r="1.5" fill="currentColor" />
-    <circle cx="19" cy="5" r="1.5" fill="currentColor" />
-    <circle cx="5" cy="12" r="1.5" fill="currentColor" />
-    <circle cx="12" cy="12" r="1.5" fill="currentColor" />
-    <circle cx="19" cy="12" r="1.5" fill="currentColor" />
-    <circle cx="5" cy="19" r="1.5" fill="currentColor" />
-    <circle cx="12" cy="19" r="1.5" fill="currentColor" />
-    <circle cx="19" cy="19" r="1.5" fill="currentColor" />
   </svg>
 );
 
@@ -454,6 +446,173 @@ export const FilterSettingsIcon: React.FC<IconProps> = ({ size = 24, className }
     <circle cx="9" cy="7" r="3" stroke="currentColor" strokeWidth="1.5" />
     <path d="M3 17H18M24 17H21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     <circle cx="15" cy="17" r="3" stroke="currentColor" strokeWidth="1.5" />
+  </svg>
+);
+
+// ── Action Circle Buttons (40x40) ─────────────────────────────────────────────
+
+export const ActionCircleServiceMoveIcon: React.FC<IconProps> = ({ size = 40, className }) => (
+  <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <rect width="40" height="40" rx="20" fill="#223658"/>
+    <path d="M24 24.25C24.4142 24.25 24.75 24.5858 24.75 25C24.75 25.4142 24.4142 25.75 24 25.75V25V24.25ZM17 25.75C16.5858 25.75 16.25 25.4142 16.25 25C16.25 24.5858 16.5858 24.25 17 24.25V25V25.75ZM24 20.25C24.4142 20.25 24.75 20.5858 24.75 21C24.75 21.4142 24.4142 21.75 24 21.75V21V20.25ZM21 21.75C20.5858 21.75 20.25 21.4142 20.25 21C20.25 20.5858 20.5858 20.25 21 20.25V21V21.75ZM24 25V25.75L17 25.75V25V24.25L24 24.25V25ZM24 21V21.75H21V21V20.25H24V21Z" fill="white"/>
+  </svg>
+);
+
+export const ActionCircleCloseIcon: React.FC<IconProps> = ({ size = 40, className }) => (
+  <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <rect width="40" height="40" rx="20" fill="#223658"/>
+    <path d="M27.0005 12.9999L13.0005 26.9999M13.0005 12.9999L27.0005 26.9999" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+export const ActionCircleCheckIcon: React.FC<IconProps> = ({ size = 40, className }) => (
+  <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <rect width="40" height="40" rx="20" fill="#223658"/>
+    <path d="M13 22L16.5 25.5L27 14.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+// ── Status / State Icons (24x24) ──────────────────────────────────────────────
+
+export const StatusInfoBlueIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="#3E68FF" strokeWidth="1.5"/>
+    <path d="M12.2422 17V12C12.2422 11.5286 12.2422 11.2929 12.0957 11.1464C11.9493 11 11.7136 11 11.2422 11" stroke="#3E68FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M11.992 8H12.001" stroke="#3E68FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+export const StatusSuccessGreenIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="#00C898" strokeWidth="1.5"/>
+    <path d="M8 12.5L10.5 15L16 9" stroke="#00C898" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+export const StatusErrorRedIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M14.9994 15L9 9M9.00064 15L15 9" stroke="#F22267" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="#F22267" strokeWidth="1.5"/>
+  </svg>
+);
+
+export const StatusWarningOrangeIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M5.82171 9.18293C8.23539 4.91199 9.44222 2.77651 11.0983 2.22681C12.0093 1.9244 12.9907 1.9244 13.9017 2.22681C15.5578 2.77651 16.7646 4.91199 19.1783 9.18293C21.592 13.4539 22.7988 15.5893 22.4368 17.3293C22.2376 18.2866 21.7469 19.1549 21.035 19.8097C19.741 21 17.3274 21 12.5 21C7.67265 21 5.25897 21 3.96496 19.8097C3.25308 19.1549 2.76239 18.2866 2.56322 17.3293C2.20119 15.5893 3.40803 13.4539 5.82171 9.18293Z" stroke="#FFB45D" strokeWidth="1.5"/>
+    <path d="M11.992 16H12.001" stroke="#FFB45D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 13L12 9" stroke="#FFB45D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+export const StatusNeutralPauseIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <circle cx="12" cy="12" r="10" stroke="#6C6E83" strokeWidth="1.5"/>
+    <path d="M16 12H8" stroke="#6C6E83" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+export const StatusNeutralClockIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M12 22C6.47711 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C16.4776 2 20.2257 4.94289 21.5 9H19" stroke="#6C6E83" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 8V12L14 14" stroke="#6C6E83" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M21.9551 13C21.9848 12.6709 22 12.3373 22 12M15 22C15.3416 21.8876 15.6753 21.7564 16 21.6078M20.7906 17C20.9835 16.6284 21.1555 16.2433 21.305 15.8462M18.1925 20.2292C18.5369 19.9441 18.8631 19.6358 19.1688 19.3065" stroke="#6C6E83" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+export const StatusNeutralSpinnerIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M12 3V6" stroke="#6C6E83" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M12 18V21" stroke="#6C6E83" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M21 12L18 12" stroke="#6C6E83" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M6 12L3 12" stroke="#6C6E83" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M18.364 5.63574L16.2427 7.75706" stroke="#6C6E83" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M7.75731 16.2422L5.63599 18.3635" stroke="#6C6E83" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M18.364 18.3635L16.2427 16.2422" stroke="#6C6E83" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M7.75731 7.75706L5.63599 5.63574" stroke="#6C6E83" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
+
+export const StatusPlayGreenIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <circle cx="12" cy="12" r="10" stroke="#00C898" strokeWidth="1.5"/>
+    <path d="M15.4531 12.3948C15.3016 13.0215 14.5857 13.4644 13.1539 14.3502C11.7697 15.2064 11.0777 15.6346 10.5199 15.4625C10.2893 15.3913 10.0793 15.2562 9.90982 15.07C9.5 14.6198 9.5 13.7465 9.5 12C9.5 10.2535 9.5 9.38018 9.90982 8.92995C10.0793 8.74381 10.2893 8.60868 10.5199 8.53753C11.0777 8.36544 11.7697 8.79357 13.1539 9.64983C14.5857 10.5356 15.3016 10.9785 15.4531 11.6052C15.5156 11.8639 15.5156 12.1361 15.4531 12.3948Z" stroke="#00C898" strokeWidth="1.5" strokeLinejoin="round"/>
+  </svg>
+);
+
+export const StatusAgentBlueIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M7.29469 18C3.53045 6.95 8.86313 2.0625 12 1C15.1369 2.0625 20.4696 6.95 16.7053 18C16.1369 17.6458 14.4 16.9375 12 16.9375C9.6 16.9375 7.86313 17.6458 7.29469 18Z" stroke="#3050BE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M14 8C14 6.89543 13.1046 6 12 6C10.8954 6 10 6.89543 10 8C10 9.10457 10.8954 10 12 10C13.1046 10 14 9.10457 14 8Z" stroke="#3050BE" strokeWidth="1.5"/>
+    <path d="M17.5 16.5576C18.9421 16.6908 20.7078 17.0822 21.9814 18C21.9814 18 22.5044 13.0642 18 12" stroke="#3050BE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M6.5 16.5576C5.05794 16.6908 3.29216 17.0822 2.01858 18C2.01858 18 1.49555 13.0642 6 12" stroke="#3050BE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M9.5 20C9.5 20 9.91667 22.5 12 23C14.0833 22.5 14.5 20 14.5 20" stroke="#3050BE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+export const StatusMonitorErrorIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path opacity="0.3" d="M20 7V15H4V7C4 5.11438 4 4.17157 4.58579 3.58579C5.17157 3 6.11438 3 8 3H16C17.8856 3 18.8284 3 19.4142 3.58579C20 4.17157 20 5.11438 20 7Z" stroke="#F22267" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M15 9L18.5 5.5M18.5 5.5L22 2M18.5 5.5L15 2M18.5 5.5L22 9" stroke="#F22267" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M20 15V12M4 15V7C4 5.11438 4 4.17157 4.58579 3.58579C5.17157 3 6.11438 3 8 3H11.5" stroke="#F22267" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M3.49762 16.0154L4.01953 15H19.9518L20.5023 16.0154C21.9452 18.677 22.3046 20.0077 21.7561 21.0039C21.2077 22 19.7536 22 16.8454 22L7.15462 22C4.24642 22 2.79231 22 2.24387 21.0039C1.69543 20.0077 2.05474 18.677 3.49762 16.0154Z" stroke="#F22267" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+export const StatusShieldDebugIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M2.5 9C2.53045 8.19543 2.6201 7.37669 2.76932 6.55013C2.8806 5.93375 2.93623 5.62556 3.12624 5.41465C3.31624 5.20374 3.78574 5.05413 4.72473 4.7549C7.03407 4.01899 8.98673 2 11.9982 2C15.0099 2 16.9647 4.01915 19.275 4.75499C20.2139 5.05405 20.6834 5.20358 20.8734 5.41449C21.0635 5.6254 21.1191 5.93364 21.2305 6.55013C21.3797 7.37669 21.4695 8.19543 21.5 9M19.4451 17C18.125 19.0226 16.1772 20.6375 13.6147 21.6175C12.9478 21.8725 12.6143 22 12.0015 22C11.3887 22 11.0553 21.8725 10.3883 21.6175C7.82558 20.6375 5.87726 19.0227 4.55666 17" stroke="#6F3EAB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M8.5 12L9.5 13M9.5 13L10.5 14M9.5 13L10.5 12M9.5 13L8.5 14" stroke="#6F3EAB" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M3.5 12L4.5 13M4.5 13L5.5 14M4.5 13L5.5 12M4.5 13L3.5 14" stroke="#6F3EAB" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M13.5 12L14.5 13M14.5 13L15.5 14M14.5 13L15.5 12M14.5 13L13.5 14" stroke="#6F3EAB" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M18.5 12L19.5 13M19.5 13L20.5 14M19.5 13L20.5 12M19.5 13L18.5 14" stroke="#6F3EAB" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
+
+export const StatusPauseSquaresIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M4 7C4 5.58579 4 4.87868 4.43934 4.43934C4.87868 4 5.58579 4 7 4C8.41421 4 9.12132 4 9.56066 4.43934C10 4.87868 10 5.58579 10 7V17C10 18.4142 10 19.1213 9.56066 19.5607C9.12132 20 8.41421 20 7 20C5.58579 20 4.87868 20 4.43934 19.5607C4 19.1213 4 18.4142 4 17V7Z" stroke="#A52D97" strokeWidth="1.5"/>
+    <path d="M14 7C14 5.58579 14 4.87868 14.4393 4.43934C14.8787 4 15.5858 4 17 4C18.4142 4 19.1213 4 19.5607 4.43934C20 4.87868 20 5.58579 20 7V17C20 18.4142 20 19.1213 19.5607 19.5607C19.1213 20 18.4142 20 17 20C15.5858 20 14.8787 20 14.4393 19.5607C14 19.1213 14 18.4142 14 17V7Z" stroke="#A52D97" strokeWidth="1.5"/>
+  </svg>
+);
+
+export const StatusFolderLockIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M16.7423 15.6806V14.2911C16.7423 14.0858 16.7509 13.878 16.8243 13.6864C17.0197 13.1762 17.5373 12.5078 18.4796 12.5078C19.422 12.5078 19.9599 13.1762 20.1553 13.6864C20.2287 13.878 20.2373 14.0858 20.2373 14.2911V15.6806M16.8116 21.5H20.1883C21.1824 21.5 21.9883 20.6939 21.9883 19.6995V17.6993C21.9883 16.705 21.1824 15.8989 20.1883 15.8989H16.8116C15.8175 15.8989 15 16.705 15 17.6993V19.6995C15 20.6939 15.8175 21.5 16.8116 21.5Z" stroke="#FFB45D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12.0027 20.5049C7.2874 20.5049 4.92973 20.5049 3.46487 19.04C2 17.5752 2 15.2174 2 10.5022V7.4456C2 5.62864 2 4.72016 2.38042 4.03847C2.6516 3.55255 3.05255 3.1516 3.53848 2.88042C4.22017 2.5 5.12865 2.5 6.94562 2.5C8.10969 2.5 8.69172 2.5 9.20122 2.69106C10.3645 3.12729 10.8442 4.18403 11.3691 5.23387L11.724 5.94676C11.8931 6.28639 12.2398 6.50108 12.6192 6.50108H16.754C18.8613 6.50108 19.9149 6.50108 20.6718 7.0068C20.9995 7.22574 21.2808 7.50707 21.4997 7.83473C21.8937 8.42442 21.9808 9.19424 22 10.5022" stroke="#FFB45D" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
+
+export const StatusServiceMoveTwoToneIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M13 19.2559C12.4477 19.2559 12 18.8081 12 18.2559C12 17.7036 12.4477 17.2559 13 17.2559L17.5 17.2559L17.5 16.6616C17.4999 16.486 17.4997 16.2703 17.5218 16.0939C17.538 15.9641 17.6098 15.388 18.1754 15.1137C18.7422 14.8387 19.2424 15.1407 19.3506 15.206L19.819 15.5451C20.1949 15.8397 20.7093 16.2454 21.1003 16.6259C21.2954 16.8157 21.4967 17.033 21.6555 17.2639C21.7967 17.4691 22 17.8193 22 18.25C22 18.6807 21.7967 19.0309 21.6555 19.2361C21.4967 19.467 21.2954 19.6843 21.1003 19.8741C20.7093 20.2546 20.1949 20.6602 19.8191 20.9549L19.3506 21.294C19.2424 21.3593 18.7422 21.6613 18.1754 21.3863C17.6098 21.112 17.538 20.5359 17.5222 20.4095L17.5218 20.4061C17.4997 20.2297 17.4999 20.014 17.5 19.8384L17.5 19.2559H13Z" fill="#00A67E"/>
+    <path d="M13.0288 2H10.9712C9.02294 2 7.45141 2 6.21533 2.17961C4.92535 2.3671 3.8568 2.76781 3.01802 3.6746C2.18949 4.57031 1.83279 5.69272 1.66416 7.04866C1.49997 8.36894 1.49998 10.0541 1.5 12.1739V12.8261C1.49998 14.9459 1.49997 16.6311 1.66416 17.9513C1.83279 19.3073 2.18949 20.4297 3.01802 21.3254C3.8568 22.2322 4.92535 22.6329 6.21533 22.8204C7.45142 23.0001 9.02293 23 10.9712 23H11.05C11.6023 23 12.05 22.5523 12.05 22C12.05 21.4477 11.6023 21 11.05 21C9.00425 21 7.57858 20.9975 6.503 20.8412C5.4647 20.6903 4.89956 20.4142 4.48622 19.9673C4.06263 19.5094 3.79327 18.8656 3.64887 17.7045C3.50182 16.5221 3.5 14.9616 3.5 12.7568V12.2432C3.5 10.1384 3.50182 8.57785 3.64887 7.39549C3.79327 6.23444 4.06263 5.59063 4.48622 5.1327C4.89956 4.68585 5.4647 4.4097 6.503 4.25879C7.57858 4.10254 9.00425 4.1 11.05 4.1H12.95C14.9957 4.1 16.4214 4.10254 17.497 4.25879C18.5353 4.4097 19.1004 4.68585 19.5138 5.1327C19.9374 5.59063 20.2067 6.23444 20.3511 7.39549C20.4983 8.57785 20.5 10.1384 20.5 12.2432V13C20.5 13.5523 20.9477 14 21.5 14C22.0523 14 22.5 13.5523 22.5 13V12.1739C22.5002 10.0541 22.5002 8.36894 22.3358 7.04866C22.1672 5.69272 21.8105 4.57031 20.982 3.6746C20.1432 2.76781 19.0747 2.3671 17.7847 2.17961C16.5486 2 14.9771 2 13.0288 2Z" fill="#6167EC"/>
+  </svg>
+);
+
+export const StatusAlertCircleIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <circle cx="12" cy="12" r="10" stroke="#F22267" strokeWidth="1.5"/>
+    <path d="M11.992 15H12.001" stroke="#F22267" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 12L12 8" stroke="#F22267" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+export const StatusStarRatingIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M13.9685 4.22755L15.4643 7.24394C15.6683 7.66384 16.2122 8.0666 16.6712 8.14372L19.3824 8.59789C21.1162 8.88925 21.5242 10.1575 20.2748 11.4086L18.167 13.5338C17.8101 13.8937 17.6146 14.5878 17.7251 15.0848L18.3285 17.7156C18.8045 19.798 17.7081 20.6035 15.8808 19.5152L13.3396 17.9984C12.8806 17.7242 12.1242 17.7242 11.6567 17.9984L9.11553 19.5152C7.29673 20.6035 6.19185 19.7894 6.6678 17.7156L7.27123 15.0848C7.38172 14.5878 7.18624 13.8937 6.82928 13.5338L4.72151 11.4086C3.48065 10.1575 3.88011 8.88925 5.61391 8.59789L8.32511 8.14372C8.77557 8.0666 9.3195 7.66384 9.52348 7.24394L11.0193 4.22755C11.8352 2.59082 13.1611 2.59082 13.9685 4.22755Z" stroke="#FF9900" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+export const StatusStarRatingFilledIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path opacity="0.3" d="M13.9685 4.22755L15.4643 7.24394C15.6683 7.66384 16.2122 8.0666 16.6712 8.14372L19.3824 8.59789C21.1162 8.88925 21.5242 10.1575 20.2748 11.4086L18.167 13.5338C17.8101 13.8937 17.6146 14.5878 17.7251 15.0848L18.3285 17.7156C18.8045 19.798 17.7081 20.6035 15.8808 19.5152L13.3396 17.9984C12.8806 17.7242 12.1242 17.7242 11.6567 17.9984L9.11553 19.5152C7.29673 20.6035 6.19185 19.7894 6.6678 17.7156L7.27123 15.0848C7.38172 14.5878 7.18624 13.8937 6.82928 13.5338L4.72151 11.4086C3.48065 10.1575 3.88011 8.88925 5.61391 8.59789L8.32511 8.14372C8.77557 8.0666 9.3195 7.66384 9.52348 7.24394L11.0193 4.22755C11.8352 2.59082 13.1611 2.59082 13.9685 4.22755Z" fill="#FF9900"/>
+    <path d="M13.9685 4.22755L15.4643 7.24394C15.6683 7.66384 16.2122 8.0666 16.6712 8.14372L19.3824 8.59789C21.1162 8.88925 21.5242 10.1575 20.2748 11.4086L18.167 13.5338C17.8101 13.8937 17.6146 14.5878 17.7251 15.0848L18.3285 17.7156C18.8045 19.798 17.7081 20.6035 15.8808 19.5152L13.3396 17.9984C12.8806 17.7242 12.1242 17.7242 11.6567 17.9984L9.11553 19.5152C7.29673 20.6035 6.19185 19.7894 6.6678 17.7156L7.27123 15.0848C7.38172 14.5878 7.18624 13.8937 6.82928 13.5338L4.72151 11.4086C3.48065 10.1575 3.88011 8.88925 5.61391 8.59789L8.32511 8.14372C8.77557 8.0666 9.3195 7.66384 9.52348 7.24394L11.0193 4.22755C11.8352 2.59082 13.1611 2.59082 13.9685 4.22755Z" stroke="#FF9900" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+export const DotsGridIcon: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M11.9958 18H12.0048M17.9998 18H18.0087M5.99976 18H6.00874M11.9958 12H12.0048M11.9998 6H12.0087M17.9998 12H18.0087M17.9998 6H18.0087M5.99976 12H6.00874M5.99976 6H6.00874" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 

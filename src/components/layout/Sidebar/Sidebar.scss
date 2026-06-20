@@ -1,39 +1,61 @@
 // Sidebar — Spaces Navigation
-// PRD: Spaces Navigation System
 
 @use 'tokens' as *;
 @use '../../../styles/mixins' as *;
 
+// ── Sidebar-specific layout values ────────────────────────────────────────────
+
+$sidebar-expanded-width:   224px;
+$sidebar-collapsed-width:   56px;
+
+$sidebar-top-padding:       14px;
+$sidebar-bottom-padding:    16px;
+
+$sidebar-brand-height:      42px;
+$sidebar-space-row-height:  36px;
+
+$sidebar-nav-row-height:    32px;
+$sidebar-collapsed-target:  40px;
+
+$sidebar-overlay-width:    280px;
+$sidebar-tree-line-offset:  14px;
+
 // ── Shell ─────────────────────────────────────────────────────────────────────
 
 .sidebar {
-  width: 240px;
-  min-width: 240px;
+  width: $sidebar-expanded-width;
+  min-width: $sidebar-expanded-width;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 36px;
-  height: 100vh;
-  padding: 32px 0 28px;
+  align-items: stretch;
   position: sticky;
   top: 0;
-  overflow: hidden;
-  transition: width $transition-base, min-width $transition-base;
-  flex-shrink: 0;
-  align-self: stretch;
   z-index: 50;
+  flex-shrink: 0;
+  overflow: visible;
 
-  border-radius: 0 16px 16px 0;
-  border-right: 1.5px solid rgba(34, 54, 88, 0.50);
+  padding: $sidebar-top-padding 0 $sidebar-bottom-padding;
+  border-radius: 0 10px 10px 0;
+  border-right: 1px solid rgba($color-divider-1, 0.8);
+
   background:
-    linear-gradient(0deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.00) 100%),
-    linear-gradient(354deg, #3E68FF -37.88%, #17243B 32.81%);
-  box-shadow: 10.253px 12.303px 20.506px 0px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(7.18px);
+    linear-gradient(
+      180deg,
+      $color-background-darkest 0%,
+      $color-background-darkest 72%,
+      rgba($color-primary, 0.45) 100%
+    );
+
+  box-shadow: $shadow-md;
+  transition:
+    width $transition-base,
+    min-width $transition-base;
 
   &--collapsed {
-    width: 56px;
-    min-width: 56px;
+    width: $sidebar-collapsed-width;
+    min-width: $sidebar-collapsed-width;
+    align-items: center;
   }
 }
 
@@ -42,68 +64,44 @@
 .sidebar__brand {
   display: flex;
   align-items: center;
-  gap: $spacing-2;
-  padding: $spacing-4 $spacing-3;
+  width: 100%;
+  min-height: $sidebar-brand-height;
+  padding: 0 $spacing-3;
   border-bottom: 1px solid $color-divider-1;
   flex-shrink: 0;
-  min-height: 56px;
-  width: 100%;
+
+  .sidebar--collapsed & {
+    width: $sidebar-collapsed-width;
+    justify-content: center;
+    padding: 0;
+    border-bottom: 0;
+  }
 }
 
 .sidebar__logo {
   display: flex;
   align-items: center;
   gap: $spacing-2;
-  text-decoration: none;
-  flex: 1;
   min-width: 0;
+  flex: 1;
+  text-decoration: none;
   color: $color-text-light;
-
-  .sidebar--collapsed & {
-    justify-content: center;
-    flex: none;
-  }
 }
 
-.sidebar__logo-text {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  overflow: hidden;
-}
-
-.sidebar__logo-title {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-bold;
-  color: $color-text-light;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-}
-
-.sidebar__logo-subtitle {
-  font-size: 9px;
-  color: $color-nav-text-idle;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.sidebar__collapse-btn,
-.sidebar__expand-btn {
-  background: none;
-  border: none;
-  padding: $spacing-1;
-  cursor: pointer;
-  color: $color-nav-icon-idle;
-  border-radius: $border-radius-sm;
-  display: flex;
+.sidebar__logo-btn {
+  width: $sidebar-collapsed-target;
+  height: $sidebar-collapsed-target;
+  display: inline-flex;
   align-items: center;
-  flex-shrink: 0;
-  transition: color $transition-fast, background-color $transition-fast;
+  justify-content: center;
+  border: 0;
+  border-radius: $border-radius-sm;
+  background: transparent;
+  color: $color-text-light;
+  cursor: pointer;
 
   &:hover {
-    color: $color-text-light;
-    background-color: rgba($color-text-light, 0.07);
+    background-color: rgba($color-text-light, 0.06);
   }
 
   &:focus-visible {
@@ -112,47 +110,102 @@
   }
 }
 
-.sidebar__expand-btn {
-  align-self: center;
-  margin: $spacing-2 auto 0;
+.sidebar__logo-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 1px;
+}
+
+.sidebar__logo-title {
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.sidebar__logo-subtitle {
+  color: $color-nav-text-idle;
+  font-size: 7px;
+  font-weight: $font-weight-normal;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sidebar__collapse-btn {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: $border-radius-sm;
+  background: transparent;
+  color: $color-nav-icon-idle;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:hover {
+    color: $color-text-light;
+    background-color: rgba($color-text-light, 0.06);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-btn-primary-idle;
+    outline-offset: 2px;
+  }
+}
+
+// ── Collapsed divider ─────────────────────────────────────────────────────────
+
+.sidebar__collapsed-divider {
+  width: 32px;
+  height: 1px;
+  margin: 14px auto 12px;
+  flex-shrink: 0;
+  background-color: rgba($color-divider-1, 0.9);
 }
 
 // ── Space area ────────────────────────────────────────────────────────────────
 
 .sidebar__space-area {
-  flex-shrink: 0;
-  border-bottom: 1px solid $color-divider-1;
   width: 100%;
+  min-height: $sidebar-space-row-height;
+  border-bottom: 1px solid $color-divider-1;
+  flex-shrink: 0;
+
+  &--collapsed {
+    width: $sidebar-collapsed-width;
+    min-height: auto;
+    display: flex;
+    justify-content: center;
+    border-bottom: 0;
+  }
 }
 
 // ── Space switcher ────────────────────────────────────────────────────────────
 
 .space-switcher {
   position: relative;
-}
-
-.space-switcher__option-icon {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  border-radius: 4px;
-  overflow: hidden;
+  width: 100%;
 }
 
 .space-switcher__btn {
   width: 100%;
+  min-height: $sidebar-space-row-height;
   display: flex;
   align-items: center;
   gap: $spacing-2;
-  padding: $spacing-3;
-  background: none;
-  border: none;
-  cursor: pointer;
+  padding: 0 $spacing-3;
+  border: 0;
+  background: transparent;
   color: $color-text-light;
-  transition: background-color $transition-fast;
+  cursor: pointer;
+  text-align: left;
 
   &:hover {
     background-color: rgba($color-text-light, 0.05);
@@ -164,114 +217,90 @@
   }
 
   .sidebar--collapsed & {
+    width: $sidebar-collapsed-target;
+    min-height: $sidebar-collapsed-target;
+    padding: 0;
     justify-content: center;
-    padding: $spacing-2;
+    border-radius: $border-radius-sm;
   }
 }
 
 .space-switcher__icon-wrap {
-  width: 24px;
-  height: 24px;
-  border-radius: 5px;
-  background-color: $color-btn-primary-idle;
-  display: flex;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: $color-text-light;
+
+  .sidebar--collapsed & {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.space-switcher__label-wrap {
+  flex: 1;
+  min-width: 0;
 }
 
 .space-switcher__label {
-  flex: 1;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-semibold;
-  text-align: left;
-  white-space: nowrap;
+  display: block;
   overflow: hidden;
+  color: $color-text-light;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  line-height: 1.2;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .space-switcher__arrow {
-  flex-shrink: 0;
-  color: $color-nav-icon-idle;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  color: $color-nav-icon-idle;
+  flex-shrink: 0;
 }
 
-.space-switcher__dropdown {
+// ── Spaces overlay ────────────────────────────────────────────────────────────
+
+.spaces-overlay {
   position: absolute;
-  left: $spacing-2;
-  right: $spacing-2;
-  top: calc(100% + 4px);
-  background-color: $color-background-darker;
+  top: 0;
+  left: calc(100% + 8px);
+  width: $sidebar-overlay-width;
+  z-index: 300;
+  overflow: hidden;
+
   border: 1px solid $color-divider-1;
   border-radius: $border-radius-base;
+  background-color: $color-background-darkest;
   box-shadow: $shadow-md;
-  z-index: 100;
-  overflow: hidden;
-  min-width: 160px;
-
-  .sidebar--collapsed & {
-    left: calc(100% + 4px);
-    right: auto;
-    top: 0;
-    min-width: 180px;
-  }
 }
 
-.space-switcher__option {
-  display: flex;
-  align-items: center;
-  gap: $spacing-2;
-  width: 100%;
-  padding: $spacing-2 $spacing-3;
-  background: none;
-  border: none;
-  cursor: pointer;
+.spaces-overlay__header {
+  padding: $spacing-3 $spacing-4 $spacing-2;
   color: $color-nav-text-idle;
-  font-size: $font-size-sm;
-  text-align: left;
-  transition: background-color $transition-fast, color $transition-fast;
-
-  &:hover {
-    background-color: rgba($color-text-light, 0.07);
-    color: $color-text-light;
-  }
-
-  &--active {
-    color: $color-text-light;
-    background-color: rgba($color-primary, 0.15);
-  }
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.space-switcher__option-icon {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.space-switcher__empty {
+.spaces-overlay__divider {
   display: block;
-  padding: $spacing-3;
-  font-size: $font-size-sm;
-  color: $color-nav-text-idle;
-  text-align: center;
+  height: 1px;
+  margin: 0 $spacing-3;
+  background-color: $color-divider-1;
 }
 
-// ── Nav tree ──────────────────────────────────────────────────────────────────
-
-.sidebar__nav {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: $spacing-2;
+.spaces-overlay__list {
   display: flex;
   flex-direction: column;
-  gap: 1px;
-  width: 100%;
+  gap: 2px;
+  max-height: min(500px, calc(100vh - 40px));
+  overflow-y: auto;
+  padding: $spacing-2;
 
   &::-webkit-scrollbar {
     width: 4px;
@@ -280,127 +309,301 @@
     background: transparent;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: $color-divider-1;
     border-radius: $border-radius-full;
+    background-color: $color-divider-1;
   }
 }
 
-.sidebar__empty-hint {
-  font-size: $font-size-xs;
-  color: $color-nav-text-idle;
-  padding: $spacing-4 $spacing-3;
-  text-align: center;
-  margin: 0;
-}
-
-// ── Nav item ──────────────────────────────────────────────────────────────────
-
-.nav-item {
+.spaces-overlay__option {
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: $spacing-2;
-  min-height: 34px;
-  padding: $spacing-1 $spacing-2;
+  gap: $spacing-3;
+  padding: $spacing-2 $spacing-3;
+  border: 0;
   border-radius: $border-radius-sm;
+  background: transparent;
   color: $color-nav-text-idle;
-  text-decoration: none;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-normal;
-  background: none;
-  border: none;
   cursor: pointer;
-  width: 100%;
   text-align: left;
-  position: relative;
-  transition: background-color $transition-fast, color $transition-fast;
 
-  &:hover:not(&--active) {
-    background-color: rgba($color-text-light, 0.06);
+  &:hover {
     color: $color-text-light;
+    background-color: rgba($color-text-light, 0.06);
   }
 
   &:focus-visible {
     outline: 2px solid $color-btn-primary-idle;
-    outline-offset: 2px;
+    outline-offset: 1px;
   }
 
   &--active {
+    color: $color-text-light;
     background-color: $color-nav-bg-selected;
+  }
+}
+
+.spaces-overlay__option-icon {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.spaces-overlay__option-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  gap: 2px;
+}
+
+.spaces-overlay__option-label {
+  overflow: hidden;
+  color: inherit;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spaces-overlay__option-description {
+  overflow: hidden;
+  color: $color-nav-text-idle;
+  font-size: $font-size-xs;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+
+$sidebar-nav-icon-size:   18px;
+$sidebar-nav-expand-width: 28px;
+$sidebar-tree-indent:     24px;
+$sidebar-tree-line-color: rgba($color-divider-1, 0.9);
+
+.sidebar__nav {
+  width: 100%;
+  flex: 1;
+  overflow: visible; // allows flyouts to overflow in both modes
+  padding: $spacing-2;
+  scrollbar-width: thin;
+
+  // In expanded mode, scroll vertically but not horizontally
+  .sidebar:not(.sidebar--collapsed) & {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .sidebar--collapsed & {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 0;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: $border-radius-full;
+    background-color: $color-divider-1;
+  }
+}
+
+// ── Expanded navigation item ──────────────────────────────────────────────────
+
+.nav-item {
+  width: 100%;
+  min-height: $sidebar-nav-row-height;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 $spacing-2;
+  border: 0;
+  border-radius: $border-radius-sm;
+  background: transparent;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-normal;
+  line-height: 1;
+  text-align: left;
+  text-decoration: none;
+  transition:
+    background-color $transition-fast,
+    color $transition-fast;
+
+  &:hover:not(.nav-item--active) {
+    color: $color-text-light;
+    background-color: rgba($color-text-light, 0.05);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-btn-primary-idle;
+    outline-offset: 1px;
+  }
+
+  &--active {
     color: $color-nav-text-selected;
-    font-weight: $font-weight-medium;
+    font-weight: $font-weight-semibold;
+    background-color: $color-nav-bg-selected;
 
     &::before {
       content: '';
       position: absolute;
       left: 0;
-      top: 20%;
-      bottom: 20%;
+      top: 15%;
+      bottom: 15%;
       width: 3px;
-      border-radius: 0 2px 2px 0;
-      background-color: $color-primary;
+      border-radius: 0 3px 3px 0;
+      background-color: $color-nav-side-line-selected;
     }
   }
 
   &--active-path {
-    color: rgba($color-text-light, 0.85);
+    color: rgba($color-text-light, 0.94);
+  }
+
+  // depth-1 = L1 items (icon + label, taller)
+  &--depth-1 {
+    min-height: 36px;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+  }
+
+  // depth-2..4 = nested items (compact, regular weight)
+  &--depth-2,
+  &--depth-3,
+  &--depth-4 {
+    min-height: $sidebar-nav-row-height;
+    font-size: $font-size-xs;
+  }
+
+  // Open non-active group: slightly emphasize
+  &--open:not(.nav-item--active) {
+    color: $color-text-light;
+  }
+
+  // Split: right padding removed so expand-btn fills the edge
+  &--split {
+    padding-right: 0;
+    overflow: hidden;
+  }
+
+  // Active split: transparent row, blue on the link area only
+  &--split.nav-item--active {
+    background-color: transparent;
+
+    &::before { display: none; }
+  }
+
+  &--split.nav-item--active .nav-item__split-link {
+    background-color: $color-nav-bg-selected;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 15%;
+      bottom: 15%;
+      width: 3px;
+      border-radius: 0 3px 3px 0;
+      background-color: $color-nav-side-line-selected;
+    }
   }
 }
 
-// Split item: inner link + expand btn side by side
 .nav-item__split-link {
+  min-width: 0;
+  min-height: $sidebar-nav-row-height;
+  flex: 1;
   display: flex;
   align-items: center;
-  flex: 1;
-  min-width: 0;
-  text-decoration: none;
+  gap: $spacing-2;
+  padding: 0 $spacing-2;
+  border-radius: $border-radius-sm 0 0 $border-radius-sm;
   color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    background-color: rgba($color-text-light, 0.05);
+  }
 
   &:focus-visible {
     outline: 2px solid $color-btn-primary-idle;
-    border-radius: $border-radius-sm;
+    outline-offset: -2px;
   }
 }
 
 .nav-item__icon {
-  display: flex;
+  width: $sidebar-nav-icon-size;
+  height: $sidebar-nav-icon-size;
+  display: inline-flex;
   align-items: center;
-  flex-shrink: 0;
+  justify-content: center;
   color: $color-nav-icon-idle;
+  flex-shrink: 0;
 
   .nav-item--active & {
     color: $color-nav-text-selected;
   }
+
+  .nav-item--active-path & {
+    color: rgba($color-text-light, 0.92);
+  }
 }
 
 .nav-item__label {
+  min-width: 0;
   flex: 1;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.nav-item__indent-line {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px;
-  height: 100%;
-  background-color: $color-divider-1;
-  pointer-events: none;
-}
-
-.nav-item__expand-btn {
-  background: none;
-  border: none;
-  padding: 2px;
-  cursor: pointer;
-  color: $color-nav-icon-idle;
-  border-radius: $border-radius-sm;
-  display: flex;
+// Dropdown chevron — visual indicator only, never a button
+.nav-item__expand-indicator {
+  width: $sidebar-nav-expand-width;
+  height: $sidebar-nav-row-height;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  color: $color-nav-icon-idle;
   flex-shrink: 0;
-  transition: color $transition-fast, background-color $transition-fast;
-  line-height: 0;
+
+  .nav-item--active & {
+    color: $color-text-light;
+  }
+}
+
+// Split chevron — independent interactive zone
+.nav-item__expand-btn {
+  width: $sidebar-nav-expand-width;
+  height: $sidebar-nav-row-height;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0 $border-radius-sm $border-radius-sm 0;
+  background: transparent;
+  color: $color-nav-icon-idle;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background-color $transition-fast,
+    color $transition-fast;
 
   &:hover {
     color: $color-text-light;
@@ -409,146 +612,186 @@
 
   &:focus-visible {
     outline: 2px solid $color-btn-primary-idle;
-  }
-}
-
-.nav-item__badge {
-  font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-  background-color: $color-btn-primary-idle;
-  color: $color-text-light;
-  border-radius: $border-radius-full;
-  padding: 1px 6px;
-  flex-shrink: 0;
-  line-height: 1.6;
-}
-
-.nav-item__children {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  border-left: 1px solid $color-divider-1;
-  margin-left: $spacing-4;
-}
-
-.nav-item__split-divider {
-  width: 1px;
-  height: 16px;
-  background-color: $color-divider-1;
-  flex-shrink: 0;
-  margin: 0 2px;
-}
-
-// ── Level indentation ─────────────────────────────────────────────────────────
-// Children containers use border-left + margin-left for tree lines.
-// Item padding stays flat — no cascading indentation.
-
-.nav-item--level-2 { padding-left: $spacing-3; }
-.nav-item--level-3 { padding-left: $spacing-2; }
-.nav-item--level-4 { padding-left: $spacing-2; }
-
-// ── Collapsed: space icon buttons ─────────────────────────────────────────────
-
-.sidebar__space-icon-btn {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  button {
-    background: none;
-    border: none;
-    padding: $spacing-2;
-    cursor: pointer;
-    color: $color-nav-icon-idle;
-    border-radius: $border-radius-sm;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    transition: color $transition-fast, background-color $transition-fast;
-
-    &:hover {
-      color: $color-text-light;
-      background-color: rgba($color-text-light, 0.08);
-    }
+    outline-offset: -2px;
   }
 
-  &--active button {
-    color: $color-primary;
-    background-color: rgba($color-primary, 0.12);
-  }
-}
-
-.sidebar__space-initials {
-  font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
-  color: $color-nav-icon-idle;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-
-  .sidebar__space-icon-btn--active & {
-    color: $color-primary;
-  }
-}
-
-.sidebar__flyout-wrap {
-  position: absolute;
-  left: calc(100% + 4px);
-  top: 0;
-  z-index: 200;
-}
-
-// ── Collapsed flyout ──────────────────────────────────────────────────────────
-
-.nav-flyout {
-  background-color: $color-background-darker;
-  border: 1px solid $color-divider-1;
-  border-radius: $border-radius-base;
-  box-shadow: $shadow-md;
-  min-width: 200px;
-  max-height: 80vh;
-  overflow-y: auto;
-  padding: $spacing-2 0;
-}
-
-.nav-flyout__header {
-  font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-  color: $color-nav-text-idle;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  padding: $spacing-2 $spacing-3 $spacing-1;
-}
-
-.flyout-item {
-  display: block;
-  width: 100%;
-  padding: $spacing-2 $spacing-3;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: $font-size-sm;
-  color: $color-nav-text-idle;
-  text-align: left;
-  transition: background-color $transition-fast, color $transition-fast;
-
-  &:hover {
-    background-color: rgba($color-text-light, 0.07);
-    color: $color-text-light;
-  }
-
-  &--active {
+  .nav-item--split.nav-item--active &,
+  .nav-item--split.nav-item--open & {
     color: $color-text-light;
     background-color: $color-nav-bg-selected;
   }
 }
 
-.flyout-group {
-  font-size: $font-size-xs;
+.nav-item__split-divider {
+  width: 1px;
+  height: 16px;
+  margin: 0;
+  background-color: rgba($color-divider-1, 0.9);
+  flex-shrink: 0;
+
+  .nav-item--active &,
+  .nav-item--open & {
+    background-color: rgba($color-text-light, 0.28);
+  }
+}
+
+// ── Nested tree ───────────────────────────────────────────────────────────────
+
+$tree-indent: 16px;
+
+.nav-item__children {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 0;
+  margin-left: $tree-indent;
+  padding-left: $spacing-2;
+  border-left: 1px solid $sidebar-tree-line-color;
+}
+
+.nav-item--depth-2,
+.nav-item--depth-3,
+.nav-item--depth-4 {
+  padding-left: $spacing-2;
+}
+
+.nav-item__children .nav-item__children {
+  margin-left: $tree-indent;
+}
+
+// ── Collapsed active-space level-1 items ──────────────────────────────────────
+
+.collapsed-nav-item {
+  position: relative;
+  width: $sidebar-collapsed-target;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.collapsed-nav-item__trigger {
+  width: $sidebar-collapsed-target;
+  height: $sidebar-collapsed-target;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 0;
+  border-radius: $border-radius-sm;
+  background: transparent;
+  color: $color-nav-icon-idle;
+  cursor: pointer;
+  transition:
+    background-color $transition-fast,
+    color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    background-color: rgba($color-text-light, 0.06);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-btn-primary-idle;
+    outline-offset: 2px;
+  }
+
+  &--active {
+    color: $color-text-light;
+    background-color: $color-nav-bg-selected;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 15%;
+      bottom: 15%;
+      width: 3px;
+      border-radius: 0 3px 3px 0;
+      background-color: $color-nav-side-line-selected;
+    }
+  }
+}
+
+// ── Collapsed level-1 flyout ──────────────────────────────────────────────────
+
+.collapsed-flyout {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 8px);
+  width: 220px;
+  max-height: min(560px, calc(100vh - 32px));
+  z-index: 250;
+  overflow-y: auto;
+  padding: $spacing-2;
+
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-base;
+  background-color: $color-background-darkest;
+  box-shadow: $shadow-md;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: $border-radius-full;
+    background-color: $color-divider-1;
+  }
+}
+
+.collapsed-flyout__item {
+  width: 100%;
+  min-height: $sidebar-nav-row-height;
+  display: block;
+  padding: 0 $spacing-3;
+  border: 0;
+  border-radius: $border-radius-sm;
+  background: transparent;
   color: $color-nav-text-idle;
+  cursor: pointer;
+  font-size: $font-size-xs;
+  line-height: #{$sidebar-nav-row-height};
+  text-align: left;
+
+  &:hover {
+    color: $color-text-light;
+    background-color: rgba($color-text-light, 0.06);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-btn-primary-idle;
+    outline-offset: 1px;
+  }
+
+  &--active {
+    color: $color-text-light;
+    font-weight: $font-weight-medium;
+    background-color: $color-nav-bg-selected;
+  }
+
+  &--parent {
+    margin-bottom: 4px;
+    border-bottom: 1px solid $color-divider-1;
+    border-radius: 0;
+    color: $color-text-light;
+    font-weight: $font-weight-semibold;
+  }
+
+  &--depth-1 { padding-left: $spacing-4; }
+  &--depth-2 { padding-left: $spacing-5; }
+  &--depth-3 { padding-left: $spacing-6; }
+}
+
+.collapsed-flyout__group {
+  min-height: 28px;
   padding: $spacing-2 $spacing-3 $spacing-1;
+  color: $color-nav-text-idle;
+  font-size: $font-size-xs;
   font-weight: $font-weight-semibold;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
+
+  &--depth-1 { padding-left: $spacing-4; }
+  &--depth-2 { padding-left: $spacing-5; }
 }

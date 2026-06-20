@@ -1,0 +1,74 @@
+@use '../../theme/styles/tokens' as *;
+
+// ── Select Button group ───────────────────────────────────────────────────────
+
+.select-button {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid $color-border-dark;
+  border-radius: $border-radius-pill;
+  overflow: hidden;
+  background: transparent;
+  user-select: none;
+
+  &--disabled { opacity: 0.5; pointer-events: none; }
+}
+
+// ── Item ──────────────────────────────────────────────────────────────────────
+
+.select-button__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  border-left: 1px solid $color-border-dark;
+  color: $color-text-light;
+  font-family: $font-family-base;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background $transition-fast, color $transition-fast;
+
+  &--first { border-left: none; }
+
+  &:hover:not(&--selected):not(&--disabled) {
+    background: $color-btn-hover-overlay;
+  }
+
+  &--selected {
+    background: $color-btn-primary-idle;
+    color: $color-text-light;
+  }
+
+  &--disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: -2px;
+  }
+
+  // ── Sizes ──────────────────────────────────────────────────────────────────
+
+  .select-button--large & {
+    height: 36px;
+    padding: 0 $spacing-4;
+    font-size: $font-size-sm;
+  }
+
+  .select-button--medium & {
+    height: 28px;
+    padding: 0 $spacing-3;
+    font-size: $font-size-xs;
+  }
+
+  .select-button--small & {
+    height: 22px;
+    padding: 0 $spacing-2;
+    font-size: $font-size-xs;
+  }
+}

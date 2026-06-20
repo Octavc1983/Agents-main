@@ -54,6 +54,7 @@ export interface NavItem {
 export interface SpaceSchema {
   id: string;
   label: string;
+  description?: string;
   spaceId: SpaceId;
   items: NavItem[];
 }
@@ -64,10 +65,22 @@ export type NavSpaceConfig = SpaceSchema;
 export const SYSTEM_ROUTE_PREFIXES = ['/system', '/settings', '/profile'];
 
 export const spacesRegistry: SpaceSchema[] = [
+  // ── Command Center ──────────────────────────────────────────────────────────
+  {
+    id: 'commandCenter',
+    label: 'Command Center',
+    description: 'A centralized view of your identity security controls, access to targets, and risks.',
+    spaceId: 'commandCenter',
+    items: [
+      { id: 'cc-home', label: 'Home', type: 'button', path: '/command-center/home', icon: HomeNavIcon },
+    ],
+  },
+
   // ── Access ──────────────────────────────────────────────────────────────────
   {
     id: 'access',
     label: 'Access',
+    description: 'Access to your resources securely',
     spaceId: 'access',
     items: [
       { id: 'access-home', label: 'Home', type: 'button', path: '/access/home', icon: HomeNavIcon },
@@ -111,6 +124,7 @@ export const spacesRegistry: SpaceSchema[] = [
   {
     id: 'manage',
     label: 'Manage',
+    description: 'Manage and protect your assets and access entitlements',
     spaceId: 'manage',
     items: [
       { id: 'manage-home', label: 'Home', type: 'button', path: '/manage/home', icon: HomeNavIcon },
@@ -120,54 +134,24 @@ export const spacesRegistry: SpaceSchema[] = [
         type: 'dropdown',
         icon: InventoryNavIcon,
         children: [
+          { id: 'manage-inv-users', label: 'Users', type: 'button', path: '/manage/inventory/users' },
+          { id: 'manage-inv-roles', label: 'Roles', type: 'button', path: '/manage/inventory/roles' },
+          { id: 'manage-inv-cloud', label: 'Cloud entitlements', type: 'button', path: '/manage/inventory/cloud-entitlements' },
+          { id: 'manage-inv-accounts', label: 'Accounts', type: 'button', path: '/manage/inventory/accounts' },
+          { id: 'manage-inv-infra', label: 'Infrastructure', type: 'button', path: '/manage/inventory/infrastructure' },
+          { id: 'manage-inv-webapps', label: 'Web apps', type: 'button', path: '/manage/inventory/web-apps' },
+          { id: 'manage-inv-service-accounts', label: 'Service accounts', type: 'button', path: '/manage/inventory/service-accounts' },
+          { id: 'manage-inv-orgs', label: 'Organizations', type: 'button', path: '/manage/inventory/organizations' },
           {
-            id: 'manage-inv-identities',
-            label: 'Identities',
-            type: 'dropdown',
+            id: 'manage-inv-machines',
+            label: 'Machines',
+            type: 'split',
+            path: '/manage/inventory/machines',
             children: [
-              { id: 'manage-inv-users', label: 'Users', type: 'button', path: '/manage/inventory/identities/users' },
-              { id: 'manage-inv-roles', label: 'Roles', type: 'button', path: '/manage/inventory/identities/roles' },
-              { id: 'manage-inv-orgs', label: 'Organizations', type: 'button', path: '/manage/inventory/identities/organizations' },
-              {
-                id: 'manage-inv-machine',
-                label: 'Machine identities',
-                type: 'split',
-                path: '/manage/inventory/identities/machine',
-                children: [
-                  { id: 'manage-inv-cp-apps', label: 'CP applications', type: 'button', path: '/manage/inventory/identities/machine/cp-apps' },
-                ],
-              },
-            ],
-          },
-          {
-            id: 'manage-inv-ai',
-            label: 'AI',
-            type: 'dropdown',
-            children: [
-              { id: 'manage-inv-ai-agents', label: 'AI Agents', type: 'button', path: '/manage/inventory/ai/agents' },
-              { id: 'manage-inv-ai-managed', label: 'Managed AI agents', type: 'button', path: '/manage/inventory/ai/managed-agents' },
-              { id: 'manage-inv-mcp', label: 'MCP servers', type: 'button', path: '/manage/inventory/ai/mcp-servers' },
-            ],
-          },
-          {
-            id: 'manage-inv-moa',
-            label: 'Means of access',
-            type: 'dropdown',
-            children: [
-              { id: 'manage-inv-secrets', label: 'Secrets', type: 'button', path: '/manage/inventory/moa/secrets' },
-              { id: 'manage-inv-managed-acc', label: 'Managed accounts', type: 'button', path: '/manage/inventory/moa/managed-accounts' },
-              { id: 'manage-inv-discovered', label: 'Discovered accounts', type: 'button', path: '/manage/inventory/moa/discovered-accounts' },
-              { id: 'manage-inv-cloud', label: 'Cloud service entitlements', type: 'button', path: '/manage/inventory/moa/cloud-entitlements' },
-              { id: 'manage-inv-endpoints', label: 'Identity endpoints', type: 'button', path: '/manage/inventory/moa/endpoints' },
-            ],
-          },
-          {
-            id: 'manage-inv-targets',
-            label: 'Targets',
-            type: 'dropdown',
-            children: [
-              { id: 'manage-inv-apps', label: 'Applications', type: 'button', path: '/manage/inventory/targets/applications' },
-              { id: 'manage-inv-vms', label: 'Virtual machines', type: 'button', path: '/manage/inventory/targets/virtual-machines' },
+              { id: 'manage-inv-secrets', label: 'Secrets', type: 'button', path: '/manage/inventory/machines/secrets' },
+              { id: 'manage-inv-workloads', label: 'Workloads', type: 'button', path: '/manage/inventory/machines/workloads' },
+              { id: 'manage-inv-ai-agents', label: 'Secured AI agents', type: 'button', path: '/manage/inventory/machines/ai-agents' },
+              { id: 'manage-inv-mcp', label: 'MCP servers', type: 'button', path: '/manage/inventory/machines/mcp-servers' },
             ],
           },
         ],
@@ -229,7 +213,8 @@ export const spacesRegistry: SpaceSchema[] = [
   // ── Detect and Respond ───────────────────────────────────────────────────────
   {
     id: 'risk',
-    label: 'Detect and Respond',
+    label: 'Detect & Respond',
+    description: 'Mitigate risks based on the CyberArk Blueprint and detect and respond to threats in near real-time',
     spaceId: 'risk',
     items: [
       {
@@ -269,7 +254,8 @@ export const spacesRegistry: SpaceSchema[] = [
   // ── Audit and Reports ────────────────────────────────────────────────────────
   {
     id: 'audit',
-    label: 'Audit and Reports',
+    label: 'Audit & Reports',
+    description: 'View a centralized audit trail',
     spaceId: 'audit',
     items: [
       { id: 'audit-system', label: 'System activities', type: 'button', path: '/audit/system-activities', icon: SystemActivitiesNavIcon },
@@ -304,6 +290,7 @@ export const spacesRegistry: SpaceSchema[] = [
   {
     id: 'setup',
     label: 'Setup',
+    description: 'Setup and configure your identity security environment',
     spaceId: 'setup',
     items: [
       {
@@ -316,6 +303,7 @@ export const spacesRegistry: SpaceSchema[] = [
           { id: 'setup-health-session', label: 'Session diagnostics', type: 'button', path: '/setup/health/session-diagnostics' },
         ],
       },
+      { id: 'setup-migrations', label: 'Migrations', type: 'button', path: '/setup/migrations', icon: DeploymentNavIcon },
       {
         id: 'setup-deployment',
         label: 'Deployment',
@@ -531,4 +519,101 @@ export function getSpaceForPath(pathname: string): SpaceSchema | null {
     if (resolveItemByPath(space.items, pathname)) return space;
   }
   return null;
+}
+
+// ── Active navigation state ───────────────────────────────────────────────────
+
+export interface ActiveNavigationState {
+  activeSpaceId: SpaceId | null;
+  activeItemId: string | null;
+  activeAncestorIds: string[];
+  activeLevelOneItemId: string | null;
+}
+
+interface NavMatch {
+  itemId: string;
+  ancestorIds: string[];
+  levelOneItemId: string;
+}
+
+function findNavMatch(
+  items: NavItemConfig[],
+  pathname: string,
+  ancestors: string[] = [],
+  levelOneItemId?: string,
+): NavMatch | null {
+  for (const item of items) {
+    const currentLevelOneItemId = levelOneItemId ?? item.id;
+    if (item.path === pathname) {
+      return { itemId: item.id, ancestorIds: ancestors, levelOneItemId: currentLevelOneItemId };
+    }
+    if (item.children) {
+      const found = findNavMatch(
+        item.children,
+        pathname,
+        [...ancestors, item.id],
+        currentLevelOneItemId,
+      );
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+export function resolveActiveNavigationState(pathname: string): ActiveNavigationState {
+  for (const space of spacesRegistry) {
+    const match = findNavMatch(space.items, pathname);
+    if (match) {
+      return {
+        activeSpaceId: space.spaceId,
+        activeItemId: match.itemId,
+        activeAncestorIds: match.ancestorIds,
+        activeLevelOneItemId: match.levelOneItemId,
+      };
+    }
+  }
+  return {
+    activeSpaceId: null,
+    activeItemId: null,
+    activeAncestorIds: [],
+    activeLevelOneItemId: null,
+  };
+}
+
+// ── Registry validation ───────────────────────────────────────────────────────
+
+const VALID_TYPES: NavItemType[] = ['button', 'split', 'dropdown'];
+
+function validateItems(items: NavItemConfig[], spacePath: string): string[] {
+  const errors: string[] = [];
+  for (const item of items) {
+    const path = `${spacePath} > ${item.id}`;
+    if (!VALID_TYPES.includes(item.type)) {
+      errors.push(`[${path}] invalid type "${String(item.type)}"`);
+    }
+    if (item.type === 'button' && !item.path) {
+      errors.push(`[${path}] type="button" requires a path`);
+    }
+    if (item.type === 'dropdown' && item.path) {
+      errors.push(`[${path}] type="dropdown" must not have a path`);
+    }
+    if (item.type === 'split' && !item.path) {
+      errors.push(`[${path}] type="split" requires a path`);
+    }
+    if (item.children) {
+      errors.push(...validateItems(item.children, path));
+    }
+  }
+  return errors;
+}
+
+export function validateSpacesRegistry(registry: SpaceSchema[]): void {
+  if (process.env.NODE_ENV === 'production') return;
+  const errors: string[] = [];
+  for (const space of registry) {
+    errors.push(...validateItems(space.items, space.id));
+  }
+  if (errors.length > 0) {
+    console.error('[navConfig] Spaces registry validation failed:\n' + errors.join('\n'));
+  }
 }

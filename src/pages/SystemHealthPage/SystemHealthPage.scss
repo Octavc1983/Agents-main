@@ -1,0 +1,117 @@
+@use 'tokens' as *;
+
+.system-health-page {
+  padding: $spacing-6 $spacing-8;
+  max-width: 1400px;
+}
+
+.system-health-page__title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin: 0 0 $spacing-6;
+}
+
+.system-health-page__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-5;
+}
+
+// ── Card ──────────────────────────────────────────────────────────────────────
+
+.health-card {
+  border: 1px solid $color-border-light;
+  border-radius: $border-radius-base;
+  background-color: $color-bg-primary;
+  overflow: hidden;
+}
+
+.health-card__title {
+  padding: $spacing-3 $spacing-5;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+  color: $color-text-secondary;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.health-card__body {
+  padding: $spacing-5;
+}
+
+// ── Stat (simple number) ──────────────────────────────────────────────────────
+
+.health-stat {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.health-stat__label {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.health-stat__value {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+// ── Metric (progress + extra stat) ───────────────────────────────────────────
+
+.health-metric {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-8;
+}
+
+.health-metric__left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  min-width: 0;
+}
+
+.health-metric__label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.health-metric__connected {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.health-metric__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: $border-radius-full;
+  background-color: $color-status-success;
+  flex-shrink: 0;
+}
+
+.health-metric__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: $spacing-1;
+  flex-shrink: 0;
+}
+
+.health-metric__extra-label {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  white-space: nowrap;
+}
+
+.health-metric__extra-value {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}

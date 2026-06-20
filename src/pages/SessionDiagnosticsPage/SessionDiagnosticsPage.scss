@@ -1,0 +1,203 @@
+@use 'tokens' as *;
+
+.session-diag-page {
+  padding: $spacing-6 $spacing-8;
+  max-width: 1400px;
+}
+
+.session-diag-page__title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin: 0 0 $spacing-5;
+}
+
+// ── Toolbar ───────────────────────────────────────────────────────────────────
+
+.session-diag-page__toolbar {
+  display: flex;
+  align-items: center;
+  gap: $spacing-6;
+  margin-bottom: $spacing-5;
+}
+
+.session-diag-page__filter {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+}
+
+.session-diag-page__filter-label {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $color-primary;
+}
+
+.session-diag-page__search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  max-width: 360px;
+  border-bottom: 1px solid $color-border-light;
+  padding-bottom: $spacing-1;
+}
+
+.session-diag-page__search-icon {
+  color: $color-text-secondary;
+  flex-shrink: 0;
+  margin-right: $spacing-2;
+}
+
+.session-diag-page__search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+
+  &::placeholder {
+    color: $color-text-secondary;
+  }
+}
+
+// ── Stat cards ────────────────────────────────────────────────────────────────
+
+.session-diag-page__stats {
+  display: flex;
+  gap: $spacing-4;
+  margin-bottom: $spacing-5;
+}
+
+.session-diag-stat {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  flex: 1;
+  max-width: 200px;
+  padding: $spacing-4;
+  border: 1px solid $color-border-light;
+  border-radius: $border-radius-base;
+  background-color: $color-bg-primary;
+}
+
+.session-diag-stat--error {
+  border-color: rgba(229, 72, 77, 0.3);
+}
+
+.session-diag-stat--system {
+  border-color: rgba(229, 72, 77, 0.3);
+}
+
+.session-diag-stat--warning {
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.session-diag-stat__label {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.session-diag-stat__value {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  line-height: 1;
+}
+
+// ── Table header ──────────────────────────────────────────────────────────────
+
+.session-diag-page__table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-3;
+}
+
+.session-diag-page__count {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.session-diag-page__last-update {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+// ── Table ─────────────────────────────────────────────────────────────────────
+
+.session-diag-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $font-size-sm;
+}
+
+.session-diag-table__th {
+  padding: $spacing-3 $spacing-4;
+  text-align: left;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $color-text-secondary;
+  background-color: $color-bg-secondary;
+  border-bottom: 1px solid $color-border-light;
+  white-space: nowrap;
+
+  &--icon {
+    width: 32px;
+    padding: $spacing-3 $spacing-2;
+  }
+
+  &--actions {
+    width: 40px;
+  }
+}
+
+.session-diag-table__row {
+  border-bottom: 1px solid $color-border-light;
+
+  &:hover {
+    background-color: $color-bg-secondary;
+  }
+}
+
+.session-diag-table__td {
+  padding: $spacing-3 $spacing-4;
+  color: $color-text-primary;
+  vertical-align: middle;
+
+  &--icon {
+    width: 32px;
+    padding: $spacing-3 $spacing-2;
+    text-align: center;
+  }
+
+  &--actions {
+    width: 40px;
+    text-align: center;
+  }
+}
+
+.session-diag-table__action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-text-secondary;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-bg-secondary;
+    color: $color-text-primary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}

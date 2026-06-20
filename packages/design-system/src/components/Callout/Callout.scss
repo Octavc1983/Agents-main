@@ -1,0 +1,100 @@
+@use '../../theme/styles/tokens' as *;
+
+// ── Callout ───────────────────────────────────────────────────────────────────
+
+.callout {
+  position: relative;
+  background: $color-background-darker;
+  border: 1px solid $color-border-dark;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-lg;
+  padding: $spacing-3;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  color: $color-text-light;
+  min-width: 200px;
+  animation: callout-in $transition-fast forwards;
+
+  @media (prefers-reduced-motion: reduce) { animation: none; }
+}
+
+@keyframes callout-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.callout__close {
+  position: absolute;
+  top: $spacing-xs;
+  right: $spacing-xs;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-text-muted;
+  cursor: pointer;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover { color: $color-text-light; background: $color-btn-hover-overlay; }
+  &:focus-visible { outline: 2px solid $color-primary; outline-offset: 2px; }
+}
+
+.callout__title {
+  margin: 0 $spacing-6 $spacing-2 0;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-sm;
+  color: $color-text-light;
+  line-height: $line-height-tight;
+}
+
+.callout__body {
+  color: $color-text-muted;
+  line-height: $line-height-normal;
+}
+
+// ── Arrow ─────────────────────────────────────────────────────────────────────
+
+.callout__arrow {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: $color-background-darker;
+  border: 1px solid $color-border-dark;
+
+  .callout--top & {
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    border-top: none;
+    border-left: none;
+  }
+
+  .callout--bottom & {
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    border-bottom: none;
+    border-right: none;
+  }
+
+  .callout--left & {
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    border-top: none;
+    border-left: none;
+  }
+
+  .callout--right & {
+    left: -6px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    border-bottom: none;
+    border-right: none;
+  }
+}
