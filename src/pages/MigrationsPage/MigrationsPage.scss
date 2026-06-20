@@ -8,7 +8,7 @@
 .migrations-page__title {
   font-size: $font-size-2xl;
   font-weight: $font-weight-semibold;
-  color: $color-text-primary;
+  color: $color-text-light;
   margin: 0 0 $spacing-6;
 }
 
@@ -18,54 +18,43 @@
   gap: $spacing-5;
 }
 
-// ── Migration card ────────────────────────────────────────────────────────────
+// ── Migration card content (inside DS Card) ───────────────────────────────────
 
 .migration-card {
+  width: 280px;
+  padding: $spacing-2;
+  text-align: left;
   display: flex;
   flex-direction: column;
   gap: $spacing-3;
-  width: 280px;
-  padding: $spacing-5;
-  background-color: $color-bg-primary;
-  border: 1px solid $color-border-light;
-  border-radius: $border-radius-base;
-  cursor: pointer;
-  text-align: left;
-  transition: border-color $transition-fast, box-shadow $transition-fast;
 
-  &:hover {
-    border-color: $color-primary-light;
-    box-shadow: $shadow-sm;
-  }
-
-  &:focus-visible {
-    outline: 2px solid $color-primary;
-    outline-offset: 2px;
-  }
+  // DS Card already handles bg, border, hover via icard--interactive
 }
 
 .migration-card__header {
   display: flex;
   align-items: center;
   gap: $spacing-2;
+  color: $color-text-light;
 }
 
 .migration-card__icon {
   display: inline-flex;
   align-items: center;
   color: $color-severity-low;
+  flex-shrink: 0;
 }
 
 .migration-card__title {
   flex: 1;
   font-size: $font-size-base;
   font-weight: $font-weight-semibold;
-  color: $color-text-primary;
+  color: $color-text-light;
 }
 
 .migration-card__description {
   font-size: $font-size-sm;
-  color: $color-text-secondary;
+  color: $color-nav-text-idle;
   line-height: $line-height-normal;
   margin: 0;
 }

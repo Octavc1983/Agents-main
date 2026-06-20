@@ -8,35 +8,34 @@
 .system-health-page__title {
   font-size: $font-size-2xl;
   font-weight: $font-weight-semibold;
-  color: $color-text-primary;
+  color: $color-text-light;
   margin: 0 0 $spacing-6;
 }
 
 .system-health-page__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, auto);
   gap: $spacing-5;
+  justify-content: start;
 }
 
-// ── Card ──────────────────────────────────────────────────────────────────────
+// ── Card content layout (inside DS Card) ─────────────────────────────────────
 
 .health-card {
-  border: 1px solid $color-border-light;
-  border-radius: $border-radius-base;
-  background-color: $color-bg-primary;
-  overflow: hidden;
+  min-width: 280px;
+  padding: $spacing-2;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  // DS Card handles bg, border, and hover via icard--interactive
 }
 
-.health-card__title {
-  padding: $spacing-3 $spacing-5;
+.health-card__header-row {
   font-size: $font-size-sm;
   font-weight: $font-weight-normal;
-  color: $color-text-secondary;
-  border-bottom: 1px solid $color-border-light;
-}
-
-.health-card__body {
-  padding: $spacing-5;
+  color: $color-nav-text-idle;
+  padding-bottom: $spacing-3;
+  border-bottom: 1px solid $color-border-dark;
 }
 
 // ── Stat (simple number) ──────────────────────────────────────────────────────
@@ -45,17 +44,18 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-2;
+  padding-top: $spacing-2;
 }
 
 .health-stat__label {
   font-size: $font-size-sm;
-  color: $color-text-secondary;
+  color: $color-nav-text-idle;
 }
 
 .health-stat__value {
   font-size: $font-size-2xl;
   font-weight: $font-weight-semibold;
-  color: $color-text-primary;
+  color: $color-text-light;
 }
 
 // ── Metric (progress + extra stat) ───────────────────────────────────────────
@@ -77,7 +77,7 @@
 .health-metric__label {
   font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
-  color: $color-text-primary;
+  color: $color-text-light;
 }
 
 .health-metric__connected {
@@ -85,15 +85,19 @@
   align-items: center;
   gap: $spacing-2;
   font-size: $font-size-sm;
-  color: $color-text-secondary;
+
+  &--connected { color: $color-status-success; }
+  &--disconnected { color: $color-status-error; }
 }
 
 .health-metric__dot {
   width: 8px;
   height: 8px;
   border-radius: $border-radius-full;
-  background-color: $color-status-success;
   flex-shrink: 0;
+
+  .health-metric__connected--connected & { background-color: $color-status-success; }
+  .health-metric__connected--disconnected & { background-color: $color-status-error; }
 }
 
 .health-metric__right {
@@ -106,12 +110,12 @@
 
 .health-metric__extra-label {
   font-size: $font-size-sm;
-  color: $color-text-secondary;
+  color: $color-nav-text-idle;
   white-space: nowrap;
 }
 
 .health-metric__extra-value {
   font-size: $font-size-2xl;
   font-weight: $font-weight-semibold;
-  color: $color-text-primary;
+  color: $color-text-light;
 }

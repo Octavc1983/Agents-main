@@ -183,3 +183,18 @@ Maps every project tool to its purpose, inputs, outputs, safe mode, apply mode, 
 | Related Command | /ux-edit-page, /ux-add-page |
 | Allowed File Scope | Approved delta files only |
 | Protected Scope | All files outside approved delta, AppShell, Sidebar, Header, Router |
+
+### apply-user-decision-memory
+
+| Field | Value |
+|---|---|
+| Purpose | Scan approved user decision memory before implementation; auto-apply high-confidence decisions; report medium-confidence recommendations; create Flow Gap for missing decisions |
+| Inputs | target route/page/feature, action type |
+| Outputs | Matching decisions applied, decisions recommended, gaps identified, conflicts flagged |
+| Dry Run | Default (report only) |
+| Apply Mode | Include matched decisions in implementation plan |
+| Related Agent | workflow-orchestrator-agent, prototype-page-builder-agent |
+| Related Skill | auto-workflow-routing/SKILL.md |
+| Related Command | /ux-add-page, /ux-edit-page |
+| Allowed File Scope | .claude/architecture/user-decision-memory/ (read) |
+| Protected Scope | All src/ files — decisions inform but do not bypass approval gates |

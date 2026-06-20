@@ -170,9 +170,10 @@ $color-border-light: $color-neutral-200;
 $color-divider:      $color-neutral-100;
 
 // ── Typography ───────────────────────────────────────────────────────────────
-$font-family-base:   'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-$font-family-mono:   'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
-$font-family-button: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-family-base:    'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-family-mono:    'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+$font-family-button:  'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-family-heading: 'Titillium Web', 'Open Sans', sans-serif;
 
 $font-size-xs:   0.75rem;
 $font-size-sm:   0.875rem;

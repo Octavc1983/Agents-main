@@ -616,6 +616,12 @@ export const DotsGridIcon: React.FC<IconProps> = ({ size = 24, className }) => (
   </svg>
 );
 
+export const CommentIcon: React.FC<IconProps> = ({ size = 20, className }) => (
+  <svg width={size} height={size} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <path d="M2 4.5A2.5 2.5 0 0 1 4.5 2h11A2.5 2.5 0 0 1 18 4.5v7a2.5 2.5 0 0 1-2.5 2.5H11l-3.5 3v-3H4.5A2.5 2.5 0 0 1 2 11.5v-7Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+  </svg>
+);
+
 // ── Nav aliases (backward compat) ─────────────────────────────────────────────
 export { HomeIcon as HomeNavIcon };
 export { ScansIcon as ScansNavIcon };

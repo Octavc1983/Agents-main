@@ -6,7 +6,7 @@
   display: flex;
   width: 100%;
   padding: 0 $spacing-12; // 0 48px
-  height: 52px;
+  height: 88px;
   justify-content: space-between;
   align-items: center;
   position: sticky;
@@ -17,12 +17,13 @@
 }
 
 .header__title {
-  font-family: $font-family-base;
-  font-size: $font-size-base;
-  font-weight: $font-weight-semibold;
+  font-family: $font-family-heading;
+  font-size: 28px;
+  font-weight: $font-weight-normal;
   color: $color-text-light;
   margin: 0;
   white-space: nowrap;
+  line-height: normal;
 }
 
 // ── Right-side actions ────────────────────────────────────────────────────────

@@ -374,3 +374,14 @@ Infer routes only from proven sibling route patterns. Otherwise mark as route-pe
 When a requested page already exists, do not create or regenerate it.
 
 Inspect the current page first. Provide a delta report. Wait for user approval. Apply only the approved delta. Preserve all unrelated logic, routes, navigation, DS usage, and state behavior.
+
+## User Decision Memory Rule
+
+Before implementing any page, flow, or feature, scan `.claude/architecture/user-decision-memory/decision-registry.md`.
+
+Apply Level 1 decisions automatically (active, high confidence, no conflict, no destructive behavior, no new DS gap).
+Prefill Level 2 decisions in the report and ask one confirmation.
+Always ask for Level 3 decisions (destructive, unknown backend, new route, DS gap, conflict).
+
+Never apply deprecated or conflicted decisions.
+Report every auto-applied decision in the implementation plan with its Decision ID and source.

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, type ReactElement, type ReactNode } from 'react';
+import React, { useState, useRef, useEffect, useCallback, type ReactElement, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import './Tooltip.scss';
 
@@ -27,7 +27,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   const tooltipRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const computePosition = () => {
+  const computePosition = useCallback(() => {
     const trigger = triggerRef.current;
     const tooltip = tooltipRef.current;
     if (!trigger || !tooltip) return;
@@ -59,7 +59,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
     }
 
     setCoords({ top, left });
-  };
+  }, [placement]);
 
   const show = () => {
     if (disabled) return;
@@ -75,7 +75,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
 
   useEffect(() => {
     if (visible) computePosition();
-  }, [visible, placement]);
+  }, [visible, computePosition]);
 
   useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
 

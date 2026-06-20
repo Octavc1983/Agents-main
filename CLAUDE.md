@@ -236,3 +236,17 @@ First inspect the current page and related route, navigation, state, services, c
 Provide a delta report and wait for user approval.
 
 After approval, apply only the approved additions or corrections while preserving all unrelated layout, logic, routes, navigation, state behavior, DS usage, and accessibility behavior.
+
+## User Decision Memory Rule
+
+Before asking the user to define a behavior, Claude must ask internally: Does the user already have an approved decision for this type of flow?
+
+If yes (high confidence): Apply automatically. Include in implementation report.
+If yes (medium confidence): Prefill and ask one focused confirmation.
+If no: Create a Flow Gap. Ask for a UX Note. After approval and validated reuse, propose as a reusable decision.
+
+Approved decisions are in `.claude/architecture/user-decision-memory/`.
+
+Screen-specific decisions override route-specific, which override feature-specific, which override template-specific, which override global.
+
+Never apply a deprecated or conflicted decision without explicit resolution.

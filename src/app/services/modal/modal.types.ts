@@ -1,3 +1,4 @@
+import type React from 'react';
 import type { ModalSize } from '@idira/design-system';
 
 export type ModalTone = 'neutral' | 'warning' | 'destructive' | 'success' | 'info';

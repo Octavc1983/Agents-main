@@ -33,8 +33,6 @@ import {
   ChevronRightIcon,
   ChevronDownIcon,
   DotsGridIcon,
-} from '@idira/design-system/icons';
-import {
   AccessIcon,
   ManageIcon,
   RiskIcon,

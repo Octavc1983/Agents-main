@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Card } from '@idira/design-system';
 import { mockMigrationOptions } from '../../mock/migrationsMockData';
 import './MigrationsPage.scss';
 
@@ -26,12 +27,13 @@ export const MigrationsPage: React.FC = () => {
 
       <div className="migrations-page__grid">
         {mockMigrationOptions.map(option => (
-          <button
+          <Card
             key={option.id}
-            type="button"
-            className="migration-card"
+            state="default"
+            size="auto"
             onClick={() => navigate(option.path)}
             aria-label={option.title}
+            className="migration-card"
           >
             <div className="migration-card__header">
               <span className="migration-card__icon" aria-hidden="true">
@@ -41,7 +43,7 @@ export const MigrationsPage: React.FC = () => {
               <ChevronRightIcon />
             </div>
             <p className="migration-card__description">{option.description}</p>
-          </button>
+          </Card>
         ))}
       </div>
     </div>

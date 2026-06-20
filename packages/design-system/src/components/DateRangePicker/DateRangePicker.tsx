@@ -106,7 +106,7 @@ const CalendarMonth: React.FC<CalendarMonthProps> = ({
         {DAY_HEADERS.map(d => <span key={d} className="drp-month__day-label">{d}</span>)}
       </div>
       <div className="drp-month__grid" role="grid" aria-label={`${MONTH_NAMES[month]} ${year}`}>
-        {days.map((day, i) => {
+        {days.map((day) => {
           const isCurrentMonth = day.getMonth() === month;
           const isToday = isSameDay(day, today);
           const isFrom = isSameDay(day, range.from);
@@ -114,7 +114,7 @@ const CalendarMonth: React.FC<CalendarMonthProps> = ({
           const inRange = isBetween(day, range.from, effectiveTo);
           const cls = ['drp-day', !isCurrentMonth ? 'drp-day--outside' : '', isToday ? 'drp-day--today' : '', isFrom ? 'drp-day--selected drp-day--from' : '', isTo && !isSameDay(day, range.from) ? 'drp-day--selected drp-day--to' : '', inRange ? 'drp-day--in-range' : ''].filter(Boolean).join(' ');
           return (
-            <button key={i} type="button" role="gridcell" className={cls} aria-label={day.toDateString()} aria-selected={isFrom || isTo} tabIndex={isCurrentMonth ? 0 : -1} onClick={() => isCurrentMonth && onDayClick(day)} onMouseEnter={() => onDayHover?.(day)} onMouseLeave={() => onDayHover?.(null)}>
+            <button key={`${year}-${String(month).padStart(2, '0')}-${String(day.getFullYear())}-${String(day.getMonth()).padStart(2, '0')}-${String(day.getDate()).padStart(2, '0')}`} type="button" role="gridcell" className={cls} aria-label={day.toDateString()} aria-selected={isFrom || isTo} tabIndex={isCurrentMonth ? 0 : -1} onClick={() => isCurrentMonth && onDayClick(day)} onMouseEnter={() => onDayHover?.(day)} onMouseLeave={() => onDayHover?.(null)}>
               {day.getDate()}
             </button>
           );

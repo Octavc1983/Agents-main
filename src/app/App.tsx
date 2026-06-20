@@ -7,14 +7,17 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
 import { ThemeProvider } from '../providers/ThemeProvider';
 import { ModalProvider } from './services/modal';
+import { PageTitleProvider } from '../providers/PageTitleContext';
 import '../styles/globals.scss';
 
 function App() {
   return (
     <ThemeProvider>
-      <ModalProvider>
-        <RouterProvider router={router} />
-      </ModalProvider>
+      <PageTitleProvider>
+        <ModalProvider>
+          <RouterProvider router={router} />
+        </ModalProvider>
+      </PageTitleProvider>
     </ThemeProvider>
   );
 }

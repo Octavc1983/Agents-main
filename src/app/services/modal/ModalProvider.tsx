@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Modal } from '@idira/design-system';
-import { Button } from '@idira/design-system';
+import { Modal, Button } from '@idira/design-system';
 import { modalService } from './ModalService';
 import type { ActiveModal, FormDialogContentProps, SystemNoticeConfig } from './modal.types';
 
