@@ -84,15 +84,30 @@
 }
 
 .session-diag-stat--error {
-  border-color: rgba(229, 72, 77, 0.3);
+  border-color: rgba($color-status-error, 0.3);
 }
 
 .session-diag-stat--system {
-  border-color: rgba(229, 72, 77, 0.3);
+  border-color: rgba($color-status-error, 0.3);
 }
 
 .session-diag-stat--warning {
-  border-color: rgba(245, 158, 11, 0.3);
+  border-color: rgba($color-status-warning, 0.3);
+}
+
+.session-diag-stat__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  .session-diag-stat--error &,
+  .session-diag-stat--system & {
+    color: $color-status-error;
+  }
+
+  .session-diag-stat--warning & {
+    color: $color-status-warning;
+  }
 }
 
 .session-diag-stat__label {
@@ -200,4 +215,10 @@
     outline: 2px solid $color-primary;
     outline-offset: 2px;
   }
+}
+
+.session-diag-table__error-icon {
+  display: inline-flex;
+  align-items: center;
+  color: $color-status-error;
 }

@@ -207,3 +207,27 @@ export interface ScansStats {
   failed: number;
   criticalFindings: number;
 }
+
+// --- Session Diagnostics types -----------------------------------------------
+
+export type ConnectionStatus = 'Failed' | 'Ended' | 'Active';
+
+export interface Session {
+  id: string;
+  sessionId: string;
+  startDate: string;
+  connectionStatus: ConnectionStatus;
+  connectionProfile: string;
+  user: string;
+  target: string;
+  hasError: boolean;
+}
+
+// --- Migrations types ---------------------------------------------------------
+
+export interface MigrationOption {
+  id: string;
+  title: string;
+  description: string;
+  path: string;
+}

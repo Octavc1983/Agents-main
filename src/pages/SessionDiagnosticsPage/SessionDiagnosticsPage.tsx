@@ -1,20 +1,9 @@
 import React, { useState } from 'react';
-import { Select, Badge } from '@idira/design-system';
+import { Select, Badge, LoadingState, EmptyState, ErrorState } from '@idira/design-system';
+import { mockSessions } from '../../mock/sessionDiagnosticsMockData';
 import './SessionDiagnosticsPage.scss';
 
 type TimeRange = 'last_30_days' | 'last_7_days' | 'last_24_hours' | 'last_hour';
-type ConnectionStatus = 'Failed' | 'Ended' | 'Active';
-
-interface Session {
-  id: string;
-  sessionId: string;
-  startDate: string;
-  connectionStatus: ConnectionStatus;
-  connectionProfile: string;
-  user: string;
-  target: string;
-  hasError: boolean;
-}
 
 const TIME_RANGE_OPTIONS = [
   { value: 'last_30_days', label: 'Last 30 days' },
@@ -23,24 +12,14 @@ const TIME_RANGE_OPTIONS = [
   { value: 'last_hour', label: 'Last hour' },
 ];
 
-const MOCK_SESSIONS: Session[] = [
-  { id: '1', sessionId: '5502432c-1...', startDate: '08 May 2025, 10:50AM', connectionStatus: 'Failed', connectionProfile: 'N/A', user: 'miriam@cyberark.clou...', target: 'i-09075513e1e7eee8...', hasError: true },
-  { id: '2', sessionId: '2b6bf010-7...', startDate: '07 May 2025, 11:18AM', connectionStatus: 'Ended', connectionProfile: 'root', user: 'miriam@cyberark.clou...', target: '172.31.80.140#Miria...', hasError: false },
-  { id: '3', sessionId: '882abede-2...', startDate: '07 May 2025, 11:18AM', connectionStatus: 'Failed', connectionProfile: 'root', user: 'miriam@cyberark.clou...', target: '172.31.80.140#Miria...', hasError: true },
-  { id: '4', sessionId: 'baaf6709-4...', startDate: '07 May 2025, 11:17AM', connectionStatus: 'Ended', connectionProfile: 'root', user: 'miriam@cyberark.clou...', target: '172.31.80.140#Miria...', hasError: false },
-  { id: '5', sessionId: '62f979b6-4...', startDate: '07 May 2025, 11:17AM', connectionStatus: 'Failed', connectionProfile: 'root', user: 'miriam@cyberark.clou...', target: '172.31.80.140#Miria...', hasError: true },
-  { id: '6', sessionId: 'e7696c1b-7...', startDate: '07 May 2025, 11:17AM', connectionStatus: 'Ended', connectionProfile: 'root', user: 'miriam@cyberark.clou...', target: '172.31.80.140#Miria...', hasError: false },
-  { id: '7', sessionId: '89a1418e-0...', startDate: '07 May 2025, 11:16AM', connectionStatus: 'Ended', connectionProfile: 'root', user: 'miriam@cyberark.clou...', target: '172.31.80.140#Miria...', hasError: false },
-  { id: '8', sessionId: '687ed4d8-2...', startDate: '07 May 2025, 11:14AM', connectionStatus: 'Ended', connectionProfile: 'root', user: 'miriam@cyberark.clou...', target: '172.31.80.140#Miria...', hasError: false },
-  { id: '9', sessionId: '6fac1dc3-5...', startDate: '07 May 2025, 10:52AM', connectionStatus: 'Failed', connectionProfile: 'root', user: 'miriam@cyberark.clou...', target: '172.31.80.140#Miria...', hasError: true },
-  { id: '10', sessionId: 'f5118f8c-6...', startDate: '07 May 2025, 10:46AM', connectionStatus: 'Ended', connectionProfile: 'root', user: 'miriam@cyberark.clou...', target: '172.31.80.140#Miria...', hasError: false },
-];
+const isLoading = false;
+const isError = false;
 
 const ErrorUserIcon: React.FC = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <circle cx="8" cy="5" r="3" stroke="#E5484D" strokeWidth="1.5" />
-    <path d="M2 14c0-2.761 2.686-5 6-5s6 2.239 6 5" stroke="#E5484D" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="8" y1="11.5" x2="8" y2="13" stroke="#E5484D" strokeWidth="1.5" strokeLinecap="round" />
+    <circle cx="8" cy="5" r="3" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M2 14c0-2.761 2.686-5 6-5s6 2.239 6 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <line x1="8" y1="11.5" x2="8" y2="13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
   </svg>
 );
 
@@ -62,7 +41,29 @@ const SortIcon: React.FC = () => (
 export const SessionDiagnosticsPage: React.FC = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>('last_30_days');
 
-  const userErrors = MOCK_SESSIONS.filter(s => s.connectionStatus === 'Failed').length;
+  if (isLoading) {
+    return <LoadingState message="Loading sessions..." />;
+  }
+
+  if (isError) {
+    return (
+      <ErrorState
+        title="Failed to load sessions"
+        message="An error occurred while loading session diagnostics. Please try again."
+      />
+    );
+  }
+
+  if (mockSessions.length === 0) {
+    return (
+      <div className="session-diag-page">
+        <h1 className="session-diag-page__title">Session diagnostics</h1>
+        <EmptyState title="No sessions found" description="No sessions match the current time range." />
+      </div>
+    );
+  }
+
+  const userErrors = mockSessions.filter(s => s.connectionStatus === 'Failed').length;
   const systemErrors = 0;
   const warnings = 0;
 
@@ -98,32 +99,38 @@ export const SessionDiagnosticsPage: React.FC = () => {
 
       <div className="session-diag-page__stats">
         <div className="session-diag-stat session-diag-stat--error">
-          <ErrorUserIcon />
+          <span className="session-diag-stat__icon" aria-hidden="true">
+            <ErrorUserIcon />
+          </span>
           <span className="session-diag-stat__label">User errors</span>
           <span className="session-diag-stat__value">{userErrors}</span>
         </div>
         <div className="session-diag-stat session-diag-stat--system">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <circle cx="8" cy="8" r="6.5" stroke="#E5484D" strokeWidth="1.5" />
-            <line x1="8" y1="4.5" x2="8" y2="8.5" stroke="#E5484D" strokeWidth="1.5" strokeLinecap="round" />
-            <circle cx="8" cy="10.5" r="0.75" fill="#E5484D" />
-          </svg>
+          <span className="session-diag-stat__icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5" />
+              <line x1="8" y1="4.5" x2="8" y2="8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <circle cx="8" cy="10.5" r="0.75" fill="currentColor" />
+            </svg>
+          </span>
           <span className="session-diag-stat__label">System errors</span>
           <span className="session-diag-stat__value">{systemErrors}</span>
         </div>
         <div className="session-diag-stat session-diag-stat--warning">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M8 2L14.5 13H1.5L8 2Z" stroke="#F59E0B" strokeWidth="1.5" strokeLinejoin="round" />
-            <line x1="8" y1="6.5" x2="8" y2="9.5" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round" />
-            <circle cx="8" cy="11" r="0.75" fill="#F59E0B" />
-          </svg>
+          <span className="session-diag-stat__icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 2L14.5 13H1.5L8 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+              <line x1="8" y1="6.5" x2="8" y2="9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <circle cx="8" cy="11" r="0.75" fill="currentColor" />
+            </svg>
+          </span>
           <span className="session-diag-stat__label">Warnings</span>
           <span className="session-diag-stat__value">{warnings}</span>
         </div>
       </div>
 
       <div className="session-diag-page__table-header">
-        <span className="session-diag-page__count">{MOCK_SESSIONS.length} sessions</span>
+        <span className="session-diag-page__count">{mockSessions.length} sessions</span>
         <span className="session-diag-page__last-update">Last update on: 09:27 am</span>
       </div>
 
@@ -145,10 +152,14 @@ export const SessionDiagnosticsPage: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {MOCK_SESSIONS.map(session => (
+          {mockSessions.map(session => (
             <tr key={session.id} className="session-diag-table__row">
               <td className="session-diag-table__td session-diag-table__td--icon">
-                {session.hasError && <ErrorUserIcon />}
+                {session.hasError && (
+                  <span className="session-diag-table__error-icon">
+                    <ErrorUserIcon />
+                  </span>
+                )}
               </td>
               <td className="session-diag-table__td">{session.sessionId}</td>
               <td className="session-diag-table__td">{session.startDate}</td>

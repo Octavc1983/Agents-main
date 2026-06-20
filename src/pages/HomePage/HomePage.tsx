@@ -25,25 +25,25 @@ export const HomePage: React.FC = () => {
       <section className="home-page__section">
         <h2 className="home-page__section-title">What is This?</h2>
         <div className="home-page__grid">
-          <Card variant="elevated" title="Figma-to-React" subtitle="MCP Integration">
+          <Card state="default" title="Figma-to-React" subtitle="MCP Integration">
             <p>
               This project is designed to work seamlessly with Figma through Model Context Protocol (MCP).
               Agents can read Figma frames and automatically generate React components.
             </p>
           </Card>
-          <Card variant="elevated" title="Design System Ready" subtitle="Infra Compatible">
+          <Card state="default" title="Design System Ready" subtitle="Infra Compatible">
             <p>
               Built with placeholder components that are ready to be swapped with your Infra Design System.
               All components include migration notes.
             </p>
           </Card>
-          <Card variant="elevated" title="SCSS Foundation" subtitle="Design Tokens">
+          <Card state="default" title="SCSS Foundation" subtitle="Design Tokens">
             <p>
               Comprehensive SCSS setup with CSS custom properties, mixins, and design tokens. Perfect for
               rapid prototyping and maintaining design consistency.
             </p>
           </Card>
-          <Card variant="elevated" title="AI-Assisted" subtitle="Agent Ready">
+          <Card state="default" title="AI-Assisted" subtitle="Agent Ready">
             <p>
               Structured for AI agents to assist in component mapping, state management, and rapid page
               creation from Figma designs.

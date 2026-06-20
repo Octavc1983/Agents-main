@@ -50,6 +50,12 @@
   gap: $spacing-2;
 }
 
+.migration-card__icon {
+  display: inline-flex;
+  align-items: center;
+  color: $color-severity-low;
+}
+
 .migration-card__title {
   flex: 1;
   font-size: $font-size-base;
