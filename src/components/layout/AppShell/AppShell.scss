@@ -18,7 +18,7 @@
 .app-shell__content {
   flex: 1;
   padding: 0;
-  background-color: $color-page-background;
+  background-color: var(--color-page-background, #{$color-page-background});
   overflow-y: auto;
 }
 

@@ -14,13 +14,14 @@
   z-index: 200;
   flex-shrink: 0;
   box-sizing: border-box;
+  background: var(--color-page-background, #{$color-page-background});
 }
 
 .header__title {
   font-family: $font-family-heading;
   font-size: 28px;
   font-weight: $font-weight-normal;
-  color: $color-text-light;
+  color: var(--color-text-light, #{$color-text-light});
   margin: 0;
   white-space: nowrap;
   line-height: normal;
@@ -52,7 +53,7 @@
   background: none;
   border: none;
   border-radius: $border-radius-sm;
-  color: $color-nav-text-idle;
+  color: var(--color-nav-text-idle, #{$color-nav-text-idle});
   cursor: pointer;
   font-family: $font-family-base;
   font-size: $font-size-sm;
@@ -114,8 +115,8 @@
   top: calc(100% + 6px);
   right: 0;
   min-width: 210px;
-  background: $color-background-darker;
-  border: 1px solid $color-border-dark;
+  background: var(--color-background-darker, #{$color-background-darker});
+  border: 1px solid var(--color-border-dark, #{$color-border-dark});
   border-radius: $border-radius-base;
   box-shadow: $shadow-md;
   z-index: 300;
@@ -205,8 +206,8 @@
   top: calc(100% + 6px);
   right: 0;
   width: 260px;
-  background: $color-background-darker;
-  border: 1px solid $color-border-dark;
+  background: var(--color-background-darker, #{$color-background-darker});
+  border: 1px solid var(--color-border-dark, #{$color-border-dark});
   border-radius: $border-radius-base;
   box-shadow: $shadow-lg;
   z-index: 300;
@@ -411,8 +412,8 @@
   width: 44px;
   height: 24px;
   border-radius: $border-radius-pill;
-  background: $color-background-darkest;
-  border: 1px solid $color-border-dark;
+  background: var(--color-background-darkest, #{$color-background-darkest});
+  border: 1px solid var(--color-border-dark, #{$color-border-dark});
   padding: 3px;
   transition: background $transition-fast;
 
@@ -428,7 +429,7 @@
   width: 18px;
   height: 18px;
   border-radius: $border-radius-full;
-  background: $color-background-dark;
+  background: var(--color-background-dark, #{$color-background-dark});
   transition: transform $transition-fast;
 
   .header-user__theme-toggle--dark & {
