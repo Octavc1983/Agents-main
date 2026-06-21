@@ -1,84 +1,1255 @@
 // @idira/design-system/styles — global entry point
-// Import this once in your app root: import '@idira/design-system/styles';
+// Import once in your app root: import '@idira/design-system/styles';
 
-@use 'tokens' as *;
+@use 'semantic-dark' as dark;
+@use 'semantic-light' as light;
 
 :root {
-  // ── Primary ────────────────────────────────────────────────────────────────
-  --color-primary:        #{$color-primary};
-  --color-primary-dark:   #{$color-primary-dark};
-  --color-primary-darker: #{$color-primary-darker};
-  --color-primary-light:  #{$color-primary-light};
+  // ── Primary ───────────────────────────────────────────────────────────────
+  --color-primary:        #{dark.$color-primary};
+  --color-primary-dark:   #{dark.$color-primary-dark};
+  --color-primary-darker: #{dark.$color-primary-darker};
+  --color-primary-light:  #{dark.$color-primary-light};
 
-  // ── Background ─────────────────────────────────────────────────────────────
-  --color-page-background:     #{$color-page-background};
-  --color-surface-idle:        #{$color-surface-idle};
-  --color-background-dark:     #{$color-background-dark};
-  --color-background-darker:   #{$color-background-darker};
-  --color-background-darkest:  #{$color-background-darkest};
+  // ── Background / Surface ──────────────────────────────────────────────────
+  --color-page-background:     #{dark.$color-page-background};
+  --color-surface-idle:        #{dark.$color-surface-idle};
+  --color-background-dark:     #{dark.$color-background-dark};
+  --color-background-darker:   #{dark.$color-background-darker};
+  --color-background-darkest:  #{dark.$color-background-darkest};
+  --color-overlay-backdrop:    #{dark.$color-overlay-backdrop};
 
-  // ── Text ───────────────────────────────────────────────────────────────────
-  --color-text-light:  #{$color-text-light};
-  --color-text-muted:  #{$color-text-muted};
-  --color-border-dark: #{$color-border-dark};
-  --color-divider-1:   #{$color-divider-1};
+  // ── Text ──────────────────────────────────────────────────────────────────
+  --color-text-light:     #{dark.$color-text-light};
+  --color-text-muted:     #{dark.$color-text-muted};
+  --color-text-title:     #{dark.$color-text-title};
+  --color-text-running:   #{dark.$color-text-running};
+  --color-text-secondary: #{dark.$color-text-secondary};
+  --color-text-hint:      #{dark.$color-text-hint};
+  --color-text-disabled:  #{dark.$color-text-disabled};
+  --color-text-inverse:   #{dark.$color-text-inverse};
+  --color-text-success:   #{dark.$color-text-success};
+  --color-text-warning:   #{dark.$color-text-warning};
+  --color-text-error:     #{dark.$color-text-error};
+  --color-text-info:      #{dark.$color-text-info};
 
-  // ── Nav ────────────────────────────────────────────────────────────────────
-  --color-nav-text-idle:           #{$color-nav-text-idle};
-  --color-nav-text-selected:       #{$color-nav-text-selected};
-  --color-nav-bg-selected:         #{$color-nav-bg-selected};
-  --color-nav-side-line-selected:  #{$color-nav-side-line-selected};
-  --color-nav-icon-idle:           #{$color-nav-icon-idle};
-  --color-nav-icon-selected:       #{$color-nav-icon-selected};
+  // ── Generic page-level aliases ────────────────────────────────────────────
+  --color-text-primary:   #{dark.$color-text-primary};
+  --color-text-tertiary:  #{dark.$color-text-tertiary};
+  --color-border-light:   #{dark.$color-border-light};
+  --color-bg-primary:     #{dark.$color-bg-primary};
+  --color-bg-secondary:   #{dark.$color-bg-secondary};
+  --color-bg-tertiary:    #{dark.$color-bg-tertiary};
+  --color-neutral-300:    #{dark.$color-neutral-300};
+  --color-neutral-400:    #{dark.$color-neutral-400};
+  --color-neutral-0:      #{dark.$color-neutral-0};
+  --color-success:        #{dark.$color-success};
+  --color-warning:        #{dark.$color-warning};
+  --color-danger:         #{dark.$color-danger};
 
-  // ── Status ─────────────────────────────────────────────────────────────────
-  --color-status-success: #{$color-status-success};
-  --color-status-warning: #{$color-status-warning};
-  --color-status-error:   #{$color-status-error};
-  --color-status-idle:    #{$color-status-idle};
+  // ── Borders / Dividers ────────────────────────────────────────────────────
+  --color-border-dark: #{dark.$color-border-dark};
+  --color-divider-1:   #{dark.$color-divider-1};
 
-  // ── Spacing ────────────────────────────────────────────────────────────────
-  --spacing-0:  #{$spacing-0};
-  --spacing-1:  #{$spacing-1};
-  --spacing-2:  #{$spacing-2};
-  --spacing-3:  #{$spacing-3};
-  --spacing-4:  #{$spacing-4};
-  --spacing-5:  #{$spacing-5};
-  --spacing-6:  #{$spacing-6};
-  --spacing-7:  #{$spacing-7};
-  --spacing-8:  #{$spacing-8};
-  --spacing-10: #{$spacing-10};
-  --spacing-12: #{$spacing-12};
-  --spacing-16: #{$spacing-16};
-  --spacing-20: #{$spacing-20};
+  // ── Icons ─────────────────────────────────────────────────────────────────
+  --color-icon-idle:     #{dark.$color-icon-idle};
+  --color-icon-disabled: #{dark.$color-icon-disabled};
+  --color-icon-inverse:  #{dark.$color-icon-inverse};
 
-  // ── Border Radius ──────────────────────────────────────────────────────────
-  --border-radius-none: #{$border-radius-none};
-  --border-radius-sm:   #{$border-radius-sm};
-  --border-radius-base: #{$border-radius-base};
-  --border-radius-md:   #{$border-radius-md};
-  --border-radius-lg:   #{$border-radius-lg};
-  --border-radius-full: #{$border-radius-full};
+  // ── Status ────────────────────────────────────────────────────────────────
+  --color-status-success:       #{dark.$color-status-success};
+  --color-status-warning:       #{dark.$color-status-warning};
+  --color-status-error:         #{dark.$color-status-error};
+  --color-status-idle:          #{dark.$color-status-idle};
+  --color-status-info-icon:     #{dark.$color-status-info-icon};
+  --color-status-info-bg:       #{dark.$color-status-info-bg};
+  --color-status-success-icon:  #{dark.$color-status-success-icon};
+  --color-status-success-bg:    #{dark.$color-status-success-bg};
+  --color-status-error-icon:    #{dark.$color-status-error-icon};
+  --color-status-error-bg:      #{dark.$color-status-error-bg};
+  --color-status-warning-icon:  #{dark.$color-status-warning-icon};
+  --color-status-warning-bg:    #{dark.$color-status-warning-bg};
+  --color-status-idle-icon:     #{dark.$color-status-idle-icon};
+  --color-status-idle-bg:       #{dark.$color-status-idle-bg};
+  --color-status-startup-icon:  #{dark.$color-status-startup-icon};
+  --color-status-startup-bg:    #{dark.$color-status-startup-bg};
+  --color-status-arrange-icon:  #{dark.$color-status-arrange-icon};
+  --color-status-arrange-bg:    #{dark.$color-status-arrange-bg};
+  --color-status-pause-icon:    #{dark.$color-status-pause-icon};
+  --color-status-pause-bg:      #{dark.$color-status-pause-bg};
+  --color-status-security-icon: #{dark.$color-status-security-icon};
+  --color-status-security-bg:   #{dark.$color-status-security-bg};
+  --color-status-calendar-icon: #{dark.$color-status-calendar-icon};
 
-  // ── Shadows ────────────────────────────────────────────────────────────────
-  --shadow-xs:   #{$shadow-xs};
-  --shadow-sm:   #{$shadow-sm};
-  --shadow-base: #{$shadow-base};
-  --shadow-md:   #{$shadow-md};
-  --shadow-lg:   #{$shadow-lg};
+  // ── Navigation ────────────────────────────────────────────────────────────
+  --color-nav-text-idle:           #{dark.$color-nav-text-idle};
+  --color-nav-text-selected:       #{dark.$color-nav-text-selected};
+  --color-nav-bg-selected:         #{dark.$color-nav-bg-selected};
+  --color-nav-side-line-selected:  #{dark.$color-nav-side-line-selected};
+  --color-nav-icon-idle:           #{dark.$color-nav-icon-idle};
+  --color-nav-icon-selected:       #{dark.$color-nav-icon-selected};
 
-  // ── Transitions ────────────────────────────────────────────────────────────
-  --transition-fast: #{$transition-fast};
-  --transition-base: #{$transition-base};
-  --transition-slow: #{$transition-slow};
+  // ── Side Navigation ───────────────────────────────────────────────────────
+  --color-sidenav-text-space-top:          #{dark.$color-sidenav-text-space-top};
+  --color-sidenav-icon-buttons-top:        #{dark.$color-sidenav-icon-buttons-top};
+  --color-sidenav-divider-top:             #{dark.$color-sidenav-divider-top};
+  --color-sidenav-icon-nav-idle:           #{dark.$color-sidenav-icon-nav-idle};
+  --color-sidenav-icon-nav-hover:          #{dark.$color-sidenav-icon-nav-hover};
+  --color-sidenav-icon-nav-selected:       #{dark.$color-sidenav-icon-nav-selected};
+  --color-sidenav-icon-nav-selected-bg:    #{dark.$color-sidenav-icon-nav-selected-bg};
+  --color-sidenav-icon-nav-hover-overlay:  #{dark.$color-sidenav-icon-nav-hover-overlay};
+  --color-sidenav-text-category-idle:      #{dark.$color-sidenav-text-category-idle};
+  --color-sidenav-text-category-hover:     #{dark.$color-sidenav-text-category-hover};
+  --color-sidenav-text-category-selected:  #{dark.$color-sidenav-text-category-selected};
+  --color-sidenav-bg-category-hover:       #{dark.$color-sidenav-bg-category-hover};
+  --color-sidenav-bg-category-hover-sub:   #{dark.$color-sidenav-bg-category-hover-sub};
+  --color-sidenav-bg-category-selected:    #{dark.$color-sidenav-bg-category-selected};
+  --color-sidenav-divider-category:        #{dark.$color-sidenav-divider-category};
+  --color-sidenav-side-line-idle:          #{dark.$color-sidenav-side-line-idle};
+  --color-sidenav-side-line-hover:         #{dark.$color-sidenav-side-line-hover};
+  --color-sidenav-side-line-selected:      #{dark.$color-sidenav-side-line-selected};
+  --color-sidenav-bg-fill-gradient-1:      #{dark.$color-sidenav-bg-fill-gradient-1};
+  --color-sidenav-bg-fill-gradient-2:      #{dark.$color-sidenav-bg-fill-gradient-2};
+  --color-sidenav-stroke-gradient-1:       #{dark.$color-sidenav-stroke-gradient-1};
+  --color-sidenav-stroke-gradient-2:       #{dark.$color-sidenav-stroke-gradient-2};
+  --color-sidenav-bg-fill-3:               #{dark.$color-sidenav-bg-fill-3};
 
-  // ── Font sizes ─────────────────────────────────────────────────────────────
-  --font-size-xs:   #{$font-size-xs};
-  --font-size-sm:   #{$font-size-sm};
-  --font-size-base: #{$font-size-base};
-  --font-size-lg:   #{$font-size-lg};
-  --font-size-xl:   #{$font-size-xl};
-  --font-size-2xl:  #{$font-size-2xl};
-  --font-size-3xl:  #{$font-size-3xl};
-  --font-size-4xl:  #{$font-size-4xl};
+  // ── Navigator ─────────────────────────────────────────────────────────────
+  --color-navigator-text-title:               #{dark.$color-navigator-text-title};
+  --color-navigator-text-title-selected:      #{dark.$color-navigator-text-title-selected};
+  --color-navigator-text-description:         #{dark.$color-navigator-text-description};
+  --color-navigator-text-description-selected:#{dark.$color-navigator-text-description-selected};
+  --color-navigator-bg-hover:                 #{dark.$color-navigator-bg-hover};
+  --color-navigator-stroke:                   #{dark.$color-navigator-stroke};
+  --color-navigator-bg-fill-1:                #{dark.$color-navigator-bg-fill-1};
+  --color-navigator-bg-fill-2:                #{dark.$color-navigator-bg-fill-2};
+  --color-navigator-bg-fill-3:                #{dark.$color-navigator-bg-fill-3};
+  --color-navigator-bg-fill-4:                #{dark.$color-navigator-bg-fill-4};
+  --color-navigator-bg-fill-light:            #{dark.$color-navigator-bg-fill-light};
+
+  // ── Header ────────────────────────────────────────────────────────────────
+  --color-header-text:       #{dark.$color-header-text};
+  --color-header-text-label: #{dark.$color-header-text-label};
+  --color-header-labels:     #{dark.$color-header-labels};
+  --color-header-icon:       #{dark.$color-header-icon};
+  --color-header-hover:      #{dark.$color-header-hover};
+  --color-header-pressed:    #{dark.$color-header-pressed};
+  --color-header-separator:  #{dark.$color-header-separator};
+  --color-header-avatar:     #{dark.$color-header-avatar};
+  --color-header-bg:         #{dark.$color-header-bg};
+  --color-header-stroke:     #{dark.$color-header-stroke};
+
+  // ── Help ──────────────────────────────────────────────────────────────────
+  --color-help-text-idle:          #{dark.$color-help-text-idle};
+  --color-help-text-hover:         #{dark.$color-help-text-hover};
+  --color-help-text-selected:      #{dark.$color-help-text-selected};
+  --color-help-icon-idle:          #{dark.$color-help-icon-idle};
+  --color-help-icon-notification:  #{dark.$color-help-icon-notification};
+  --color-help-icon-hover:         #{dark.$color-help-icon-hover};
+  --color-help-icon-selected:      #{dark.$color-help-icon-selected};
+  --color-help-bg-idle:            #{dark.$color-help-bg-idle};
+  --color-help-bg-hover:           #{dark.$color-help-bg-hover};
+  --color-help-bg-selected:        #{dark.$color-help-bg-selected};
+
+  // ── Buttons / Primary ─────────────────────────────────────────────────────
+  --color-btn-primary-idle:          #{dark.$color-btn-primary-idle};
+  --color-btn-primary-hover:         #{dark.$color-btn-primary-hover};
+  --color-btn-primary-pressed:       #{dark.$color-btn-primary-pressed};
+  --color-btn-primary-text:          #{dark.$color-btn-primary-text};
+  --color-btn-primary-text-disabled: #{dark.$color-btn-primary-text-disabled};
+  --color-btn-primary-disabled-bg:   #{dark.$color-btn-primary-disabled-bg};
+
+  // ── Buttons / Secondary ───────────────────────────────────────────────────
+  --color-btn-secondary-bg-idle:         #{dark.$color-btn-secondary-bg-idle};
+  --color-btn-secondary-bg-hover:        #{dark.$color-btn-secondary-bg-hover};
+  --color-btn-secondary-bg-selected:     #{dark.$color-btn-secondary-bg-selected};
+  --color-btn-secondary-bg-disabled:     #{dark.$color-btn-secondary-bg-disabled};
+  --color-btn-secondary-text-idle:       #{dark.$color-btn-secondary-text-idle};
+  --color-btn-secondary-text-hover:      #{dark.$color-btn-secondary-text-hover};
+  --color-btn-secondary-text-selected:   #{dark.$color-btn-secondary-text-selected};
+  --color-btn-secondary-text-disabled:   #{dark.$color-btn-secondary-text-disabled};
+  --color-btn-secondary-stroke-idle:     #{dark.$color-btn-secondary-stroke-idle};
+  --color-btn-secondary-stroke-hover:    #{dark.$color-btn-secondary-stroke-hover};
+  --color-btn-secondary-stroke-selected: #{dark.$color-btn-secondary-stroke-selected};
+  --color-btn-secondary-stroke-disabled: #{dark.$color-btn-secondary-stroke-disabled};
+  --color-btn-secondary-border:          #{dark.$color-btn-secondary-border};
+  --color-btn-secondary-text:            #{dark.$color-btn-secondary-text};
+  --color-btn-hover-overlay:             #{dark.$color-btn-hover-overlay};
+  --color-btn-secondary-pressed-bg:      #{dark.$color-btn-secondary-pressed-bg};
+  --color-btn-disabled-bg:               #{dark.$color-btn-disabled-bg};
+  --color-btn-disabled-text:             #{dark.$color-btn-disabled-text};
+  --color-btn-disabled-border:           #{dark.$color-btn-disabled-border};
+
+  // ── Buttons / Text ────────────────────────────────────────────────────────
+  --color-btn-text-bg-hover:    #{dark.$color-btn-text-bg-hover};
+  --color-btn-text-bg-selected: #{dark.$color-btn-text-bg-selected};
+  --color-btn-text-bg-disabled: #{dark.$color-btn-text-bg-disabled};
+  --color-btn-text-idle:        #{dark.$color-btn-text-idle};
+  --color-btn-text-hover:       #{dark.$color-btn-text-hover};
+  --color-btn-text-selected:    #{dark.$color-btn-text-selected};
+  --color-btn-text-disabled:    #{dark.$color-btn-text-disabled};
+
+  // ── Buttons / Filter ──────────────────────────────────────────────────────
+  --color-btn-filter-text-idle:     #{dark.$color-btn-filter-text-idle};
+  --color-btn-filter-icon-idle:     #{dark.$color-btn-filter-icon-idle};
+  --color-btn-filter-icon-hover:    #{dark.$color-btn-filter-icon-hover};
+  --color-btn-filter-icon-pressed:  #{dark.$color-btn-filter-icon-pressed};
+  --color-btn-filter-icon-selected: #{dark.$color-btn-filter-icon-selected};
+  --color-btn-filter-icon-disabled: #{dark.$color-btn-filter-icon-disabled};
+  --color-btn-filter-hover-text:    #{dark.$color-btn-filter-hover-text};
+  --color-btn-filter-pressed-text:  #{dark.$color-btn-filter-pressed-text};
+  --color-btn-filter-selected-text: #{dark.$color-btn-filter-selected-text};
+
+  // ── Buttons / Icon ────────────────────────────────────────────────────────
+  --color-btn-icon-idle:       #{dark.$color-btn-icon-idle};
+  --color-btn-icon-hover:      #{dark.$color-btn-icon-hover};
+  --color-btn-icon-pressed:    #{dark.$color-btn-icon-pressed};
+  --color-btn-icon-selected:   #{dark.$color-btn-icon-selected};
+  --color-btn-icon-disabled:   #{dark.$color-btn-icon-disabled};
+  --color-btn-icon-hover-bg:   #{dark.$color-btn-icon-hover-bg};
+  --color-btn-icon-pressed-bg: #{dark.$color-btn-icon-pressed-bg};
+
+  // ── Buttons / Split ───────────────────────────────────────────────────────
+  --color-split-primary-text:            #{dark.$color-split-primary-text};
+  --color-split-primary-text-disabled:   #{dark.$color-split-primary-text-disabled};
+  --color-split-primary-fill-idle:       #{dark.$color-split-primary-fill-idle};
+  --color-split-primary-fill-hover:      #{dark.$color-split-primary-fill-hover};
+  --color-split-primary-fill-selected:   #{dark.$color-split-primary-fill-selected};
+  --color-split-primary-bg-disabled:     #{dark.$color-split-primary-bg-disabled};
+  --color-split-secondary-text-idle:     #{dark.$color-split-secondary-text-idle};
+  --color-split-secondary-text-hover:    #{dark.$color-split-secondary-text-hover};
+  --color-split-secondary-text-selected: #{dark.$color-split-secondary-text-selected};
+  --color-split-secondary-text-disabled: #{dark.$color-split-secondary-text-disabled};
+  --color-split-secondary-fill-idle:     #{dark.$color-split-secondary-fill-idle};
+  --color-split-secondary-fill-hover:    #{dark.$color-split-secondary-fill-hover};
+  --color-split-secondary-fill-selected: #{dark.$color-split-secondary-fill-selected};
+  --color-split-secondary-stroke-disabled: #{dark.$color-split-secondary-stroke-disabled};
+
+  // ── Link ──────────────────────────────────────────────────────────────────
+  --color-btn-link-text:     #{dark.$color-btn-link-text};
+  --color-btn-link-disabled: #{dark.$color-btn-link-disabled};
+
+  // ── Accordion ─────────────────────────────────────────────────────────────
+  --color-accordion-bg:                #{dark.$color-accordion-bg};
+  --color-accordion-bg-hover:          #{dark.$color-accordion-bg-hover};
+  --color-accordion-bg-selected-hover: #{dark.$color-accordion-bg-selected-hover};
+  --color-accordion-bg-selected:       #{dark.$color-accordion-bg-selected};
+  --color-accordion-stroke:            #{dark.$color-accordion-stroke};
+  --color-accordion-stroke-hover:      #{dark.$color-accordion-stroke-hover};
+  --color-accordion-text:              #{dark.$color-accordion-text};
+  --color-accordion-icon:              #{dark.$color-accordion-icon};
+
+  // ── Action Menu ───────────────────────────────────────────────────────────
+  --color-action-menu-text-idle:     #{dark.$color-action-menu-text-idle};
+  --color-action-menu-text-hover:    #{dark.$color-action-menu-text-hover};
+  --color-action-menu-text-selected: #{dark.$color-action-menu-text-selected};
+  --color-action-menu-text-disabled: #{dark.$color-action-menu-text-disabled};
+  --color-action-menu-icon-idle:     #{dark.$color-action-menu-icon-idle};
+  --color-action-menu-icon-hover:    #{dark.$color-action-menu-icon-hover};
+  --color-action-menu-icon-selected: #{dark.$color-action-menu-icon-selected};
+  --color-action-menu-icon-disabled: #{dark.$color-action-menu-icon-disabled};
+  --color-action-menu-bg-hover:      #{dark.$color-action-menu-bg-hover};
+  --color-action-menu-bg-selected:   #{dark.$color-action-menu-bg-selected};
+  --color-action-menu-gradient:      #{dark.$color-action-menu-gradient};
+
+  // ── Anchor Links ──────────────────────────────────────────────────────────
+  --color-anchor-text-idle:      #{dark.$color-anchor-text-idle};
+  --color-anchor-text-hover:     #{dark.$color-anchor-text-hover};
+  --color-anchor-text-selected:  #{dark.$color-anchor-text-selected};
+  --color-anchor-text-disabled:  #{dark.$color-anchor-text-disabled};
+  --color-anchor-line-selected:  #{dark.$color-anchor-line-selected};
+  --color-anchor-bg-hover:       #{dark.$color-anchor-bg-hover};
+  --color-anchor-bg-selected:    #{dark.$color-anchor-bg-selected};
+  --color-anchor-separator:      #{dark.$color-anchor-separator};
+
+  // ── Badge ─────────────────────────────────────────────────────────────────
+  --color-badge-critical-bg:     #{dark.$color-badge-critical-bg};
+  --color-badge-critical-text:   #{dark.$color-badge-critical-text};
+  --color-badge-critical-border: #{dark.$color-badge-critical-border};
+  --color-badge-high-bg:         #{dark.$color-badge-high-bg};
+  --color-badge-high-text:       #{dark.$color-badge-high-text};
+  --color-badge-high-border:     #{dark.$color-badge-high-border};
+  --color-badge-medium-bg:       #{dark.$color-badge-medium-bg};
+  --color-badge-medium-text:     #{dark.$color-badge-medium-text};
+  --color-badge-medium-border:   #{dark.$color-badge-medium-border};
+  --color-badge-low-bg:          #{dark.$color-badge-low-bg};
+  --color-badge-low-text:        #{dark.$color-badge-low-text};
+  --color-badge-low-border:      #{dark.$color-badge-low-border};
+  --color-badge-info-bg:         #{dark.$color-badge-info-bg};
+  --color-badge-info-text:       #{dark.$color-badge-info-text};
+  --color-badge-info-border:     #{dark.$color-badge-info-border};
+  --color-badge-success-bg:      #{dark.$color-badge-success-bg};
+  --color-badge-success-text:    #{dark.$color-badge-success-text};
+  --color-badge-success-border:  #{dark.$color-badge-success-border};
+  --color-badge-neutral-bg:      #{dark.$color-badge-neutral-bg};
+  --color-badge-neutral-text:    #{dark.$color-badge-neutral-text};
+  --color-badge-neutral-border:  #{dark.$color-badge-neutral-border};
+
+  // ── Bulk ──────────────────────────────────────────────────────────────────
+  --color-bulk-dialog-card-stroke:   #{dark.$color-bulk-dialog-card-stroke};
+  --color-bulk-dialog-stroke:        #{dark.$color-bulk-dialog-stroke};
+  --color-bulk-dialog-separator:     #{dark.$color-bulk-dialog-separator};
+  --color-bulk-dialog-text:          #{dark.$color-bulk-dialog-text};
+  --color-bulk-dialog-icon:          #{dark.$color-bulk-dialog-icon};
+  --color-bulk-dialog-text-sub:      #{dark.$color-bulk-dialog-text-sub};
+  --color-bulk-dialog-bg-gradient-1: #{dark.$color-bulk-dialog-bg-gradient-1};
+  --color-bulk-dialog-bg-gradient-2: #{dark.$color-bulk-dialog-bg-gradient-2};
+  --color-bulk-bar-separator:        #{dark.$color-bulk-bar-separator};
+  --color-bulk-bar-text:             #{dark.$color-bulk-bar-text};
+  --color-bulk-bar-gradient-stop-1:  #{dark.$color-bulk-bar-gradient-stop-1};
+  --color-bulk-bar-gradient-stop-2:  #{dark.$color-bulk-bar-gradient-stop-2};
+  --color-bulk-bar-stroke:           #{dark.$color-bulk-bar-stroke};
+
+  // ── Calendar ──────────────────────────────────────────────────────────────
+  --color-cal-text-idle:            #{dark.$color-cal-text-idle};
+  --color-cal-text-selected:        #{dark.$color-cal-text-selected};
+  --color-cal-text-hover:           #{dark.$color-cal-text-hover};
+  --color-cal-text-labels:          #{dark.$color-cal-text-labels};
+  --color-cal-text-disabled:        #{dark.$color-cal-text-disabled};
+  --color-cal-icon-idle:            #{dark.$color-cal-icon-idle};
+  --color-cal-bg-idle:              #{dark.$color-cal-bg-idle};
+  --color-cal-bg-default:           #{dark.$color-cal-bg-default};
+  --color-cal-bg-hover:             #{dark.$color-cal-bg-hover};
+  --color-cal-bg-numbers-hover:     #{dark.$color-cal-bg-numbers-hover};
+  --color-cal-bg-number-selected:   #{dark.$color-cal-bg-number-selected};
+  --color-cal-bg-selected:          #{dark.$color-cal-bg-selected};
+  --color-cal-bg-selected-day:      #{dark.$color-cal-bg-selected-day};
+  --color-cal-bg-in-range:          #{dark.$color-cal-bg-in-range};
+  --color-cal-stroke-idle:          #{dark.$color-cal-stroke-idle};
+  --color-cal-stroke-selected-idle: #{dark.$color-cal-stroke-selected-idle};
+  --color-cal-stroke-selected:      #{dark.$color-cal-stroke-selected};
+  --color-cal-tr-bg-idle:           #{dark.$color-cal-tr-bg-idle};
+  --color-cal-tr-bg-selected:       #{dark.$color-cal-tr-bg-selected};
+  --color-cal-tr-text-idle:         #{dark.$color-cal-tr-text-idle};
+  --color-cal-tr-text-selected:     #{dark.$color-cal-tr-text-selected};
+
+  // ── Cards ─────────────────────────────────────────────────────────────────
+  --color-card-bg:                         #{dark.$color-card-bg};
+  --color-card-bg-hover:                   #{dark.$color-card-bg-hover};
+  --color-card-stroke:                     #{dark.$color-card-stroke};
+  --color-card-gradient-stop-1:            #{dark.$color-card-gradient-stop-1};
+  --color-card-gradient-stop-2:            #{dark.$color-card-gradient-stop-2};
+  --color-card-stroke-hover-gradient-1:    #{dark.$color-card-stroke-hover-gradient-1};
+  --color-card-stroke-hover-gradient-2:    #{dark.$color-card-stroke-hover-gradient-2};
+  --color-card-stroke-selected-gradient-1: #{dark.$color-card-stroke-selected-gradient-1};
+  --color-card-stroke-selected-gradient-2: #{dark.$color-card-stroke-selected-gradient-2};
+  --color-card-glow-shadow:                #{dark.$color-card-glow-shadow};
+  --color-card-stroke-hover-light:         #{dark.$color-card-stroke-hover-light};
+  --color-card-stroke-hover-dark:          #{dark.$color-card-stroke-hover-dark};
+  --color-card-glow-light:                 #{dark.$color-card-glow-light};
+  --color-card-glow-dark:                  #{dark.$color-card-glow-dark};
+
+  // ── Checkbox ──────────────────────────────────────────────────────────────
+  --color-checkbox-bg-idle:           #{dark.$color-checkbox-bg-idle};
+  --color-checkbox-bg-idle-hover:     #{dark.$color-checkbox-bg-idle-hover};
+  --color-checkbox-bg-selected:       #{dark.$color-checkbox-bg-selected};
+  --color-checkbox-bg-selected-hover: #{dark.$color-checkbox-bg-selected-hover};
+  --color-checkbox-stroke-idle:       #{dark.$color-checkbox-stroke-idle};
+  --color-checkbox-stroke-idle-hover: #{dark.$color-checkbox-stroke-idle-hover};
+  --color-checkbox-bg-disabled:       #{dark.$color-checkbox-bg-disabled};
+  --color-checkbox-stroke-disabled:   #{dark.$color-checkbox-stroke-disabled};
+  --color-checkbox-stroke-selected:   #{dark.$color-checkbox-stroke-selected};
+  --color-checkbox-stroke-hover:      #{dark.$color-checkbox-stroke-hover};
+  --color-checkbox-text:              #{dark.$color-checkbox-text};
+  --color-checkbox-icon-checked:      #{dark.$color-checkbox-icon-checked};
+  --color-checkbox-icon-disabled:     #{dark.$color-checkbox-icon-disabled};
+  --color-checkbox-icon:              #{dark.$color-checkbox-icon};
+
+  // ── Charts ────────────────────────────────────────────────────────────────
+  --color-chart-tooltip-bg:      #{dark.$color-chart-tooltip-bg};
+  --color-chart-tooltip-stroke:  #{dark.$color-chart-tooltip-stroke};
+  --color-chart-tooltip-text:    #{dark.$color-chart-tooltip-text};
+  --color-chart-legend-bg:       #{dark.$color-chart-legend-bg};
+  --color-chart-donut-bg:        #{dark.$color-chart-donut-bg};
+  --color-chart-donut-stroke:    #{dark.$color-chart-donut-stroke};
+  --color-chart-axis-y-line:     #{dark.$color-chart-axis-y-line};
+  --color-chart-vertical-bars:   #{dark.$color-chart-vertical-bars};
+
+  // ── Chips ─────────────────────────────────────────────────────────────────
+  --color-chip-bg:               #{dark.$color-chip-bg};
+  --color-chip-bg-hover:         #{dark.$color-chip-bg-hover};
+  --color-chip-bg-disabled:      #{dark.$color-chip-bg-disabled};
+  --color-chip-border:           #{dark.$color-chip-border};
+  --color-chip-border-hover:     #{dark.$color-chip-border-hover};
+  --color-chip-border-disabled:  #{dark.$color-chip-border-disabled};
+  --color-chip-text:             #{dark.$color-chip-text};
+  --color-chip-text-disabled:    #{dark.$color-chip-text-disabled};
+  --color-chip-icon:             #{dark.$color-chip-icon};
+  --color-chip-icon-hover:       #{dark.$color-chip-icon-hover};
+  --color-chip-icon-disabled:    #{dark.$color-chip-icon-disabled};
+  --color-chip-remove:           #{dark.$color-chip-remove};
+  --color-chip-disabled-bg:      #{dark.$color-chip-disabled-bg};
+  --color-chip-disabled-text:    #{dark.$color-chip-disabled-text};
+
+  // ── Copy ──────────────────────────────────────────────────────────────────
+  --color-copy-text:         #{dark.$color-copy-text};
+  --color-copy-icon:         #{dark.$color-copy-icon};
+  --color-copy-stroke:       #{dark.$color-copy-stroke};
+  --color-copy-bg:           #{dark.$color-copy-bg};
+  --color-copy-badge-bg:     #{dark.$color-copy-badge-bg};
+  --color-copy-badge-border: #{dark.$color-copy-badge-border};
+  --color-copy-badge-text:   #{dark.$color-copy-badge-text};
+
+  // ── Contextual ────────────────────────────────────────────────────────────
+  --color-contextual-title:            #{dark.$color-contextual-title};
+  --color-contextual-subtitle:         #{dark.$color-contextual-subtitle};
+  --color-contextual-icons:            #{dark.$color-contextual-icons};
+  --color-inapp-bg:                    #{dark.$color-inapp-bg};
+  --color-inapp-text:                  #{dark.$color-inapp-text};
+  --color-inapp-stroke:                #{dark.$color-inapp-stroke};
+  --color-contextual-info-icon:        #{dark.$color-contextual-info-icon};
+  --color-contextual-info-stroke:      #{dark.$color-contextual-info-stroke};
+  --color-contextual-info-bg:          #{dark.$color-contextual-info-bg};
+  --color-contextual-success-icon:     #{dark.$color-contextual-success-icon};
+  --color-contextual-success-stroke:   #{dark.$color-contextual-success-stroke};
+  --color-contextual-success-bg:       #{dark.$color-contextual-success-bg};
+  --color-contextual-warning-icon:     #{dark.$color-contextual-warning-icon};
+  --color-contextual-warning-stroke:   #{dark.$color-contextual-warning-stroke};
+  --color-contextual-warning-bg:       #{dark.$color-contextual-warning-bg};
+  --color-contextual-error-icon:       #{dark.$color-contextual-error-icon};
+  --color-contextual-error-stroke:     #{dark.$color-contextual-error-stroke};
+  --color-contextual-error-bg:         #{dark.$color-contextual-error-bg};
+
+  // ── Dialog ────────────────────────────────────────────────────────────────
+  --color-dialog-bg:         #{dark.$color-dialog-bg};
+  --color-dialog-icon:       #{dark.$color-dialog-icon};
+  --color-dialog-separator:  #{dark.$color-dialog-separator};
+  --color-dialog-close-icon: #{dark.$color-dialog-close-icon};
+  --color-dialog-text:       #{dark.$color-dialog-text};
+
+  // ── Form Footer ───────────────────────────────────────────────────────────
+  --color-footer-bg:   #{dark.$color-footer-bg};
+  --color-footer-line: #{dark.$color-footer-line};
+
+  // ── Input ─────────────────────────────────────────────────────────────────
+  --color-input-bg:                   #{dark.$color-input-bg};
+  --color-input-bg-focused:           #{dark.$color-input-bg-focused};
+  --color-input-border:               #{dark.$color-input-border};
+  --color-input-border-focused:       #{dark.$color-input-border-focused};
+  --color-input-border-error:         #{dark.$color-input-border-error};
+  --color-input-text:                 #{dark.$color-input-text};
+  --color-input-placeholder:          #{dark.$color-input-placeholder};
+  --color-input-label:                #{dark.$color-input-label};
+  --color-input-hint:                 #{dark.$color-input-hint};
+  --color-input-error:                #{dark.$color-input-error};
+  --color-input-disabled-bg:          #{dark.$color-input-disabled-bg};
+  --color-input-disabled-text:        #{dark.$color-input-disabled-text};
+  --color-input-text-label:           #{dark.$color-input-text-label};
+  --color-input-text-label-disabled:  #{dark.$color-input-text-label-disabled};
+  --color-input-text-label-focus:     #{dark.$color-input-text-label-focus};
+  --color-input-text-label-error:     #{dark.$color-input-text-label-error};
+  --color-input-text-default:         #{dark.$color-input-text-default};
+  --color-input-text-disabled:        #{dark.$color-input-text-disabled};
+  --color-input-text-hint:            #{dark.$color-input-text-hint};
+  --color-input-icon-info:            #{dark.$color-input-icon-info};
+  --color-input-text-readonly:        #{dark.$color-input-text-readonly};
+  --color-input-stroke-idle:          #{dark.$color-input-stroke-idle};
+  --color-input-stroke-hover:         #{dark.$color-input-stroke-hover};
+  --color-input-stroke-focus:         #{dark.$color-input-stroke-focus};
+  --color-input-stroke-error:         #{dark.$color-input-stroke-error};
+  --color-input-stroke-disabled:      #{dark.$color-input-stroke-disabled};
+  --color-input-bg-selected:          #{dark.$color-input-bg-selected};
+  --color-advisory-text:              #{dark.$color-advisory-text};
+  --color-advisory-error:             #{dark.$color-advisory-error};
+  --color-advisory-counter:           #{dark.$color-advisory-counter};
+  --color-advisory-icon-error:        #{dark.$color-advisory-icon-error};
+  --color-advisory-icon-idle:         #{dark.$color-advisory-icon-idle};
+
+  // ── Listbox ───────────────────────────────────────────────────────────────
+  --color-listbox-text-idle:      #{dark.$color-listbox-text-idle};
+  --color-listbox-text-selected:  #{dark.$color-listbox-text-selected};
+  --color-listbox-text-disabled:  #{dark.$color-listbox-text-disabled};
+  --color-listbox-text-label:     #{dark.$color-listbox-text-label};
+  --color-listbox-text-search:    #{dark.$color-listbox-text-search};
+  --color-listbox-icon-idle:      #{dark.$color-listbox-icon-idle};
+  --color-listbox-icon-selected:  #{dark.$color-listbox-icon-selected};
+  --color-listbox-icon-search:    #{dark.$color-listbox-icon-search};
+  --color-listbox-icon-disabled:  #{dark.$color-listbox-icon-disabled};
+  --color-listbox-bg-idle:        #{dark.$color-listbox-bg-idle};
+  --color-listbox-bg-hover:       #{dark.$color-listbox-bg-hover};
+  --color-listbox-bg-selected:    #{dark.$color-listbox-bg-selected};
+  --color-listbox-bg-disabled:    #{dark.$color-listbox-bg-disabled};
+  --color-listbox-bg-holder:      #{dark.$color-listbox-bg-holder};
+  --color-listbox-stroke-idle:    #{dark.$color-listbox-stroke-idle};
+  --color-listbox-stroke-holder:  #{dark.$color-listbox-stroke-holder};
+
+  // ── Textarea ──────────────────────────────────────────────────────────────
+  --color-textarea-bg-idle:         #{dark.$color-textarea-bg-idle};
+  --color-textarea-bg-hover:        #{dark.$color-textarea-bg-hover};
+  --color-textarea-bg-selected:     #{dark.$color-textarea-bg-selected};
+  --color-textarea-bg-disabled:     #{dark.$color-textarea-bg-disabled};
+  --color-textarea-bg-error:        #{dark.$color-textarea-bg-error};
+  --color-textarea-stroke-idle:     #{dark.$color-textarea-stroke-idle};
+  --color-textarea-stroke-hover:    #{dark.$color-textarea-stroke-hover};
+  --color-textarea-stroke-selected: #{dark.$color-textarea-stroke-selected};
+  --color-textarea-stroke-error:    #{dark.$color-textarea-stroke-error};
+  --color-textarea-stroke-disabled: #{dark.$color-textarea-stroke-disabled};
+  --color-textarea-text-idle:       #{dark.$color-textarea-text-idle};
+  --color-textarea-text-selected:   #{dark.$color-textarea-text-selected};
+  --color-textarea-text-disabled:   #{dark.$color-textarea-text-disabled};
+  --color-textarea-text-error:      #{dark.$color-textarea-text-error};
+  --color-textarea-icon-resize:     #{dark.$color-textarea-icon-resize};
+
+  // ── Search ────────────────────────────────────────────────────────────────
+  --color-search-bg-idle:         #{dark.$color-search-bg-idle};
+  --color-search-bg-hover:        #{dark.$color-search-bg-hover};
+  --color-search-bg-selected:     #{dark.$color-search-bg-selected};
+  --color-search-stroke-idle:     #{dark.$color-search-stroke-idle};
+  --color-search-stroke-hover:    #{dark.$color-search-stroke-hover};
+  --color-search-stroke-selected: #{dark.$color-search-stroke-selected};
+  --color-search-stroke-filled:   #{dark.$color-search-stroke-filled};
+  --color-search-icon:            #{dark.$color-search-icon};
+  --color-search-text:            #{dark.$color-search-text};
+  --color-search-text-selected:   #{dark.$color-search-text-selected};
+  --color-search-text-idle:       #{dark.$color-search-text-idle};
+
+  // ── Select ────────────────────────────────────────────────────────────────
+  --color-select-dropdown-bg:        #{dark.$color-select-dropdown-bg};
+  --color-select-item-hover:         #{dark.$color-select-item-hover};
+  --color-select-item-selected:      #{dark.$color-select-item-selected};
+  --color-select-item-text:          #{dark.$color-select-item-text};
+  --color-select-item-text-selected: #{dark.$color-select-item-text-selected};
+  --color-select-search-border:      #{dark.$color-select-search-border};
+
+  // ── KPI ───────────────────────────────────────────────────────────────────
+  --color-kpi-lines:       #{dark.$color-kpi-lines};
+  --color-kpi-icon-bg:     #{dark.$color-kpi-icon-bg};
+  --color-kpi-hover-bg:    #{dark.$color-kpi-hover-bg};
+  --color-kpi-selected-bg: #{dark.$color-kpi-selected-bg};
+
+  // ── Labels ────────────────────────────────────────────────────────────────
+  --color-label-text-dark:  #{dark.$color-label-text-dark};
+  --color-label-text-idle:  #{dark.$color-label-text-idle};
+  --color-label-icon-idle:  #{dark.$color-label-icon-idle};
+  --color-label-icon-dark:  #{dark.$color-label-icon-dark};
+  --color-label-bg-hover:   #{dark.$color-label-bg-hover};
+  --color-label-warning-text:        #{dark.$color-label-warning-text};
+  --color-label-warning-icon:        #{dark.$color-label-warning-icon};
+  --color-label-warning-text-line:   #{dark.$color-label-warning-text-line};
+  --color-label-warning-icon-line:   #{dark.$color-label-warning-icon-line};
+  --color-label-warning-bg:          #{dark.$color-label-warning-bg};
+  --color-label-warning-bg-line:     #{dark.$color-label-warning-bg-line};
+  --color-label-warning-stroke-line: #{dark.$color-label-warning-stroke-line};
+  --color-label-warning-bg-hover:    #{dark.$color-label-warning-bg-hover};
+  --color-label-approved-text-line:   #{dark.$color-label-approved-text-line};
+  --color-label-approved-icon-line:   #{dark.$color-label-approved-icon-line};
+  --color-label-approved-stroke-line: #{dark.$color-label-approved-stroke-line};
+  --color-label-approved-bg:          #{dark.$color-label-approved-bg};
+  --color-label-approved-bg-line:     #{dark.$color-label-approved-bg-line};
+  --color-label-approved-bg-hover:    #{dark.$color-label-approved-bg-hover};
+  --color-label-error-text-line:   #{dark.$color-label-error-text-line};
+  --color-label-error-icon-line:   #{dark.$color-label-error-icon-line};
+  --color-label-error-bg:          #{dark.$color-label-error-bg};
+  --color-label-error-bg-line:     #{dark.$color-label-error-bg-line};
+  --color-label-error-stroke-line: #{dark.$color-label-error-stroke-line};
+  --color-label-error-bg-hover:    #{dark.$color-label-error-bg-hover};
+  --color-label-info-text-line:   #{dark.$color-label-info-text-line};
+  --color-label-info-icon-line:   #{dark.$color-label-info-icon-line};
+  --color-label-info-bg:          #{dark.$color-label-info-bg};
+  --color-label-info-bg-line:     #{dark.$color-label-info-bg-line};
+  --color-label-info-stroke-line: #{dark.$color-label-info-stroke-line};
+  --color-label-info-bg-hover:    #{dark.$color-label-info-bg-hover};
+  --color-label-low-text-line:   #{dark.$color-label-low-text-line};
+  --color-label-low-icon-line:   #{dark.$color-label-low-icon-line};
+  --color-label-low-bg:          #{dark.$color-label-low-bg};
+  --color-label-low-bg-line:     #{dark.$color-label-low-bg-line};
+  --color-label-low-stroke-line: #{dark.$color-label-low-stroke-line};
+  --color-label-low-bg-hover:    #{dark.$color-label-low-bg-hover};
+  --color-label-status-text-line:   #{dark.$color-label-status-text-line};
+  --color-label-status-icon-line:   #{dark.$color-label-status-icon-line};
+  --color-label-status-bg:          #{dark.$color-label-status-bg};
+  --color-label-status-bg-line:     #{dark.$color-label-status-bg-line};
+  --color-label-status-stroke-line: #{dark.$color-label-status-stroke-line};
+  --color-label-status-bg-hover:    #{dark.$color-label-status-bg-hover};
+
+  // ── Lazy loading ──────────────────────────────────────────────────────────
+  --color-lazy-bg:        #{dark.$color-lazy-bg};
+  --color-lazy-failed:    #{dark.$color-lazy-failed};
+  --color-lazy-text-icon: #{dark.$color-lazy-text-icon};
+  --color-loading-green:  #{dark.$color-loading-green};
+  --color-loading-purple: #{dark.$color-loading-purple};
+  --color-loading-blue-1: #{dark.$color-loading-blue-1};
+  --color-loading-blue-2: #{dark.$color-loading-blue-2};
+  --color-loading-shadow: #{dark.$color-loading-shadow};
+
+  // ── Severity ──────────────────────────────────────────────────────────────
+  --color-severity-critical: #{dark.$color-severity-critical};
+  --color-severity-high:     #{dark.$color-severity-high};
+  --color-severity-medium:   #{dark.$color-severity-medium};
+  --color-severity-low:      #{dark.$color-severity-low};
+
+  // ── Skeleton ──────────────────────────────────────────────────────────────
+  --color-skeleton-bg:     #{dark.$color-skeleton-bg};
+  --color-skeleton-bg-new: #{dark.$color-skeleton-bg-new};
+  --color-skeleton-line:   #{dark.$color-skeleton-line};
+
+  // ── Scroll ────────────────────────────────────────────────────────────────
+  --color-scroll-bg:           #{dark.$color-scroll-bg};
+  --color-scroll-handle:       #{dark.$color-scroll-handle};
+  --color-scroll-handle-hover: #{dark.$color-scroll-handle-hover};
+
+  // ── Slot ──────────────────────────────────────────────────────────────────
+  --color-slot-bg:   #{dark.$color-slot-bg};
+  --color-slot-icon: #{dark.$color-slot-icon};
+
+  // ── Progress Bar ──────────────────────────────────────────────────────────
+  --color-progress-bg:           #{dark.$color-progress-bg};
+  --color-progress-handle:       #{dark.$color-progress-handle};
+  --color-progress-text:         #{dark.$color-progress-text};
+  --color-progress-text-sub:     #{dark.$color-progress-text-sub};
+  --color-progress-text-error:   #{dark.$color-progress-text-error};
+  --color-progress-text-success: #{dark.$color-progress-text-success};
+
+  // ── Radio Button ──────────────────────────────────────────────────────────
+  --color-radio-bg-idle:           #{dark.$color-radio-bg-idle};
+  --color-radio-bg-idle-hover:     #{dark.$color-radio-bg-idle-hover};
+  --color-radio-bg-selected:       #{dark.$color-radio-bg-selected};
+  --color-radio-bg-selected-hover: #{dark.$color-radio-bg-selected-hover};
+  --color-radio-bg-disabled:       #{dark.$color-radio-bg-disabled};
+  --color-radio-stroke-idle:       #{dark.$color-radio-stroke-idle};
+  --color-radio-stroke-idle-hover: #{dark.$color-radio-stroke-idle-hover};
+  --color-radio-selected-hover:    #{dark.$color-radio-selected-hover};
+  --color-radio-stroke-disabled:   #{dark.$color-radio-stroke-disabled};
+  --color-radio-stroke-selected:   #{dark.$color-radio-stroke-selected};
+  --color-radio-text:              #{dark.$color-radio-text};
+
+  // ── Side Filter ───────────────────────────────────────────────────────────
+  --color-side-filter-title: #{dark.$color-side-filter-title};
+  --color-side-filter-icons: #{dark.$color-side-filter-icons};
+  --color-side-filter-line:  #{dark.$color-side-filter-line};
+  --color-filter-pill-text-icons:      #{dark.$color-filter-pill-text-icons};
+  --color-filter-pill-bg-idle:         #{dark.$color-filter-pill-bg-idle};
+  --color-filter-pill-bg-hover:        #{dark.$color-filter-pill-bg-hover};
+  --color-filter-pill-stroke:          #{dark.$color-filter-pill-stroke};
+  --color-filter-pill-stroke-hover:    #{dark.$color-filter-pill-stroke-hover};
+  --color-filter-pill-selected-stroke: #{dark.$color-filter-pill-selected-stroke};
+  --color-filter-pill-bg-selected:     #{dark.$color-filter-pill-bg-selected};
+
+  // ── Split View ────────────────────────────────────────────────────────────
+  --color-split-view-text:       #{dark.$color-split-view-text};
+  --color-split-view-text-value: #{dark.$color-split-view-text-value};
+  --color-split-view-text-label: #{dark.$color-split-view-text-label};
+  --color-split-view-stroke:     #{dark.$color-split-view-stroke};
+  --color-split-view-gradient-1: #{dark.$color-split-view-gradient-1};
+  --color-split-view-gradient-2: #{dark.$color-split-view-gradient-2};
+
+  // ── System Message ────────────────────────────────────────────────────────
+  --color-system-msg-info-separator:    #{dark.$color-system-msg-info-separator};
+  --color-system-msg-success-separator: #{dark.$color-system-msg-success-separator};
+  --color-system-msg-warning-separator: #{dark.$color-system-msg-warning-separator};
+  --color-system-msg-fail-separator:    #{dark.$color-system-msg-fail-separator};
+
+  // ── Table ─────────────────────────────────────────────────────────────────
+  --color-table-bg-hover:              #{dark.$color-table-bg-hover};
+  --color-table-line-idle:             #{dark.$color-table-line-idle};
+  --color-table-text-default:          #{dark.$color-table-text-default};
+  --color-table-text-labels:           #{dark.$color-table-text-labels};
+  --color-table-bg-idle:               #{dark.$color-table-bg-idle};
+  --color-table-bg-selected:           #{dark.$color-table-bg-selected};
+  --color-table-bg-grouping-idle:      #{dark.$color-table-bg-grouping-idle};
+  --color-table-bg-grouping-hover:     #{dark.$color-table-bg-grouping-hover};
+  --color-table-line-selected:         #{dark.$color-table-line-selected};
+  --color-table-fat-stroke-idle:       #{dark.$color-table-fat-stroke-idle};
+  --color-table-fat-stroke-hover:      #{dark.$color-table-fat-stroke-hover};
+  --color-table-fat-stroke-selected:   #{dark.$color-table-fat-stroke-selected};
+  --color-table-fat-bg-idle:           #{dark.$color-table-fat-bg-idle};
+  --color-table-fat-bg-hover:          #{dark.$color-table-fat-bg-hover};
+  --color-table-fat-bg-selected:       #{dark.$color-table-fat-bg-selected};
+
+  // ── Tabs ──────────────────────────────────────────────────────────────────
+  --color-tab-line:                           #{dark.$color-tab-line};
+  --color-tab-text-idle:                      #{dark.$color-tab-text-idle};
+  --color-tab-text-selected:                  #{dark.$color-tab-text-selected};
+  --color-tab-text-hover:                     #{dark.$color-tab-text-hover};
+  --color-tab-text-selected-new:              #{dark.$color-tab-text-selected-new};
+  --color-tab-icon-number-idle:               #{dark.$color-tab-icon-number-idle};
+  --color-tab-icon-number-hover:              #{dark.$color-tab-icon-number-hover};
+  --color-tab-icon-number-selected:           #{dark.$color-tab-icon-number-selected};
+  --color-tab-icon-number-disabled:           #{dark.$color-tab-icon-number-disabled};
+  --color-tab-stroke-hover:                   #{dark.$color-tab-stroke-hover};
+  --color-tab-stroke-selected:                #{dark.$color-tab-stroke-selected};
+  --color-tab-disabled:                       #{dark.$color-tab-disabled};
+  --color-tab-vertical-text-idle:             #{dark.$color-tab-vertical-text-idle};
+  --color-tab-vertical-text-sub-idle:         #{dark.$color-tab-vertical-text-sub-idle};
+  --color-tab-vertical-bg-idle:               #{dark.$color-tab-vertical-bg-idle};
+  --color-tab-vertical-bg-selected-1:         #{dark.$color-tab-vertical-bg-selected-1};
+  --color-tab-vertical-bg-selected-2:         #{dark.$color-tab-vertical-bg-selected-2};
+  --color-tab-vertical-bg-selected-radial-1:  #{dark.$color-tab-vertical-bg-selected-radial-1};
+  --color-tab-vertical-bg-selected-radial-2:  #{dark.$color-tab-vertical-bg-selected-radial-2};
+  --color-vtab-icon:             #{dark.$color-vtab-icon};
+  --color-vtab-text-idle-new:    #{dark.$color-vtab-text-idle-new};
+  --color-vtab-text-hover:       #{dark.$color-vtab-text-hover};
+  --color-vtab-text-selected:    #{dark.$color-vtab-text-selected};
+  --color-vtab-text-disabled:    #{dark.$color-vtab-text-disabled};
+  --color-vtab-text-group-idle:  #{dark.$color-vtab-text-group-idle};
+  --color-vtab-text-group-hover: #{dark.$color-vtab-text-group-hover};
+  --color-vtab-text-group-selected: #{dark.$color-vtab-text-group-selected};
+  --color-vtab-bg-idle:          #{dark.$color-vtab-bg-idle};
+  --color-vtab-bg-hover:         #{dark.$color-vtab-bg-hover};
+  --color-vtab-stroke:           #{dark.$color-vtab-stroke};
+  --color-vtab-bg-selected-1:    #{dark.$color-vtab-bg-selected-1};
+  --color-vtab-bg-selected-2:    #{dark.$color-vtab-bg-selected-2};
+
+  // ── Tags ──────────────────────────────────────────────────────────────────
+  --color-tag-bg:           #{dark.$color-tag-bg};
+  --color-tag-bg-hover:     #{dark.$color-tag-bg-hover};
+  --color-tag-stroke-hover: #{dark.$color-tag-stroke-hover};
+  --color-tag-text:         #{dark.$color-tag-text};
+
+  // ── Timeline ──────────────────────────────────────────────────────────────
+  --color-timeline-text-title: #{dark.$color-timeline-text-title};
+  --color-timeline-text-sub:   #{dark.$color-timeline-text-sub};
+  --color-timeline-dot:        #{dark.$color-timeline-dot};
+  --color-timeline-line:       #{dark.$color-timeline-line};
+
+  // ── Toolbar ───────────────────────────────────────────────────────────────
+  --color-toolbar-divider: #{dark.$color-toolbar-divider};
+
+  // ── Tooltip / Callout ─────────────────────────────────────────────────────
+  --color-tooltip-bg:     #{dark.$color-tooltip-bg};
+  --color-tooltip-stroke: #{dark.$color-tooltip-stroke};
+  --color-tooltip-text:   #{dark.$color-tooltip-text};
+  --color-callout-bg:     #{dark.$color-callout-bg};
+  --color-callout-stroke: #{dark.$color-callout-stroke};
+  --color-callout-icon:   #{dark.$color-callout-icon};
+
+  // ── Toggle ────────────────────────────────────────────────────────────────
+  --color-toggle-bg-idle:         #{dark.$color-toggle-bg-idle};
+  --color-toggle-bg-hover:        #{dark.$color-toggle-bg-hover};
+  --color-toggle-bg-disabled:     #{dark.$color-toggle-bg-disabled};
+  --color-toggle-nub-idle:        #{dark.$color-toggle-nub-idle};
+  --color-toggle-nub-hover:       #{dark.$color-toggle-nub-hover};
+  --color-toggle-nub-disabled:    #{dark.$color-toggle-nub-disabled};
+  --color-toggle-bg-off-idle:     #{dark.$color-toggle-bg-off-idle};
+  --color-toggle-bg-off-hover:    #{dark.$color-toggle-bg-off-hover};
+  --color-toggle-bg-off-disabled: #{dark.$color-toggle-bg-off-disabled};
+  --color-toggle-nob-off:         #{dark.$color-toggle-nob-off};
+  --color-toggle-nob-off-hover:   #{dark.$color-toggle-nob-off-hover};
+  --color-toggle-nob-off-disabled:#{dark.$color-toggle-nob-off-disabled};
+  --color-toggle-text:            #{dark.$color-toggle-text};
+
+  // ── Upload ────────────────────────────────────────────────────────────────
+  --color-upload-bg:               #{dark.$color-upload-bg};
+  --color-upload-bg-selected:      #{dark.$color-upload-bg-selected};
+  --color-upload-bg-hover:         #{dark.$color-upload-bg-hover};
+  --color-upload-stroke-idle:      #{dark.$color-upload-stroke-idle};
+  --color-upload-stroke-hover:     #{dark.$color-upload-stroke-hover};
+  --color-upload-stroke-focus:     #{dark.$color-upload-stroke-focus};
+  --color-upload-stroke-error:     #{dark.$color-upload-stroke-error};
+  --color-upload-stroke-success:   #{dark.$color-upload-stroke-success};
+  --color-upload-stroke-disabled:  #{dark.$color-upload-stroke-disabled};
+  --color-upload-icon-bg-idle:     #{dark.$color-upload-icon-bg-idle};
+  --color-upload-icon-bg-disabled: #{dark.$color-upload-icon-bg-disabled};
+  --color-upload-icon:             #{dark.$color-upload-icon};
+  --color-upload-icon-disabled:    #{dark.$color-upload-icon-disabled};
+  --color-upload-text-default:     #{dark.$color-upload-text-default};
+  --color-upload-text-label:       #{dark.$color-upload-text-label};
+  --color-upload-text-sub:         #{dark.$color-upload-text-sub};
+  --color-upload-text-disabled:    #{dark.$color-upload-text-disabled};
+  --color-upload-text-importing:   #{dark.$color-upload-text-importing};
+
+  // ── Toast ─────────────────────────────────────────────────────────────────
+  --color-toast-text-icon:    #{dark.$color-toast-text-icon};
+  --color-toast-icon:         #{dark.$color-toast-icon};
+  --color-toast-stroke:       #{dark.$color-toast-stroke};
+  --color-toast-bg:           #{dark.$color-toast-bg};
+  --color-toast-inapp-bg:     #{dark.$color-toast-inapp-bg};
+  --color-toast-inapp-text:   #{dark.$color-toast-inapp-text};
+  --color-toast-inapp-stroke: #{dark.$color-toast-inapp-stroke};
+  --color-toast-inapp-icon:   #{dark.$color-toast-inapp-icon};
+
+  // ── Wizard ────────────────────────────────────────────────────────────────
+  --color-wizard-line-idle:                       #{dark.$color-wizard-line-idle};
+  --color-wizard-line-side:                       #{dark.$color-wizard-line-side};
+  --color-wizard-line-visited:                    #{dark.$color-wizard-line-visited};
+  --color-wizard-text-title-current:              #{dark.$color-wizard-text-title-current};
+  --color-wizard-text-title-current-hover:        #{dark.$color-wizard-text-title-current-hover};
+  --color-wizard-text-number-current:             #{dark.$color-wizard-text-number-current};
+  --color-wizard-bg-number-current:               #{dark.$color-wizard-bg-number-current};
+  --color-wizard-bg-number-current-hover:         #{dark.$color-wizard-bg-number-current-hover};
+  --color-wizard-text-title-visited:              #{dark.$color-wizard-text-title-visited};
+  --color-wizard-text-title-visited-hover:        #{dark.$color-wizard-text-title-visited-hover};
+  --color-wizard-text-number-visited:             #{dark.$color-wizard-text-number-visited};
+  --color-wizard-stroke-number-visited:           #{dark.$color-wizard-stroke-number-visited};
+  --color-wizard-bg-number-visited:               #{dark.$color-wizard-bg-number-visited};
+  --color-wizard-text-number-visited-hover:       #{dark.$color-wizard-text-number-visited-hover};
+  --color-wizard-stroke-number-visited-hover:     #{dark.$color-wizard-stroke-number-visited-hover};
+  --color-wizard-bg-number-visited-hover:         #{dark.$color-wizard-bg-number-visited-hover};
+  --color-wizard-text-title-not-visited:          #{dark.$color-wizard-text-title-not-visited};
+  --color-wizard-text-title-not-visited-hover:    #{dark.$color-wizard-text-title-not-visited-hover};
+  --color-wizard-text-number-not-visited:         #{dark.$color-wizard-text-number-not-visited};
+  --color-wizard-stroke-not-visited:              #{dark.$color-wizard-stroke-not-visited};
+  --color-wizard-bg-number-not-visited:           #{dark.$color-wizard-bg-number-not-visited};
+  --color-wizard-text-number-not-visited-hover:   #{dark.$color-wizard-text-number-not-visited-hover};
+  --color-wizard-stroke-not-visited-hover:        #{dark.$color-wizard-stroke-not-visited-hover};
+  --color-wizard-bg-number-not-visited-hover:     #{dark.$color-wizard-bg-number-not-visited-hover};
+  --color-wizard-text-title-error:                #{dark.$color-wizard-text-title-error};
+  --color-wizard-text-title-error-hover:          #{dark.$color-wizard-text-title-error-hover};
+  --color-wizard-text-title-error-current:        #{dark.$color-wizard-text-title-error-current};
+  --color-wizard-text-title-error-current-hover:  #{dark.$color-wizard-text-title-error-current-hover};
+  --color-wizard-icon-error:                      #{dark.$color-wizard-icon-error};
+  --color-wizard-stroke-error:                    #{dark.$color-wizard-stroke-error};
+  --color-wizard-bg-number-error:                 #{dark.$color-wizard-bg-number-error};
+  --color-wizard-icon-error-hover:                #{dark.$color-wizard-icon-error-hover};
+  --color-wizard-stroke-error-hover:              #{dark.$color-wizard-stroke-error-hover};
+  --color-wizard-bg-number-error-hover:           #{dark.$color-wizard-bg-number-error-hover};
+  --color-wizard-text-disabled:                   #{dark.$color-wizard-text-disabled};
+  --color-wizard-text-disabled-hover:             #{dark.$color-wizard-text-disabled-hover};
+  --color-wizard-text-number-disabled:            #{dark.$color-wizard-text-number-disabled};
+  --color-wizard-bg-number-disabled:              #{dark.$color-wizard-bg-number-disabled};
+  --color-wizard-stroke-number-disabled-hover:    #{dark.$color-wizard-stroke-number-disabled-hover};
+
+  // ── Space logos ───────────────────────────────────────────────────────────
+  --color-space-command-center-1: #{dark.$color-space-command-center-1};
+  --color-space-command-center-2: #{dark.$color-space-command-center-2};
+  --color-space-command-center-3: #{dark.$color-space-command-center-3};
+  --color-space-access-1:         #{dark.$color-space-access-1};
+  --color-space-access-2:         #{dark.$color-space-access-2};
+  --color-space-access-3:         #{dark.$color-space-access-3};
+  --color-space-risk-1:           #{dark.$color-space-risk-1};
+  --color-space-risk-2:           #{dark.$color-space-risk-2};
+  --color-space-risk-3:           #{dark.$color-space-risk-3};
+  --color-space-manage-1:         #{dark.$color-space-manage-1};
+  --color-space-manage-2:         #{dark.$color-space-manage-2};
+  --color-space-manage-3:         #{dark.$color-space-manage-3};
+  --color-space-audit-1:          #{dark.$color-space-audit-1};
+  --color-space-audit-2:          #{dark.$color-space-audit-2};
+  --color-space-audit-3:          #{dark.$color-space-audit-3};
+  --color-space-setup-1:          #{dark.$color-space-setup-1};
+  --color-space-setup-2:          #{dark.$color-space-setup-2};
+  --color-space-setup-3:          #{dark.$color-space-setup-3};
+
+  // ── Branding ──────────────────────────────────────────────────────────────
+  --color-brand-icon-blue:    #{dark.$color-brand-icon-blue};
+  --color-brand-icon-dark:    #{dark.$color-brand-icon-dark};
+  --color-brand-text:         #{dark.$color-brand-text};
+  --color-brand-tagline:      #{dark.$color-brand-tagline};
+  --color-brand-tagline-gray: #{dark.$color-brand-tagline-gray};
+
+  // ── Spacing ───────────────────────────────────────────────────────────────
+  --spacing-0:  0;
+  --spacing-1:  0.25rem;
+  --spacing-2:  0.5rem;
+  --spacing-3:  0.75rem;
+  --spacing-4:  1rem;
+  --spacing-5:  1.25rem;
+  --spacing-6:  1.5rem;
+  --spacing-7:  1.75rem;
+  --spacing-8:  2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+
+  // ── Border Radius ─────────────────────────────────────────────────────────
+  --border-radius-none: 0;
+  --border-radius-sm:   0.125rem;
+  --border-radius-base: 0.25rem;
+  --border-radius-md:   0.375rem;
+  --border-radius-lg:   0.5rem;
+  --border-radius-full: 9999px;
+
+  // ── Shadows ───────────────────────────────────────────────────────────────
+  --shadow-xs:   0 1px 2px rgba(0,0,0,0.20);
+  --shadow-sm:   0 1px 4px rgba(0,0,0,0.25);
+  --shadow-base: 0 2px 8px rgba(0,0,0,0.30);
+  --shadow-md:   0 4px 16px rgba(0,0,0,0.35);
+  --shadow-lg:   0 8px 32px rgba(0,0,0,0.40);
+
+  // ── Transitions ───────────────────────────────────────────────────────────
+  --transition-fast: 100ms ease-in-out;
+  --transition-base: 200ms ease-in-out;
+  --transition-slow: 300ms ease-in-out;
+
+  // ── Font sizes ────────────────────────────────────────────────────────────
+  --font-size-xs:   0.625rem;
+  --font-size-sm:   0.75rem;
+  --font-size-base: 0.875rem;
+  --font-size-lg:   1rem;
+  --font-size-xl:   1.125rem;
+  --font-size-2xl:  1.25rem;
+  --font-size-3xl:  1.5rem;
+  --font-size-4xl:  2rem;
+}
+
+// ── Light theme overrides ──────────────────────────────────────────────────────
+[data-theme='light'] {
+  --color-primary:        #{light.$color-primary};
+  --color-primary-dark:   #{light.$color-primary-dark};
+  --color-primary-darker: #{light.$color-primary-darker};
+  --color-primary-light:  #{light.$color-primary-light};
+  --color-page-background:     #{light.$color-page-background};
+  --color-surface-idle:        #{light.$color-surface-idle};
+  --color-background-dark:     #{light.$color-background-dark};
+  --color-background-darker:   #{light.$color-background-darker};
+  --color-background-darkest:  #{light.$color-background-darkest};
+  --color-text-light:     #{light.$color-text-light};
+  --color-text-muted:     #{light.$color-text-muted};
+  --color-text-title:     #{light.$color-text-title};
+  --color-text-running:   #{light.$color-text-running};
+  --color-text-secondary: #{light.$color-text-secondary};
+  --color-text-hint:      #{light.$color-text-hint};
+  --color-text-disabled:  #{light.$color-text-disabled};
+  --color-text-inverse:   #{light.$color-text-inverse};
+  --color-text-success:   #{light.$color-text-success};
+  --color-text-warning:   #{light.$color-text-warning};
+  --color-text-error:     #{light.$color-text-error};
+  --color-text-info:      #{light.$color-text-info};
+  --color-text-primary:   #{light.$color-text-primary};
+  --color-text-tertiary:  #{light.$color-text-tertiary};
+  --color-border-light:   #{light.$color-border-light};
+  --color-bg-primary:     #{light.$color-bg-primary};
+  --color-bg-secondary:   #{light.$color-bg-secondary};
+  --color-bg-tertiary:    #{light.$color-bg-tertiary};
+  --color-neutral-300:    #{light.$color-neutral-300};
+  --color-neutral-400:    #{light.$color-neutral-400};
+  --color-neutral-0:      #{light.$color-neutral-0};
+  --color-success:        #{light.$color-success};
+  --color-warning:        #{light.$color-warning};
+  --color-danger:         #{light.$color-danger};
+  --color-border-dark: #{light.$color-border-dark};
+  --color-divider-1:   #{light.$color-divider-1};
+  --color-icon-idle:     #{light.$color-icon-idle};
+  --color-icon-disabled: #{light.$color-icon-disabled};
+  --color-icon-inverse:  #{light.$color-icon-inverse};
+  --color-status-success:       #{light.$color-status-success};
+  --color-status-warning:       #{light.$color-status-warning};
+  --color-status-error:         #{light.$color-status-error};
+  --color-status-idle:          #{light.$color-status-idle};
+  --color-status-info-icon:     #{light.$color-status-info-icon};
+  --color-status-info-bg:       #{light.$color-status-info-bg};
+  --color-status-success-icon:  #{light.$color-status-success-icon};
+  --color-status-success-bg:    #{light.$color-status-success-bg};
+  --color-status-error-icon:    #{light.$color-status-error-icon};
+  --color-status-error-bg:      #{light.$color-status-error-bg};
+  --color-status-warning-icon:  #{light.$color-status-warning-icon};
+  --color-status-warning-bg:    #{light.$color-status-warning-bg};
+  --color-status-idle-icon:     #{light.$color-status-idle-icon};
+  --color-status-idle-bg:       #{light.$color-status-idle-bg};
+  --color-status-startup-icon:  #{light.$color-status-startup-icon};
+  --color-status-startup-bg:    #{light.$color-status-startup-bg};
+  --color-nav-text-idle:           #{light.$color-nav-text-idle};
+  --color-nav-text-selected:       #{light.$color-nav-text-selected};
+  --color-nav-bg-selected:         #{light.$color-nav-bg-selected};
+  --color-nav-side-line-selected:  #{light.$color-nav-side-line-selected};
+  --color-nav-icon-idle:           #{light.$color-nav-icon-idle};
+  --color-nav-icon-selected:       #{light.$color-nav-icon-selected};
+  --color-header-text:       #{light.$color-header-text};
+  --color-header-text-label: #{light.$color-header-text-label};
+  --color-header-labels:     #{light.$color-header-labels};
+  --color-header-icon:       #{light.$color-header-icon};
+  --color-header-hover:      #{light.$color-header-hover};
+  --color-header-pressed:    #{light.$color-header-pressed};
+  --color-header-separator:  #{light.$color-header-separator};
+  --color-header-avatar:     #{light.$color-header-avatar};
+  --color-header-bg:         #{light.$color-header-bg};
+  --color-header-stroke:     #{light.$color-header-stroke};
+  --color-btn-primary-idle:          #{light.$color-btn-primary-idle};
+  --color-btn-primary-hover:         #{light.$color-btn-primary-hover};
+  --color-btn-primary-pressed:       #{light.$color-btn-primary-pressed};
+  --color-btn-primary-text:          #{light.$color-btn-primary-text};
+  --color-btn-primary-text-disabled: #{light.$color-btn-primary-text-disabled};
+  --color-btn-primary-disabled-bg:   #{light.$color-btn-primary-disabled-bg};
+  --color-btn-secondary-bg-idle:         #{light.$color-btn-secondary-bg-idle};
+  --color-btn-secondary-bg-hover:        #{light.$color-btn-secondary-bg-hover};
+  --color-btn-secondary-bg-selected:     #{light.$color-btn-secondary-bg-selected};
+  --color-btn-secondary-bg-disabled:     #{light.$color-btn-secondary-bg-disabled};
+  --color-btn-secondary-text-idle:       #{light.$color-btn-secondary-text-idle};
+  --color-btn-secondary-text-hover:      #{light.$color-btn-secondary-text-hover};
+  --color-btn-secondary-text-selected:   #{light.$color-btn-secondary-text-selected};
+  --color-btn-secondary-text-disabled:   #{light.$color-btn-secondary-text-disabled};
+  --color-btn-secondary-stroke-idle:     #{light.$color-btn-secondary-stroke-idle};
+  --color-btn-secondary-stroke-hover:    #{light.$color-btn-secondary-stroke-hover};
+  --color-btn-secondary-stroke-selected: #{light.$color-btn-secondary-stroke-selected};
+  --color-btn-secondary-stroke-disabled: #{light.$color-btn-secondary-stroke-disabled};
+  --color-btn-secondary-border:          #{light.$color-btn-secondary-border};
+  --color-btn-secondary-text:            #{light.$color-btn-secondary-text};
+  --color-btn-hover-overlay:             #{light.$color-btn-hover-overlay};
+  --color-btn-disabled-bg:               #{light.$color-btn-disabled-bg};
+  --color-btn-disabled-text:             #{light.$color-btn-disabled-text};
+  --color-btn-disabled-border:           #{light.$color-btn-disabled-border};
+  --color-btn-text-idle:        #{light.$color-btn-text-idle};
+  --color-btn-text-hover:       #{light.$color-btn-text-hover};
+  --color-btn-text-selected:    #{light.$color-btn-text-selected};
+  --color-btn-text-disabled:    #{light.$color-btn-text-disabled};
+  --color-btn-icon-idle:       #{light.$color-btn-icon-idle};
+  --color-btn-icon-hover:      #{light.$color-btn-icon-hover};
+  --color-btn-icon-pressed:    #{light.$color-btn-icon-pressed};
+  --color-btn-icon-selected:   #{light.$color-btn-icon-selected};
+  --color-btn-icon-disabled:   #{light.$color-btn-icon-disabled};
+  --color-btn-icon-hover-bg:   #{light.$color-btn-icon-hover-bg};
+  --color-btn-icon-pressed-bg: #{light.$color-btn-icon-pressed-bg};
+  --color-btn-link-text:     #{light.$color-btn-link-text};
+  --color-btn-link-disabled: #{light.$color-btn-link-disabled};
+  --color-accordion-bg:                #{light.$color-accordion-bg};
+  --color-accordion-bg-hover:          #{light.$color-accordion-bg-hover};
+  --color-accordion-bg-selected-hover: #{light.$color-accordion-bg-selected-hover};
+  --color-accordion-bg-selected:       #{light.$color-accordion-bg-selected};
+  --color-accordion-stroke:            #{light.$color-accordion-stroke};
+  --color-accordion-stroke-hover:      #{light.$color-accordion-stroke-hover};
+  --color-accordion-text:              #{light.$color-accordion-text};
+  --color-accordion-icon:              #{light.$color-accordion-icon};
+  --color-action-menu-text-idle:     #{light.$color-action-menu-text-idle};
+  --color-action-menu-text-hover:    #{light.$color-action-menu-text-hover};
+  --color-action-menu-text-selected: #{light.$color-action-menu-text-selected};
+  --color-action-menu-text-disabled: #{light.$color-action-menu-text-disabled};
+  --color-action-menu-icon-idle:     #{light.$color-action-menu-icon-idle};
+  --color-action-menu-icon-hover:    #{light.$color-action-menu-icon-hover};
+  --color-action-menu-icon-selected: #{light.$color-action-menu-icon-selected};
+  --color-action-menu-icon-disabled: #{light.$color-action-menu-icon-disabled};
+  --color-action-menu-bg-hover:      #{light.$color-action-menu-bg-hover};
+  --color-action-menu-bg-selected:   #{light.$color-action-menu-bg-selected};
+  --color-badge-critical-bg:     #{light.$color-badge-critical-bg};
+  --color-badge-critical-text:   #{light.$color-badge-critical-text};
+  --color-badge-critical-border: #{light.$color-badge-critical-border};
+  --color-badge-high-bg:         #{light.$color-badge-high-bg};
+  --color-badge-high-text:       #{light.$color-badge-high-text};
+  --color-badge-high-border:     #{light.$color-badge-high-border};
+  --color-badge-medium-bg:       #{light.$color-badge-medium-bg};
+  --color-badge-medium-text:     #{light.$color-badge-medium-text};
+  --color-badge-medium-border:   #{light.$color-badge-medium-border};
+  --color-badge-low-bg:          #{light.$color-badge-low-bg};
+  --color-badge-low-text:        #{light.$color-badge-low-text};
+  --color-badge-low-border:      #{light.$color-badge-low-border};
+  --color-badge-info-bg:         #{light.$color-badge-info-bg};
+  --color-badge-info-text:       #{light.$color-badge-info-text};
+  --color-badge-info-border:     #{light.$color-badge-info-border};
+  --color-badge-success-bg:      #{light.$color-badge-success-bg};
+  --color-badge-success-text:    #{light.$color-badge-success-text};
+  --color-badge-success-border:  #{light.$color-badge-success-border};
+  --color-badge-neutral-bg:      #{light.$color-badge-neutral-bg};
+  --color-badge-neutral-text:    #{light.$color-badge-neutral-text};
+  --color-badge-neutral-border:  #{light.$color-badge-neutral-border};
+  --color-card-bg:       #{light.$color-card-bg};
+  --color-card-bg-hover: #{light.$color-card-bg-hover};
+  --color-card-stroke:   #{light.$color-card-stroke};
+  --color-checkbox-bg-idle:           #{light.$color-checkbox-bg-idle};
+  --color-checkbox-bg-idle-hover:     #{light.$color-checkbox-bg-idle-hover};
+  --color-checkbox-bg-selected:       #{light.$color-checkbox-bg-selected};
+  --color-checkbox-bg-selected-hover: #{light.$color-checkbox-bg-selected-hover};
+  --color-checkbox-stroke-idle:       #{light.$color-checkbox-stroke-idle};
+  --color-checkbox-stroke-idle-hover: #{light.$color-checkbox-stroke-idle-hover};
+  --color-checkbox-bg-disabled:       #{light.$color-checkbox-bg-disabled};
+  --color-checkbox-stroke-disabled:   #{light.$color-checkbox-stroke-disabled};
+  --color-checkbox-stroke-selected:   #{light.$color-checkbox-stroke-selected};
+  --color-checkbox-stroke-hover:      #{light.$color-checkbox-stroke-hover};
+  --color-checkbox-text:              #{light.$color-checkbox-text};
+  --color-checkbox-icon-checked:      #{light.$color-checkbox-icon-checked};
+  --color-checkbox-icon-disabled:     #{light.$color-checkbox-icon-disabled};
+  --color-checkbox-icon:              #{light.$color-checkbox-icon};
+  --color-chip-bg:              #{light.$color-chip-bg};
+  --color-chip-bg-hover:        #{light.$color-chip-bg-hover};
+  --color-chip-bg-disabled:     #{light.$color-chip-bg-disabled};
+  --color-chip-border:          #{light.$color-chip-border};
+  --color-chip-border-hover:    #{light.$color-chip-border-hover};
+  --color-chip-border-disabled: #{light.$color-chip-border-disabled};
+  --color-chip-text:            #{light.$color-chip-text};
+  --color-chip-text-disabled:   #{light.$color-chip-text-disabled};
+  --color-chip-icon:            #{light.$color-chip-icon};
+  --color-chip-icon-hover:      #{light.$color-chip-icon-hover};
+  --color-chip-icon-disabled:   #{light.$color-chip-icon-disabled};
+  --color-chip-remove:          #{light.$color-chip-remove};
+  --color-chip-disabled-bg:     #{light.$color-chip-disabled-bg};
+  --color-chip-disabled-text:   #{light.$color-chip-disabled-text};
+  --color-copy-text:   #{light.$color-copy-text};
+  --color-copy-icon:   #{light.$color-copy-icon};
+  --color-copy-stroke: #{light.$color-copy-stroke};
+  --color-copy-bg:     #{light.$color-copy-bg};
+  --color-dialog-bg:         #{light.$color-dialog-bg};
+  --color-dialog-icon:       #{light.$color-dialog-icon};
+  --color-dialog-separator:  #{light.$color-dialog-separator};
+  --color-dialog-close-icon: #{light.$color-dialog-close-icon};
+  --color-dialog-text:       #{light.$color-dialog-text};
+  --color-footer-bg:   #{light.$color-footer-bg};
+  --color-footer-line: #{light.$color-footer-line};
+  --color-input-bg:              #{light.$color-input-bg};
+  --color-input-bg-focused:      #{light.$color-input-bg-focused};
+  --color-input-border:          #{light.$color-input-border};
+  --color-input-border-focused:  #{light.$color-input-border-focused};
+  --color-input-border-error:    #{light.$color-input-border-error};
+  --color-input-text:            #{light.$color-input-text};
+  --color-input-placeholder:     #{light.$color-input-placeholder};
+  --color-input-label:           #{light.$color-input-label};
+  --color-input-hint:            #{light.$color-input-hint};
+  --color-input-error:           #{light.$color-input-error};
+  --color-input-disabled-bg:     #{light.$color-input-disabled-bg};
+  --color-input-disabled-text:   #{light.$color-input-disabled-text};
+  --color-input-text-label:      #{light.$color-input-text-label};
+  --color-input-stroke-idle:     #{light.$color-input-stroke-idle};
+  --color-input-stroke-hover:    #{light.$color-input-stroke-hover};
+  --color-input-stroke-focus:    #{light.$color-input-stroke-focus};
+  --color-input-stroke-error:    #{light.$color-input-stroke-error};
+  --color-input-stroke-disabled: #{light.$color-input-stroke-disabled};
+  --color-advisory-text:         #{light.$color-advisory-text};
+  --color-advisory-error:        #{light.$color-advisory-error};
+  --color-advisory-counter:      #{light.$color-advisory-counter};
+  --color-advisory-icon-error:   #{light.$color-advisory-icon-error};
+  --color-advisory-icon-idle:    #{light.$color-advisory-icon-idle};
+  --color-listbox-text-idle:     #{light.$color-listbox-text-idle};
+  --color-listbox-text-selected: #{light.$color-listbox-text-selected};
+  --color-listbox-text-disabled: #{light.$color-listbox-text-disabled};
+  --color-listbox-bg-idle:       #{light.$color-listbox-bg-idle};
+  --color-listbox-bg-hover:      #{light.$color-listbox-bg-hover};
+  --color-listbox-bg-selected:   #{light.$color-listbox-bg-selected};
+  --color-listbox-stroke-idle:   #{light.$color-listbox-stroke-idle};
+  --color-search-bg-idle:         #{light.$color-search-bg-idle};
+  --color-search-stroke-idle:     #{light.$color-search-stroke-idle};
+  --color-search-stroke-hover:    #{light.$color-search-stroke-hover};
+  --color-search-stroke-selected: #{light.$color-search-stroke-selected};
+  --color-search-icon:            #{light.$color-search-icon};
+  --color-search-text:            #{light.$color-search-text};
+  --color-select-dropdown-bg:        #{light.$color-select-dropdown-bg};
+  --color-select-item-hover:         #{light.$color-select-item-hover};
+  --color-select-item-selected:      #{light.$color-select-item-selected};
+  --color-select-item-text:          #{light.$color-select-item-text};
+  --color-select-item-text-selected: #{light.$color-select-item-text-selected};
+  --color-severity-critical: #{light.$color-severity-critical};
+  --color-severity-high:     #{light.$color-severity-high};
+  --color-severity-medium:   #{light.$color-severity-medium};
+  --color-severity-low:      #{light.$color-severity-low};
+  --color-skeleton-bg:     #{light.$color-skeleton-bg};
+  --color-skeleton-bg-new: #{light.$color-skeleton-bg-new};
+  --color-skeleton-line:   #{light.$color-skeleton-line};
+  --color-scroll-bg:           #{light.$color-scroll-bg};
+  --color-scroll-handle:       #{light.$color-scroll-handle};
+  --color-scroll-handle-hover: #{light.$color-scroll-handle-hover};
+  --color-progress-bg:           #{light.$color-progress-bg};
+  --color-progress-handle:       #{light.$color-progress-handle};
+  --color-progress-text:         #{light.$color-progress-text};
+  --color-progress-text-sub:     #{light.$color-progress-text-sub};
+  --color-progress-text-error:   #{light.$color-progress-text-error};
+  --color-progress-text-success: #{light.$color-progress-text-success};
+  --color-radio-bg-idle:           #{light.$color-radio-bg-idle};
+  --color-radio-bg-idle-hover:     #{light.$color-radio-bg-idle-hover};
+  --color-radio-bg-selected:       #{light.$color-radio-bg-selected};
+  --color-radio-bg-selected-hover: #{light.$color-radio-bg-selected-hover};
+  --color-radio-stroke-idle:       #{light.$color-radio-stroke-idle};
+  --color-radio-stroke-idle-hover: #{light.$color-radio-stroke-idle-hover};
+  --color-radio-stroke-selected:   #{light.$color-radio-stroke-selected};
+  --color-radio-text:              #{light.$color-radio-text};
+  --color-side-filter-title: #{light.$color-side-filter-title};
+  --color-side-filter-icons: #{light.$color-side-filter-icons};
+  --color-side-filter-line:  #{light.$color-side-filter-line};
+  --color-filter-pill-text-icons:      #{light.$color-filter-pill-text-icons};
+  --color-filter-pill-bg-idle:         #{light.$color-filter-pill-bg-idle};
+  --color-filter-pill-bg-hover:        #{light.$color-filter-pill-bg-hover};
+  --color-filter-pill-stroke:          #{light.$color-filter-pill-stroke};
+  --color-filter-pill-selected-stroke: #{light.$color-filter-pill-selected-stroke};
+  --color-filter-pill-bg-selected:     #{light.$color-filter-pill-bg-selected};
+  --color-split-view-text:       #{light.$color-split-view-text};
+  --color-split-view-text-value: #{light.$color-split-view-text-value};
+  --color-split-view-text-label: #{light.$color-split-view-text-label};
+  --color-split-view-stroke:     #{light.$color-split-view-stroke};
+  --color-system-msg-info-separator:    #{light.$color-system-msg-info-separator};
+  --color-system-msg-success-separator: #{light.$color-system-msg-success-separator};
+  --color-system-msg-warning-separator: #{light.$color-system-msg-warning-separator};
+  --color-system-msg-fail-separator:    #{light.$color-system-msg-fail-separator};
+  --color-table-bg-hover:    #{light.$color-table-bg-hover};
+  --color-table-line-idle:   #{light.$color-table-line-idle};
+  --color-table-text-default:#{light.$color-table-text-default};
+  --color-table-text-labels: #{light.$color-table-text-labels};
+  --color-table-bg-selected: #{light.$color-table-bg-selected};
+  --color-table-fat-stroke-idle:     #{light.$color-table-fat-stroke-idle};
+  --color-table-fat-stroke-hover:    #{light.$color-table-fat-stroke-hover};
+  --color-table-fat-bg-idle:         #{light.$color-table-fat-bg-idle};
+  --color-table-fat-bg-hover:        #{light.$color-table-fat-bg-hover};
+  --color-table-fat-bg-selected:     #{light.$color-table-fat-bg-selected};
+  --color-tab-line:             #{light.$color-tab-line};
+  --color-tab-text-idle:        #{light.$color-tab-text-idle};
+  --color-tab-text-selected:    #{light.$color-tab-text-selected};
+  --color-tab-text-hover:       #{light.$color-tab-text-hover};
+  --color-tab-text-selected-new:#{light.$color-tab-text-selected-new};
+  --color-tab-stroke-hover:     #{light.$color-tab-stroke-hover};
+  --color-tab-stroke-selected:  #{light.$color-tab-stroke-selected};
+  --color-tab-disabled:         #{light.$color-tab-disabled};
+  --color-vtab-text-idle-new:    #{light.$color-vtab-text-idle-new};
+  --color-vtab-text-hover:       #{light.$color-vtab-text-hover};
+  --color-vtab-text-selected:    #{light.$color-vtab-text-selected};
+  --color-vtab-text-disabled:    #{light.$color-vtab-text-disabled};
+  --color-vtab-bg-idle:          #{light.$color-vtab-bg-idle};
+  --color-vtab-bg-hover:         #{light.$color-vtab-bg-hover};
+  --color-vtab-stroke:           #{light.$color-vtab-stroke};
+  --color-vtab-bg-selected-1:    #{light.$color-vtab-bg-selected-1};
+  --color-vtab-bg-selected-2:    #{light.$color-vtab-bg-selected-2};
+  --color-tag-bg:       #{light.$color-tag-bg};
+  --color-tag-bg-hover: #{light.$color-tag-bg-hover};
+  --color-tag-text:     #{light.$color-tag-text};
+  --color-timeline-text-title: #{light.$color-timeline-text-title};
+  --color-timeline-text-sub:   #{light.$color-timeline-text-sub};
+  --color-timeline-dot:        #{light.$color-timeline-dot};
+  --color-timeline-line:       #{light.$color-timeline-line};
+  --color-toolbar-divider: #{light.$color-toolbar-divider};
+  --color-tooltip-bg:     #{light.$color-tooltip-bg};
+  --color-tooltip-stroke: #{light.$color-tooltip-stroke};
+  --color-tooltip-text:   #{light.$color-tooltip-text};
+  --color-callout-bg:     #{light.$color-callout-bg};
+  --color-callout-stroke: #{light.$color-callout-stroke};
+  --color-callout-icon:   #{light.$color-callout-icon};
+  --color-toggle-bg-idle:         #{light.$color-toggle-bg-idle};
+  --color-toggle-bg-hover:        #{light.$color-toggle-bg-hover};
+  --color-toggle-bg-disabled:     #{light.$color-toggle-bg-disabled};
+  --color-toggle-nub-idle:        #{light.$color-toggle-nub-idle};
+  --color-toggle-nub-hover:       #{light.$color-toggle-nub-hover};
+  --color-toggle-nub-disabled:    #{light.$color-toggle-nub-disabled};
+  --color-toggle-bg-off-idle:     #{light.$color-toggle-bg-off-idle};
+  --color-toggle-bg-off-hover:    #{light.$color-toggle-bg-off-hover};
+  --color-toggle-bg-off-disabled: #{light.$color-toggle-bg-off-disabled};
+  --color-toggle-nob-off:         #{light.$color-toggle-nob-off};
+  --color-toggle-nob-off-hover:   #{light.$color-toggle-nob-off-hover};
+  --color-toggle-text:            #{light.$color-toggle-text};
+  --color-upload-bg:               #{light.$color-upload-bg};
+  --color-upload-bg-selected:      #{light.$color-upload-bg-selected};
+  --color-upload-bg-hover:         #{light.$color-upload-bg-hover};
+  --color-upload-stroke-idle:      #{light.$color-upload-stroke-idle};
+  --color-upload-stroke-hover:     #{light.$color-upload-stroke-hover};
+  --color-upload-stroke-focus:     #{light.$color-upload-stroke-focus};
+  --color-upload-stroke-error:     #{light.$color-upload-stroke-error};
+  --color-upload-stroke-success:   #{light.$color-upload-stroke-success};
+  --color-upload-icon:             #{light.$color-upload-icon};
+  --color-upload-text-default:     #{light.$color-upload-text-default};
+  --color-upload-text-label:       #{light.$color-upload-text-label};
+  --color-upload-text-sub:         #{light.$color-upload-text-sub};
+  --color-toast-text-icon:    #{light.$color-toast-text-icon};
+  --color-toast-icon:         #{light.$color-toast-icon};
+  --color-toast-stroke:       #{light.$color-toast-stroke};
+  --color-toast-bg:           #{light.$color-toast-bg};
+  --color-toast-inapp-bg:     #{light.$color-toast-inapp-bg};
+  --color-toast-inapp-text:   #{light.$color-toast-inapp-text};
+  --color-toast-inapp-stroke: #{light.$color-toast-inapp-stroke};
+  --color-wizard-line-idle:                    #{light.$color-wizard-line-idle};
+  --color-wizard-line-side:                    #{light.$color-wizard-line-side};
+  --color-wizard-line-visited:                 #{light.$color-wizard-line-visited};
+  --color-wizard-text-title-current:           #{light.$color-wizard-text-title-current};
+  --color-wizard-text-number-current:          #{light.$color-wizard-text-number-current};
+  --color-wizard-bg-number-current:            #{light.$color-wizard-bg-number-current};
+  --color-wizard-text-title-visited:           #{light.$color-wizard-text-title-visited};
+  --color-wizard-text-number-visited:          #{light.$color-wizard-text-number-visited};
+  --color-wizard-stroke-number-visited:        #{light.$color-wizard-stroke-number-visited};
+  --color-wizard-bg-number-visited:            #{light.$color-wizard-bg-number-visited};
+  --color-wizard-text-title-not-visited:       #{light.$color-wizard-text-title-not-visited};
+  --color-wizard-text-number-not-visited:      #{light.$color-wizard-text-number-not-visited};
+  --color-wizard-stroke-not-visited:           #{light.$color-wizard-stroke-not-visited};
+  --color-wizard-bg-number-not-visited:        #{light.$color-wizard-bg-number-not-visited};
+  --color-wizard-icon-error:                   #{light.$color-wizard-icon-error};
+  --color-wizard-stroke-error:                 #{light.$color-wizard-stroke-error};
+  --color-wizard-bg-number-error:              #{light.$color-wizard-bg-number-error};
+  --color-wizard-text-disabled:                #{light.$color-wizard-text-disabled};
+  --color-wizard-text-number-disabled:         #{light.$color-wizard-text-number-disabled};
+  --color-wizard-bg-number-disabled:           #{light.$color-wizard-bg-number-disabled};
+  --color-space-command-center-1: #{light.$color-space-command-center-1};
+  --color-space-command-center-2: #{light.$color-space-command-center-2};
+  --color-space-access-1:         #{light.$color-space-access-1};
+  --color-space-access-2:         #{light.$color-space-access-2};
+  --color-space-risk-1:           #{light.$color-space-risk-1};
+  --color-space-risk-2:           #{light.$color-space-risk-2};
+  --color-space-manage-1:         #{light.$color-space-manage-1};
+  --color-space-manage-2:         #{light.$color-space-manage-2};
+  --color-space-audit-1:          #{light.$color-space-audit-1};
+  --color-space-audit-2:          #{light.$color-space-audit-2};
+  --color-space-setup-1:          #{light.$color-space-setup-1};
+  --color-space-setup-2:          #{light.$color-space-setup-2};
+  --color-brand-icon-dark:    #{light.$color-brand-icon-dark};
+  --color-brand-text:         #{light.$color-brand-text};
+  --color-brand-tagline:      #{light.$color-brand-tagline};
+  --color-brand-tagline-gray: #{light.$color-brand-tagline-gray};
 }

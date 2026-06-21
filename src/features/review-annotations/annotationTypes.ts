@@ -11,4 +11,7 @@ export interface Annotation {
   resolved: boolean;
   deletedAt: string | null;
   history: Array<{ text: string; editedAt: string }>;
+  number: number;
+  pinX?: number;
+  pinY?: number;
 }

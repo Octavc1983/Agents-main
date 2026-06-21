@@ -6,6 +6,8 @@ export * from './components/Badge';
 export * from './components/Button';
 export * from './components/Callout';
 export * from './components/Card';
+export * from './components/LineChart';
+export * from './components/RiskMiniBar';
 export * from './components/Checkbox';
 export * from './components/Chip';
 export * from './components/CopyButton';

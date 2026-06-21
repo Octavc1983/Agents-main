@@ -1,0 +1,260 @@
+@use 'tokens' as *;
+
+// ── Status badge ──────────────────────────────────────────────────────────────
+
+.ma-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 $spacing-3;
+  height: 22px;
+  border-radius: $border-radius-full;
+  font-size: $font-size-sm;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1px solid transparent;
+
+  &--active   { border-color: $color-status-success; color: $color-status-success; }
+  &--inactive { border-color: $color-nav-text-idle;  color: $color-nav-text-idle; }
+  &--pending  { border-color: $color-status-warning; color: $color-status-warning; }
+  &--locked   { border-color: $color-status-error;   color: $color-status-error; }
+}
+
+// ── Platform icon ─────────────────────────────────────────────────────────────
+
+.ma-platform-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+// ── Identifiers cell ──────────────────────────────────────────────────────────
+
+.ma-identifiers {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+}
+
+.ma-identifiers__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ma-identifiers__name {
+  font-size: $font-size-base;
+  font-weight: 500;
+  color: $color-text-light;
+}
+
+.ma-identifiers__meta {
+  display: flex;
+  gap: $spacing-3;
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+
+  span { white-space: nowrap; }
+}
+
+// ── Generic table cell text ───────────────────────────────────────────────────
+
+.ma-cell-text {
+  color: $color-nav-text-idle;
+  font-size: $font-size-base;
+
+  &--capitalize { text-transform: capitalize; }
+}
+
+// ── Tags cell ─────────────────────────────────────────────────────────────────
+
+.ma-tags-cell {
+  display: flex;
+  gap: $spacing-1;
+  flex-wrap: nowrap;
+  align-items: center;
+  position: relative;
+}
+
+// ── Tag chip — key bold, value normal ─────────────────────────────────────────
+
+.ma-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 $spacing-2;
+  height: 22px;
+  border-radius: $border-radius-sm;
+  background: $color-background-darker;
+  border: 1px solid $color-divider-1;
+  color: $color-text-light;
+  font-size: $font-size-xs;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  &--callout {
+    height: 26px;
+    font-size: $font-size-sm;
+  }
+}
+
+.ma-tag__key {
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+}
+
+.ma-tag__value {
+  font-weight: $font-weight-normal;
+  color: $color-nav-text-idle;
+}
+
+// ── +N overflow button ────────────────────────────────────────────────────────
+
+.ma-tag--overflow-btn {
+  background: transparent;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-sm;
+  color: $color-primary;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  height: 22px;
+  padding: 0 $spacing-2;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background $transition-fast, border-color $transition-fast;
+
+  &:hover {
+    background: $color-btn-hover-overlay;
+    border-color: $color-primary;
+  }
+}
+
+// ── Tags callout (portal-positioned) ─────────────────────────────────────────
+
+.ma-tags-callout {
+  position: fixed;
+  z-index: 500;
+  width: 340px;
+  background: $color-background-darker;
+  border: 1px solid $color-border-dark;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-lg;
+  overflow: hidden;
+}
+
+.ma-tags-callout__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-3 $spacing-4;
+  border-bottom: 1px solid $color-border-dark;
+}
+
+.ma-tags-callout__title {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-light;
+}
+
+.ma-tags-callout__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-text-muted;
+  cursor: pointer;
+  padding: 0;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    background: $color-btn-hover-overlay;
+  }
+}
+
+.ma-tags-callout__body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+  padding: $spacing-3 $spacing-4;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+// ── Row actions (3-dot menu) ──────────────────────────────────────────────────
+
+.ma-row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.ma-row-actions__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-text-muted;
+  cursor: pointer;
+  padding: 0;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover,
+  &--active {
+    color: $color-text-light;
+    background: $color-btn-hover-overlay;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+.ma-row-actions__menu {
+  position: fixed;
+  z-index: 500;
+  min-width: 180px;
+  background: $color-background-darker;
+  border: 1px solid $color-border-dark;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-md;
+  padding: $spacing-1 0;
+  overflow: hidden;
+}
+
+.ma-row-actions__item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: $spacing-2 $spacing-3;
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    background: $color-btn-hover-overlay;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: -2px;
+  }
+}

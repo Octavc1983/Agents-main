@@ -120,13 +120,25 @@ Templates assemble existing AppShell, Infra, DS components, tokens, shared featu
 
 ---
 
+## WizardTemplate
+
+**Category:** Multi-Step Wizard / Vertical Stepper / Guided Flow
+**Status:** Implemented
+**Path:** src/prototype-templates/WizardTemplate/
+**Specification:** .claude/architecture/templates/WizardTemplate.md
+**Primary User Goal:** Guide users through a sequential multi-step creation or configuration flow with persistent step context
+**Best Use Cases:** Create account wizard, onboarding flows, multi-step setup, guided configuration
+**Last Reviewed:** 2026-06-21
+
+---
+
 ## Candidates (Not Yet Specified)
 
 | Candidate | Evidence | Status |
 |---|---|---|
 | FormPageTemplate | No existing instances — common form pattern | Candidate |
 | ConfigurationFormTemplate | No existing instances — complex settings form | Candidate |
-| WizardTemplate | No existing instances — multi-step flows anticipated | Candidate |
+| WizardTemplate | Implemented for CreateManagedAccountWizard | Implemented |
 | DialogFlowTemplate | No existing instances — dialogs are page-level | Candidate |
 | ConfirmationDialogTemplate | No existing instances — destructive actions anticipated | Candidate |
 | BulkStatusDialogTemplate | TableFiltersTemplate Bulk contract describes it | Candidate |

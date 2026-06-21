@@ -21,3 +21,25 @@
   background-color: $color-page-background;
   overflow-y: auto;
 }
+
+.app-shell__review-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-1 $spacing-3;
+  border-radius: $border-radius-base;
+  border: 1px solid $color-btn-secondary-border;
+  background: transparent;
+  color: $color-btn-secondary-text;
+  font-size: $font-size-sm;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background $transition-fast, border-color $transition-fast;
+
+  &:hover {
+    background: $color-btn-hover-overlay;
+  }
+
+  &--active {
+    background: $color-btn-secondary-pressed-bg;
+  }
+}

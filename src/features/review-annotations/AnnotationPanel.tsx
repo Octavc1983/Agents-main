@@ -26,7 +26,12 @@ function formatTime(iso: string) {
 }
 
 export const AnnotationPanel: React.FC = () => {
-  const { open, closePanel, annotations, addAnnotation, editAnnotation, resolveAnnotation, deleteAnnotation } = useAnnotations();
+  const {
+    open, closePanel, annotations,
+    addAnnotation, editAnnotation, resolveAnnotation, deleteAnnotation,
+    isPlacingPin, startPlacingPin, cancelPlacingPin,
+    pendingPin, setPendingPin,
+  } = useAnnotations();
   const { pathname } = useLocation();
 
   const [text, setText] = useState('');
@@ -90,6 +95,26 @@ export const AnnotationPanel: React.FC = () => {
         </div>
       </div>
 
+      {isPlacingPin && (
+        <div className="annotation-panel__placing-hint">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5" />
+            <circle cx="8" cy="8" r="1.5" fill="currentColor" />
+          </svg>
+          <span>Click anywhere on the page to place a pin.</span>
+          {pendingPin && (
+            <span className="annotation-panel__placing-hint-ok">Pin placed — fill in the annotation below.</span>
+          )}
+          <button
+            type="button"
+            className="annotation-panel__placing-cancel"
+            onClick={cancelPlacingPin}
+          >
+            Cancel
+          </button>
+        </div>
+      )}
+
       <div className="annotation-panel__compose">
         <div className="annotation-panel__severity-row">
           {SEVERITY_OPTIONS.map(s => (
@@ -103,6 +128,44 @@ export const AnnotationPanel: React.FC = () => {
             </button>
           ))}
         </div>
+
+        <div className="annotation-panel__pin-row">
+          {!pendingPin ? (
+            <button
+              type="button"
+              className={`annotation-pin-btn${isPlacingPin ? ' annotation-pin-btn--active' : ''}`}
+              onClick={isPlacingPin ? cancelPlacingPin : startPlacingPin}
+            >
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 2a3.5 3.5 0 0 1 3.5 3.5c0 2.5-3.5 7-3.5 7S4.5 8 4.5 5.5A3.5 3.5 0 0 1 8 2Z" stroke="currentColor" strokeWidth="1.4" fill="none" />
+                <circle cx="8" cy="5.5" r="1.2" fill="currentColor" />
+              </svg>
+              {isPlacingPin ? 'Placing pin…' : 'Pin on page'}
+            </button>
+          ) : (
+            <>
+              <span className="annotation-pin-btn annotation-pin-btn--placed">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8l3.5 3.5L13 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                Pin placed
+              </span>
+              <button
+                type="button"
+                className="annotation-pin-btn annotation-pin-btn--remove"
+                onClick={cancelPlacingPin}
+                aria-label="Remove pin"
+                title="Remove pin"
+              >
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <line x1="2" y1="2" x2="10" y2="10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                  <line x1="10" y1="2" x2="2" y2="10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                </svg>
+              </button>
+            </>
+          )}
+        </div>
+
         <textarea
           ref={textareaRef}
           className="annotation-panel__textarea"

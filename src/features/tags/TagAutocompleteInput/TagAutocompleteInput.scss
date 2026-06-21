@@ -1,0 +1,157 @@
+@use 'tokens' as *;
+
+.tagInput {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+  position: relative;
+
+  &--disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+.tagInput__label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-light;
+}
+
+// ── Chip + input field ────────────────────────────────────────────────────────
+
+.tagInput__field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacing-1;
+  min-height: 40px;
+  padding: $spacing-1 $spacing-2;
+  background: $color-input-bg;
+  border: 1px solid $color-input-border;
+  border-radius: $border-radius-base;
+  cursor: text;
+  transition: border-color $transition-fast;
+
+  &:focus-within {
+    border-color: $color-input-border-focused;
+  }
+
+  &--open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+// ── Text input inside field ───────────────────────────────────────────────────
+
+.tagInput__input {
+  flex: 1;
+  min-width: 140px;
+  background: none;
+  border: none;
+  outline: none;
+  color: $color-input-text;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  padding: 2px 0;
+  line-height: 1.4;
+
+  &::placeholder {
+    color: $color-input-placeholder;
+  }
+}
+
+// ── Dropdown ──────────────────────────────────────────────────────────────────
+
+.tagInput__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  list-style: none;
+  margin: 0;
+  padding: $spacing-1 0;
+  background: $color-surface-idle;
+  border: 1px solid $color-input-border-focused;
+  border-top: none;
+  border-bottom-left-radius: $border-radius-base;
+  border-bottom-right-radius: $border-radius-base;
+  max-height: 260px;
+  overflow-y: auto;
+  box-shadow: $shadow-md;
+}
+
+.tagInput__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-2;
+  padding: $spacing-2 $spacing-3;
+  font-size: $font-size-sm;
+  color: $color-text-light;
+  cursor: pointer;
+  transition: background $transition-fast;
+
+  &:hover,
+  &--active {
+    background: $color-btn-hover-overlay;
+  }
+
+  &--create {
+    color: $color-primary;
+    gap: $spacing-1;
+  }
+}
+
+.tagInput__option-create-prefix {
+  color: $color-nav-text-idle;
+  font-size: $font-size-sm;
+}
+
+.tagInput__option-value {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tagInput__option-source {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  padding: 1px $spacing-2;
+  border-radius: $border-radius-sm;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  &--oob {
+    background: rgba(122, 128, 255, 0.15);
+    color: $color-primary;
+  }
+
+  &--external {
+    background: rgba(255, 255, 255, 0.08);
+    color: $color-nav-text-idle;
+  }
+}
+
+// ── Validation error ──────────────────────────────────────────────────────────
+
+.tagInput__error {
+  font-size: $font-size-xs;
+  color: $color-status-error;
+  min-height: 16px;
+}
+
+// ── Counter ───────────────────────────────────────────────────────────────────
+
+.tagInput__count {
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+  text-align: right;
+
+  &--limit {
+    color: $color-status-warning;
+  }
+}

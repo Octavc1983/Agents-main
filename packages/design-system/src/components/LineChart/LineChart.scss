@@ -1,0 +1,109 @@
+@use '../../theme/styles/tokens' as *;
+
+// CSS custom properties for severity colors (allows runtime override)
+:root {
+  --lc-color-critical: #{$color-severity-critical};
+  --lc-color-high:     #{$color-severity-high};
+  --lc-color-medium:   #{$color-severity-medium};
+  --lc-color-low:      #{$color-severity-low};
+  --lc-color-neutral:  #{$color-text-muted};
+}
+
+.lchart {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  &__plot-area {
+    position: relative;
+    flex: 1;
+  }
+
+  &__svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  &__grid-line {
+    stroke: $color-border-dark;
+    stroke-width: 0.5;
+    stroke-dasharray: 3 3;
+  }
+
+  &__line {
+    vector-effect: non-scaling-stroke;
+  }
+
+  &__dot {
+    r: 2;
+    vector-effect: non-scaling-stroke;
+  }
+
+  &__y-labels {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 28px;
+    width: 36px;
+    pointer-events: none;
+  }
+
+  &__y-label {
+    position: absolute;
+    right: 4px;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    line-height: 1;
+    transform: translateY(-50%);
+    white-space: nowrap;
+  }
+
+  &__x-labels {
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+    right: 16px;
+    height: 28px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &__x-label {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    white-space: nowrap;
+    bottom: 0;
+  }
+
+  &__legend {
+    display: flex;
+    align-items: center;
+    gap: $spacing-4;
+    flex-wrap: wrap;
+    padding-top: $spacing-2;
+  }
+
+  &__legend-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+  }
+
+  &__legend-dot {
+    width: 20px;
+    height: 3px;
+    border-radius: $border-radius-full;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  &__legend-label {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+  }
+}

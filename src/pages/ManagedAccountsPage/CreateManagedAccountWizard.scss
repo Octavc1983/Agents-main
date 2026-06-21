@@ -1,0 +1,244 @@
+@use 'tokens' as *;
+
+// ── Success screen (rendered inside wizard-tpl shell) ─────────────────────────
+
+.wizard-tpl--success {
+  max-width: 480px;
+}
+
+.wizard-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-4;
+  padding: $spacing-12 $spacing-8;
+  text-align: center;
+  width: 100%;
+}
+
+.wizard-success__icon {
+  color: $color-status-success;
+}
+
+.wizard-success__title {
+  font-size: $font-size-2xl;
+  font-weight: 600;
+  color: $color-dialog-text;
+  margin: 0;
+}
+
+.wizard-success__desc {
+  font-size: $font-size-base;
+  color: $color-text-muted;
+  margin: 0;
+  max-width: 360px;
+}
+
+// ── Confirm-cancel dialog (stacked above the wizard backdrop) ─────────────────
+
+.wizard-tpl-backdrop--above {
+  z-index: 1100;
+}
+
+.wizard-confirm {
+  background: $color-dialog-bg;
+  border: 1px solid $color-dialog-separator;
+  border-radius: $border-radius-base;
+  padding: $spacing-6;
+  max-width: 360px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  box-shadow: $shadow-md;
+}
+
+.wizard-confirm__title {
+  font-size: $font-size-lg;
+  font-weight: 600;
+  color: $color-dialog-text;
+  margin: 0;
+}
+
+.wizard-confirm__body {
+  font-size: $font-size-base;
+  color: $color-text-muted;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.wizard-confirm__actions {
+  display: flex;
+  gap: $spacing-2;
+  justify-content: flex-end;
+  margin-top: $spacing-2;
+}
+
+// ── Step content ──────────────────────────────────────────────────────────────
+
+.wizard-step__title {
+  font-size: $font-size-lg;
+  font-weight: 600;
+  color: $color-dialog-text;
+  margin: 0 0 $spacing-5;
+}
+
+.wizard-step__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-3;
+
+  &--narrow { grid-template-columns: repeat(4, 1fr); }
+}
+
+// ── Type card ─────────────────────────────────────────────────────────────────
+
+.wizard-type-card {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+  padding: $spacing-4;
+  border-radius: $border-radius-base;
+  border: 1px solid $color-dialog-separator;
+  background: $color-background-darker;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color $transition-fast, background $transition-fast;
+
+  &:hover { border-color: $color-primary; background: $color-background-dark; }
+
+  &--selected {
+    border-color: $color-primary;
+    background: $color-background-dark;
+    box-shadow: 0 0 0 1px $color-primary;
+  }
+}
+
+.wizard-type-card__label {
+  font-size: $font-size-base;
+  font-weight: 600;
+  color: $color-dialog-text;
+}
+
+.wizard-type-card__desc {
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  line-height: 1.4;
+}
+
+// ── Platform card ─────────────────────────────────────────────────────────────
+
+.wizard-platform-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-4;
+  border-radius: $border-radius-base;
+  border: 1px solid $color-dialog-separator;
+  background: $color-background-darker;
+  cursor: pointer;
+  transition: border-color $transition-fast, background $transition-fast;
+
+  &:hover { border-color: $color-primary; background: $color-background-dark; }
+
+  &--selected {
+    border-color: $color-primary;
+    background: $color-background-dark;
+    box-shadow: 0 0 0 1px $color-primary;
+  }
+}
+
+.wizard-platform-card__abbr {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: $border-radius-base;
+  background: $color-background-darkest;
+  color: $color-dialog-text;
+  font-size: $font-size-sm;
+  font-weight: 700;
+}
+
+.wizard-platform-card__label {
+  font-size: $font-size-sm;
+  color: $color-dialog-text;
+  font-weight: 500;
+}
+
+// ── Form fields ───────────────────────────────────────────────────────────────
+
+.wizard-step__form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-4;
+}
+
+.wizard-field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+
+  &--full { grid-column: 1 / -1; }
+}
+
+.wizard-field__label {
+  font-size: $font-size-sm;
+  color: $color-input-text-label;
+  font-weight: 500;
+}
+
+.wizard-field__input,
+.wizard-field__textarea {
+  padding: $spacing-2 $spacing-3;
+  border-radius: $border-radius-base;
+  border: 1px solid $color-input-stroke-idle;
+  background: $color-input-bg;
+  color: $color-input-text;
+  font-size: $font-size-base;
+  font-family: inherit;
+  outline: none;
+  transition: border-color $transition-fast;
+
+  &::placeholder { color: $color-input-placeholder; }
+  &:hover  { border-color: $color-input-stroke-hover; }
+  &:focus  { border-color: $color-input-stroke-focus; }
+}
+
+.wizard-field__textarea { resize: vertical; }
+
+// ── Review ────────────────────────────────────────────────────────────────────
+
+.wizard-review {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid $color-dialog-separator;
+  border-radius: $border-radius-base;
+  overflow: hidden;
+}
+
+.wizard-review__row {
+  display: flex;
+  gap: $spacing-4;
+  padding: $spacing-3 $spacing-4;
+  font-size: $font-size-base;
+  border-bottom: 1px solid $color-dialog-separator;
+
+  &:last-child { border-bottom: none; }
+}
+
+.wizard-review__label {
+  flex: 0 0 140px;
+  color: $color-text-muted;
+  font-weight: 500;
+}
+
+.wizard-review__value {
+  flex: 1;
+  color: $color-dialog-text;
+  word-break: break-all;
+}

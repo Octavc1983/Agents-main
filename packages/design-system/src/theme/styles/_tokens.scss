@@ -242,6 +242,31 @@ $border-radius-full: 9999px;
 
 $tab-border-radius: 4px;
 
+// ── Dialog ────────────────────────────────────────────────────────────────────
+$color-dialog-bg:         #1D2D49;
+$color-dialog-separator:  #395A93;
+$color-dialog-close-icon: #ffffff;
+$color-dialog-text:       #ffffff;
+
+// ── Input (semantic) ──────────────────────────────────────────────────────────
+$color-input-text-label:    #d6e3fb;
+$color-input-stroke-idle:   #395A93;
+$color-input-stroke-hover:  #5D82C0;
+$color-input-stroke-focus:  #7a80ff;
+
+// ── Wizard ────────────────────────────────────────────────────────────────────
+$color-wizard-line-idle:              #6C6E83;
+$color-wizard-line-visited:           #9b6dff;
+$color-wizard-text-title-current:     #9b6dff;
+$color-wizard-text-number-current:    #ffffff;
+$color-wizard-bg-number-current:      #9b6dff;
+$color-wizard-text-title-visited:     #9b6dff;
+$color-wizard-text-number-visited:    #9b6dff;
+$color-wizard-stroke-number-visited:  #9b6dff;
+$color-wizard-text-title-not-visited: #BBC2D0;
+$color-wizard-text-number-not-visited:#BBC2D0;
+$color-wizard-stroke-not-visited:     #BBC2D0;
+
 // ── Overlay ───────────────────────────────────────────────────────────────────
 $color-overlay-backdrop: rgba(0, 0, 0, 0.30);
 

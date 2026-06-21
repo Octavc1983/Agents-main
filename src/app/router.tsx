@@ -5,6 +5,8 @@ import { SystemHealthPage } from '../pages/SystemHealthPage/SystemHealthPage';
 import { SessionDiagnosticsPage } from '../pages/SessionDiagnosticsPage/SessionDiagnosticsPage';
 import { MigrationsPage } from '../pages/MigrationsPage/MigrationsPage';
 import { MigrationDetailPage } from '../pages/MigrationDetailPage/MigrationDetailPage';
+import { ManagedAccountsPage } from '../pages/ManagedAccountsPage/ManagedAccountsPage';
+import { RiskManagementPage } from '../pages/RiskManagementPage/RiskManagementPage';
 import { getDefaultPathForSpace } from '../navigation/navConfig';
 
 const defaultPath = getDefaultPathForSpace('access');
@@ -22,6 +24,8 @@ export const router = createBrowserRouter([
       { path: 'setup/health/session-diagnostics', element: <SessionDiagnosticsPage /> },
       { path: 'setup/migrations', element: <MigrationsPage /> },
       { path: 'setup/migrations/:migrationId', element: <MigrationDetailPage /> },
+      { path: 'manage/inventory/accounts', element: <ManagedAccountsPage /> },
+      { path: 'risk/risk-management', element: <RiskManagementPage /> },
       {
         path: '*',
         element: <ComingSoonPage />,

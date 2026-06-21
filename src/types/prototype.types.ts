@@ -231,3 +231,40 @@ export interface MigrationOption {
   description: string;
   path: string;
 }
+
+// --- Managed Accounts types ---------------------------------------------------
+
+export type ManagedAccountStatus = 'active' | 'inactive' | 'pending' | 'locked';
+export type ManagedAccountType = 'local' | 'domain' | 'service' | 'cloud';
+export type ManagedAccountPlatform =
+  | 'Windows' | 'Linux' | 'AWS' | 'Azure' | 'GCP' | 'Oracle' | 'SAP'
+  | 'Ubuntu' | 'MacOS' | 'RHEL' | 'Debian' | 'Fedora'
+  | 'Docker' | 'Kubernetes'
+  | 'PostgreSQL' | 'MySQL'
+  | 'GitHub' | 'GitLab' | 'Bitbucket' | 'Git'
+  | 'Salesforce' | 'Jira' | 'Slack' | 'Zoom'
+  | 'Jenkins' | 'Splunk'
+  | 'Python' | 'Chrome' | 'Google';
+
+export interface ManagedAccount {
+  id: string;
+  name: string;
+  accountType: ManagedAccountType;
+  platform: ManagedAccountPlatform;
+  address: string;
+  status: ManagedAccountStatus;
+  owner: string;
+  safe: string;
+  lastPasswordChange: string;
+  createdAt: string;
+  tags: string[];
+  description?: string;
+}
+
+export interface ManagedAccountsStats {
+  total: number;
+  active: number;
+  inactive: number;
+  pending: number;
+  locked: number;
+}

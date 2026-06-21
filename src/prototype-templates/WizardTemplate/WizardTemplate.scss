@@ -1,0 +1,207 @@
+@use 'tokens' as *;
+
+// ── Backdrop ──────────────────────────────────────────────────────────────────
+
+.wizard-tpl-backdrop {
+  position: fixed;
+  inset: 0;
+  background: $color-overlay-backdrop;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: $spacing-4;
+}
+
+// ── Shell ─────────────────────────────────────────────────────────────────────
+
+.wizard-tpl {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  max-height: calc(100vh - $spacing-8);
+  background: $color-dialog-bg;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-lg;
+  overflow: hidden;
+}
+
+// ── Close button ──────────────────────────────────────────────────────────────
+
+.wizard-tpl__close {
+  position: absolute;
+  top: $spacing-4;
+  right: $spacing-4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: $border-radius-base;
+  border: none;
+  background: transparent;
+  color: $color-dialog-close-icon;
+  cursor: pointer;
+  z-index: 1;
+  transition: background $transition-fast;
+
+  &:hover { background: $color-bg-tertiary; }
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+}
+
+// ── Left sidebar ──────────────────────────────────────────────────────────────
+
+.wizard-tpl__sidebar {
+  flex-shrink: 0;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  background: $color-background-darkest;
+  border-right: 1px solid $color-dialog-separator;
+  padding: $spacing-6 $spacing-5;
+  overflow-y: auto;
+}
+
+.wizard-tpl__sidebar-header {
+  padding-right: $spacing-8; // clear the close button
+  margin-bottom: $spacing-8;
+}
+
+.wizard-tpl__title {
+  font-size: $font-size-lg;
+  font-weight: 600;
+  color: $color-dialog-text;
+  margin: 0;
+  line-height: 1.3;
+}
+
+// ── Vertical stepper ──────────────────────────────────────────────────────────
+
+.wizard-tpl__stepper {
+  flex: 1;
+}
+
+.wizard-tpl__step-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.wizard-tpl__step {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-3;
+}
+
+.wizard-tpl__step-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  padding-top: 2px; // optically align number with label
+}
+
+.wizard-tpl__step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: $border-radius-full;
+  border: 1.5px solid;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  flex-shrink: 0;
+  transition: background $transition-fast, color $transition-fast, border-color $transition-fast;
+}
+
+.wizard-tpl__step-line {
+  width: 1.5px;
+  flex: 1;
+  min-height: $spacing-6;
+  background: $color-wizard-line-idle;
+  margin: $spacing-1 0;
+  transition: background $transition-fast;
+
+  &--visited { background: $color-wizard-line-visited; }
+}
+
+.wizard-tpl__step-label {
+  font-size: $font-size-sm;
+  padding: 2px 0 $spacing-6;
+  line-height: 1.25;
+  transition: color $transition-fast;
+}
+
+// Step states
+
+.wizard-tpl__step--visited {
+  .wizard-tpl__step-number {
+    border-color: $color-wizard-stroke-number-visited;
+    color: $color-wizard-text-number-visited;
+    background: transparent;
+  }
+  .wizard-tpl__step-label { color: $color-wizard-text-title-visited; }
+}
+
+.wizard-tpl__step--current {
+  .wizard-tpl__step-number {
+    background: $color-wizard-bg-number-current;
+    color: $color-wizard-text-number-current;
+    border-color: $color-wizard-bg-number-current;
+  }
+  .wizard-tpl__step-label {
+    color: $color-wizard-text-title-current;
+    font-weight: 600;
+  }
+}
+
+.wizard-tpl__step--upcoming {
+  .wizard-tpl__step-number {
+    border-color: $color-wizard-stroke-not-visited;
+    color: $color-wizard-text-number-not-visited;
+    background: transparent;
+  }
+  .wizard-tpl__step-label { color: $color-wizard-text-title-not-visited; }
+}
+
+// Remove bottom padding from last step label
+.wizard-tpl__step:last-child .wizard-tpl__step-label {
+  padding-bottom: 0;
+}
+
+// ── Right: main area ──────────────────────────────────────────────────────────
+
+.wizard-tpl__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.wizard-tpl__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: $spacing-6;
+}
+
+// ── Footer ────────────────────────────────────────────────────────────────────
+
+.wizard-tpl__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-4 $spacing-6;
+  border-top: 1px solid $color-dialog-separator;
+  flex-shrink: 0;
+}
+
+.wizard-tpl__footer-nav {
+  display: flex;
+  gap: $spacing-2;
+}

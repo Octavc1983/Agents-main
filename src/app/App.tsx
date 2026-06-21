@@ -8,6 +8,8 @@ import { router } from './router';
 import { ThemeProvider } from '../providers/ThemeProvider';
 import { ModalProvider } from './services/modal';
 import { PageTitleProvider } from '../providers/PageTitleContext';
+import { AnnotationProvider } from '../features/review-annotations/AnnotationContext';
+import { featureFlags } from '../config/featureFlags';
 import '../styles/globals.scss';
 
 function App() {
@@ -15,7 +17,13 @@ function App() {
     <ThemeProvider>
       <PageTitleProvider>
         <ModalProvider>
-          <RouterProvider router={router} />
+          {featureFlags.reviewAnnotations ? (
+            <AnnotationProvider>
+              <RouterProvider router={router} />
+            </AnnotationProvider>
+          ) : (
+            <RouterProvider router={router} />
+          )}
         </ModalProvider>
       </PageTitleProvider>
     </ThemeProvider>

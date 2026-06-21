@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect, type FC } from 'react';
+import { useState, useRef, useEffect, type FC, type ReactNode } from 'react';
+import { useThemeMode } from '../../../providers/ThemeProvider';
 import './Header.scss';
 
 // ── Inline icons (header-specific — gradient AI, bell, help, moon, sun) ───────
@@ -156,17 +157,29 @@ const HelpMenu: FC = () => {
   );
 };
 
+// ── Chevron for accordion ─────────────────────────────────────────────────────
+
+const ChevronIcon: FC<{ open: boolean }> = ({ open }) => (
+  <svg
+    width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"
+    style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }}
+  >
+    <path d="M3 9L7 5L11 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 // ── User menu ─────────────────────────────────────────────────────────────────
 
 interface UserMenuProps {
   name: string;
   initials: string;
-  isDark: boolean;
-  onThemeToggle: () => void;
 }
 
-const UserMenu: FC<UserMenuProps> = ({ name, initials, isDark, onThemeToggle }) => {
+const UserMenu: FC<UserMenuProps> = ({ name, initials }) => {
+  const { mode, setMode } = useThemeMode();
+  const isDark = mode === 'dark';
   const [open, setOpen] = useState(false);
+  const [signInOpen, setSignInOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -194,6 +207,8 @@ const UserMenu: FC<UserMenuProps> = ({ name, initials, isDark, onThemeToggle }) 
 
       {open && (
         <div className="header-user__dropdown" role="menu" aria-label="User menu">
+
+          {/* ── Profile row ── */}
           <div className="header-user__profile">
             <UserAvatar initials={initials} large />
             <div className="header-user__profile-info">
@@ -215,19 +230,58 @@ const UserMenu: FC<UserMenuProps> = ({ name, initials, isDark, onThemeToggle }) 
 
           <div className="header-user__divider" />
 
+          {/* ── Sign-in info accordion ── */}
           <div className="header-user__section">
-            <div className="header-user__row header-user__row--section-label">Sign-in info</div>
+            <button
+              type="button"
+              className="header-user__row header-user__row--action header-user__row--accordion"
+              onClick={() => setSignInOpen(v => !v)}
+              aria-expanded={signInOpen}
+            >
+              <span>Sign-in info</span>
+              <ChevronIcon open={signInOpen} />
+            </button>
+            {signInOpen && (
+              <div className="header-user__signin-details">
+                <div className="header-user__signin-row">
+                  <span>Last sign-in:</span><span>02/14/2018 8:34 AM</span>
+                </div>
+                <div className="header-user__signin-row">
+                  <span>Signed in from:</span><span>18.220.51.23</span>
+                </div>
+                <div className="header-user__signin-row">
+                  <span>Failed sign-in attempts:</span><span>1</span>
+                </div>
+                <div className="header-user__signin-row">
+                  <span>Last failed sign-in:</span><span>02/10/2018 17:20 PM</span>
+                </div>
+                <div className="header-user__signin-row">
+                  <span>Failed to sign in from:</span><span>18.220.51.23</span>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="header-user__divider" />
 
+          {/* ── Settings section ── */}
           <div className="header-user__section">
+            <button type="button" className="header-user__row header-user__row--action">
+              Reload rights
+            </button>
             <div className="header-user__row">
-              <span>Theme</span>
+              <span>AI/ML and data usage</span>
+              <span className="header-user__value">Enabled</span>
+            </div>
+            <div className="header-user__row header-user__row--theme">
+              <div className="header-user__theme-label-wrap">
+                <span>Theme</span>
+                <span className="header-user__theme-subtitle">Dark mode is only available on certain pages.</span>
+              </div>
               <button
                 type="button"
                 className={`header-user__theme-toggle${isDark ? ' header-user__theme-toggle--dark' : ''}`}
-                onClick={onThemeToggle}
+                onClick={() => setMode(isDark ? 'light' : 'dark')}
                 aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
                 aria-pressed={isDark}
               >
@@ -258,14 +312,12 @@ const UserMenu: FC<UserMenuProps> = ({ name, initials, isDark, onThemeToggle }) 
 
 export interface HeaderProps {
   title: string;
-  subtitle?: string;
   userName?: string;
   userInitials?: string;
   notificationCount?: number;
   onAIClick?: () => void;
   onNotificationsClick?: () => void;
-  isDark?: boolean;
-  onThemeToggle?: () => void;
+  reviewButton?: ReactNode;
 }
 
 export const Header: FC<HeaderProps> = ({
@@ -275,13 +327,13 @@ export const Header: FC<HeaderProps> = ({
   notificationCount = 1,
   onAIClick,
   onNotificationsClick,
-  isDark = true,
-  onThemeToggle = () => {},
+  reviewButton,
 }) => (
   <header className="header">
     <h1 className="header__title">{title}</h1>
 
     <div className="header__actions">
+      {reviewButton}
       <button
         type="button"
         className="header-icon-btn header-icon-btn--ai"
@@ -297,12 +349,7 @@ export const Header: FC<HeaderProps> = ({
 
       <span className="header__divider" aria-hidden="true" />
 
-      <UserMenu
-        name={userName}
-        initials={userInitials}
-        isDark={isDark}
-        onThemeToggle={onThemeToggle}
-      />
+      <UserMenu name={userName} initials={userInitials} />
     </div>
   </header>
 );

@@ -30,5 +30,6 @@
       "@idira/design-system/types": ["./packages/design-system/src/types/index.ts"]
     }
   },
-  "include": ["src", "packages/design-system/src"]
+  "include": ["src", "packages/design-system/src"],
+  "exclude": ["node_modules"]
 }

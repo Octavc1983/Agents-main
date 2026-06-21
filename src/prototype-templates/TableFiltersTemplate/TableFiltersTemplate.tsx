@@ -96,89 +96,92 @@ function buildActiveChips(
 
 interface FilterPanelProps {
   filterGroups: TableFilterGroup[];
-  draftFilters: Record<string, string[]>;
-  onDraftChange: (groupId: string, value: string, checked: boolean) => void;
-  onApply: () => void;
-  onCancel: () => void;
-  onClear: () => void;
+  appliedFilters: Record<string, string[]>;
+  onFilterChange: (groupId: string, value: string, checked: boolean) => void;
+  onClose: () => void;
 }
 
 const FilterPanel: React.FC<FilterPanelProps> = ({
   filterGroups,
-  draftFilters,
-  onDraftChange,
-  onApply,
-  onCancel,
-  onClear,
-}) => (
-  <div className="tableFiltersTemplate__filtersPanel" role="dialog" aria-label="Filters">
-    <div className="tableFiltersTemplate__filtersPanelHeader">
-      <span className="tableFiltersTemplate__filtersPanelTitle">Filters</span>
-      <button
-        className="tableFiltersTemplate__filtersPanelClose"
-        type="button"
-        onClick={onCancel}
-        aria-label="Close filters panel"
-      >
-        <CloseIcon size={14} />
-      </button>
-    </div>
+  appliedFilters,
+  onFilterChange,
+  onClose,
+}) => {
+  const [collapsed, setCollapsed] = React.useState<Record<string, boolean>>({});
 
-    <div className="tableFiltersTemplate__filtersPanelBody">
-      {filterGroups.map((group) => (
-        <div key={group.id} className="tableFiltersTemplate__filterGroup">
-          <span className="tableFiltersTemplate__filterGroupLabel">{group.label}</span>
-          <div className="tableFiltersTemplate__filterGroupOptions">
-            {group.options.map((option) => {
-              const selected = (draftFilters[group.id] ?? []).includes(option.value);
-              return (
-                <label
-                  key={option.value}
-                  className="tableFiltersTemplate__filterOption"
+  const toggleGroup = (groupId: string) =>
+    setCollapsed((prev) => ({ ...prev, [groupId]: !prev[groupId] }));
+
+  return (
+    <div className="tableFiltersTemplate__filtersPanel" role="complementary" aria-label="Filters">
+      <div className="tableFiltersTemplate__filtersPanelHeader">
+        <span className="tableFiltersTemplate__filtersPanelTitle">Filter</span>
+        <button
+          className="tableFiltersTemplate__filtersPanelClose"
+          type="button"
+          onClick={onClose}
+          aria-label="Close filters panel"
+        >
+          <CloseIcon size={14} />
+        </button>
+      </div>
+
+      <div className="tableFiltersTemplate__filtersPanelBody">
+        {filterGroups.map((group) => {
+          const isCollapsed = !!collapsed[group.id];
+          return (
+            <div key={group.id} className="tableFiltersTemplate__filterGroup">
+              <button
+                type="button"
+                className="tableFiltersTemplate__filterGroupHeader"
+                onClick={() => toggleGroup(group.id)}
+                aria-expanded={!isCollapsed}
+              >
+                <span className="tableFiltersTemplate__filterGroupLabel">{group.label}</span>
+                <svg
+                  className={`tableFiltersTemplate__filterGroupChevron${isCollapsed ? ' tableFiltersTemplate__filterGroupChevron--collapsed' : ''}`}
+                  width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"
                 >
-                  <input
-                    type={group.type === 'single-select' ? 'radio' : 'checkbox'}
-                    name={group.id}
-                    value={option.value}
-                    checked={selected}
-                    onChange={(e) => onDraftChange(group.id, option.value, e.target.checked)}
-                    className="tableFiltersTemplate__filterInput"
-                  />
-                  <span className="tableFiltersTemplate__filterOptionLabel">{option.label}</span>
-                </label>
-              );
-            })}
-          </div>
-        </div>
-      ))}
-    </div>
+                  <path d="M3 9L7 5L11 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
 
-    <div className="tableFiltersTemplate__filtersPanelFooter">
-      <button
-        className="tableFiltersTemplate__filtersClearBtn"
-        type="button"
-        onClick={onClear}
-      >
-        Clear
-      </button>
-      <div className="tableFiltersTemplate__filtersPanelActions">
-        <Button variant="secondary" size="sm" onClick={onCancel}>
-          Cancel
-        </Button>
-        <Button variant="primary" size="sm" onClick={onApply}>
-          Apply
-        </Button>
+              {!isCollapsed && (
+                <div className="tableFiltersTemplate__filterGroupOptions">
+                  {group.options.map((option) => {
+                    const selected = (appliedFilters[group.id] ?? []).includes(option.value);
+                    return (
+                      <label key={option.value} className="tableFiltersTemplate__filterOption">
+                        <input
+                          type={group.type === 'single-select' ? 'radio' : 'checkbox'}
+                          name={group.id}
+                          value={option.value}
+                          checked={selected}
+                          onChange={(e) => onFilterChange(group.id, option.value, e.target.checked)}
+                          onClick={group.type === 'single-select' && selected
+                            ? (e) => { e.preventDefault(); onFilterChange(group.id, option.value, false); }
+                            : undefined}
+                          className="tableFiltersTemplate__filterInput"
+                        />
+                        <span className="tableFiltersTemplate__filterOptionLabel">{option.label}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 // ── TableFiltersTemplate ───────────────────────────────────────────────────────
 
 export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): React.ReactElement {
   const {
     title,
-    description,
     rows,
     columns,
     getRowId,
@@ -201,11 +204,7 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
   // ── State ──────────────────────────────────────────────────────────────────
 
   const [searchQuery, setSearchQuery] = useState('');
-
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  // draftFilters: changes made inside the panel before Apply
-  const [draftFilters, setDraftFilters] = useState<Record<string, string[]>>({});
-  // appliedFilters: what is actually affecting the table
   const [appliedFilters, setAppliedFilters] = useState<Record<string, string[]>>({});
 
   // ── Filtering ──────────────────────────────────────────────────────────────
@@ -230,28 +229,13 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
   // ── Filter panel handlers ──────────────────────────────────────────────────
 
   const openFilters = useCallback(() => {
-    setDraftFilters({ ...appliedFilters });
-    setIsFiltersOpen(true);
-  }, [appliedFilters]);
-
-  const handleApply = useCallback(() => {
-    setAppliedFilters({ ...draftFilters });
-    setIsFiltersOpen(false);
-  }, [draftFilters]);
-
-  const handleCancel = useCallback(() => {
-    setDraftFilters({ ...appliedFilters });
-    setIsFiltersOpen(false);
-  }, [appliedFilters]);
-
-  const handleClearPanel = useCallback(() => {
-    setDraftFilters({});
+    setIsFiltersOpen(v => !v);
   }, []);
 
-  const handleDraftChange = useCallback(
+  const handleFilterChange = useCallback(
     (groupId: string, value: string, checked: boolean) => {
       const group = filterGroups.find((g) => g.id === groupId);
-      setDraftFilters((prev) => {
+      setAppliedFilters((prev) => {
         const current = prev[groupId] ?? [];
         if (group?.type === 'single-select') {
           return { ...prev, [groupId]: checked ? [value] : [] };
@@ -280,7 +264,6 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
   const clearAll = useCallback(() => {
     setSearchQuery('');
     setAppliedFilters({});
-    setDraftFilters({});
   }, []);
 
   // ── Render ─────────────────────────────────────────────────────────────────
@@ -288,19 +271,11 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
   return (
     <div className="tableFiltersTemplate">
 
-      {/* ── Page header ─────────────────────────────────────────────── */}
-      <div className="tableFiltersTemplate__header">
-        <h1 className="tableFiltersTemplate__title">{title}</h1>
-        {description && (
-          <p className="tableFiltersTemplate__description">{description}</p>
-        )}
-      </div>
-
       {/* ── Toolbar ─────────────────────────────────────────────────── */}
       <div className="tableFiltersTemplate__toolbar">
-        <div className="tableFiltersTemplate__toolbarMain">
 
-          {/* Left: filter button + search + item counter */}
+        {/* Row 1: filter + search | primary action */}
+        <div className="tableFiltersTemplate__toolbarRow1">
           <div className="tableFiltersTemplate__toolbarLeft">
             {filterGroups.length > 0 && (
               <button
@@ -345,15 +320,21 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
                 </button>
               )}
             </div>
-
-            <span className="tableFiltersTemplate__itemCount">{itemCountLabel}</span>
           </div>
 
-          {/* Right: refresh + timestamp + secondary + primary */}
+          <div className="tableFiltersTemplate__toolbarRight">
+            {secondaryActions}
+            {primaryAction}
+          </div>
+        </div>
+
+        {/* Row 2: item count | updated at + refresh */}
+        <div className="tableFiltersTemplate__toolbarRow2">
+          <span className="tableFiltersTemplate__itemCount">{itemCountLabel}</span>
           <div className="tableFiltersTemplate__toolbarRight">
             {updatedAt && (
               <span className="tableFiltersTemplate__updatedAt">
-                Updated {updatedAt}
+                Updated at {updatedAt}
               </span>
             )}
             {onRefresh && (
@@ -366,12 +347,10 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
                 <RefreshIcon size={14} aria-hidden="true" />
               </button>
             )}
-            {secondaryActions}
-            {primaryAction}
           </div>
         </div>
 
-        {/* Active filter chips row */}
+        {/* Row 3: active filter chips (conditional) */}
         {hasActiveFilters && (
           <div className="tableFiltersTemplate__chips" role="list" aria-label="Active filters">
             {activeChips.map((chip) => (
@@ -413,11 +392,9 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
         {isFiltersOpen && filterGroups.length > 0 && (
           <FilterPanel
             filterGroups={filterGroups}
-            draftFilters={draftFilters}
-            onDraftChange={handleDraftChange}
-            onApply={handleApply}
-            onCancel={handleCancel}
-            onClear={handleClearPanel}
+            appliedFilters={appliedFilters}
+            onFilterChange={handleFilterChange}
+            onClose={() => setIsFiltersOpen(false)}
           />
         )}
 

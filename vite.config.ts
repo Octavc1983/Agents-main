@@ -22,6 +22,7 @@ export default defineConfig({
         loadPaths: [
           path.resolve(__dirname, './packages/design-system/src/theme/styles'),
         ],
+        preprocessorEngine: 'sass',
       },
     },
   },

@@ -137,7 +137,7 @@ export const spacesRegistry: SpaceSchema[] = [
           { id: 'manage-inv-users', label: 'Users', type: 'button', path: '/manage/inventory/users' },
           { id: 'manage-inv-roles', label: 'Roles', type: 'button', path: '/manage/inventory/roles' },
           { id: 'manage-inv-cloud', label: 'Cloud entitlements', type: 'button', path: '/manage/inventory/cloud-entitlements' },
-          { id: 'manage-inv-accounts', label: 'Accounts', type: 'button', path: '/manage/inventory/accounts' },
+          { id: 'manage-inv-accounts', label: 'Managed accounts', type: 'button', path: '/manage/inventory/accounts' },
           { id: 'manage-inv-infra', label: 'Infrastructure', type: 'button', path: '/manage/inventory/infrastructure' },
           { id: 'manage-inv-webapps', label: 'Web apps', type: 'button', path: '/manage/inventory/web-apps' },
           { id: 'manage-inv-service-accounts', label: 'Service accounts', type: 'button', path: '/manage/inventory/service-accounts' },
@@ -213,7 +213,7 @@ export const spacesRegistry: SpaceSchema[] = [
   // ── Detect and Respond ───────────────────────────────────────────────────────
   {
     id: 'risk',
-    label: 'Detect & Respond',
+    label: 'Detect and Respond',
     description: 'Mitigate risks based on the CyberArk Blueprint and detect and respond to threats in near real-time',
     spaceId: 'risk',
     items: [

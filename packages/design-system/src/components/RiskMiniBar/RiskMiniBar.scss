@@ -1,0 +1,73 @@
+@use '../../theme/styles/tokens' as *;
+
+.rmb {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-text-light;
+  }
+
+  &__total {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+  }
+
+  &__track {
+    display: flex;
+    height: 8px;
+    border-radius: $border-radius-full;
+    overflow: hidden;
+    background: $color-background-darker;
+    gap: 2px;
+  }
+
+  &__fill {
+    height: 100%;
+    border-radius: $border-radius-full;
+    min-width: 4px;
+    transition: width 0.3s ease;
+
+    &--critical { background: $color-severity-critical; }
+    &--high     { background: $color-severity-high; }
+    &--medium   { background: $color-severity-medium; }
+    &--low      { background: $color-severity-low; }
+  }
+
+  &__stats {
+    display: flex;
+    gap: $spacing-4;
+    flex-wrap: wrap;
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    &-val {
+      font-size: $font-size-base;
+      font-weight: $font-weight-bold;
+      line-height: 1.2;
+    }
+
+    &-lbl {
+      font-size: $font-size-xs;
+      color: $color-text-muted;
+    }
+
+    &--critical &-val { color: $color-severity-critical; }
+    &--high     &-val { color: $color-severity-high; }
+    &--medium   &-val { color: $color-severity-medium; }
+    &--low      &-val { color: $color-severity-low; }
+  }
+}

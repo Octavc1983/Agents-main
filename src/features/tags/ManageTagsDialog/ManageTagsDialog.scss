@@ -1,0 +1,62 @@
+@use 'tokens' as *;
+
+.manageTagsDialog__body {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  min-height: 160px;
+}
+
+.manageTagsDialog__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $spacing-2;
+  width: 100%;
+}
+
+// ── Error banner ──────────────────────────────────────────────────────────────
+
+.manageTagsDialog__error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-3;
+  padding: $spacing-3;
+  background: rgba(231, 76, 76, 0.1);
+  border: 1px solid rgba(231, 76, 76, 0.3);
+  border-radius: $border-radius-base;
+  font-size: $font-size-sm;
+  color: $color-status-error;
+}
+
+.manageTagsDialog__error-retry {
+  background: none;
+  border: none;
+  color: $color-primary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0;
+
+  &:hover { text-decoration: underline; }
+}
+
+// ── Read-only notice ──────────────────────────────────────────────────────────
+
+.manageTagsDialog__readonly-notice {
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  padding: $spacing-2 $spacing-3;
+  background: $color-surface-idle;
+  border-radius: $border-radius-base;
+}
+
+// ── Discard confirmation ──────────────────────────────────────────────────────
+
+.manageTagsDialog__discard-text {
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  margin: 0;
+}
