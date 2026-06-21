@@ -2,179 +2,276 @@
 
 .rmp {
   padding: $spacing-6 $spacing-8;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-6;
   min-height: 100%;
 
-  // ── Page header ───────────────────────────────────────────────────────────
+  // ── Main outer card ───────────────────────────────────────────────────────
 
-  &__header {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-2;
+  &__main-card {
+    padding: $spacing-5 !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
-  &__title-row {
+  // ── Category header (inside left panel only) ─────────────────────────────
+
+  &__cat-header {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    gap: $spacing-6;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-bottom: $spacing-4;
   }
 
-  &__title {
+  &__total-title {
     font-family: $font-family-heading;
     font-size: $font-size-2xl;
     font-weight: $font-weight-bold;
     color: $color-text-light;
-    margin: 0;
+    white-space: nowrap;
   }
 
-  &__header-kpis {
+  &__cat-kpis {
     display: flex;
     align-items: center;
-    gap: $spacing-3;
+    height: 39px;
+    gap: 30px;
+  }
+
+  &__kpi-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    svg { flex-shrink: 0; width: 24px; height: 24px; }
+  }
+
+  &__kpi-pill-text {
+    font-family: $font-family-heading;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    color: $color-text-light;
+    white-space: nowrap;
+  }
+
+  // ── 3-column body ─────────────────────────────────────────────────────────
+
+  &__body {
+    display: grid;
+    grid-template-columns: 1fr minmax(300px, 600px) 188px;
+    column-gap: 24px;
+    align-items: stretch;
+    min-height: 300px;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: 1fr minmax(300px, 600px) 188px;
+    }
+  }
+
+  // ── Left panel: categories ────────────────────────────────────────────────
+
+  &__categories-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-right: 40px;
+    align-self: start;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: $color-border-dark;
+    }
+  }
+
+  &__cat-grid {
+    display: grid;
+    gap: 0;
+
+    &--top    { grid-template-columns: repeat(3, 1fr); }
+    &--bottom { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  // shared border between grids acts as the divider — no separate element needed
+  &__cat-divider { display: none; }
+
+  &__cat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    height: 147px;
+    box-sizing: border-box;
+    border: 1px solid $color-border-dark;
+    background: $color-background-dark;
+    // collapse shared borders
+    margin-top: -1px;
+    margin-left: -1px;
+    border-radius: 0;
+
+    // top-left corner of entire grid (first item of top row)
+    .rmp__cat-grid--top &:first-child      { border-radius: 14px 0 0 0; }
+    // top-right corner (last item of top row)
+    .rmp__cat-grid--top &:last-child       { border-radius: 0 14px 0 0; }
+    // bottom-left corner (first item of bottom row)
+    .rmp__cat-grid--bottom &:first-child   { border-radius: 0 0 0 14px; }
+    // bottom-right corner (last item of bottom row)
+    .rmp__cat-grid--bottom &:last-child    { border-radius: 0 0 14px 0; }
+  }
+
+  // wrap grids in a container that adds the outer left/top offset
+  &__cat-grid {
+    margin-left: 1px;
+    margin-top: 1px;
+  }
+
+  &__cat-label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: $color-text-muted;
+    white-space: nowrap;
+  }
+
+  &__cat-count-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
     flex-wrap: wrap;
   }
 
-  &__total-label {
-    font-size: $font-size-sm;
-    color: $color-text-muted;
-    padding: 2px $spacing-3;
-    border: 1px solid $color-border-dark;
-    border-radius: $border-radius-full;
-  }
-
-  &__kpi-val {
-    font-size: $font-size-sm;
-    font-weight: $font-weight-semibold;
-
-    &--critical { color: $color-severity-critical; }
-    &--high     { color: $color-severity-high; }
-    &--medium   { color: $color-severity-medium; }
-  }
-
-  // ── Sections ──────────────────────────────────────────────────────────────
-
-  &__section {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-4;
-  }
-
-  &__section-title {
+  &__cat-count {
     font-family: $font-family-heading;
-    font-size: $font-size-lg;
-    font-weight: $font-weight-semibold;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
     color: $color-text-light;
-    margin: 0;
+    line-height: $line-height-tight;
   }
 
-  // ── Category cards ────────────────────────────────────────────────────────
-
-  &__categories-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: $spacing-4;
-
-    @media (max-width: 1200px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    @media (max-width: 900px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  &__cat-unit {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
   }
 
-  &__category-card {
-    padding: $spacing-4 !important;
+  &__cat-bar {
+    height: 5px;
+    border-radius: $border-radius-full;
+    background: $color-background-darker;
+    overflow: hidden;
   }
 
-  // ── Progress row ──────────────────────────────────────────────────────────
-
-  &__progress-row {
-    display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: $spacing-4;
-    align-items: stretch;
-
-    @media (max-width: 960px) {
-      grid-template-columns: 1fr;
-    }
+  &__cat-bar-fill {
+    height: 100%;
+    border-radius: $border-radius-full;
+    background: $color-severity-critical;
+    min-width: 2px;
   }
 
-  &__progress-card,
-  &__remediation-card {
-    padding: $spacing-5 !important;
+  &__cat-caption {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+  }
+
+  // ── Center panel: chart ───────────────────────────────────────────────────
+
+  &__chart-panel {
     display: flex;
     flex-direction: column;
-    gap: $spacing-4;
+    gap: $spacing-3;
+    padding: 0 0 0 40px;
+    min-width: 300px;
+    max-width: 600px;
+    align-self: stretch;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: $color-border-dark;
+    }
   }
 
-  &__progress-header {
+  &__chart-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: $spacing-4;
+    flex-wrap: wrap;
   }
 
-  &__time-filters {
-    display: flex;
-    gap: $spacing-1;
+  &__chart-title {
+    font-family: $font-family-heading;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $color-text-light;
   }
 
-  &__time-btn {
-    padding: 4px $spacing-3;
-    border-radius: $border-radius-sm;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-medium;
-    color: $color-text-muted;
-    background: transparent;
-    border: 1px solid $color-border-dark;
-    cursor: pointer;
-    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
-
-    &:hover {
-      background: $color-background-darker;
-      color: $color-text-light;
-    }
-
-    &--active {
-      background: $color-primary;
-      color: $color-background-dark;
-      border-color: $color-primary;
-      font-weight: $font-weight-semibold;
-    }
-  }
-
-  &__chart {
+  &__chart-wrap {
     flex: 1;
-    min-height: 200px;
+    min-height: 0;
+    position: relative;
+    width: 100%;
   }
 
-  // ── Remediation KPI tile ──────────────────────────────────────────────────
+  &__chart-legend {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    justify-content: center;
+  }
 
-  &__kpi-list {
+  &__chart-legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: $border-radius-full;
+    background: #C45BE7;
+    flex-shrink: 0;
+  }
+
+  &__chart-legend-label {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+  }
+
+  // ── Right panel: KPIs ─────────────────────────────────────────────────────
+
+  &__kpi-panel {
     display: flex;
     flex-direction: column;
-    gap: $spacing-4;
-    flex: 1;
+    align-items: flex-start;
+    gap: 24px;
+    width: 188px;
+    min-height: 362px;
+    padding: 24px 20px;
+    border-radius: 12px;
+    background: $color-page-background;
+    flex-shrink: 0;
+    align-self: start;
+    box-sizing: border-box;
   }
 
   &__kpi-item {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: $spacing-2;
   }
 
-  &__kpi-big {
+  &__kpi-value {
+    font-family: $font-family-heading;
     font-size: $font-size-3xl;
     font-weight: $font-weight-bold;
+    color: $color-text-light;
     line-height: $line-height-tight;
-
-    &--success { color: $color-status-success; }
-    &--info    { color: $color-primary; }
-    &--warning { color: $color-status-warning; }
   }
 
   &__kpi-label {
@@ -183,84 +280,5 @@
     line-height: $line-height-normal;
   }
 
-  &__kpi-divider {
-    height: 1px;
-    background: $color-border-dark;
-  }
-
-  // ── Table ─────────────────────────────────────────────────────────────────
-
-  &__table-card {
-    padding: $spacing-5 !important;
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-4;
-  }
-
-  &__table-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__table-wrap {
-    overflow-x: auto;
-  }
-
-  &__table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: $font-size-sm;
-  }
-
-  &__table-head-row {
-    border-bottom: 1px solid $color-border-dark;
-  }
-
-  &__th {
-    padding: $spacing-3 $spacing-4;
-    text-align: left;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-semibold;
-    color: $color-text-muted;
-    white-space: nowrap;
-
-    &--num { text-align: right; }
-  }
-
-  &__table-row {
-    border-bottom: 1px solid $color-divider-1;
-    transition: background-color 0.1s;
-
-    &:last-child { border-bottom: none; }
-
-    &:hover { background: $color-background-darker; }
-  }
-
-  &__td {
-    padding: $spacing-3 $spacing-4;
-    color: $color-text-muted;
-    vertical-align: middle;
-
-    &--type     { color: $color-text-light; font-weight: $font-weight-medium; }
-    &--num      { text-align: right; }
-    &--critical { color: $color-severity-critical; font-weight: $font-weight-semibold; }
-  }
-
-  &__trend {
-    display: inline-flex;
-    align-items: center;
-    gap: $spacing-1;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-medium;
-    padding: 2px $spacing-2;
-    border-radius: $border-radius-sm;
-
-    &--up   { color: $color-severity-critical; background: rgba($color-severity-critical, 0.1); }
-    &--down { color: $color-status-success; background: rgba($color-status-success, 0.1); }
-  }
-
-  &__trend-arrow {
-    font-style: normal;
-  }
+  &__kpi-divider { display: none; }
 }

@@ -1,350 +1,237 @@
-import React, { useState, useCallback } from 'react';
-import { Button, Card, Badge, SeverityBadge, LineChart, RiskMiniBar } from '@idira/design-system';
-import type { LineChartSeries } from '@idira/design-system';
+import React, { useState, useEffect, useRef } from 'react';
+import { Chart } from 'primereact/chart';
+import { Card, Badge, SelectButton } from '@idira/design-system';
+import type { SelectButtonOption } from '@idira/design-system';
 import './RiskManagementPage.scss';
 
 // ── Mock data ─────────────────────────────────────────────────────────────────
 
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+const KPI_SUMMARY = { total: 12456, critical: 267, high: 588, medium: 823 };
 
-const KPI_SUMMARY = {
-  total:    12456,
-  critical: 267,
-  high:     588,
-  medium:   823,
-  low:      410,
-};
+interface RiskCategory { id: string; label: string; total: number; critical: number; }
 
-const RISK_CATEGORIES = [
-  {
-    id: 'users',
-    label: 'Users',
-    segments: [
-      { severity: 'critical' as const, count: 512 },
-      { severity: 'high'     as const, count: 897 },
-      { severity: 'medium'   as const, count: 1124 },
-      { severity: 'low'      as const, count: 708 },
-    ],
-  },
-  {
-    id: 'cloud-ent',
-    label: 'Cloud entitlements',
-    segments: [
-      { severity: 'critical' as const, count: 780 },
-      { severity: 'high'     as const, count: 920 },
-      { severity: 'medium'   as const, count: 520 },
-    ],
-  },
-  {
-    id: 'cloud-infra',
-    label: 'Cloud infra access',
-    segments: [
-      { severity: 'critical' as const, count: 940 },
-      { severity: 'high'     as const, count: 660 },
-      { severity: 'medium'   as const, count: 310 },
-    ],
-  },
-  {
-    id: 'applications',
-    label: 'Applications',
-    segments: [
-      { severity: 'critical' as const, count: 1620 },
-      { severity: 'high'     as const, count: 410 },
-      { severity: 'medium'   as const, count: 180 },
-    ],
-  },
-  {
-    id: 'secrets',
-    label: 'Secrets',
-    segments: [
-      { severity: 'critical' as const, count: 287 },
-      { severity: 'high'     as const, count: 511 },
-      { severity: 'medium'   as const, count: 330 },
-      { severity: 'low'      as const, count: 220 },
-    ],
-  },
-  {
-    id: 'workloads',
-    label: 'Workloads',
-    segments: [
-      { severity: 'critical' as const, count: 110 },
-      { severity: 'high'     as const, count: 210 },
-      { severity: 'low'      as const, count: 340 },
-    ],
-  },
-  {
-    id: 'ai-agents',
-    label: 'AI agents',
-    segments: [
-      { severity: 'critical' as const, count: 640 },
-      { severity: 'high'     as const, count: 280 },
-      { severity: 'medium'   as const, count: 188 },
-    ],
-  },
+const RISK_CATEGORIES: RiskCategory[] = [
+  { id: 'users',       label: 'Users',              total: 3000,  critical: 540  },
+  { id: 'cloud-ent',   label: 'Cloud entitlements', total: 3006,  critical: 1112 },
+  { id: 'cloud-infra', label: 'Cloud infra access', total: 1678,  critical: 789  },
+  { id: 'applications',label: 'Applications',       total: 2789,  critical: 2203 },
+  { id: 'secrets',     label: 'Secrets',            total: 200,   critical: 90   },
+  { id: 'workloads',   label: 'Workloads',          total: 400,   critical: 44   },
+  { id: 'ai-agents',   label: 'AI agents',          total: 5006,  critical: 3204 },
 ];
 
-const PROGRESS_SERIES: LineChartSeries[] = [
-  {
-    id: 'critical',
-    label: 'Critical',
-    severity: 'critical',
-    data: MONTHS.map((label, i) => ({ label, value: 3600 - i * 480 })),
+const MONTHS_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const CHART_DATA = {
+  '1M': { labels: MONTHS_LABELS.slice(11), values: [180000] },
+  '3M': { labels: MONTHS_LABELS.slice(9), values: [160000, 170000, 180000] },
+  '6M': { labels: MONTHS_LABELS.slice(6), values: [100000, 110000, 130000, 150000, 160000, 180000] },
+  '1Y': {
+    labels: MONTHS_LABELS,
+    values: [40000, 50000, 60000, 80000, 100000, 120000, 130000, 145000, 155000, 165000, 172000, 180000],
   },
-  {
-    id: 'high',
-    label: 'High',
-    severity: 'high',
-    data: MONTHS.map((label, i) => ({ label, value: 2800 - i * 280 })),
-  },
-  {
-    id: 'medium',
-    label: 'Medium',
-    severity: 'medium',
-    data: MONTHS.map((label, i) => ({ label, value: 2000 - i * 200 })),
-  },
-  {
-    id: 'low',
-    label: 'Low',
-    severity: 'low',
-    data: MONTHS.map((label, i) => ({ label, value: 1000 - i * 80 })),
-  },
+};
+
+const TIME_RANGES: SelectButtonOption[] = [
+  { id: '1M', label: '1M' },
+  { id: '3M', label: '3M' },
+  { id: '6M', label: '6M' },
+  { id: '1Y', label: '1Y' },
 ];
 
 const REMEDIATION_KPIS = [
-  {
-    id: 'remediated',
-    value: '98%',
-    label: 'Findings remediated',
-    trend: 'success' as const,
-    trendLabel: 'Good',
-  },
-  {
-    id: 'critical-resolved',
-    value: '86%',
-    label: 'Critical findings resolved',
-    trend: 'info' as const,
-    trendLabel: 'Excellent',
-  },
-  {
-    id: 'expansion',
-    value: '0%',
-    label: 'Expansion in coverage',
-    trend: 'warning' as const,
-    trendLabel: 'Needs attention',
-  },
+  { id: 'remediated',       value: '98%', label: 'Findings remediated',       badge: 'Good',           color: 'medium'   as const },
+  { id: 'critical-resolved',value: '86%', label: 'Critical findings resolved', badge: 'Excellent',     color: 'success'  as const },
+  { id: 'expansion',        value: '0%',  label: 'Expansion in Coverage',      badge: 'Need attention', color: 'critical' as const },
 ];
 
-const TOP_RISKS = [
-  {
-    id: 'r1',
-    type: 'Excessive privileges',
-    category: 'Users',
-    findings: 3241,
-    critical: 512,
-    trendPct: 12,
-    trendDir: 'up' as const,
-    sla: 'Overdue',
-    slaSeverity: 'critical' as const,
-  },
-  {
-    id: 'r2',
-    type: 'Stale access',
-    category: 'Cloud entitlements',
-    findings: 2187,
-    critical: 334,
-    trendPct: 8,
-    trendDir: 'down' as const,
-    sla: 'On track',
-    slaSeverity: 'low' as const,
-  },
-  {
-    id: 'r3',
-    type: 'Unencrypted secrets',
-    category: 'Secrets',
-    findings: 1834,
-    critical: 287,
-    trendPct: 5,
-    trendDir: 'up' as const,
-    sla: 'At risk',
-    slaSeverity: 'high' as const,
-  },
-  {
-    id: 'r4',
-    type: 'Privilege escalation',
-    category: 'Workloads',
-    findings: 1620,
-    critical: 241,
-    trendPct: 22,
-    trendDir: 'up' as const,
-    sla: 'Overdue',
-    slaSeverity: 'critical' as const,
-  },
-  {
-    id: 'r5',
-    type: 'Shadow admin accounts',
-    category: 'Applications',
-    findings: 1574,
-    critical: 198,
-    trendPct: 3,
-    trendDir: 'down' as const,
-    sla: 'On track',
-    slaSeverity: 'low' as const,
-  },
-];
+// ── Category mini-card ────────────────────────────────────────────────────────
 
-type TimeRange = '1W' | '1M' | '3M' | '6M' | '1Y';
-const TIME_RANGES: TimeRange[] = ['1W', '1M', '3M', '6M', '1Y'];
+const CategoryItem: React.FC<{ cat: RiskCategory }> = ({ cat }) => {
+  const critPct = cat.total > 0 ? Math.round((cat.critical / cat.total) * 100) : 0;
+  return (
+    <div className="rmp__cat-item">
+      <span className="rmp__cat-label">{cat.label}</span>
+      <div className="rmp__cat-count-row">
+        <span className="rmp__cat-count">{cat.total.toLocaleString()}</span>
+        <span className="rmp__cat-unit">findings</span>
+      </div>
+      <div className="rmp__cat-bar" role="progressbar" aria-valuenow={critPct} aria-valuemin={0} aria-valuemax={100}>
+        <div className="rmp__cat-bar-fill" style={{ width: `${critPct}%` }} />
+      </div>
+      <span className="rmp__cat-caption">Critical - {critPct}%</span>
+    </div>
+  );
+};
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export const RiskManagementPage: React.FC = () => {
-  const [activeRange, setActiveRange] = useState<TimeRange>('3M');
+  const [activeRange, setActiveRange] = useState<string[]>(['3M']);
+  const chartRef = useRef<Chart>(null);
 
-  const handleShowAll = useCallback(() => {
-    // Navigate to findings list — placeholder
-    window.location.href = '/risk/risk-management/risks';
+  const range = (activeRange[0] ?? '3M') as keyof typeof CHART_DATA;
+  const { labels, values } = CHART_DATA[range];
+
+  const chartData = {
+    labels,
+    datasets: [
+      {
+        label: 'Total findings',
+        data: values,
+        borderColor: '#C45BE7',
+        backgroundColor: (context: { chart: { ctx: CanvasRenderingContext2D; chartArea?: { top: number; bottom: number } } }) => {
+          const { ctx, chartArea } = context.chart;
+          if (!chartArea) return 'rgba(196,91,231,0.18)';
+          const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+          gradient.addColorStop(0.358, 'rgba(196,91,231,0.18)');
+          gradient.addColorStop(1,     'rgba(57,56,56,0)');
+          return gradient;
+        },
+        fill: true,
+        tension: 0.4,
+        pointRadius: 0,
+        pointHoverRadius: 4,
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: { duration: 300 },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1D2D49',
+        borderColor: '#283F67',
+        borderWidth: 1,
+        titleColor: '#d6e3fb',
+        bodyColor: '#ffffff',
+        padding: 10,
+      },
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(40,63,103,0.5)', drawBorder: false },
+        ticks: { color: '#BBC2D0', font: { size: 11 } },
+        border: { display: false },
+      },
+      y: {
+        min: 0,
+        max: 200000,
+        ticks: {
+          color: '#BBC2D0',
+          font: { size: 11 },
+          stepSize: 50000,
+          callback: (v: number) => `${v / 1000}K`,
+        },
+        grid: { color: 'rgba(40,63,103,0.5)', drawBorder: false },
+        border: { display: false },
+      },
+    },
+  };
+
+  // destroy chart on unmount to avoid canvas reuse error
+  useEffect(() => {
+    return () => { chartRef.current?.getChart()?.destroy(); };
   }, []);
 
   return (
     <div className="rmp">
 
-      {/* ── Page header ──────────────────────────────────────────────── */}
-      <div className="rmp__header">
-        <div className="rmp__title-row">
-          <h1 className="rmp__title">Risk Management</h1>
-          <div className="rmp__header-kpis">
-            <span className="rmp__total-label">{KPI_SUMMARY.total.toLocaleString()} total findings</span>
-            <SeverityBadge severity="critical" variant="stroke" />
-            <span className="rmp__kpi-val rmp__kpi-val--critical">{KPI_SUMMARY.critical.toLocaleString()}</span>
-            <SeverityBadge severity="high" variant="stroke" />
-            <span className="rmp__kpi-val rmp__kpi-val--high">{KPI_SUMMARY.high.toLocaleString()}</span>
-            <SeverityBadge severity="medium" variant="stroke" />
-            <span className="rmp__kpi-val rmp__kpi-val--medium">{KPI_SUMMARY.medium.toLocaleString()}</span>
-          </div>
-        </div>
-      </div>
+      {/* ── Main card: full-width single container ────────────────────────── */}
+      <Card size="auto" className="rmp__main-card">
 
-      {/* ── Risk categories ──────────────────────────────────────────── */}
-      <section className="rmp__section" aria-label="Risk breakdown by category">
-        <h2 className="rmp__section-title">Risk breakdown by category</h2>
-        <div className="rmp__categories-grid">
-          {RISK_CATEGORIES.map(cat => {
-            const total = cat.segments.reduce((s, seg) => s + seg.count, 0);
-            return (
-              <Card key={cat.id} size="auto" background="gradient-dark-to-light" className="rmp__category-card">
-                <RiskMiniBar
-                  label={cat.label}
-                  segments={cat.segments}
-                  totalLabel={`${total.toLocaleString()} findings`}
-                />
-              </Card>
-            );
-          })}
-        </div>
-      </section>
+        {/* 3-column body ───────────────────────────────────────────────────── */}
+        <div className="rmp__body">
 
-      {/* ── Progress + Remediation KPIs ──────────────────────────────── */}
-      <div className="rmp__progress-row">
+          {/* ── Left: category grid ───────────────────────────────────────── */}
+          <div className="rmp__categories-panel">
 
-        {/* Progress chart */}
-        <Card size="auto" className="rmp__progress-card">
-          <div className="rmp__progress-header">
-            <h2 className="rmp__section-title">Progress over time</h2>
-            <div className="rmp__time-filters" role="group" aria-label="Time range filter">
-              {TIME_RANGES.map(range => (
-                <button
-                  key={range}
-                  type="button"
-                  className={`rmp__time-btn${activeRange === range ? ' rmp__time-btn--active' : ''}`}
-                  onClick={() => setActiveRange(range)}
-                  aria-pressed={activeRange === range}
-                >
-                  {range}
-                </button>
-              ))}
+            {/* Category header ────────────────────────────────────────────── */}
+            <div className="rmp__cat-header">
+              <span className="rmp__total-title">Total findings {KPI_SUMMARY.total.toLocaleString()}</span>
+              <div className="rmp__cat-kpis">
+                <div className="rmp__kpi-pill">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" stroke="#F54E85" strokeWidth="1.5"/>
+                    <path d="M11.992 16H12.001" stroke="#F54E85" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12 13.125L12 8.9375" stroke="#F54E85" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span className="rmp__kpi-pill-text">{KPI_SUMMARY.critical} Critical</span>
+                </div>
+                <div className="rmp__kpi-pill">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5.32171 9.68293C7.73539 5.41199 8.94222 3.27651 10.5983 2.72681C11.5093 2.4244 12.4907 2.4244 13.4017 2.72681C15.0578 3.27651 16.2646 5.41199 18.6783 9.68293C21.092 13.9539 22.2988 16.0893 21.9368 17.8293C21.7376 18.7866 21.2469 19.6549 20.535 20.3097C19.241 21.5 16.8274 21.5 12 21.5C7.17265 21.5 4.75897 21.5 3.46496 20.3097C2.75308 19.6549 2.26239 18.7866 2.06322 17.8293C1.70119 16.0893 2.90803 13.9539 5.32171 9.68293Z" stroke="#FFA033" strokeWidth="1.5"/>
+                    <path d="M11.992 16H12.001" stroke="#FFA033" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12 13L12 9" stroke="#FFA033" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span className="rmp__kpi-pill-text">{KPI_SUMMARY.high} High</span>
+                </div>
+                <div className="rmp__kpi-pill">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z" stroke="#888DFF" strokeWidth="1.5"/>
+                    <path d="M11.9998 16H12.0088" stroke="#888DFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12 13L12 8.875" stroke="#888DFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span className="rmp__kpi-pill-text">{KPI_SUMMARY.medium} Medium</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="rmp__cat-grid rmp__cat-grid--top">
+              {RISK_CATEGORIES.slice(0, 3).map(cat => <CategoryItem key={cat.id} cat={cat} />)}
+            </div>
+            <div className="rmp__cat-divider" role="separator" />
+            <div className="rmp__cat-grid rmp__cat-grid--bottom">
+              {RISK_CATEGORIES.slice(3).map(cat => <CategoryItem key={cat.id} cat={cat} />)}
             </div>
           </div>
-          <LineChart
-            series={PROGRESS_SERIES}
-            height={240}
-            showLegend
-            showGrid
-            showDots
-            aria-label="Findings progress over time"
-            className="rmp__chart"
-          />
-        </Card>
 
-        {/* Remediation KPI tile */}
-        <Card size="auto" className="rmp__remediation-card">
-          <h2 className="rmp__section-title">Remediation</h2>
-          <div className="rmp__kpi-list">
+          {/* ── Center: chart ─────────────────────────────────────────────── */}
+          <div className="rmp__chart-panel">
+            <div className="rmp__chart-header">
+              <span className="rmp__chart-title">Progress over time</span>
+              <SelectButton
+                options={TIME_RANGES}
+                value={activeRange}
+                onChange={setActiveRange}
+                size="small"
+              />
+            </div>
+            <div className="rmp__chart-wrap">
+              <Chart
+                ref={chartRef}
+                type="line"
+                data={chartData}
+                options={chartOptions}
+                style={{ width: '100%', height: '100%' }}
+              />
+            </div>
+            <div className="rmp__chart-legend">
+              <span className="rmp__chart-legend-dot" aria-hidden="true" />
+              <span className="rmp__chart-legend-label">Total findings</span>
+            </div>
+          </div>
+
+          {/* ── Right: remediation KPIs ───────────────────────────────────── */}
+          <div className="rmp__kpi-panel">
             {REMEDIATION_KPIS.map((kpi, i) => (
               <React.Fragment key={kpi.id}>
                 <div className="rmp__kpi-item">
-                  <span className={`rmp__kpi-big rmp__kpi-big--${kpi.trend}`}>{kpi.value}</span>
+                  <span className="rmp__kpi-value">{kpi.value}</span>
                   <span className="rmp__kpi-label">{kpi.label}</span>
-                  <Badge label={kpi.trendLabel} color={kpi.trend === 'warning' ? 'high' : kpi.trend === 'info' ? 'low' : 'success'} variant="stroke" />
+                  <Badge label={kpi.badge} color={kpi.color} variant="stroke" />
                 </div>
                 {i < REMEDIATION_KPIS.length - 1 && <div className="rmp__kpi-divider" role="separator" />}
               </React.Fragment>
             ))}
           </div>
-        </Card>
 
-      </div>
-
-      {/* ── Top 5 risk types table ───────────────────────────────────── */}
-      <section className="rmp__section" aria-label="Top 5 risk types">
-        <Card size="auto" className="rmp__table-card">
-          <div className="rmp__table-header">
-            <h2 className="rmp__section-title">Top 5 risk types</h2>
-            <Button variant="secondary" size="sm" onClick={handleShowAll}>
-              Show all
-            </Button>
-          </div>
-
-          <div className="rmp__table-wrap">
-            <table className="rmp__table" aria-label="Top 5 risk types">
-              <thead>
-                <tr className="rmp__table-head-row">
-                  <th className="rmp__th">Risk Type</th>
-                  <th className="rmp__th">Category</th>
-                  <th className="rmp__th rmp__th--num">Findings</th>
-                  <th className="rmp__th rmp__th--num">Critical</th>
-                  <th className="rmp__th">Trend</th>
-                  <th className="rmp__th">SLA Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {TOP_RISKS.map(row => (
-                  <tr key={row.id} className="rmp__table-row">
-                    <td className="rmp__td rmp__td--type">{row.type}</td>
-                    <td className="rmp__td">{row.category}</td>
-                    <td className="rmp__td rmp__td--num">{row.findings.toLocaleString()}</td>
-                    <td className="rmp__td rmp__td--num rmp__td--critical">{row.critical.toLocaleString()}</td>
-                    <td className="rmp__td">
-                      <span className={`rmp__trend rmp__trend--${row.trendDir}`}>
-                        <span className="rmp__trend-arrow" aria-hidden="true">
-                          {row.trendDir === 'up' ? '↑' : '↓'}
-                        </span>
-                        {row.trendPct}%
-                      </span>
-                    </td>
-                    <td className="rmp__td">
-                      <Badge
-                        label={row.sla}
-                        color={row.slaSeverity === 'critical' ? 'critical' : row.slaSeverity === 'high' ? 'high' : 'success'}
-                        variant="stroke"
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Card>
-      </section>
+        </div>
+      </Card>
 
     </div>
   );

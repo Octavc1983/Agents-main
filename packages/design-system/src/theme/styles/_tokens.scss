@@ -48,11 +48,14 @@ $color-copy-badge-bg:     #E3FBE4;
 $color-copy-badge-border: #3E8C7B;
 $color-copy-badge-text:   #3E8C7B;
 
-$color-card-stroke:           #E3EBFF;
+$color-card-stroke:             #36395E;
 $color-card-stroke-hover-light: #AEC7F6;
 $color-card-stroke-hover-dark:  rgba(209, 219, 255, 0.50);
-$color-card-glow-light:       #D6E3FB;
-$color-card-glow-dark:        rgba(124, 215, 255, 0.50);
+$color-card-glow-light:         #D6E3FB;
+$color-card-glow-dark:          rgba(124, 215, 255, 0.50);
+$color-card-gradient-stop-1:    #1D3068;
+$color-card-gradient-stop-2:    rgba(30, 41, 56, 0.60);
+$shadow-card:                   0 0 16px 0 rgba(18, 5, 43, 0.25);
 
 $color-status-success: #00C898;
 $color-status-warning: #FFB45D;
@@ -237,6 +240,7 @@ $border-radius-sm:   0.25rem;
 $border-radius-base: 0.5rem;
 $border-radius-md:   0.75rem;
 $border-radius-lg:   1rem;
+$border-radius-xl:   1.5rem;
 $border-radius-pill: 100px;
 $border-radius-full: 9999px;
 
