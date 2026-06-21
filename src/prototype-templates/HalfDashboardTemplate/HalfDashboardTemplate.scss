@@ -1,0 +1,303 @@
+@use 'tokens' as *;
+
+.hdt {
+  padding: $spacing-5 !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+
+  // ── 3-column body ───────────────────────────────────────────────────────────
+
+  &__body {
+    display: grid;
+    grid-template-columns: 1fr minmax(300px, 600px) 188px;
+    column-gap: 24px;
+    align-items: stretch;
+    min-height: 300px;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: 1fr minmax(300px, 600px) 188px;
+    }
+  }
+
+  // ── Left panel ──────────────────────────────────────────────────────────────
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-right: 40px;
+    align-self: start;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: $color-border-dark;
+    }
+  }
+
+  &__left-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: $spacing-4;
+  }
+
+  &__title {
+    font-family: $font-family-heading;
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-light;
+    white-space: nowrap;
+  }
+
+  &__header-kpis {
+    display: flex;
+    align-items: center;
+    height: 39px;
+    gap: 30px;
+  }
+
+  &__header-kpi-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    svg { flex-shrink: 0; width: 24px; height: 24px; }
+  }
+
+  &__header-kpi-text {
+    font-family: $font-family-heading;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    color: $color-text-light;
+    white-space: nowrap;
+  }
+
+  // ── Category tile grid ──────────────────────────────────────────────────────
+
+  &__tile-grid {
+    display: grid;
+    gap: 0;
+    margin-left: 1px;
+    margin-top: 1px;
+
+    &--top    { grid-template-columns: repeat(3, 1fr); }
+    &--bottom { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  &__tile {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    height: 147px;
+    box-sizing: border-box;
+    border: 1px solid $color-border-dark;
+    background: $color-background-dark;
+    margin-top: -1px;
+    margin-left: -1px;
+    border-radius: 0;
+    transition: border-color $transition-fast, background $transition-fast, box-shadow $transition-fast;
+    cursor: default;
+
+    .hdt__tile-grid--top &:first-child    { border-radius: 14px 0 0 0; }
+    .hdt__tile-grid--top &:last-child     { border-radius: 0 14px 0 0; }
+    .hdt__tile-grid--bottom &:first-child { border-radius: 0 0 0 14px; }
+    .hdt__tile-grid--bottom &:last-child  { border-radius: 0 0 14px 0; }
+
+    &--hover {
+      border-color: rgba(237, 242, 255, 0.66);
+      background: #122052;
+      box-shadow: 0 0 29.7px 0 rgba(93, 147, 217, 0.60);
+      z-index: 1;
+      position: relative;
+    }
+  }
+
+  &__tile-label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: $color-text-muted;
+    white-space: nowrap;
+  }
+
+  &__tile-count-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  &__tile-count {
+    font-family: $font-family-heading;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-light;
+    line-height: $line-height-tight;
+  }
+
+  &__tile-unit {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+  }
+
+  &__tile-bar {
+    height: 5px;
+    border-radius: $border-radius-full;
+    background: $color-background-darker;
+    overflow: hidden;
+
+    &--segmented {
+      display: flex;
+      background: $color-background-darker;
+    }
+  }
+
+  &__tile-bar-fill {
+    height: 100%;
+    border-radius: $border-radius-full;
+    background: $color-severity-critical;
+    min-width: 2px;
+  }
+
+  &__tile-bar-seg {
+    height: 100%;
+    min-width: 2px;
+    transition: width $transition-fast;
+
+    &--critical { background: $color-severity-critical; }
+    &--high     { background: $color-severity-high; }
+    &--medium   { background: $color-severity-medium; }
+    &--low      { background: $color-severity-low; }
+
+    &:first-child { border-radius: $border-radius-full 0 0 $border-radius-full; }
+    &:last-child  { border-radius: 0 $border-radius-full $border-radius-full 0; }
+  }
+
+  &__tile-caption {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+  }
+
+  // ── Center panel: chart ─────────────────────────────────────────────────────
+
+  &__center {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-3;
+    padding: 0 0 0 40px;
+    align-self: stretch;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: $color-border-dark;
+    }
+  }
+
+  &__chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-4;
+    flex-wrap: wrap;
+  }
+
+  &__chart-title {
+    font-family: $font-family-heading;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $color-text-light;
+  }
+
+  &__chart-wrap {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    width: 100%;
+  }
+
+  &__chart-canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  &__chart-legend {
+    display: flex;
+    align-items: center;
+    gap: $spacing-4;
+    justify-content: center;
+  }
+
+  &__legend-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+  }
+
+  &__legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: $border-radius-full;
+    background: var(--dot-color, #{$color-primary});
+    flex-shrink: 0;
+  }
+
+  &__legend-label {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+  }
+
+  // ── Right panel: KPIs ───────────────────────────────────────────────────────
+
+  &__kpi-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    width: 188px;
+    min-height: 362px;
+    padding: 24px 20px;
+    border-radius: 12px;
+    background: $color-page-background;
+    flex-shrink: 0;
+    align-self: start;
+    box-sizing: border-box;
+  }
+
+  &__kpi-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-2;
+  }
+
+  &__kpi-value {
+    font-family: $font-family-heading;
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-light;
+    line-height: $line-height-tight;
+  }
+
+  &__kpi-label {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    line-height: $line-height-normal;
+  }
+
+  &__kpi-divider { display: none; }
+}

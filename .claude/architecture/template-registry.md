@@ -36,6 +36,7 @@ Templates assemble existing AppShell, Infra, DS components, tokens, shared featu
 | Table plus row click opening details | TableMasterDetailsTemplate | Full table default, item selection, details content | Persistent toolbar, table mode, details mode, context preservation, details states |
 | Cards/list left, details right, 30/70 split | CardListMasterDetailsTemplate | Vertical cards, selected item, details panel | Card list, selected state, details states, item switching |
 | KPI tiles, widgets, charts, summary metrics | TilesDashboardTemplate | KPI cards, widgets, metric groups | Widget layout, dashboard filters, freshness state, drill-down actions, widget states |
+| Single card, category tile grid + line chart + KPI sidebar, horizontal 3-column | HalfDashboardTemplate | Category breakdown tiles, time range selector, dark KPI panel | Tile grid with collapsed borders, gradient chart, KPI metric sidebar |
 | Canvas, nodes, connections, pan, zoom, minimap | CanvasTemplate | Infinite canvas, nodes, connections, toolbar | Canvas state, zoom/pan, selection, node actions, keyboard shortcuts |
 | Zero-state config with vertical tabs, setup CTA | ZeroStateConfigurationTemplate | Side vertical tabs, no configured data, setup CTA | Vertical tabs, zero state, setup guidance, config sections, save/cancel, permission states |
 | Form fields, save, validation | FormPageTemplate | Form groups, inputs, validation, actions | Validation, save states, backend errors, unsaved changes, cancel behavior |
@@ -128,6 +129,18 @@ Templates assemble existing AppShell, Infra, DS components, tokens, shared featu
 **Specification:** .claude/architecture/templates/WizardTemplate.md
 **Primary User Goal:** Guide users through a sequential multi-step creation or configuration flow with persistent step context
 **Best Use Cases:** Create account wizard, onboarding flows, multi-step setup, guided configuration
+**Last Reviewed:** 2026-06-21
+
+---
+
+## HalfDashboardTemplate
+
+**Category:** Half Dashboard / Category Breakdown + Chart + KPI Metrics
+**Status:** Implemented
+**Path:** src/prototype-templates/HalfDashboardTemplate/
+**Specification:** .claude/architecture/templates/HalfDashboardTemplate.md
+**Primary User Goal:** Present a compact, data-dense domain summary combining categorical tile grid, time-series chart, and KPI sidebar — all above the fold in a single card
+**Best Use Cases:** Risk Management, Compliance Overview, Identity Risk Summary, Scan Health, Coverage Overview
 **Last Reviewed:** 2026-06-21
 
 ---

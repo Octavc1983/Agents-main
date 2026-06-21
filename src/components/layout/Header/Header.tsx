@@ -162,7 +162,7 @@ const HelpMenu: FC = () => {
 const ChevronIcon: FC<{ open: boolean }> = ({ open }) => (
   <svg
     width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"
-    style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }}
+    className={open ? 'header-chevron header-chevron--open' : 'header-chevron'}
   >
     <path d="M3 9L7 5L11 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
