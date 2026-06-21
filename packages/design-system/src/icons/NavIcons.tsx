@@ -175,6 +175,28 @@ export const StatusStoppedIcon: React.FC<IconProps> = ({ size = 14, className })
   </svg>
 );
 
+export const StatusActiveIcon: React.FC<IconProps> = ({ size = 14, className }) => (
+  <svg width={size} height={size} viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <circle cx="7" cy="7" r="6" fill="#00C898" />
+    <circle cx="7" cy="7" r="2.5" fill="white" />
+  </svg>
+);
+
+export const StatusInactiveIcon: React.FC<IconProps> = ({ size = 14, className }) => (
+  <svg width={size} height={size} viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <circle cx="7" cy="7" r="6" fill="#6C6E83" />
+    <path d="M4.5 7H9.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+
+export const StatusLockedIcon: React.FC<IconProps> = ({ size = 14, className }) => (
+  <svg width={size} height={size} viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+    <circle cx="7" cy="7" r="6" fill="#F22267" />
+    <rect x="4.5" y="6.5" width="5" height="4" rx="0.75" fill="white" />
+    <path d="M5.5 6.5V5.25C5.5 4.284 6.172 3.5 7 3.5C7.828 3.5 8.5 4.284 8.5 5.25V6.5" stroke="white" strokeWidth="1.25" strokeLinecap="round" />
+  </svg>
+);
+
 // ── Page Nav Icons (20px) ─────────────────────────────────────────────────────
 
 export const HomeIcon: React.FC<IconProps> = ({ size = 20, className }) => (

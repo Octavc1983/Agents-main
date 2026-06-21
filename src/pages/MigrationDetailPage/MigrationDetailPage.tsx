@@ -1,24 +1,12 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from '@idira/design-system';
-import {
-  StatusPendingIcon,
-  StatusRunningIcon,
-  StatusCompletedIcon,
-  StatusFailedIcon,
-} from '@idira/design-system/icons';
+import { StatusIcon } from '../../components/shared/StatusIcon';
 import { mockMigrationDetails } from '../../mock/migrationDetailMockData';
 import { useSetPageTitle } from '../../hooks/useSetPageTitle';
 import './MigrationDetailPage.scss';
 
 type StepStatus = 'not_performed' | 'in_progress' | 'done' | 'failed';
-
-const STATUS_ICON: Record<StepStatus, React.ReactElement> = {
-  not_performed: <StatusPendingIcon size={14} />,
-  in_progress:   <StatusRunningIcon size={14} />,
-  done:          <StatusCompletedIcon size={14} />,
-  failed:        <StatusFailedIcon size={14} />,
-};
 
 const STATUS_LABEL: Record<StepStatus, string> = {
   not_performed: 'Not performed',
@@ -29,7 +17,7 @@ const STATUS_LABEL: Record<StepStatus, string> = {
 
 const StatusBadge: React.FC<{ status: StepStatus }> = ({ status }) => (
   <span className={`migration-step-status migration-step-status--${status}`}>
-    {STATUS_ICON[status]}
+    <StatusIcon status={status} size={24} />
     {STATUS_LABEL[status]}
   </span>
 );

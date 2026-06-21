@@ -1,24 +1,5 @@
 @use 'tokens' as *;
 
-// ── Status badge ──────────────────────────────────────────────────────────────
-
-.ma-status-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0 $spacing-3;
-  height: 22px;
-  border-radius: $border-radius-full;
-  font-size: $font-size-sm;
-  font-weight: 500;
-  white-space: nowrap;
-  border: 1px solid transparent;
-
-  &--active   { border-color: $color-status-success; color: $color-status-success; }
-  &--inactive { border-color: $color-nav-text-idle;  color: $color-nav-text-idle; }
-  &--pending  { border-color: $color-status-warning; color: $color-status-warning; }
-  &--locked   { border-color: $color-status-error;   color: $color-status-error; }
-}
-
 // ── Platform icon ─────────────────────────────────────────────────────────────
 
 .ma-platform-icon {

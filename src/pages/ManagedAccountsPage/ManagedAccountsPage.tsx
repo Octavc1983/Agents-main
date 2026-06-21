@@ -4,6 +4,7 @@ import { Button } from '@idira/design-system';
 import { ManageTagsDialog } from '../../features/tags/ManageTagsDialog/ManageTagsDialog';
 import { MOCK_TAG_SUGGESTIONS } from '../../mock/tagsMockData';
 import type { Tag } from '../../features/tags/tag.types';
+import { StatusIcon } from '../../components/shared/StatusIcon';
 import {
   WindowsPlatformIcon, LinuxPlatformIcon, AWSPlatformIcon, AzurePlatformIcon,
   GCPPlatformIcon, OraclePlatformIcon, SAPPlatformIcon, UbuntuPlatformIcon,
@@ -20,21 +21,6 @@ import type { ManagedAccount, ManagedAccountStatus, ManagedAccountPlatform } fro
 import { managedAccountsMock } from '../../mock/managedAccountsMockData';
 import { CreateManagedAccountWizard } from './CreateManagedAccountWizard';
 import './ManagedAccountsPage.scss';
-
-// ── Status badge ──────────────────────────────────────────────────────────────
-
-const STATUS_LABELS: Record<ManagedAccountStatus, string> = {
-  active: 'Active',
-  inactive: 'Inactive',
-  pending: 'Pending',
-  locked: 'Locked',
-};
-
-const StatusBadge: React.FC<{ status: ManagedAccountStatus }> = ({ status }) => (
-  <span className={`ma-status-badge ma-status-badge--${status}`}>
-    {STATUS_LABELS[status]}
-  </span>
-);
 
 // ── Platform icon ─────────────────────────────────────────────────────────────
 
@@ -410,7 +396,7 @@ export const ManagedAccountsPage: React.FC = () => {
     {
       id: 'status',
       label: 'Status',                          // was "Risk" (#3)
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row) => <StatusIcon status={row.status} size={24} showLabel />,
       hideWhenNarrow: true,
     },
     {
