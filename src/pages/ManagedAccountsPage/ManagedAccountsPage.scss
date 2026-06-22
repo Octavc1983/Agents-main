@@ -169,6 +169,7 @@
   padding: $spacing-3 $spacing-4;
   max-height: 240px;
   overflow-y: auto;
+  @include ds-scrollbar;
 }
 
 // ── Account details panel ─────────────────────────────────────────────────────
@@ -255,6 +256,7 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-5;
+  @include ds-scrollbar;
 }
 
 .ma-details-panel__grid {

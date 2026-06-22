@@ -7,6 +7,8 @@ import type {
   HalfDashboardChartSeries,
   HalfDashboardHeaderKpi,
 } from '../../prototype-templates/HalfDashboardTemplate';
+import { SeverityBadge } from '@idira/design-system';
+import './RiskManagementPage.scss';
 
 // ── Mock data ─────────────────────────────────────────────────────────────────
 
@@ -91,6 +93,76 @@ const KPI_ITEMS: HalfDashboardKpiItem[] = [
   { id: 'expansion',         value: '0%',  label: 'Expansion in Coverage',      badge: 'Need attention', badgeColor: 'critical' },
 ];
 
+// ── Top 5 risk types table ────────────────────────────────────────────────────
+
+type RiskTypeSeverity = 'critical' | 'high' | 'medium' | 'low';
+
+interface RiskTypeRow {
+  id: string;
+  riskType: string;
+  severity: RiskTypeSeverity;
+  entityType: string;
+  findings: number;
+  lastUpdated: string;
+}
+
+const TOP_RISK_TYPES: RiskTypeRow[] = [
+  { id: 'rt-001', riskType: 'Users with standing admin access to production', severity: 'critical', entityType: 'Federated Principal Users', findings: 25, lastUpdated: 'Sep 09, 2024  09:56 AM' },
+  { id: 'rt-002', riskType: 'Orphan user with privileged access',              severity: 'critical', entityType: 'Users',                    findings: 39, lastUpdated: 'Sep 09, 2024  09:56 AM' },
+  { id: 'rt-003', riskType: 'Apps with weak, shared credentials',              severity: 'high',     entityType: 'Applications',             findings: 107, lastUpdated: 'Sep 09, 2024  09:56 AM' },
+  { id: 'rt-004', riskType: 'Groups with standing sensitive access',           severity: 'high',     entityType: 'Federated Principal Groups', findings: 55, lastUpdated: 'Sep 09, 2024  09:56 AM' },
+  { id: 'rt-005', riskType: 'Dormant users',                                   severity: 'high',     entityType: 'Users',                    findings: 25, lastUpdated: 'Sep 09, 2024  09:56 AM' },
+];
+
+const RiskTypesTable: React.FC = () => (
+  <div className="rmp-risk-table">
+    <div className="rmp-risk-table__header">
+      <span className="rmp-risk-table__title">Top 5 risk types</span>
+      <button type="button" className="rmp-risk-table__show-all">Show all &rsaquo;</button>
+    </div>
+    <div className="rmp-risk-table__scroll">
+    <table className="rmp-risk-table__el" aria-label="Top 5 risk types">
+      <thead>
+        <tr>
+          <th className="rmp-risk-table__th rmp-risk-table__th--risk-type">RISK TYPE</th>
+          <th className="rmp-risk-table__th rmp-risk-table__th--severity">
+            SEVERITY
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" className="rmp-risk-table__sort-icon">
+              <path d="M6 8.5L3.5 5.5h5L6 8.5Z" fill="currentColor" />
+              <path d="M6 3.5l2.5 3h-5L6 3.5Z" fill="currentColor" opacity="0.35" />
+            </svg>
+          </th>
+          <th className="rmp-risk-table__th rmp-risk-table__th--entity-type">ENTITY TYPE</th>
+          <th className="rmp-risk-table__th rmp-risk-table__th--findings">FINDINGS</th>
+          <th className="rmp-risk-table__th rmp-risk-table__th--last-updated">LAST UPDATED</th>
+        </tr>
+      </thead>
+      <tbody>
+        {TOP_RISK_TYPES.map(row => (
+          <tr key={row.id} className="rmp-risk-table__row">
+            <td className="rmp-risk-table__td rmp-risk-table__td--risk-type">
+              <span className="rmp-risk-table__cell-text" title={row.riskType}>{row.riskType}</span>
+            </td>
+            <td className="rmp-risk-table__td rmp-risk-table__td--badge">
+              <SeverityBadge severity={row.severity} variant="fill" />
+            </td>
+            <td className="rmp-risk-table__td rmp-risk-table__td--entity-type">
+              <span className="rmp-risk-table__cell-text" title={row.entityType}>{row.entityType}</span>
+            </td>
+            <td className="rmp-risk-table__td rmp-risk-table__td--findings">
+              {row.findings}
+            </td>
+            <td className="rmp-risk-table__td rmp-risk-table__td--last-updated">
+              <span className="rmp-risk-table__cell-text" title={row.lastUpdated}>{row.lastUpdated}</span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    </div>
+  </div>
+);
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export const RiskManagementPage: React.FC = () => (
@@ -107,5 +179,6 @@ export const RiskManagementPage: React.FC = () => (
       defaultTimeRange="1Y"
       kpiItems={KPI_ITEMS}
     />
+    <RiskTypesTable />
   </div>
 );

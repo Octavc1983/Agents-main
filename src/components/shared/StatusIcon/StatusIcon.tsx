@@ -15,7 +15,8 @@ import './StatusIcon.scss';
 
 export type AccountStatusValue = 'active' | 'inactive' | 'pending' | 'locked' | 'marked_for_deletion' | 'deleted';
 export type StepStatusValue = 'not_performed' | 'in_progress' | 'done' | 'failed';
-export type StatusValue = AccountStatusValue | StepStatusValue;
+export type SecretStatusValue = 'onboarded' | 'not_rotated' | 'idle' | 'expired' | 'disabled';
+export type StatusValue = AccountStatusValue | StepStatusValue | SecretStatusValue;
 
 const ACCOUNT_STATUS_MAP: Record<AccountStatusValue, React.FC<{ size?: number }>> = {
   active:               StatusActiveIcon,
@@ -31,6 +32,14 @@ const STEP_STATUS_MAP: Record<StepStatusValue, React.FC<{ size?: number }>> = {
   in_progress:   StatusRunningIcon,
   done:          StatusCompletedIcon,
   failed:        StatusFailedIcon,
+};
+
+const SECRET_STATUS_MAP: Record<SecretStatusValue, React.FC<{ size?: number }>> = {
+  onboarded:   StatusActiveIcon,
+  not_rotated: StatusStoppedIcon,
+  idle:        StatusInactiveIcon,
+  expired:     StatusDeletedIcon,
+  disabled:    StatusLockedIcon,
 };
 
 const ACCOUNT_STATUS_LABELS: Record<AccountStatusValue, string> = {
@@ -49,8 +58,23 @@ const STEP_STATUS_LABELS: Record<StepStatusValue, string> = {
   failed:        'Failed',
 };
 
+const SECRET_STATUS_LABELS: Record<SecretStatusValue, string> = {
+  onboarded:   'Onboarded',
+  not_rotated: 'Not rotated',
+  idle:        'Idle',
+  expired:     'Expired',
+  disabled:    'Disabled',
+};
+
+const SECRET_STATUS_SET = new Set<string>(['onboarded', 'not_rotated', 'idle', 'expired', 'disabled']);
+const STEP_STATUS_SET = new Set<string>(['not_performed', 'in_progress', 'done', 'failed']);
+
+function isSecretStatus(v: StatusValue): v is SecretStatusValue {
+  return SECRET_STATUS_SET.has(v);
+}
+
 function isStepStatus(v: StatusValue): v is StepStatusValue {
-  return v === 'not_performed' || v === 'in_progress' || v === 'done' || v === 'failed';
+  return STEP_STATUS_SET.has(v);
 }
 
 interface StatusIconProps {
@@ -64,7 +88,10 @@ export const StatusIcon: React.FC<StatusIconProps> = ({ status, size = 24, showL
   let Icon: React.FC<{ size?: number }>;
   let label: string;
 
-  if (isStepStatus(status)) {
+  if (isSecretStatus(status)) {
+    Icon = SECRET_STATUS_MAP[status];
+    label = SECRET_STATUS_LABELS[status];
+  } else if (isStepStatus(status)) {
     Icon = STEP_STATUS_MAP[status];
     label = STEP_STATUS_LABELS[status];
   } else {

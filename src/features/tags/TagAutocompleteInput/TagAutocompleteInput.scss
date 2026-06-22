@@ -1,4 +1,5 @@
 @use 'tokens' as *;
+@use '../../../styles/mixins' as *;
 
 .tagInput {
   display: flex;
@@ -72,6 +73,7 @@
   max-height: 260px;
   overflow-y: auto;
   box-shadow: $shadow-md;
+  @include ds-scrollbar;
 }
 
 .tagInput__option {

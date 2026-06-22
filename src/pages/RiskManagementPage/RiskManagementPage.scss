@@ -1,6 +1,121 @@
 @use 'tokens' as *;
+@use '../../styles/mixins' as *;
 
 .rmp {
-  padding: $spacing-6 $spacing-8;
   min-height: 100%;
+}
+
+// ── Top 5 risk types table ────────────────────────────────────────────────────
+
+.rmp-risk-table {
+  margin-top: $spacing-6;
+}
+
+.rmp-risk-table__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-3;
+}
+
+.rmp-risk-table__title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+}
+
+.rmp-risk-table__show-all {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-primary;
+  cursor: pointer;
+  transition: opacity $transition-fast;
+
+  &:hover { opacity: 0.75; }
+}
+
+.rmp-risk-table__scroll {
+  overflow-y: auto;
+  max-height: 320px;
+  @include ds-scrollbar;
+}
+
+.rmp-risk-table__el {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $font-size-sm;
+}
+
+.rmp-risk-table__th {
+  height: 40px;
+  padding: 0 $spacing-3;
+  text-align: left;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-nav-text-idle;
+  border-bottom: 1px solid $color-table-line-idle;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: $color-page-background;
+
+  &--risk-type   { width: 45%; }
+  &--severity    { width: 130px; }
+  &--entity-type { width: 20%; }
+  &--findings    { width: 90px; }
+  &--last-updated { width: 180px; }
+}
+
+.rmp-risk-table__sort-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: $spacing-1;
+  color: $color-nav-text-idle;
+}
+
+.rmp-risk-table__row {
+  height: 50px;
+  border-bottom: 1px solid $color-table-line-idle;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: $color-table-bg-hover;
+    cursor: pointer;
+  }
+}
+
+.rmp-risk-table__td {
+  padding: 0 $spacing-3;
+  color: $color-text-light;
+  vertical-align: middle;
+  max-width: 0;
+  overflow: hidden;
+
+  &--badge,
+  &--findings {
+    max-width: none;
+    overflow: visible;
+    white-space: nowrap;
+  }
+
+  &--findings {
+    color: $color-nav-text-idle;
+    font-size: $font-size-sm;
+  }
+}
+
+.rmp-risk-table__cell-text {
+  @include table-cell-truncate;
+  color: $color-nav-text-idle;
+  font-size: $font-size-sm;
+
+  .rmp-risk-table__td--risk-type & {
+    color: $color-text-light;
+  }
 }

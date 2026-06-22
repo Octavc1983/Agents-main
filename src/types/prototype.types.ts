@@ -271,3 +271,33 @@ export interface ManagedAccountsStats {
   pending: number;
   locked: number;
 }
+
+// --- Secrets types ------------------------------------------------------------
+
+export type SecretStatus = 'onboarded' | 'not_rotated' | 'idle' | 'expired' | 'disabled';
+export type SecretRiskLevel = 'critical' | 'high' | 'medium' | 'low';
+export type SecretProvider = 'AWS' | 'Azure' | 'GCP' | 'HashiCorp' | 'CyberArk';
+export type SecretStore = 'AWS Secrets Manager' | 'Azure Key Vault' | 'GCP Secret Manager' | 'HashiCorp Vault' | 'CyberArk Vault';
+
+export interface Secret {
+  id: string;
+  name: string;
+  platform: SecretProvider;
+  secretStore: SecretStore;
+  syncedByIdira: boolean;
+  riskLevel: SecretRiskLevel;
+  status: SecretStatus;
+  createdAt: string;
+  lastChanged: string;
+  expiration: string | null;
+  daysToExpiration: number | null;
+  tags: string[];
+  description?: string;
+}
+
+export interface SecretsStats {
+  total: number;
+  byProvider: Array<{ provider: SecretProvider; count: number }>;
+  byStatus: Record<SecretStatus, number>;
+  byRisk: { critical: number; high: number; medium: number; low: number };
+}

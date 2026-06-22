@@ -7,6 +7,7 @@ import { MigrationsPage } from '../pages/MigrationsPage/MigrationsPage';
 import { MigrationDetailPage } from '../pages/MigrationDetailPage/MigrationDetailPage';
 import { ManagedAccountsPage } from '../pages/ManagedAccountsPage/ManagedAccountsPage';
 import { RiskManagementPage } from '../pages/RiskManagementPage/RiskManagementPage';
+import { SecretsPage } from '../pages/SecretsPage/SecretsPage';
 import { getDefaultPathForSpace } from '../navigation/navConfig';
 
 const defaultPath = getDefaultPathForSpace('access');
@@ -25,6 +26,7 @@ export const router = createBrowserRouter([
       { path: 'setup/migrations', element: <MigrationsPage /> },
       { path: 'setup/migrations/:migrationId', element: <MigrationDetailPage /> },
       { path: 'manage/inventory/means-of-access/managed-accounts', element: <ManagedAccountsPage /> },
+      { path: 'manage/inventory/means-of-access/secrets', element: <SecretsPage /> },
       { path: 'risk/risk-management', element: <RiskManagementPage /> },
       {
         path: '*',

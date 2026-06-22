@@ -282,6 +282,7 @@
   overflow: auto;
   max-height: calc(100vh - 280px);
   min-height: 200px;
+  @include ds-scrollbar;
 }
 
 .tableFiltersTemplate__tableEl {
@@ -442,6 +443,7 @@ $filters-panel-width: 260px;
   padding: 0 $spacing-4;
   overflow-y: auto;
   flex: 1;
+  @include ds-scrollbar;
 }
 
 .tableFiltersTemplate__filterGroup {

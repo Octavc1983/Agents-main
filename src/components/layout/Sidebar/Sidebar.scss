@@ -361,6 +361,7 @@ $sidebar-tree-line-offset:  14px;
 }
 
 .spaces-overlay__option-label {
+  display: block;
   overflow: hidden;
   color: inherit;
   font-size: $font-size-sm;
@@ -371,6 +372,7 @@ $sidebar-tree-line-offset:  14px;
 }
 
 .spaces-overlay__option-description {
+  display: block;
   overflow: hidden;
   color: $color-nav-text-idle;
   font-size: $font-size-xs;

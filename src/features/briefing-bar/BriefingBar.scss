@@ -1,0 +1,296 @@
+@use 'tokens' as *;
+@use '../../styles/mixins' as *;
+
+.briefing-bar {
+  display: flex;
+  align-items: center;
+  gap: $spacing-5;
+  padding: $spacing-4 $spacing-6;
+  background-color: $color-surface-idle;
+  border-bottom: 1px solid $color-divider-1;
+  min-height: 72px;
+  flex-shrink: 0;
+}
+
+// ── Section ───────────────────────────────────────────────────────────────────
+
+.briefing-bar__section {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  flex-shrink: 0;
+}
+
+.briefing-bar__section--providers {
+  gap: $spacing-4;
+}
+
+.briefing-bar__section--status {
+  gap: $spacing-2;
+}
+
+.briefing-bar__section--risk {
+  gap: $spacing-3;
+  min-width: 220px;
+}
+
+// ── Divider ───────────────────────────────────────────────────────────────────
+
+.briefing-bar__divider {
+  width: 1px;
+  height: 40px;
+  background-color: $color-divider-1;
+  flex-shrink: 0;
+}
+
+// ── Total ─────────────────────────────────────────────────────────────────────
+
+.briefing-bar__total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.briefing-bar__total-count {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-light;
+  line-height: 1;
+}
+
+.briefing-bar__total-label {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  white-space: nowrap;
+}
+
+// ── Provider chips ────────────────────────────────────────────────────────────
+
+.briefing-bar__providers {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  flex-wrap: nowrap;
+}
+
+.briefing-bar__provider-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  padding: $spacing-1 $spacing-2;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-full;
+  background: transparent;
+  color: $color-nav-text-idle;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: background-color $transition-fast, border-color $transition-fast, color $transition-fast;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: $color-table-bg-hover;
+    color: $color-text-light;
+  }
+
+  &--active {
+    border-color: $color-primary;
+    background-color: rgba($color-primary, 0.1);
+    color: $color-primary;
+  }
+}
+
+.briefing-bar__provider-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.briefing-bar__provider-name {
+  max-width: 80px;
+  @include table-cell-truncate;
+}
+
+.briefing-bar__provider-count {
+  color: $color-text-light;
+  font-weight: $font-weight-semibold;
+}
+
+.briefing-bar__provider-overflow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 22px;
+  padding: 0 $spacing-2;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-full;
+  background: transparent;
+  color: $color-nav-text-idle;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: background-color $transition-fast, color $transition-fast;
+
+  &:hover, &--active {
+    background-color: $color-table-bg-hover;
+    color: $color-text-light;
+  }
+}
+
+// ── Overflow popover ──────────────────────────────────────────────────────────
+
+.briefing-bar__overflow-popover {
+  position: fixed;
+  z-index: 1000;
+  width: 220px;
+  background-color: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-md;
+  padding: $spacing-1;
+}
+
+.briefing-bar__overflow-item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  width: 100%;
+  padding: $spacing-2 $spacing-3;
+  border: 0;
+  border-radius: $border-radius-sm;
+  background: transparent;
+  color: $color-nav-text-idle;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color $transition-fast, color $transition-fast;
+
+  &:hover { background-color: $color-table-bg-hover; color: $color-text-light; }
+  &--active { background-color: rgba($color-primary, 0.1); color: $color-primary; }
+}
+
+.briefing-bar__overflow-icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.briefing-bar__overflow-label {
+  flex: 1;
+  font-weight: $font-weight-medium;
+}
+
+.briefing-bar__overflow-count {
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+}
+
+.briefing-bar__overflow-pct {
+  color: $color-nav-text-idle;
+  font-size: $font-size-xs;
+  min-width: 32px;
+  text-align: right;
+}
+
+// ── Status KPI tiles ──────────────────────────────────────────────────────────
+
+.briefing-bar__status-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: $spacing-2 $spacing-3;
+  border: 1px solid transparent;
+  border-radius: $border-radius-md;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color $transition-fast, border-color $transition-fast;
+  min-width: 64px;
+
+  &:hover {
+    background-color: $color-table-bg-hover;
+  }
+
+  &--active {
+    border-color: $color-primary;
+    background-color: rgba($color-primary, 0.08);
+  }
+}
+
+.briefing-bar__status-count {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $color-text-light;
+  line-height: 1;
+}
+
+.briefing-bar__status-label {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  white-space: nowrap;
+  text-align: center;
+}
+
+// ── Risk breakdown ────────────────────────────────────────────────────────────
+
+.briefing-bar__risk-title {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-nav-text-idle;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.briefing-bar__risk-row {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 2px $spacing-1;
+  border-radius: $border-radius-sm;
+  transition: background-color $transition-fast;
+
+  &:hover { background-color: $color-table-bg-hover; }
+  &--active { background-color: rgba($color-primary, 0.08); }
+}
+
+.briefing-bar__risk-label {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  min-width: 44px;
+  text-align: right;
+}
+
+.briefing-bar__risk-bar-track {
+  width: 80px;
+  height: 6px;
+  background-color: $color-divider-1;
+  border-radius: $border-radius-full;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.briefing-bar__risk-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: $border-radius-full;
+  transition: width $transition-fast;
+
+  &--critical { background-color: $color-status-error; }
+  &--high     { background-color: $color-status-warning; }
+  &--medium   { background-color: $color-status-success; }
+}
+
+.briefing-bar__risk-count {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  min-width: 20px;
+  text-align: left;
+}

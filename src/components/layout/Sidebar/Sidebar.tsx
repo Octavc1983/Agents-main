@@ -405,7 +405,9 @@ const SpacesOverlay: React.FC<SpacesOverlayProps> = ({
       <div className="spaces-overlay__list">
         {spaces.map((space, index) => (
           <React.Fragment key={space.id}>
-            {index > 0 && <span className="spaces-overlay__divider" aria-hidden="true" />}
+            {index > 0 && spaces[index - 1].spaceId === 'commandCenter' && (
+              <span className="spaces-overlay__divider" aria-hidden="true" />
+            )}
             <button
               type="button"
               role="menuitem"

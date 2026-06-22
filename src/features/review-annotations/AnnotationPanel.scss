@@ -1,4 +1,5 @@
 @use 'tokens' as *;
+@use '../../styles/mixins' as *;
 
 // ── Panel shell ───────────────────────────────────────────────────────────────
 
@@ -230,6 +231,7 @@
   flex-direction: column;
   gap: $spacing-3;
   padding: $spacing-4 $spacing-5;
+  @include ds-scrollbar;
 }
 
 .annotation-panel__empty {

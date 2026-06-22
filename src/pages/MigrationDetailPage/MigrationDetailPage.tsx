@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from '@idira/design-system';
 import { StatusIcon } from '../../components/shared/StatusIcon';
+import {
+  StatusCompletedIcon,
+  StatusFailedIcon,
+  StatusRunningIcon,
+  StatusPendingIcon,
+} from '@idira/design-system/icons';
 import { mockMigrationDetails } from '../../mock/migrationDetailMockData';
 import { useSetPageTitle } from '../../hooks/useSetPageTitle';
 import './MigrationDetailPage.scss';
