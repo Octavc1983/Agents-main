@@ -1,0 +1,72 @@
+// ConfirmationDialogTemplate styles
+// Prototype-layer template — not a DS component
+// Tokens: @idira/design-system/styles/tokens
+
+@use 'tokens' as *;
+@use '../../styles/mixins' as *;
+
+// ── Dialog body ───────────────────────────────────────────────────────────────
+
+.conf-dlg__body {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  padding: $spacing-2 0;
+}
+
+.conf-dlg__description {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  line-height: 1.5;
+}
+
+// ── Affected items list ───────────────────────────────────────────────────────
+
+.conf-dlg__affected-list {
+  list-style: none;
+  margin: 0;
+  padding: $spacing-3 $spacing-4;
+  border-radius: $border-radius-base;
+  border: 1px solid $color-divider-1;
+  background: $color-surface-idle;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  max-height: 160px;
+  overflow-y: auto;
+  @include ds-scrollbar;
+}
+
+.conf-dlg__affected-item {
+  font-size: $font-size-sm;
+  color: $color-text-light;
+  line-height: 1.4;
+}
+
+// ── Acknowledgment checkbox ───────────────────────────────────────────────────
+
+.conf-dlg__acknowledgment {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-3;
+  cursor: pointer;
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  line-height: 1.4;
+}
+
+.conf-dlg__acknowledgment-checkbox {
+  flex-shrink: 0;
+  margin-top: 2px;
+  accent-color: $color-primary;
+}
+
+// ── Error state ───────────────────────────────────────────────────────────────
+
+.conf-dlg__error {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $color-status-error;
+  line-height: 1.4;
+}

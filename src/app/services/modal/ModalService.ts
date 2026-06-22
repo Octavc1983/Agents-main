@@ -1,4 +1,4 @@
-import type { ActiveModal, FormDialogConfig, SystemNoticeConfig } from './modal.types';
+import type { ActiveModal, ConfirmationDialogConfig, FormDialogConfig, SystemNoticeConfig } from './modal.types';
 
 type Listener = (modal: ActiveModal | null) => void;
 
@@ -28,6 +28,12 @@ class ModalService {
   openNotice(config: SystemNoticeConfig) {
     if (this.current?.config.id === config.id) return;
     this.current = { kind: 'notice', config };
+    this.notify();
+  }
+
+  openConfirmation(config: ConfirmationDialogConfig) {
+    if (this.current?.config.id === config.id) return;
+    this.current = { kind: 'confirmation', config };
     this.notify();
   }
 

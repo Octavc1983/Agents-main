@@ -7,7 +7,7 @@ export type CardBackground = 'solid' | 'gradient-light-to-dark' | 'gradient-dark
 export interface CardProps {
   state?: CardVariant;
   background?: CardBackground;
-  size?: 'fixed' | 'auto';
+  size?: 'fixed' | 'medium' | 'auto';
   onClick?: () => void;
   children?: React.ReactNode;
   className?: string;
@@ -20,7 +20,8 @@ export const Card: React.FC<CardProps> = ({
   state = 'default', background = 'solid', size = 'fixed', onClick,
   children, className, 'aria-label': ariaLabel, title, subtitle,
 }) => {
-  const cls = ['icard', `icard--${state}`, `icard--bg-${background}`, size === 'fixed' ? 'icard--fixed' : 'icard--auto', onClick ? 'icard--interactive' : '', className].filter(Boolean).join(' ');
+  const sizeClass = size === 'fixed' ? 'icard--fixed' : size === 'medium' ? 'icard--medium' : 'icard--auto';
+  const cls = ['icard', `icard--${state}`, `icard--bg-${background}`, sizeClass, onClick ? 'icard--interactive' : '', className].filter(Boolean).join(' ');
   return (
     <div className={cls} onClick={onClick} role={onClick ? 'button' : undefined} tabIndex={onClick ? 0 : undefined} aria-label={ariaLabel}
       onKeyDown={onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') onClick(); } : undefined}>

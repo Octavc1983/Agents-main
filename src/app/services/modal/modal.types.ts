@@ -3,6 +3,40 @@ import type { ModalSize } from '@idira/design-system';
 
 export type ModalTone = 'neutral' | 'warning' | 'destructive' | 'success' | 'info';
 
+// ── Confirmation Dialog ───────────────────────────────────────────────────────
+
+export type ConfirmationDialogVariant =
+  | 'destructive'
+  | 'warning'
+  | 'reset'
+  | 'discard'
+  | 'standard';
+
+export interface ConfirmationAffectedItem {
+  id: string;
+  label: string;
+}
+
+export interface ConfirmationDialogConfig {
+  id: string;
+  variant: ConfirmationDialogVariant;
+
+  title: string;
+  description: string;
+
+  affectedItems?: ConfirmationAffectedItem[];
+
+  confirmLabel: string;
+  cancelLabel?: string;
+
+  confirmAction: () => Promise<void> | void;
+  onCancel?: () => void;
+
+  isBlocking?: boolean;
+  requiresAcknowledgment?: boolean;
+  acknowledgmentLabel?: string;
+}
+
 // ── Form Dialog ───────────────────────────────────────────────────────────────
 
 export interface FormDialogConfig<TResult = void> {
@@ -44,4 +78,5 @@ export interface SystemNoticeConfig {
 
 export type ActiveModal =
   | { kind: 'form'; config: FormDialogConfig<unknown> }
-  | { kind: 'notice'; config: SystemNoticeConfig };
+  | { kind: 'notice'; config: SystemNoticeConfig }
+  | { kind: 'confirmation'; config: ConfirmationDialogConfig };

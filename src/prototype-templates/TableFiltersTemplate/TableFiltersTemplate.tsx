@@ -449,7 +449,10 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
         )}
 
         {/* Table area */}
-        <div className={`tableFiltersTemplate__table${isFiltersOpen ? ' tableFiltersTemplate__table--narrowed' : ''}`}>
+        <div className={[
+          'tableFiltersTemplate__table',
+          isFiltersOpen ? 'tableFiltersTemplate__table--narrowed' : '',
+        ].filter(Boolean).join(' ')}>
 
           {/* Loading state */}
           {isLoading && <LoadingState message="Loading…" />}
@@ -520,14 +523,14 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
                 <tbody>
                   {filteredRows.map((row) => {
                     const rowId = getRowId(row);
-                    const isSelected = selectedIds.has(rowId);
+                    const isChecked = selectedIds.has(rowId);
                     return (
                       <tr
                         key={rowId}
                         className={[
                           'tableFiltersTemplate__row',
                           onRowClick ? 'tableFiltersTemplate__row--clickable' : '',
-                          isSelected ? 'tableFiltersTemplate__row--selected' : '',
+                          isChecked ? 'tableFiltersTemplate__row--selected' : '',
                         ].filter(Boolean).join(' ')}
                         onClick={onRowClick ? () => onRowClick(row) : undefined}
                       >
@@ -539,7 +542,7 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
                             <input
                               type="checkbox"
                               className="tableFiltersTemplate__checkbox"
-                              checked={isSelected}
+                              checked={isChecked}
                               onChange={() => toggleSelectRow(rowId)}
                               aria-label="Select row"
                             />
@@ -573,6 +576,7 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
             </div>
           )}
         </div>
+
       </div>
     </div>
   );

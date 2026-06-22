@@ -7,4 +7,7 @@ export type {
   FormDialogContentProps,
   SystemNoticeConfig,
   ModalTone,
+  ConfirmationDialogConfig,
+  ConfirmationDialogVariant,
+  ConfirmationAffectedItem,
 } from './modal.types';

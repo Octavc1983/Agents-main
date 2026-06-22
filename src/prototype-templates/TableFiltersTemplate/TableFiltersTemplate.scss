@@ -285,7 +285,6 @@
 .tableFiltersTemplate__table {
   flex: 1;
   min-width: 0;
-  transition: flex $transition-base;
 
   &--narrowed {
     flex: 1;
@@ -294,7 +293,6 @@
 
 .tableFiltersTemplate__tableWrap {
   overflow: auto;
-  max-height: calc(100vh - 280px);
   min-height: 200px;
   @include ds-scrollbar;
 }
@@ -358,6 +356,7 @@
       padding-left: calc(#{$spacing-3} - 3px);
     }
   }
+
 }
 
 .tableFiltersTemplate__td {

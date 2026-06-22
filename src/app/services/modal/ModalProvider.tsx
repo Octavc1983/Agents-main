@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Modal, Button } from '@idira/design-system';
 import { modalService } from './ModalService';
 import type { ActiveModal, FormDialogContentProps, SystemNoticeConfig } from './modal.types';
+import '../../../prototype-templates/ConfirmationDialogTemplate/ConfirmationDialogTemplate.scss';
 
 // ── Form Dialog Renderer ──────────────────────────────────────────────────────
 
@@ -136,6 +137,109 @@ const SystemNoticeRenderer: React.FC<{
   );
 };
 
+// ── Confirmation Dialog Renderer ──────────────────────────────────────────────
+
+const ConfirmationDialogRenderer: React.FC<{
+  modal: Extract<ActiveModal, { kind: 'confirmation' }>;
+  onClose: () => void;
+}> = ({ modal, onClose }) => {
+  const { config } = modal;
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [hasFailed, setHasFailed] = useState(false);
+  const [isAcknowledged, setIsAcknowledged] = useState(false);
+
+  const handleConfirm = useCallback(async () => {
+    if (isConfirming) return;
+    setIsConfirming(true);
+    setHasFailed(false);
+    try {
+      await config.confirmAction();
+      onClose();
+    } catch {
+      setHasFailed(true);
+    } finally {
+      setIsConfirming(false);
+    }
+  }, [config, isConfirming, onClose]);
+
+  const handleCancel = useCallback(() => {
+    if (isConfirming) return;
+    config.onCancel?.();
+    onClose();
+  }, [config, isConfirming, onClose]);
+
+  const isConfirmDisabled =
+    isConfirming ||
+    (config.requiresAcknowledgment === true && !isAcknowledged);
+
+  const isDestructive = config.variant === 'destructive';
+
+  const footer = (
+    <>
+      <Button
+        variant="secondary"
+        size="sm"
+        onClick={handleCancel}
+        disabled={isConfirming}
+      >
+        {config.cancelLabel ?? 'Cancel'}
+      </Button>
+      <Button
+        variant={isDestructive ? 'danger' : 'primary'}
+        size="sm"
+        onClick={handleConfirm}
+        disabled={isConfirmDisabled}
+      >
+        {isConfirming ? 'Processing…' : config.confirmLabel}
+      </Button>
+    </>
+  );
+
+  return (
+    <Modal
+      isOpen
+      onClose={handleCancel}
+      title={config.title}
+      size="small"
+      showCloseButton={!(config.isBlocking ?? false)}
+      closeOnBackdropClick={!(config.isBlocking ?? false)}
+      closeOnEscape={!(config.isBlocking ?? false)}
+      footer={footer}
+    >
+      <div className="conf-dlg__body">
+        <p className="conf-dlg__description">{config.description}</p>
+
+        {config.affectedItems && config.affectedItems.length > 0 && (
+          <ul className="conf-dlg__affected-list" aria-label="Affected items">
+            {config.affectedItems.map(item => (
+              <li key={item.id} className="conf-dlg__affected-item">{item.label}</li>
+            ))}
+          </ul>
+        )}
+
+        {config.requiresAcknowledgment && config.acknowledgmentLabel && (
+          <label className="conf-dlg__acknowledgment">
+            <input
+              type="checkbox"
+              checked={isAcknowledged}
+              onChange={e => setIsAcknowledged(e.target.checked)}
+              disabled={isConfirming}
+              className="conf-dlg__acknowledgment-checkbox"
+            />
+            <span>{config.acknowledgmentLabel}</span>
+          </label>
+        )}
+
+        {hasFailed && (
+          <p className="conf-dlg__error" role="alert">
+            The action could not be completed. Please try again.
+          </p>
+        )}
+      </div>
+    </Modal>
+  );
+};
+
 // ── ModalProvider ─────────────────────────────────────────────────────────────
 
 export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -157,6 +261,9 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       )}
       {active?.kind === 'notice' && (
         <SystemNoticeRenderer modal={active} onClose={handleClose} />
+      )}
+      {active?.kind === 'confirmation' && (
+        <ConfirmationDialogRenderer modal={active} onClose={handleClose} />
       )}
     </>
   );

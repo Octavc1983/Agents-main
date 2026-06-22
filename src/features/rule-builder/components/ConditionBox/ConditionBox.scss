@@ -1,0 +1,285 @@
+// ConditionBox — Rule Builder Canvas Node
+// Product-specific canvas node. Not a DS component.
+// Tokens: @idira/design-system/styles/tokens
+
+@use 'tokens' as *;
+@use '../../../../../styles/mixins' as *;
+
+// ── Node constants ────────────────────────────────────────────────────────────
+
+$node-min-width: 280px;
+$port-size:      12px;
+$port-offset:    -7px; // half port size + 1px overhang
+
+// ── Node wrapper ──────────────────────────────────────────────────────────────
+
+.condition-box {
+  position: relative;
+  min-width: $node-min-width;
+  background: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-card;
+  cursor: default;
+  user-select: none;
+  transition:
+    border-color $transition-fast,
+    box-shadow $transition-fast;
+
+  // ── Status modifiers ───────────────────────────────────────────────────────
+
+  &--selected {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 2px rgba(122, 128, 255, 0.25), $shadow-card;
+  }
+
+  &--invalid {
+    border-color: $color-status-error;
+  }
+
+  &--warning {
+    border-color: $color-status-warning;
+  }
+
+  &--read-only {
+    cursor: not-allowed;
+    opacity: 0.75;
+  }
+
+  &--disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+}
+
+// ── Selection surface ─────────────────────────────────────────────────────────
+// Covers the entire node except ports and menu trigger.
+
+.condition-box__selection-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  cursor: pointer;
+  border-radius: inherit;
+
+  .condition-box--read-only & {
+    cursor: not-allowed;
+  }
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+
+.condition-box__header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-2 $spacing-3;
+  background: $color-background-darker;
+  border-radius: $border-radius-base $border-radius-base 0 0;
+  border-bottom: 1px solid $color-divider-1;
+  min-height: 36px;
+}
+
+.condition-box__type-label {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  @include text-truncate;
+}
+
+.condition-box__menu-trigger {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color $transition-fast, background-color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    background-color: $color-btn-hover-overlay;
+  }
+
+  .condition-box--read-only & {
+    display: none;
+  }
+}
+
+// ── Body ──────────────────────────────────────────────────────────────────────
+
+.condition-box__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+  padding: $spacing-3;
+}
+
+// ── Field rows ────────────────────────────────────────────────────────────────
+
+.condition-box__field {
+  display: flex;
+  align-items: baseline;
+  gap: $spacing-2;
+  min-width: 0;
+}
+
+.condition-box__field-label {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-normal;
+  color: $color-nav-text-idle;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 64px;
+}
+
+.condition-box__field-value {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $color-text-light;
+  @include text-truncate;
+  min-width: 0;
+}
+
+.condition-box__field-value--placeholder {
+  color: $color-nav-text-idle;
+  font-weight: $font-weight-normal;
+  font-style: italic;
+}
+
+// ── Validation / warning message ──────────────────────────────────────────────
+
+.condition-box__validation {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-1;
+  margin-top: $spacing-1;
+  padding-top: $spacing-2;
+  border-top: 1px solid $color-divider-1;
+}
+
+.condition-box__validation-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+
+  .condition-box--invalid & {
+    color: $color-status-error;
+  }
+
+  .condition-box--warning & {
+    color: $color-status-warning;
+  }
+}
+
+.condition-box__validation-text {
+  font-size: $font-size-xs;
+  line-height: 1.4;
+
+  .condition-box--invalid & {
+    color: $color-status-error;
+  }
+
+  .condition-box--warning & {
+    color: $color-status-warning;
+  }
+}
+
+// ── Connection ports ──────────────────────────────────────────────────────────
+// Ports are positioned absolutely relative to .condition-box.
+// They stay fixed regardless of node body height.
+
+.condition-box__port {
+  position: absolute;
+  z-index: 3;
+  width: $port-size;
+  height: $port-size;
+  border-radius: $border-radius-full;
+  background: $color-page-background;
+  border: 2px solid $color-divider-1;
+  cursor: crosshair;
+  transition: border-color $transition-fast, background-color $transition-fast;
+
+  &:hover,
+  &:focus-visible {
+    border-color: $color-primary;
+    background: $color-primary;
+    outline: none;
+  }
+
+  &--connected {
+    border-color: $color-primary;
+    background: $color-primary;
+  }
+
+  .condition-box--read-only & {
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+}
+
+// Input port — left center
+.condition-box__input-port {
+  top: 50%;
+  left: $port-offset;
+  transform: translateY(-50%);
+}
+
+// True output port — right, upper third
+.condition-box__true-output-port {
+  top: 33%;
+  right: $port-offset;
+  transform: translateY(-50%);
+}
+
+// False output port — right, lower third
+.condition-box__false-output-port {
+  top: 67%;
+  right: $port-offset;
+  transform: translateY(-50%);
+}
+
+// ── Port labels ───────────────────────────────────────────────────────────────
+// Only visible to screen readers and on hover; not shown visually by default.
+
+.condition-box__port-label {
+  position: absolute;
+  white-space: nowrap;
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  pointer-events: none;
+
+  // True port label — appears to the right of the port
+  .condition-box__true-output-port & {
+    left: calc(100% + #{$spacing-2});
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  // False port label — appears to the right of the port
+  .condition-box__false-output-port & {
+    left: calc(100% + #{$spacing-2});
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  // Input port label — appears to the left of the port
+  .condition-box__input-port & {
+    right: calc(100% + #{$spacing-2});
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

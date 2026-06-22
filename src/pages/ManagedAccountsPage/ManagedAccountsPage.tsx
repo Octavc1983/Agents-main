@@ -17,7 +17,7 @@ import {
 } from '@idira/design-system/icons';
 import { TableFiltersTemplate } from '../../prototype-templates/TableFiltersTemplate';
 import type { TableColumn } from '../../prototype-templates/TableFiltersTemplate';
-import { CardListMasterDetailsTemplate } from '../../prototype-templates/CardListMasterDetailsTemplate';
+import { FatlinesListMasterDetailsTemplate } from '../../prototype-templates/FatlinesListMasterDetailsTemplate';
 import type { ManagedAccount, ManagedAccountPlatform } from '../../types/prototype.types';
 import { managedAccountsMock } from '../../mock/managedAccountsMockData';
 import { CreateManagedAccountWizard } from './CreateManagedAccountWizard';
@@ -560,8 +560,6 @@ export const ManagedAccountsPage: React.FC = () => {
     </Button>
   );
 
-  const sharedFilterGroups = FILTER_GROUPS;
-
   const getFilterValue = useCallback((account: ManagedAccount, groupId: string) => {
     if (groupId === 'safe') return account.safe;
     if (groupId === 'organization') return account.organization ?? '';
@@ -581,92 +579,48 @@ export const ManagedAccountsPage: React.FC = () => {
     (a: ManagedAccount) => a.platform,
   ], []);
 
-  // ── Master-details view ────────────────────────────────────────────────────
-
-  if (selectedAccountId) {
-    return (
-      <>
-        <CardListMasterDetailsTemplate<ManagedAccount>
-          title="Managed accounts"
-          description="Discover, connect, and monitor all AI agents across the organization."
-          items={managedAccountsMock}
-          getItemId={(a) => a.id}
-          getItemTitle={(a) => a.name}
-          getItemSubtitle={(a) => `${a.platform} · ${a.address || a.accountType}`}
-          getItemStatus={(a) => <StatusIcon status={a.status} size={24} />}
-          getItemIcon={(a) => {
-            const Icon = PLATFORM_ICON_MAP[a.platform];
-            return Icon ? <Icon size={20} /> : null;
-          }}
-          initialSelectedId={selectedAccountId}
-          onSelectedItemChange={(item) => {
-            if (!item) setSelectedAccountId(null);
-          }}
-          renderDetails={(account) => (
-            <AccountDetailsPanel
-              account={account}
-              onClose={() => setSelectedAccountId(null)}
-              onManageTags={setTagsDialogAccount}
-            />
-          )}
-          filterGroups={sharedFilterGroups}
-          getFilterValue={getFilterValue}
-          searchableFields={searchableFields}
-          searchPlaceholder="Search / Filter"
-          primaryAction={sharedActions}
-          updatedAt={updatedAt}
-          onRefresh={handleRefresh}
-          isLoading={isRefreshing}
-          emptyTitle="No managed accounts"
-          emptyDescription="Create your first managed account to get started."
-        />
-
-        {wizardOpen && (
-          <CreateManagedAccountWizard onClose={() => setWizardOpen(false)} />
-        )}
-        {tagsDialogAccount && (
-          <ManageTagsDialog
-            isOpen={!!tagsDialogAccount}
-            onClose={() => setTagsDialogAccount(null)}
-            entityName={tagsDialogAccount.name}
-            initialTags={accountTagsToTagModel(tagsDialogAccount.tags)}
-            suggestions={MOCK_TAG_SUGGESTIONS}
-            onSave={async (_tags: Tag[]) => { await new Promise(r => setTimeout(r, 600)); }}
-          />
-        )}
-      </>
-    );
-  }
-
-  // ── Table view (default) ───────────────────────────────────────────────────
-
   return (
     <>
-      <TableFiltersTemplate<ManagedAccount>
-        title="Managed accounts"
-        description="Discover, connect, and monitor all AI agents across the organization."
+      <FatlinesListMasterDetailsTemplate<ManagedAccount>
         rows={managedAccountsMock}
-        columns={columns}
         getRowId={(a) => a.id}
-        selectable
-        searchPlaceholder="Search / Filter"
-        searchableFields={searchableFields}
-        filterGroups={FILTER_GROUPS}
-        getFilterValue={getFilterValue}
-        primaryAction={sharedActions}
-        updatedAt={updatedAt}
-        onRefresh={handleRefresh}
-        isLoading={isRefreshing}
-        emptyTitle="No managed accounts"
-        emptyDescription="Create your first managed account to get started."
-        onRowClick={(account) => setSelectedAccountId(account.id)}
-        rowActions={(account) => (
-          <RowActionsMenu
+        selectedEntityId={selectedAccountId}
+        onSelectedEntityChange={setSelectedAccountId}
+        renderList={(onRowClick) => (
+          <TableFiltersTemplate<ManagedAccount>
+            title="Managed accounts"
+            description="Discover, connect, and monitor all AI agents across the organization."
+            rows={managedAccountsMock}
+            columns={columns}
+            getRowId={(a) => a.id}
+            selectable
+            searchPlaceholder="Search / Filter"
+            searchableFields={searchableFields}
+            filterGroups={FILTER_GROUPS}
+            getFilterValue={getFilterValue}
+            primaryAction={sharedActions}
+            updatedAt={updatedAt}
+            onRefresh={handleRefresh}
+            isLoading={isRefreshing}
+            emptyTitle="No managed accounts"
+            emptyDescription="Create your first managed account to get started."
+            onRowClick={onRowClick}
+            rowActions={(account) => (
+              <RowActionsMenu
+                account={account}
+                onManageTags={setTagsDialogAccount}
+                popoverId={`${account.id}-menu`}
+                openPopoverId={openPopoverId}
+                setOpenPopoverId={setOpenPopoverId}
+              />
+            )}
+          />
+        )}
+        renderDetails={(account) => (
+          <AccountDetailsPanel
             account={account}
+            onClose={() => setSelectedAccountId(null)}
             onManageTags={setTagsDialogAccount}
-            popoverId={`${account.id}-menu`}
-            openPopoverId={openPopoverId}
-            setOpenPopoverId={setOpenPopoverId}
           />
         )}
       />
