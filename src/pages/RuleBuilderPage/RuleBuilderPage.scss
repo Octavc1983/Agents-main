@@ -1,0 +1,418 @@
+@use 'tokens' as *;
+@use '../../styles/mixins' as *;
+
+// ── Page shell ────────────────────────────────────────────────────────────────
+// CanvasTemplate sits inside Main Content.
+// Main Content owns outer padding. CanvasTemplate must NOT add duplicate padding.
+// Uses height:100% to fill available content area.
+
+.rb {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  // Compensate for AppShell's inner padding so canvas fills full viewport area
+  margin: calc(-1 * #{$spacing-6}) calc(-1 * #{$spacing-12});
+  padding: 0;
+}
+
+// ── Rule Context Header ───────────────────────────────────────────────────────
+
+.rb__context-header {
+  display: flex;
+  align-items: center;
+  padding: $spacing-4 $spacing-6;
+  border-bottom: 1px solid $color-divider-1;
+  background: $color-page-background;
+  flex-shrink: 0;
+}
+
+.rb__title-row {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  min-width: 0;
+}
+
+.rb__title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  margin: 0;
+  line-height: 1.2;
+  @include text-truncate;
+}
+
+.rb__title-input {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  background: $color-surface-idle;
+  border: 1px solid $color-primary;
+  border-radius: $border-radius-sm;
+  padding: 2px $spacing-2;
+  min-width: 260px;
+  outline: none;
+}
+
+.rb__edit-title-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  border-radius: $border-radius-sm;
+  flex-shrink: 0;
+  transition: color $transition-fast;
+
+  &:hover { color: $color-text-light; }
+}
+
+.rb__wip-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px $spacing-3;
+  border-radius: $border-radius-full;
+  background: rgba(122, 128, 255, 0.15);
+  border: 1px solid rgba(122, 128, 255, 0.35);
+  color: $color-primary;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+// ── Canvas Toolbar ────────────────────────────────────────────────────────────
+
+.rb__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-4;
+  padding: 0 $spacing-6;
+  height: 48px;
+  background: $color-page-background;
+  border-bottom: 1px solid $color-divider-1;
+  flex-shrink: 0;
+}
+
+.rb__toolbar-left,
+.rb__toolbar-center,
+.rb__toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+.rb__toolbar-divider {
+  display: inline-block;
+  width: 1px;
+  height: 16px;
+  background: $color-divider-1;
+  flex-shrink: 0;
+}
+
+// Search
+.rb__search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.rb__search-icon {
+  position: absolute;
+  left: $spacing-2;
+  color: $color-nav-text-idle;
+  pointer-events: none;
+}
+
+.rb__search-input {
+  background: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-sm;
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  padding: $spacing-1 $spacing-3 $spacing-1 $spacing-6;
+  width: 200px;
+  outline: none;
+
+  &::placeholder { color: $color-nav-text-idle; }
+  &:focus { border-color: $color-primary; }
+  &::-webkit-search-cancel-button { display: none; }
+}
+
+// Meta + status
+.rb__meta {
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  white-space: nowrap;
+
+  strong {
+    color: $color-text-light;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.rb__status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  white-space: nowrap;
+}
+
+// Zoom controls
+.rb__zoom-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-sm;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  transition: color $transition-fast, border-color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    border-color: $color-primary;
+  }
+}
+
+.rb__zoom-value {
+  font-size: $font-size-sm;
+  color: $color-text-light;
+  min-width: 40px;
+  text-align: center;
+}
+
+// Toolbar actions
+.rb__cancel-btn {
+  background: none;
+  border: 1px solid $color-btn-secondary-border;
+  border-radius: $border-radius-sm;
+  color: $color-btn-secondary-text;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  padding: $spacing-1 $spacing-3;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity $transition-fast;
+
+  &:hover { opacity: 0.8; }
+}
+
+.rb__draft-btn {
+  background: $color-background-darker;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-sm;
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  padding: $spacing-1 $spacing-3;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity $transition-fast;
+
+  &:hover { opacity: 0.8; }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.rb__activate-btn {
+  background: $color-btn-primary-idle;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  padding: $spacing-1 $spacing-4;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color $transition-fast;
+
+  &:hover:not(&--disabled) { background: $color-btn-primary-hover; }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// ── Canvas Workspace ──────────────────────────────────────────────────────────
+
+.rb__workspace {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  background: $color-page-background;
+  color: $color-divider-1;   // dot grid color via currentColor
+}
+
+// ── Canvas surface (zoom + pan target) ───────────────────────────────────────
+
+.rb__canvas-surface {
+  position: absolute;
+  inset: 0;
+  // overflow: visible so nodes outside viewport are still rendered
+}
+
+// ── Node wrappers ─────────────────────────────────────────────────────────────
+
+.rb__node-wrapper {
+  position: absolute;
+}
+
+// ── Connector ────────────────────────────────────────────────────────────────
+
+.rb__canvas__connector {
+  color: $color-divider-1;
+}
+
+// ── Start node ────────────────────────────────────────────────────────────────
+
+.rb-start-node {
+  width: 300px;
+  background: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-card;
+}
+
+.rb-start-node__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-2 $spacing-3;
+  background: $color-background-darker;
+  border-radius: $border-radius-base $border-radius-base 0 0;
+  border-bottom: 1px solid $color-divider-1;
+}
+
+.rb-start-node__label {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(122, 128, 255, 0.15);
+  border-radius: $border-radius-pill;
+  padding: 2px $spacing-2;
+}
+
+.rb-start-node__menu {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  border-radius: $border-radius-sm;
+  transition: color $transition-fast;
+
+  &:hover { color: $color-text-light; }
+}
+
+.rb-start-node__body {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-3;
+}
+
+.rb-start-node__field-label {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  min-width: 48px;
+}
+
+.rb-start-node__field-value {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-light;
+}
+
+// Port row — horizontal line + add button
+.rb-start-node__port-row {
+  display: flex;
+  align-items: center;
+  padding: 0 0 $spacing-2 0;
+}
+
+.rb-start-node__connector-line {
+  flex: 1;
+  height: 1px;
+  background: $color-divider-1;
+  margin-left: auto;
+}
+
+.rb-start-node__add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  color: $color-primary;
+  cursor: pointer;
+  margin-right: -14px; // extend slightly past node edge
+  transition: opacity $transition-fast;
+
+  &:hover { opacity: 0.7; }
+}
+
+// ── Floating Add Condition ────────────────────────────────────────────────────
+
+.rb__floating-add {
+  position: absolute;
+  top: $spacing-8;
+  right: $spacing-6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-1;
+  z-index: 10;
+}
+
+.rb__floating-add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: $color-surface-idle;
+  border: 1px solid $color-primary;
+  border-radius: $border-radius-full;
+  color: $color-primary;
+  cursor: pointer;
+  box-shadow: $shadow-card;
+  transition: background-color $transition-fast, opacity $transition-fast;
+
+  &:hover {
+    background: rgba(122, 128, 255, 0.1);
+  }
+}
+
+.rb__floating-add-label {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  text-align: center;
+  white-space: pre;
+  line-height: 1.3;
+}
