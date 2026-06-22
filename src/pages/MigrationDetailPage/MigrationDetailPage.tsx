@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from '@idira/design-system';
 import { StatusIcon } from '../../components/shared/StatusIcon';
-import {
-  StatusCompletedIcon,
-  StatusFailedIcon,
-  StatusRunningIcon,
-  StatusPendingIcon,
-} from '@idira/design-system/icons';
+import type { StepStatusValue } from '../../components/shared/StatusIcon/StatusIcon';
 import { mockMigrationDetails } from '../../mock/migrationDetailMockData';
 import { useSetPageTitle } from '../../hooks/useSetPageTitle';
 import './MigrationDetailPage.scss';
@@ -29,6 +24,13 @@ const StatusBadge: React.FC<{ status: StepStatus }> = ({ status }) => (
 );
 
 type CheckStatus = 'not_run' | 'running' | 'passed' | 'failed';
+
+const CHECK_STATUS_MAP: Record<CheckStatus, StepStatusValue> = {
+  not_run: 'not_performed',
+  running: 'in_progress',
+  passed:  'done',
+  failed:  'failed',
+};
 
 interface ReadinessCheck {
   id: string;
@@ -130,10 +132,7 @@ export const MigrationDetailPage: React.FC = () => {
                     {step.checks.map(check => (
                       <tr key={check.id} className="migration-checks-table__row">
                         <td className="migration-checks-table__td migration-checks-table__td--name">
-                          {check.status === 'passed'  && <StatusCompletedIcon size={14} />}
-                          {check.status === 'failed'  && <StatusFailedIcon size={14} />}
-                          {check.status === 'running' && <StatusRunningIcon size={14} />}
-                          {check.status === 'not_run' && <StatusPendingIcon size={14} />}
+                          <StatusIcon status={CHECK_STATUS_MAP[check.status]} size={14} />
                           {check.name}
                         </td>
                         <td className="migration-checks-table__td">{check.description}</td>

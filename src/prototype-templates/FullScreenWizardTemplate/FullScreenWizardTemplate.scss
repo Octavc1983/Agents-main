@@ -1,0 +1,276 @@
+// FullScreenWizardTemplate styles
+// Page Composition Template — not a DS component
+// Tokens: @idira/design-system/styles/tokens
+
+@use 'tokens' as *;
+@use '../../styles/mixins' as *;
+
+// ── Shell ─────────────────────────────────────────────────────────────────────
+
+.fsw-tpl {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: $color-dialog-bg;
+}
+
+// ── Left navigation panel ─────────────────────────────────────────────────────
+
+.fsw-tpl__nav {
+  flex-shrink: 0;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  background: $color-background-darkest;
+  border-right: 1px solid $color-dialog-separator;
+  padding: $spacing-8 $spacing-6;
+  overflow-y: auto;
+  @include ds-scrollbar;
+}
+
+.fsw-tpl__nav-header {
+  margin-bottom: $spacing-8;
+}
+
+.fsw-tpl__title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-dialog-text;
+  margin: 0 0 $spacing-1;
+  line-height: 1.3;
+}
+
+.fsw-tpl__subtitle {
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  margin: 0;
+  line-height: 1.4;
+}
+
+// ── Vertical stepper ──────────────────────────────────────────────────────────
+
+.fsw-tpl__stepper {
+  flex: 1;
+}
+
+.fsw-tpl__step-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.fsw-tpl__step {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-3;
+}
+
+.fsw-tpl__step-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+// ── Bubble button ─────────────────────────────────────────────────────────────
+
+.fsw-tpl__step-bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: $border-radius-full;
+  border: 1.5px solid;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  flex-shrink: 0;
+  padding: 0;
+  cursor: default;
+  background: transparent;
+  transition: background $transition-fast, border-color $transition-fast, color $transition-fast;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.fsw-tpl__step--clickable .fsw-tpl__step-bubble {
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+// ── Connector line ────────────────────────────────────────────────────────────
+
+.fsw-tpl__step-line {
+  width: 1.5px;
+  min-height: $spacing-6;
+  flex: 1;
+  background: $color-wizard-line-idle;
+  margin: $spacing-1 0;
+  transition: background $transition-fast;
+
+  &--completed {
+    background: $color-wizard-line-visited;
+  }
+}
+
+// ── Step info ─────────────────────────────────────────────────────────────────
+
+.fsw-tpl__step-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 0 $spacing-6;
+  min-width: 0;
+}
+
+.fsw-tpl__step:last-child .fsw-tpl__step-info {
+  padding-bottom: 0;
+}
+
+.fsw-tpl__step-label {
+  font-size: $font-size-sm;
+  line-height: 1.25;
+  transition: color $transition-fast;
+}
+
+.fsw-tpl__step-sublabel {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ── Bubble state styles ───────────────────────────────────────────────────────
+
+.fsw-tpl__step--current {
+  .fsw-tpl__step-bubble {
+    background: $color-wizard-bg-number-current;
+    color: $color-wizard-text-number-current;
+    border-color: $color-wizard-bg-number-current;
+  }
+  .fsw-tpl__step-label {
+    color: $color-wizard-text-title-current;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.fsw-tpl__step--completed {
+  .fsw-tpl__step-bubble {
+    border-color: $color-wizard-stroke-number-visited;
+    color: $color-wizard-text-number-visited;
+  }
+  .fsw-tpl__step-label {
+    color: $color-wizard-text-title-visited;
+  }
+}
+
+.fsw-tpl__step--in-progress {
+  .fsw-tpl__step-bubble {
+    border-color: $color-primary;
+    color: $color-primary;
+  }
+  .fsw-tpl__step-label {
+    color: $color-wizard-text-title-current;
+  }
+}
+
+.fsw-tpl__step--warning {
+  .fsw-tpl__step-bubble {
+    border-color: $color-status-warning;
+    color: $color-status-warning;
+  }
+  .fsw-tpl__step-label {
+    color: $color-wizard-text-title-visited;
+  }
+}
+
+.fsw-tpl__step--failed {
+  .fsw-tpl__step-bubble {
+    border-color: $color-status-error;
+    color: $color-status-error;
+  }
+  .fsw-tpl__step-label {
+    color: $color-wizard-text-title-visited;
+  }
+}
+
+.fsw-tpl__step--locked,
+.fsw-tpl__step--upcoming {
+  .fsw-tpl__step-bubble {
+    border-color: $color-wizard-stroke-not-visited;
+    color: $color-wizard-text-number-not-visited;
+  }
+  .fsw-tpl__step-label {
+    color: $color-wizard-text-title-not-visited;
+  }
+}
+
+// ── Spinner animation ─────────────────────────────────────────────────────────
+
+.fsw-tpl__spinner-icon {
+  animation: fsw-spin 1s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes fsw-spin {
+  to { transform: rotate(360deg); }
+}
+
+// ── Right: body ───────────────────────────────────────────────────────────────
+
+.fsw-tpl__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+// ── Scrollable content ────────────────────────────────────────────────────────
+
+.fsw-tpl__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: $spacing-8 $spacing-8;
+  @include ds-scrollbar;
+}
+
+// ── Fixed footer ──────────────────────────────────────────────────────────────
+
+.fsw-tpl__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-3;
+  padding: $spacing-4 $spacing-8;
+  border-top: 1px solid $color-dialog-separator;
+  flex-shrink: 0;
+  background: $color-dialog-bg;
+}
+
+.fsw-tpl__footer-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}

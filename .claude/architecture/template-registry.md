@@ -124,13 +124,28 @@ Templates assemble existing AppShell, Infra, DS components, tokens, shared featu
 
 ## WizardTemplate
 
-**Category:** Multi-Step Wizard / Vertical Stepper / Guided Flow
+**Category:** Multi-Step Wizard / Modal Dialog / Vertical Stepper
 **Status:** Implemented
 **Path:** src/prototype-templates/WizardTemplate/
 **Specification:** .claude/architecture/templates/WizardTemplate.md
-**Primary User Goal:** Guide users through a sequential multi-step creation or configuration flow with persistent step context
-**Best Use Cases:** Create account wizard, onboarding flows, multi-step setup, guided configuration
-**Last Reviewed:** 2026-06-21
+**Primary User Goal:** Guide users through a short sequential multi-step flow in a modal dialog overlay
+**Best Use Cases:** Create account (short flows), simple onboarding modals, 2–4 step setup dialogs
+**When NOT to use:** Long guided operations, migration flows, processes with backend operations, logs/reports, or irreversible stages → use FullScreenWizardTemplate instead
+**Last Reviewed:** 2026-06-22
+
+---
+
+## FullScreenWizardTemplate
+
+**Category:** Full-Screen Wizard / Main Content Replacement / Guided Multi-Step Flow
+**Status:** Implemented
+**Path:** src/prototype-templates/FullScreenWizardTemplate/
+**Specification:** .claude/architecture/templates/FullScreenWizardTemplate.md
+**Primary User Goal:** Guide users through a structured multi-step process with dependencies, validation, state persistence, and controlled navigation — filling the Main Content area while AppShell, Sidebar, and Header remain intact
+**Best Use Cases:** H2P Migration, tenant onboarding, infrastructure configuration, connector setup, provisioning workflows, data import, security compliance setup — any process that is too complex for a modal dialog
+**Step Status Support:** not-started, locked, ready, in-progress, completed, warning, failed, blocked, unknown-outcome, skipped, reset
+**Back Behavior:** allowed-no-reset, allowed-with-downstream-reset, allowed-before-lock, blocked-after-irreversible-action, hidden
+**Last Reviewed:** 2026-06-22
 
 ---
 
@@ -158,17 +173,42 @@ Templates assemble existing AppShell, Infra, DS components, tokens, shared featu
 
 ---
 
+## FullScreenFormTemplate
+
+**Category:** Full-Screen Form / Create / Edit / Configuration
+**Status:** Implemented
+**Path:** src/prototype-templates/FullScreenFormTemplate/
+**Specification:** .claude/architecture/templates/FullScreenFormTemplate.md
+**Primary User Goal:** Create, edit, or configure a single entity with a fixed header, scrollable form body, and fixed footer — AppShell, Sidebar, and Header remain intact
+**Best Use Cases:** Create Managed Account, Edit Account, Create Policy, Integration Setup, Entity Details Edit
+**FormState support:** initial, loading, ready, dirty, valid, invalid, submitting, saved, save-failed, warning, blocked, unknown-outcome, read-only
+**When NOT to use:** Sequential dependent steps → FullScreenWizardTemplate; Multiple independent sections → VerticalTabsConfigurationTemplate
+**Last Reviewed:** 2026-06-22
+
+---
+
+## VerticalTabsConfigurationTemplate
+
+**Category:** Vertical Tabs / Configuration / Multi-Section Administration
+**Status:** Implemented
+**Path:** src/prototype-templates/VerticalTabsConfigurationTemplate/
+**Specification:** .claude/architecture/templates/VerticalTabsConfigurationTemplate.md
+**Primary User Goal:** Allow users to freely navigate and edit multiple independent configuration sections with persistent orientation, per-tab state, and flexible save models
+**Best Use Cases:** Migration Configuration, Integration Settings, Security Settings, Tenant Configuration, Advanced Settings pages
+**Tab Status support:** default, dirty, valid, invalid, saving, saved, warning, failed, blocked, locked, read-only
+**Save models:** page-level-save, tab-level-save, auto-save, mixed
+**When NOT to use:** Sequential steps with dependencies → FullScreenWizardTemplate
+**Last Reviewed:** 2026-06-22
+
+---
+
 ## Candidates (Not Yet Specified)
 
 | Candidate | Evidence | Status |
 |---|---|---|
-| FormPageTemplate | No existing instances — common form pattern | Candidate |
-| ConfigurationFormTemplate | No existing instances — complex settings form | Candidate |
-| WizardTemplate | Implemented for CreateManagedAccountWizard | Implemented |
 | DialogFlowTemplate | No existing instances — dialogs are page-level | Candidate |
 | ConfirmationDialogTemplate | No existing instances — destructive actions anticipated | Candidate |
 | BulkStatusDialogTemplate | TableFiltersTemplate Bulk contract describes it | Candidate |
-| SettingsPageTemplate | No existing instances | Candidate |
 | DetailsPageTemplate | No existing instances | Candidate |
 
 ---

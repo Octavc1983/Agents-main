@@ -341,6 +341,10 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
               </button>
             )}
 
+            {filterGroups.length > 0 && (
+              <span aria-hidden="true" className="tableFiltersTemplate__toolbarDivider" />
+            )}
+
             <div className="tableFiltersTemplate__searchWrap">
               <SearchIcon
                 size={14}
@@ -369,8 +373,8 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
           </div>
 
           <div className="tableFiltersTemplate__toolbarRight">
-            {secondaryActions}
             {primaryAction}
+            {secondaryActions}
           </div>
         </div>
 

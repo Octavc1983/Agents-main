@@ -48,8 +48,9 @@
 
 .tableFiltersTemplate__toolbarRow1 {
   @include flex-between;
-  gap: $spacing-3;
-  padding: $spacing-2 $spacing-3; 
+  height: 34px;
+  gap: $spacing-4;
+  padding: 0 $spacing-3;
 }
 
 .tableFiltersTemplate__toolbarRow2 {
@@ -63,6 +64,8 @@
   align-items: center;
   gap: $spacing-2;
   flex-wrap: wrap;
+  min-width: 0;
+  flex: 1;
 }
 
 .tableFiltersTemplate__toolbarRight {
@@ -70,6 +73,17 @@
   align-items: center;
   gap: $spacing-2;
   flex-shrink: 0;
+}
+
+// ── Toolbar divider ───────────────────────────────────────────────────────────
+
+.tableFiltersTemplate__toolbarDivider {
+  display: inline-block;
+  width: 1px;
+  height: 16px;
+  background-color: $color-divider-1;
+  flex-shrink: 0;
+  align-self: center;
 }
 
 // ── Filter button ─────────────────────────────────────────────────────────────

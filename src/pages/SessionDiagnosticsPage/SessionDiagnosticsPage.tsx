@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
-import { Select, Badge, LoadingState, EmptyState, ErrorState } from '@idira/design-system';
+import { Select, LoadingState, EmptyState, ErrorState } from '@idira/design-system';
+import { StatusIcon } from '../../components/shared/StatusIcon';
+import type { StatusValue } from '../../components/shared/StatusIcon/StatusIcon';
 import { mockSessions } from '../../mock/sessionDiagnosticsMockData';
 import './SessionDiagnosticsPage.scss';
 
 type TimeRange = 'last_30_days' | 'last_7_days' | 'last_24_hours' | 'last_hour';
+
+const CONNECTION_STATUS_MAP: Record<string, { status: StatusValue; label: string }> = {
+  Connected: { status: 'active',   label: 'Connected' },
+  Failed:    { status: 'deleted',  label: 'Failed' },
+  Ended:     { status: 'inactive', label: 'Ended' },
+};
 
 const TIME_RANGE_OPTIONS = [
   { value: 'last_30_days', label: 'Last 30 days' },
@@ -11,9 +19,6 @@ const TIME_RANGE_OPTIONS = [
   { value: 'last_24_hours', label: 'Last 24 hours' },
   { value: 'last_hour', label: 'Last hour' },
 ];
-
-const isLoading = false;
-const isError = false;
 
 const ErrorUserIcon: React.FC = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -40,6 +45,8 @@ const SortIcon: React.FC = () => (
 
 export const SessionDiagnosticsPage: React.FC = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>('last_30_days');
+  const [isLoading] = useState(false);
+  const [isError] = useState(false);
 
   if (isLoading) {
     return <LoadingState message="Loading sessions..." />;
@@ -167,11 +174,17 @@ export const SessionDiagnosticsPage: React.FC = () => {
               <td className="session-diag-table__td">
                 <span className="session-diag-table__cell-text" title={session.startDate}>{session.startDate}</span>
               </td>
-              <td className="session-diag-table__td session-diag-table__td--badge">
-                <Badge
-                  color={session.connectionStatus === 'Failed' ? 'critical' : 'neutral'}
-                  label={session.connectionStatus}
-                />
+              <td className="session-diag-table__td">
+                {(() => {
+                  const mapped = CONNECTION_STATUS_MAP[session.connectionStatus];
+                  if (!mapped) return <span className="session-diag-table__cell-text" title={session.connectionStatus}>{session.connectionStatus}</span>;
+                  return (
+                    <span className="session-diag-status-cell">
+                      <StatusIcon status={mapped.status} size={24} />
+                      <span className="session-diag-status-cell__label">{mapped.label}</span>
+                    </span>
+                  );
+                })()}
               </td>
               <td className="session-diag-table__td">
                 <span className="session-diag-table__cell-text" title={session.connectionProfile}>{session.connectionProfile}</span>

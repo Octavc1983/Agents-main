@@ -1,0 +1,206 @@
+// VerticalTabsConfigurationTemplate styles
+// Page Composition Template — not a DS component
+// Tokens: @idira/design-system/styles/tokens
+
+@use 'tokens' as *;
+@use '../../styles/mixins' as *;
+
+// ── Shell ─────────────────────────────────────────────────────────────────────
+
+.vtc-tpl {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: $color-dialog-bg;
+}
+
+// ── Fixed header ──────────────────────────────────────────────────────────────
+
+.vtc-tpl__header {
+  @include flex-between;
+  gap: $spacing-4;
+  padding: $spacing-6 $spacing-8;
+  border-bottom: 1px solid $color-dialog-separator;
+  flex-shrink: 0;
+  background: $color-background-darkest;
+}
+
+.vtc-tpl__header-text {
+  @include flex-col;
+  gap: $spacing-1;
+  min-width: 0;
+}
+
+.vtc-tpl__title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.vtc-tpl__subtitle {
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.vtc-tpl__dirty-indicator {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  flex-shrink: 0;
+  font-style: italic;
+}
+
+// ── Body: rail + content ──────────────────────────────────────────────────────
+
+.vtc-tpl__body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+// ── Vertical tab rail ─────────────────────────────────────────────────────────
+
+.vtc-tpl__rail {
+  flex-shrink: 0;
+  width: 220px;
+  border-right: 1px solid $color-dialog-separator;
+  background: $color-background-darkest;
+  padding: $spacing-4 0;
+  overflow-y: auto;
+  @include ds-scrollbar;
+}
+
+.vtc-tpl__tab-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+// ── Tab button ────────────────────────────────────────────────────────────────
+
+.vtc-tpl__tab {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  width: 100%;
+  padding: $spacing-3 $spacing-5;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+  color: $color-wizard-text-title-not-visited;
+  transition: background $transition-fast, color $transition-fast;
+  position: relative;
+
+  &:hover:not(.vtc-tpl__tab--locked) {
+    background: $color-nav-bg-selected;
+    color: $color-text-light;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: -2px;
+  }
+
+  &--active {
+    background: $color-nav-bg-selected;
+    color: $color-wizard-text-title-current;
+    font-weight: $font-weight-semibold;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: $color-primary;
+      border-radius: 0 $border-radius-sm $border-radius-sm 0;
+    }
+  }
+
+  &--locked {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  &--invalid .vtc-tpl__tab-status {
+    color: $color-status-error;
+  }
+
+  &--warning .vtc-tpl__tab-status {
+    color: $color-status-warning;
+  }
+
+  &--saved .vtc-tpl__tab-status {
+    color: $color-status-success;
+  }
+
+  &--dirty .vtc-tpl__tab-status {
+    color: $color-primary;
+  }
+}
+
+.vtc-tpl__tab-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.vtc-tpl__tab-label {
+  flex: 1;
+  min-width: 0;
+  @include text-truncate;
+}
+
+.vtc-tpl__tab-status {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.vtc-tpl__tab-indicator {
+  &--dirty {
+    color: $color-primary;
+  }
+}
+
+// ── Scrollable active-tab content ─────────────────────────────────────────────
+
+.vtc-tpl__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: $spacing-8;
+  @include ds-scrollbar;
+}
+
+// ── Fixed footer ──────────────────────────────────────────────────────────────
+
+.vtc-tpl__footer {
+  @include flex-between;
+  gap: $spacing-3;
+  padding: $spacing-4 $spacing-8;
+  border-top: 1px solid $color-dialog-separator;
+  flex-shrink: 0;
+  background: $color-dialog-bg;
+}
+
+.vtc-tpl__footer-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}

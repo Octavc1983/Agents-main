@@ -200,10 +200,18 @@
     overflow: visible;
   }
 
-  &--badge {
-    max-width: none;
-    overflow: visible;
-  }
+}
+
+.session-diag-status-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+.session-diag-status-cell__label {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  white-space: nowrap;
 }
 
 .session-diag-table__cell-text {
