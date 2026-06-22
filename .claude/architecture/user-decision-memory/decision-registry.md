@@ -64,6 +64,7 @@ Claude must never apply a global memory when a more specific approved decision e
 | DEC-013 | Annotation delete = soft delete retained in audit | annotation | global | active | high |
 | DEC-014 | Review Mode is external utility, not product flow | annotation | global | active | high |
 | DEC-015 | Inspect Mode off by default, explicit activation only | annotation | global | active | high |
+| DEC-016 | Add Account uses FullScreenWizardTemplate, not dialog | navigation / template-selection | feature — Add Account | active | high |
 
 ## Conflict Resolution
 

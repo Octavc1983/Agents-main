@@ -202,14 +202,77 @@ Templates assemble existing AppShell, Infra, DS components, tokens, shared featu
 
 ---
 
+## DialogFlowTemplate
+
+**Category:** Modal Dialog / Focused Multi-Step Flow
+**Status:** Approved with limitation
+**Path:** src/prototype-templates/DialogFlowTemplate/ *(not yet implemented)*
+**Specification:** .claude/architecture/templates/DialogFlowTemplate.md
+**Skill:** .claude/skills/_templates/dialog-flow-template/
+**Primary User Goal:** Allow users to complete a focused, scoped task within a modal overlay without leaving the current page context
+**Best Use Cases:** Create tag, Edit configuration subset, Upload SSH key, Select connector, Add remote access domain, 2–4 step guided modal flows
+**When NOT to use:** Add Account / Create Account / Onboard Account (DEC-016 → FullScreenWizardTemplate); any flow with backend operations, irreversible stages, or logs/reports
+**DS Primitives:** Modal (verified), Button including danger variant (verified), Stepper (verify compatibility for multi-step)
+**Limitation:** Stepper inside Modal header requires verification before use. If incompatible → DS Gap.
+**DEC-016:** Add Account NEVER routes here. FullScreenWizardTemplate only.
+**Last Reviewed:** 2026-06-22
+
+---
+
+## ConfirmationDialogTemplate
+
+**Category:** Destructive Action Confirmation / Modal Dialog
+**Status:** Approved
+**Path:** src/prototype-templates/ConfirmationDialogTemplate/ *(not yet implemented)*
+**Specification:** .claude/architecture/templates/ConfirmationDialogTemplate.md
+**Skill:** .claude/skills/_templates/confirmation-dialog-template/
+**Primary User Goal:** Force explicit user acknowledgment of a consequential action and clearly communicate what will happen
+**Best Use Cases:** Delete entity, Disable integration, Discard unsaved changes, Reset configuration, Abort migration, Destructive bulk action gate
+**When NOT to use:** Actions that are safely reversible; input validation; error acknowledgment
+**DS Primitives:** Modal size=small (verified), Button danger variant (verified)
+**Last Reviewed:** 2026-06-22
+
+---
+
+## BulkStatusDialogTemplate
+
+**Category:** Async Bulk Operation / Per-Item Status / Progress Dialog
+**Status:** Approved with limitation
+**Path:** src/prototype-templates/BulkStatusDialogTemplate/ *(not yet implemented)*
+**Specification:** .claude/architecture/templates/BulkStatusDialogTemplate.md
+**Skill:** .claude/skills/_templates/bulk-status-dialog-template/
+**Primary User Goal:** Give users persistent, per-item visibility into the progress and outcome of an async multi-entity operation
+**Best Use Cases:** Bulk tag update, bulk account onboarding, bulk rotation, bulk export, bulk remediation, migration sub-operation results
+**When NOT to use:** Single-entity operations; short synchronous operations
+**DS Primitives:** Modal large (verified), Button (verified), ProgressBar active/paused/failed/done (verified)
+**Shared Primitives:** StatusIcon (shared) for operational results — NOT SeverityBadge
+**Limitation:** Scrollable result list only — NOT virtualized. Safe for ~200 items. Large collections require future virtualization capability (open architecture gap).
+**Last Reviewed:** 2026-06-22
+
+---
+
+## DetailsPageTemplate
+
+**Category:** Single Entity Details / Full-Page View
+**Status:** Approved
+**Path:** src/prototype-templates/DetailsPageTemplate/ *(not yet implemented)*
+**Specification:** .claude/architecture/templates/DetailsPageTemplate.md
+**Skill:** .claude/skills/_templates/details-page-template/
+**Primary User Goal:** Give users a complete structured view of one entity — status, metadata, configuration, activity, relationships, and contextual actions
+**Best Use Cases:** Managed account details, connector details, migration run details, risk finding details, secret details, integration details
+**When NOT to use:** Comparison against list context more important → use master details panel; Short inspection (3–5 fields) → use Drawer; Entity creation → use FullScreenFormTemplate
+**DS Primitives:** Button, ActionMenu, Tabs, Card, SeverityBadge (risk severity only), EmptyState, Skeleton — all verified
+**Shared Primitives:** StatusIcon (shared) for entity operational status — NOT SeverityBadge
+**Navigation:** Active sidebar item does NOT change. Back restores originating context.
+**Last Reviewed:** 2026-06-22
+
+---
+
 ## Candidates (Not Yet Specified)
 
 | Candidate | Evidence | Status |
 |---|---|---|
-| DialogFlowTemplate | No existing instances — dialogs are page-level | Candidate |
-| ConfirmationDialogTemplate | No existing instances — destructive actions anticipated | Candidate |
-| BulkStatusDialogTemplate | TableFiltersTemplate Bulk contract describes it | Candidate |
-| DetailsPageTemplate | No existing instances | Candidate |
+| SettingsPageTemplate | No existing instances | Candidate |
 
 ---
 

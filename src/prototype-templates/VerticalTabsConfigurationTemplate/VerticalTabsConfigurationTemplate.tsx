@@ -69,7 +69,7 @@ function getTabStatusIndicator(status: VerticalTabStatus | undefined): React.Rea
 
 function isTabOpenable(tab: VerticalTab): boolean {
   if (tab.isLocked) return false;
-  if (tab.status === 'saving') return false;
+  if (tab.status === 'locked' || tab.status === 'saving') return false;
   return true;
 }
 

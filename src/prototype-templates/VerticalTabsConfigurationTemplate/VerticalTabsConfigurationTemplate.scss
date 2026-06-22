@@ -104,7 +104,7 @@
   transition: background $transition-fast, color $transition-fast;
   position: relative;
 
-  &:hover:not(.vtc-tpl__tab--locked) {
+  &:hover:not(.vtc-tpl__tab--locked, .vtc-tpl__tab--saving) {
     background: $color-nav-bg-selected;
     color: $color-text-light;
   }
