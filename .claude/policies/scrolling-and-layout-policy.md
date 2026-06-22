@@ -1,5 +1,55 @@
 # Scrolling and Layout Policy
 
+## Main Content Padding Ownership
+
+`Main Content` owns the only outer page padding:
+
+```scss
+padding: 48px 24px;
+// 48px → top and bottom outer spacing
+// 24px → left and right page gutters
+```
+
+Templates render inside this padded area and must NOT add another outer padding layer.
+
+```text
+AppShell
+└── Main Content
+    ├── padding: 48px 24px   ← owned here only
+    └── Template
+        ├── Wizard
+        ├── Vertical Tabs Configuration
+        ├── FATLINES List + Master Details
+        ├── FullScreen Form
+        └── Details Page
+```
+
+Templates may define only internal spacing between their own regions:
+
+```text
+- left rail to content canvas gap
+- filter panel to list gap
+- list to details split gap
+- section spacing
+- footer action alignment
+- internal panel padding
+```
+
+Templates must NOT add:
+
+```text
+- padding: 48px 24px  (outer page padding)
+- duplicated page gutters
+- outer max-width wrappers
+- compensating negative margins
+- extra top spacing that recreates Main Content padding
+- nested wrappers only to recreate Main Content spacing
+```
+
+QA Failing: template adds outer padding that duplicates `Main Content padding: 48px 24px`.
+
+---
+
 ## Scrollbar Rule
 
 All `overflow-y: auto` containers must use `@include ds-scrollbar`.

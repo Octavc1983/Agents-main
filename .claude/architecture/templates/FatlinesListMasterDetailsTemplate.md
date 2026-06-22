@@ -56,7 +56,80 @@ AppShell
 ├── Sidebar                        ← outside template
 ├── Application Header             ← outside template
 └── Main Content
+    ├── padding: 48px 24px         ← owned by Main Content only
     └── FatlinesListMasterDetailsTemplate
+        └── uses available padded area — does not add outer padding
+```
+
+---
+
+## FORBIDDEN Layout — Stacked Vertical (Desktop)
+
+**This layout pattern is forbidden on desktop:**
+
+```text
+Main Content
+├── FATLINES List        ← full-width at top
+└── Master Details       ← full-width Card below     ← WRONG
+```
+
+Problems with the stacked pattern:
+- Details are detached from the selected row context.
+- User must scroll away from the list to inspect the selected entity.
+- List and Details do not have independent scroll ownership.
+- The layout behaves like a stacked Details Page, not Master Details.
+- The Details panel incorrectly consumes the entire workspace width.
+
+**Never render Master Details as a full-width Card below the FATLINES list on desktop.**
+
+---
+
+## Required Desktop Layout — Horizontal Split
+
+```text
+┌────────────────────────────────────────────────────────────────────────────┐
+│ Context / Action Bar                                                        │
+│ Filter | Search | Result count | Page actions | View controls              │
+├──────────────┬──────────────────────────────┬──────────────────────────────┤
+│              │                              │                              │
+│ Filter Panel │       FATLINES List           │       Master Details         │
+│  (optional)  │                              │                              │
+│              │       independent scroll      │       fixed header           │
+│              │                              │       independent scroll      │
+│              │                              │                              │
+└──────────────┴──────────────────────────────┴──────────────────────────────┘
+```
+
+---
+
+## Required Component Structure
+
+```tsx
+<MainContent>
+  {/* Main Content owns padding: 48px 24px */}
+  <FatlinesMasterDetailsTemplate>
+    {/* template adds only internal layout spacing */}
+    <ContextActionBar />
+    <SplitWorkspace>
+      <FilterPanel />          {/* optional, left column */}
+      <FatlinesListPane>       {/* owns vertical scroll */}
+        <FatlinesList />
+      </FatlinesListPane>
+      <SplitDivider />
+      <MasterDetailsPane>      {/* right column */}
+        <MasterDetailsHeader />{/* fixed */}
+        <MasterDetailsContent />{/* owns vertical scroll */}
+      </MasterDetailsPane>
+    </SplitWorkspace>
+  </FatlinesMasterDetailsTemplate>
+</MainContent>
+```
+
+**Do NOT use:**
+
+```tsx
+<FatlinesList />
+<DetailsCard />    {/* as sibling vertical blocks — FORBIDDEN */}
 ```
 
 ---
@@ -567,28 +640,31 @@ The Filter Panel must never share its scroll container with the FATLINES list or
 ## QA Blocking Rules
 
 ```text
-- Checkbox click opens Master Details
-- StatusIcon is not 24px (shared application primitive)
-- Different status icon mapping in list vs Master Details
-- Risk column uses badge, dot, or text instead of SeverityBadge
-- Filters reset when Master Details opens
-- Sidebar selection changes when row is selected
-- Selected entity is not highlighted in list while details are open
-- Virtualization not used for large data sets
-- Master Details does not close safely when selected entity is filtered out
-- AppShell Header or Sidebar included inside the template
-- Summary Bar scrolls with List or Details content
-- List and Details share one vertical scroll container
-- Details Header scrolls away
-- Filter Panel Header or Footer scrolls away
-- Checkbox interaction opens Details
-- Row action interaction opens Details
-- Split divider implemented as unsupported local resizer
-- Draft filter changes update results before Apply
-- Closing filter panel silently applies draft changes
-- Filter count reflects draft rather than applied filters
-- Filtered-out selected entities remain active in Master Details
-- Screenshot colors or component styling are copied locally
+- FATLINES List rendered above Master Details as stacked full-width sections on desktop.
+- Master Details implemented as a full-width Card below the list on desktop.
+- Opening details requires scrolling away from the selected list row.
+- Checkbox click opens Master Details.
+- Row action interaction opens Master Details.
+- StatusIcon is not 24px (shared application primitive).
+- Different status icon mapping in list vs Master Details vs Details Header.
+- Risk column uses badge, dot, or text instead of SeverityBadge.
+- Filters reset when Master Details opens.
+- Sidebar selection changes when row is selected.
+- Selected entity is not highlighted in list while details are open.
+- Virtualization not used for large data sets.
+- Master Details does not close safely when selected entity is filtered out.
+- AppShell Header or Sidebar included inside the template.
+- Summary Bar scrolls with List or Details content.
+- List and Details share one vertical scroll container.
+- Details Header scrolls away with content.
+- Filter Panel Header or Footer scrolls away.
+- Split divider implemented as unsupported local resizer.
+- Draft filter changes update results before Apply.
+- Closing filter panel silently applies draft changes.
+- Filter count reflects draft rather than applied filters.
+- Filtered-out selected entities remain active in Master Details.
+- Template adds outer padding that duplicates Main Content padding (48px 24px).
+- Screenshot colors or component styling are copied locally.
 ```
 
 ---

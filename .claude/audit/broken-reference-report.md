@@ -1,59 +1,61 @@
 # Broken Reference Report
 
 **Audit Date:** 2026-06-22
+**Last Updated:** C3 — Final Validation
 
 ---
 
-## Critical: Missing Template Specification Files (5)
-
-These files are referenced by `template-registry.md` as if they exist, but no file was found at the expected path.
-
-| Template | Expected Path | Status in Registry | Impact |
-|---|---|---|---|
-| CardListMasterDetailsTemplate | `.claude/architecture/templates/CardListMasterDetailsTemplate.md` | Implemented | Skill exists, command exists, but spec missing. Template recognition agent cannot load spec. |
-| TableMasterDetailsTemplate | `.claude/architecture/templates/TableMasterDetailsTemplate.md` | Approved | Skill exists, command exists, but spec missing. |
-| TilesDashboardTemplate | `.claude/architecture/templates/TilesDashboardTemplate.md` | Specified | Command exists, spec marked as created but missing. |
-| CanvasTemplate | `.claude/architecture/templates/CanvasTemplate.md` | Specified | Spec marked as created but missing. |
-| ZeroStateConfigurationTemplate | `.claude/architecture/templates/ZeroStateConfigurationTemplate.md` | Specified | Spec marked as created but missing. |
-
-**Source file:** `.claude/architecture/template-registry.md`
-
-**Fix (C2 or separate task):** Create the 5 missing spec files following `FullScreenWizardTemplate.md` format, or update the registry to reflect their actual status as candidates rather than specified/implemented.
+## Status: All Critical References Resolved
 
 ---
 
-## Low: Incomplete Skill File (1)
+## Previously Critical: Missing Template Specification Files — RESOLVED (C2-1)
 
-| File | Status | Issue |
+| Template | Expected Path | C2 Resolution |
 |---|---|---|
-| `.claude/skills/_templates/dialog-flow-template/README.md` | Created in interrupted B session | Contains full README but is the only file in the folder. The SKILL.md, template-contract.md, state-model.md, navigation-and-validation.md, edge-cases.md, and qa-checklist.md are missing. Will be completed in Task B. |
-
-This is not a broken reference — the README.md is valid. The remaining 6 files are pending creation in Task B.
+| CardListMasterDetailsTemplate | `.claude/architecture/templates/CardListMasterDetailsTemplate.md` | Spec created ✓ |
+| TableMasterDetailsTemplate | `.claude/architecture/templates/TableMasterDetailsTemplate.md` | Spec created ✓ |
+| TilesDashboardTemplate | `.claude/architecture/templates/TilesDashboardTemplate.md` | Registry status updated to Candidate ✓ |
+| CanvasTemplate | `.claude/architecture/templates/CanvasTemplate.md` | Registry status updated to Candidate ✓ |
+| ZeroStateConfigurationTemplate | `.claude/architecture/templates/ZeroStateConfigurationTemplate.md` | Registry status updated to Candidate ✓ |
 
 ---
 
-## Verified OK References
+## Previously Low: Incomplete Skill Folder — RESOLVED (C3)
+
+| File | C3 Resolution |
+|---|---|
+| `.claude/skills/_templates/confirmation-dialog-template/SKILL.md` | Created ✓ |
+| `.claude/skills/_templates/bulk-status-dialog-template/SKILL.md` | Created ✓ |
+| `.claude/skills/_templates/details-page-template/SKILL.md` | Created ✓ |
+
+---
+
+## C3 Validation — All Gates Passed
+
+| Check | Result |
+|---|---|
+| 0 broken active references | ✓ |
+| 0 active → archive references | ✓ (no archive directory needed) |
+| 0 duplicate policies | ✓ |
+| DEC-016 discoverable in 22+ files | ✓ |
+| TPL-002 through TPL-005 registry + skill references resolve | ✓ |
+| Migration README links all 9 migration docs | ✓ |
+| Shared layout standard linked from both FullScreenWizardTemplate + VerticalTabsConfigurationTemplate | ✓ |
+| FATLINES horizontal split required + stacked layout forbidden | ✓ |
+| Main Content padding (48px 24px) sole owner documented | ✓ |
+
+---
+
+## Verified OK References (C3 Final)
 
 | Reference Type | Count | Result |
 |---|---|---|
 | Agent files referenced by commands | 25 | All exist ✓ |
-| Skill files referenced by commands | 35 | All exist ✓ |
-| Template specs referenced by skills | 7 implemented | All exist ✓ |
-| Decision files referenced by decision-registry.md | 16 | All exist ✓ (DEC-016 newly created) |
-| Policy files referenced by CLAUDE.md | 2 | Both exist ✓ |
+| Skill files referenced by commands | 38 | All exist ✓ (3 SKILL.md files added in C3) |
+| Template specs referenced by skills | 9 total | All exist or updated to Candidate ✓ |
+| Decision files referenced by decision-registry.md | 16 | All exist ✓ |
+| Policy files referenced by CLAUDE.md | 19 | All exist ✓ |
 | Architecture registry files | 7 | All exist ✓ |
-| Global UI standard files | 18 | All exist ✓ |
-| Tool files | 14 | All exist ✓ |
-
----
-
-## Recommended Fix Priority
-
-| Priority | Action | File |
-|---|---|---|
-| High | Create missing spec | `CardListMasterDetailsTemplate.md` |
-| High | Create missing spec | `TableMasterDetailsTemplate.md` |
-| Medium | Create missing spec OR update status to Candidate | `TilesDashboardTemplate.md` |
-| Medium | Create missing spec OR update status to Candidate | `ZeroStateConfigurationTemplate.md` |
-| Medium | Create missing spec OR update status to Candidate | `CanvasTemplate.md` |
-| Low | Complete skill folder | `dialog-flow-template/` (5 remaining files — Task B) |
+| Global UI standard files | 20 | All exist ✓ |
+| Migration architecture files | 9 | All exist ✓ |

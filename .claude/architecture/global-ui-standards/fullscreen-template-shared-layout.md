@@ -9,6 +9,31 @@ Both templates share the same structural layout shell. Their differences are in 
 
 ---
 
+## Main Content Padding Ownership
+
+`Main Content` owns the only outer page padding:
+
+```scss
+padding: 48px 24px;
+// 48px → top and bottom outer spacing
+// 24px → left and right page gutters
+```
+
+Templates render inside this padded area.
+
+```text
+Main Content
+├── padding: 48px 24px  ← owned here, not in the template
+└── Wizard / Vertical Tabs Template
+    ├── internal navigation rail
+    ├── internal content canvas
+    └── internal fixed footer
+```
+
+Templates must NOT add outer page padding. No duplicated gutters, no outer max-width wrappers, no compensating negative margins.
+
+---
+
 ## Template Boundary
 
 The following are outside both templates:
