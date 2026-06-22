@@ -30,17 +30,32 @@ Do NOT use when:
 - Steps must be completed in strict order → use FullScreenWizardTemplate
 - Only one section exists → use FullScreenFormTemplate
 
+## Shared Layout Standard
+
+See: `.claude/architecture/global-ui-standards/fullscreen-template-shared-layout.md`
+
+Defines the shared layout shell for VerticalTabsConfigurationTemplate and FullScreenWizardTemplate:
+- Template boundary (Sidebar / Header are outside the template)
+- Context Navigation Row
+- Template Header structure
+- Left Navigation Rail rules (configuration domain tabs — free navigation, not sequential)
+- Main Content Canvas scroll ownership
+- Fixed Footer Actions
+- Responsive behavior
+- QA blocking rules
+
 ## Layout
 
 ```
 AppShell
-├── Sidebar (unchanged)
-├── Application Header (unchanged)
+├── Sidebar (unchanged)                         ← outside template
+├── Application Header (unchanged)              ← outside template
 └── Main Content
     └── VerticalTabsConfigurationTemplate
-        ├── Fixed header (title, subtitle, dirty indicator)
-        ├── Body (flex row)
-        │   ├── Fixed vertical tab rail (220px, scrollable if tabs overflow)
+        ├── [Optional] Context Navigation Row
+        ├── Fixed template header (title, subtitle, dirty indicator)
+        ├── Main Workspace (flex row)
+        │   ├── Fixed vertical tab rail (scrollable when tab list overflows)
         │   └── Scrollable active-tab content (owns vertical scroll)
         └── Fixed footer
             ├── Left: Cancel

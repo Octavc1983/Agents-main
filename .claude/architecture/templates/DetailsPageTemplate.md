@@ -4,9 +4,9 @@
 Approved
 
 ## Approval Conditions
-- No custom DS primitive required — uses Button, ActionMenu, StatusIcon, Tabs, Card, existing layout patterns ✓
+- No custom DS primitive required — uses Button, ActionMenu, Tabs, Card, existing layout patterns ✓
 - All required DS components verified as available ✓
-- `StatusIcon` (shared, `src/components/shared/StatusIcon/`) for entity status ✓
+- `StatusIcon` (shared application primitive — `src/components/shared/StatusIcon/` — not a DS package export) for entity status ✓
 - `SeverityBadge` (DS) for risk severity metadata only ✓
 - `ActionMenu` (DS) for contextual actions ✓
 - `Tabs` (DS) for content section navigation ✓

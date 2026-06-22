@@ -71,54 +71,51 @@ Templates assemble existing AppShell, Infra, DS components, tokens, shared featu
 **Category:** Card List / Master Details / Split Panel
 **Status:** Implemented
 **Path:** src/prototype-templates/CardListMasterDetailsTemplate/
-**Specification:** .claude/architecture/templates/CardListMasterDetailsTemplate.md
+**Specification:** .claude/architecture/templates/CardListMasterDetailsTemplate.md *(spec created 2026-06-22)*
 **Primary User Goal:** Allow users to browse a list and view details without losing list context
 **Best Use Cases:** Scans (card mode), Accounts, Resources, Findings with rich detail
-**Last Reviewed:** 2026-06-19
+**Last Reviewed:** 2026-06-22
 
 ---
 
 ## TableMasterDetailsTemplate
 
 **Category:** Table + Row Click + Details Panel
-**Status:** Approved (not yet implemented separately — built by combining TableFiltersTemplate with CardListMasterDetailsTemplate logic at page level)
-**Specification:** .claude/architecture/templates/TableMasterDetailsTemplate.md
+**Status:** Approved (not yet implemented separately — built by combining TableFiltersTemplate with details panel logic at page level)
+**Specification:** .claude/architecture/templates/TableMasterDetailsTemplate.md *(spec created 2026-06-22)*
 **Primary User Goal:** Table browsing with persistent details panel on row click
 **Best Use Cases:** Scans (table mode with details), Accounts, Findings, Rules
-**Last Reviewed:** 2026-06-19
+**Last Reviewed:** 2026-06-22
 
 ---
 
 ## TilesDashboardTemplate
 
 **Category:** KPI Tiles / Charts / Summary Metrics / Dashboard
-**Status:** Specified
-**Specification:** .claude/architecture/templates/TilesDashboardTemplate.md
+**Status:** Candidate *(previously marked "Specified" in error — spec file does not exist)*
 **Primary User Goal:** High-level overview of metrics, trends, statuses, and insights
 **Best Use Cases:** Risk dashboard, scan health, compliance summary, usage analytics
-**Last Reviewed:** 2026-06-19
+**Last Reviewed:** 2026-06-22
 
 ---
 
 ## CanvasTemplate
 
 **Category:** Visual Workspace / Node Graph / Drag-and-Drop Builder
-**Status:** Specified
-**Specification:** .claude/architecture/templates/CanvasTemplate.md
+**Status:** Candidate *(previously marked "Specified" in error — spec file does not exist)*
 **Primary User Goal:** Visualize, create, or connect objects in a spatial workspace
 **Best Use Cases:** Rule builder, workflow builder, dependency map, topology view
-**Last Reviewed:** 2026-06-19
+**Last Reviewed:** 2026-06-22
 
 ---
 
 ## ZeroStateConfigurationTemplate
 
 **Category:** Zero State / Configuration / Vertical Tabs
-**Status:** Specified
-**Specification:** .claude/architecture/templates/ZeroStateConfigurationTemplate.md
+**Status:** Candidate *(previously marked "Specified" in error — spec file does not exist)*
 **Primary User Goal:** Guide users through initial feature setup or configuration
 **Best Use Cases:** Integration setup, account configuration, policy configuration, connection settings
-**Last Reviewed:** 2026-06-19
+**Last Reviewed:** 2026-06-22
 
 ---
 

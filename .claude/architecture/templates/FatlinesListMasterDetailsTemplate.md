@@ -37,6 +37,30 @@ Allow users to scan dense entity records in a compact list and inspect one entit
 
 ---
 
+## Template Boundary
+
+The template does NOT include:
+
+```text
+- Application Header
+- Global navigation Sidebar
+- Space switcher
+- Global utility actions
+- AppShell layout
+```
+
+The template begins inside Main Content:
+
+```text
+AppShell
+├── Sidebar                        ← outside template
+├── Application Header             ← outside template
+└── Main Content
+    └── FatlinesListMasterDetailsTemplate
+```
+
+---
+
 ## Core Pattern
 
 ```text
@@ -51,11 +75,227 @@ Master Details provides deep inspection without replacing the page, changing nav
 
 ---
 
+## Required Layout Structure
+
+```text
+FatlinesListMasterDetailsTemplate
+├── Persistent Summary Bar
+│   ├── Filter trigger
+│   ├── Search
+│   ├── Optional saved-view / bookmark control
+│   ├── Result count
+│   ├── Page-level actions
+│   └── View-mode controls
+│
+└── Split Workspace
+    ├── FATLINES List Pane
+    │   └── Scrollable FATLINES list
+    │
+    ├── Resizable Split Divider
+    │   └── Drag handle
+    │
+    └── Master Details Pane
+        ├── Details Header
+        │   ├── Entity title
+        │   ├── Contextual actions
+        │   └── Close Details action
+        │
+        └── Scrollable Details Content
+```
+
+---
+
+## Persistent Summary Bar
+
+The Summary Bar belongs to the template and remains above both panes.
+
+It is not part of the List Pane and not part of the Master Details Pane.
+
+```text
+Persistent Summary Bar
+→ fixed within the template
+→ remains visible while List and Details content scroll independently
+→ controls the shared list context
+```
+
+It owns:
+
+```text
+- search query
+- applied filters
+- filter trigger
+- result count
+- selection summary
+- bulk actions
+- optional saved-view controls
+- optional view-mode switch
+- page-level actions
+```
+
+The Summary Bar must remain stable when:
+
+```text
+- a list row is selected
+- Master Details opens
+- Master Details closes
+- filters are applied
+- search changes
+- list scroll position changes
+```
+
+---
+
+## Split Workspace
+
+The workspace below the Summary Bar is a horizontal split layout.
+
+```text
+┌───────────────────────────┬────────────────────────────────┐
+│                           │                                │
+│      FATLINES List        │         Master Details         │
+│                           │                                │
+│      scrollable           │          scrollable            │
+│                           │                                │
+└───────────────────────────┴────────────────────────────────┘
+              ↑
+       Resizable divider
+```
+
+Rules:
+
+```text
+- The List Pane and Master Details Pane are sibling regions.
+- Each pane owns its own vertical scrolling.
+- The split workspace itself does not own vertical scrolling.
+- The Summary Bar remains fixed above both panes.
+- The Details Header remains fixed above Details Content.
+- Opening details must not reset the list query, filters, sort, selection, pagination, or scroll position.
+```
+
+---
+
+## Default Width Behavior
+
+Default composition (from screenshot):
+
+```text
+List Pane:    ~47% of available workspace width
+Details Pane: ~53% of available workspace width
+```
+
+Do not hardcode these values in page CSS. Map to closest approved layout token, grid definition, or split-pane capability.
+
+The divider must allow resizing only when the available Design System or approved application layout primitive supports it. If no approved split-pane primitive exists → create a capability gap rather than implementing a custom local resizer.
+
+---
+
+## Filter Panel Behavior
+
+When filters are expanded, the workspace becomes a three-column layout:
+
+```text
+┌──────────────────────────────────────────────────────────────────────┐
+│ Context / Action Bar                                                  │
+│ Filter | Search | Saved view | Actions | View controls                │
+├───────────────┬───────────────────────────┬──────────────────────────┤
+│               │                           │                          │
+│ Filter Panel  │      FATLINES List         │      Master Details      │
+│               │                           │                          │
+│ independently │      independently         │      independently       │
+│ scrollable    │      scrollable             │      scrollable          │
+│               │                           │                          │
+└───────────────┴───────────────────────────┴──────────────────────────┘
+```
+
+### Filter Panel Anatomy
+
+```text
+Filter Panel
+├── Panel Header (fixed)
+│   ├── Filter title
+│   ├── Optional applied-count summary
+│   └── Close action
+│
+├── Filter Content (owns vertical scroll)
+│   ├── Filter category groups
+│   │   ├── Category label
+│   │   ├── Optional search within values
+│   │   ├── Checkbox / radio / select controls
+│   │   └── Optional expand / collapse control
+│   │
+│   ├── Loading state
+│   ├── Empty state
+│   ├── Error state
+│   └── Permission state
+│
+└── Panel Footer (fixed)
+    ├── Clear all
+    ├── Cancel
+    └── Apply filters
+```
+
+### Draft and Applied Filter Model
+
+Separate draft from applied:
+
+```ts
+type FilterState = {
+  draftFilters: FilterGroup[];
+  appliedFilters: FilterGroup[];
+  isPanelOpen: boolean;
+};
+```
+
+Behavior:
+- User changes values → update draft only
+- Apply → draft becomes applied → results update → pagination resets → list scroll returns to top → selected entity revalidated
+- Cancel or close without Apply → discard draft → preserve applied → results unchanged
+
+Do not apply filter changes immediately unless an explicit product decision requires live filtering.
+
+### Multi-Select Logic
+
+```text
+Multiple values inside one category → OR
+Different filter categories           → AND
+```
+
+### Applied Filter Summary (chips)
+
+Applied filters must remain visible outside the panel in the Summary Bar using grouped chips:
+
+```text
+Environment: Production, Staging
+Status: Active
+Provider: AWS +3
+```
+
+The Filter Panel and chips must always reflect the same applied filter state.
+
+### Filter Panel Modes
+
+```ts
+type FilterPanelMode = 'expanded' | 'collapsed';
+```
+
+When collapsed: List Pane expands into released width. Master Details retains its split relationship with List Pane.
+
+Do not render the Filter Panel as a modal by default. Do not use a Drawer unless responsive behavior requires it.
+
+### Filter Panel States
+
+```ts
+type FilterPanelState =
+  | 'collapsed' | 'loading' | 'ready' | 'empty'
+  | 'error' | 'permission-denied' | 'applying' | 'applied';
+```
+
+---
+
 ## Required Page Structure
 
 ```text
 Page
-├── Optional page header
 ├── Persistent Summary Bar
 │   ├── Search
 │   ├── Filter trigger
@@ -64,21 +304,28 @@ Page
 │   ├── Selection summary
 │   ├── Bulk actions
 │   └── Optional view controls
-└── Main content
-    ├── FATLINES List
+└── Split Workspace
+    ├── [Optional] Filter Panel
+    ├── FATLINES List Pane
     │   ├── Bulk selection checkbox
-    │   ├── 24px status icon
+    │   ├── 24px StatusIcon (shared)
     │   ├── Primary identifiers
     │   ├── Secondary identifiers
     │   ├── Contextual metadata
     │   └── Row actions
-    └── Master Details
-        ├── Entity header
-        ├── Status
-        ├── Primary metadata
-        ├── Details sections
-        ├── Related activity / data
-        └── Contextual actions
+    ├── Resizable Split Divider
+    └── Master Details Pane
+        ├── Details Header (fixed)
+        │   ├── Entity title
+        │   ├── Contextual actions
+        │   └── Close action
+        └── Details Content (scrollable)
+            ├── Entity header
+            ├── Status
+            ├── Primary metadata
+            ├── Details sections
+            ├── Related activity / data
+            └── Contextual actions
 ```
 
 ---
@@ -299,11 +546,29 @@ IRON RULE: The status column must use `StatusIcon` at 24px. Same icon mapping mu
 
 ---
 
+## Scroll Ownership
+
+```text
+Persistent Summary Bar         → fixed
+Filter Panel Header            → fixed
+Filter Panel Content           → owns vertical scroll
+Filter Panel Footer            → fixed
+FATLINES List Pane             → owns vertical scroll
+Master Details Header          → fixed within Details Pane
+Master Details Content         → owns vertical scroll
+Split Workspace                → does not own vertical scroll
+Full page                      → does not own vertical scroll by default
+```
+
+The Filter Panel must never share its scroll container with the FATLINES list or Master Details content.
+
+---
+
 ## QA Blocking Rules
 
 ```text
 - Checkbox click opens Master Details
-- Status icon is not 24px DS icon
+- StatusIcon is not 24px (shared application primitive)
 - Different status icon mapping in list vs Master Details
 - Risk column uses badge, dot, or text instead of SeverityBadge
 - Filters reset when Master Details opens
@@ -311,6 +576,19 @@ IRON RULE: The status column must use `StatusIcon` at 24px. Same icon mapping mu
 - Selected entity is not highlighted in list while details are open
 - Virtualization not used for large data sets
 - Master Details does not close safely when selected entity is filtered out
+- AppShell Header or Sidebar included inside the template
+- Summary Bar scrolls with List or Details content
+- List and Details share one vertical scroll container
+- Details Header scrolls away
+- Filter Panel Header or Footer scrolls away
+- Checkbox interaction opens Details
+- Row action interaction opens Details
+- Split divider implemented as unsupported local resizer
+- Draft filter changes update results before Apply
+- Closing filter panel silently applies draft changes
+- Filter count reflects draft rather than applied filters
+- Filtered-out selected entities remain active in Master Details
+- Screenshot colors or component styling are copied locally
 ```
 
 ---

@@ -99,7 +99,7 @@ Auto-load:
 - Filter/search/sort/scroll preserved when Master Details opens/closes
 - If selected entity is filtered out → close Master Details safely
 - Virtualization by default for large data sets
-- Status icons: 24px DS StatusIcon (GUS-001)
+- Status icons: 24px StatusIcon (shared application primitive — src/components/shared/StatusIcon/ — not a DS package export) (GUS-001)
 - Risk column: SeverityBadge severity={row.riskLevel} variant="fill" — wired to Risk Management page
 - All required states: loading, empty, no-results, error, permission, selection, bulk, unavailable entity
 

@@ -39,23 +39,39 @@ Examples: Migration setup, tenant onboarding, infrastructure configuration, conn
 - A simple confirmation dialog suffices
 ```
 
+## Shared Layout Standard
+
+See: `.claude/architecture/global-ui-standards/fullscreen-template-shared-layout.md`
+
+Defines the shared layout shell for FullScreenWizardTemplate and VerticalTabsConfigurationTemplate:
+- Template boundary (Sidebar / Header are outside the template)
+- Context Navigation Row
+- Template Header structure
+- Left Navigation Rail rules
+- Main Content Canvas scroll ownership
+- Fixed Footer Actions
+- Responsive behavior
+- QA blocking rules
+
 ## Layout
 
 ```
 AppShell
-├── Sidebar (unchanged)
-├── Application Header (unchanged)
+├── Sidebar (unchanged)                         ← outside template
+├── Application Header (unchanged)              ← outside template
 └── Main Content
     └── FullScreenWizardTemplate
-        ├── Left nav panel (280px, fixed)
-        │   ├── Wizard title
-        │   ├── Optional subtitle
-        │   └── Vertical stepper (scrollable when step count requires)
-        ├── Right body (flex: 1)
-        │   ├── Scrollable step content (owns vertical scroll)
-        │   └── Fixed footer
-        │       ├── Left: Cancel / Close
-        │       └── Right: Back | Primary action
+        ├── [Optional] Context Navigation Row
+        ├── Template Header
+        ├── Main Workspace
+        │   ├── Left nav panel (fixed, scrollable when step list overflows)
+        │   │   ├── Wizard title
+        │   │   ├── Optional subtitle
+        │   │   └── Vertical stepper
+        │   └── Scrollable step content (owns vertical scroll)
+        └── Fixed footer
+            ├── Left: Cancel / Close
+            └── Right: Back | Primary action
 ```
 
 ## File Structure

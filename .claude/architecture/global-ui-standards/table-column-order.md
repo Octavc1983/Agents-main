@@ -134,7 +134,7 @@ Row actions click     → opens row action menu only (stops propagation)
 
 ```text
 1. Does this table support bulk actions? → Checkbox column first
-2. Is the Status column second? → Use 24px DS StatusIcon
+2. Is the Status column second? → Use 24px StatusIcon (shared — src/components/shared/StatusIcon/ — not a DS package export)
 3. Do identifiers begin immediately after status?
 4. Is there a Risk column? → SeverityBadge only, wired to Risk Management
 5. Are row actions last?
