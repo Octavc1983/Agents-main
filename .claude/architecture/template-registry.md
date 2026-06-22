@@ -34,6 +34,7 @@ Templates assemble existing AppShell, Infra, DS components, tokens, shared featu
 |---|---|---|---|
 | Table, rows, columns, filters, search, sorting, bulk actions, pagination | TableFiltersTemplate | Table header, filter toolbar, row menu, checkbox selection | Search, filters, chips, result summary, sort, selection, row actions, bulk actions, Bulk Status Dialog, all states |
 | Table plus row click opening details | TableMasterDetailsTemplate | Full table default, item selection, details content | Persistent toolbar, table mode, details mode, context preservation, details states |
+| Dense entity rows, checkbox, status icon, row click opens details panel, tabbed master details | FatlinesListMasterDetailsTemplate | FATLINES list, row selection, master details panel, summary bar | Column order (checkbox→status→identifiers→risk→actions), virtualization, filter/search preservation, bulk actions, all states |
 | Cards/list left, details right, 30/70 split | CardListMasterDetailsTemplate | Vertical cards, selected item, details panel | Card list, selected state, details states, item switching |
 | KPI tiles, widgets, charts, summary metrics | TilesDashboardTemplate | KPI cards, widgets, metric groups | Widget layout, dashboard filters, freshness state, drill-down actions, widget states |
 | Single card, category tile grid + line chart + KPI sidebar, horizontal 3-column | HalfDashboardTemplate | Category breakdown tiles, time range selector, dark KPI panel | Tile grid with collapsed borders, gradient chart, KPI metric sidebar |
@@ -130,6 +131,18 @@ Templates assemble existing AppShell, Infra, DS components, tokens, shared featu
 **Primary User Goal:** Guide users through a sequential multi-step creation or configuration flow with persistent step context
 **Best Use Cases:** Create account wizard, onboarding flows, multi-step setup, guided configuration
 **Last Reviewed:** 2026-06-21
+
+---
+
+## FatlinesListMasterDetailsTemplate
+
+**Category:** Entity Management / FATLINES List / Master Details / Tabbed Details
+**Status:** Approved
+**Specification:** .claude/architecture/templates/FatlinesListMasterDetailsTemplate.md
+**Primary User Goal:** Scan dense entity records and inspect one entity in full context without losing list position, filters, or bulk selection
+**Best Use Cases:** Managed Accounts, Identities, Risk Findings, Policies, Access relationships, any management inventory page requiring both browsing and deep inspection
+**Column Order:** Checkbox → 24px Status Icon → Primary Identifier → Metadata → Risk → Actions
+**Last Reviewed:** 2026-06-22
 
 ---
 

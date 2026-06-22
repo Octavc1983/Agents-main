@@ -40,8 +40,8 @@
   color: $color-text-light;
   font-size: 11px;
   font-weight: $font-weight-semibold;
-  border: 2px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  border: 2px solid $color-annotation-pin-border;
+  box-shadow: $shadow-annotation-pin;
   cursor: pointer;
   pointer-events: all;
   transition: transform $transition-fast, box-shadow $transition-fast;
@@ -51,7 +51,7 @@
 
   &:hover {
     transform: translate(-50%, -50%) scale(1.2);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55);
+    box-shadow: $shadow-annotation-pin-hover;
   }
 
   &:focus-visible {
@@ -65,8 +65,8 @@
   }
 
   &--pending {
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px dashed rgba(255, 255, 255, 0.6);
+    background: $color-annotation-pin-pending-bg;
+    border: 2px dashed $color-annotation-pin-pending-border;
     pointer-events: none;
     animation: pin-pulse 1s ease-in-out infinite;
     cursor: none;
@@ -75,7 +75,7 @@
   &--dragging {
     cursor: grabbing;
     transform: translate(-50%, -50%) scale(1.25);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.65);
+    box-shadow: $shadow-annotation-pin-drag;
     opacity: 0.9;
     transition: none; // disable transition during drag for instant tracking
   }
@@ -99,7 +99,7 @@
   background: $color-background-darker;
   border: 1px solid $color-border-dark;
   border-radius: $border-radius-base;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  box-shadow: $shadow-annotation-callout;
   padding: $spacing-3 $spacing-4;
   z-index: 360;
   pointer-events: all;

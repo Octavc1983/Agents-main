@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
       { path: 'setup/health/session-diagnostics', element: <SessionDiagnosticsPage /> },
       { path: 'setup/migrations', element: <MigrationsPage /> },
       { path: 'setup/migrations/:migrationId', element: <MigrationDetailPage /> },
-      { path: 'manage/inventory/accounts', element: <ManagedAccountsPage /> },
+      { path: 'manage/inventory/means-of-access/managed-accounts', element: <ManagedAccountsPage /> },
       { path: 'risk/risk-management', element: <RiskManagementPage /> },
       {
         path: '*',

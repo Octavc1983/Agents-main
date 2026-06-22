@@ -88,6 +88,7 @@ export function CardListMasterDetailsTemplate<T>(
     getItemChips,
     renderDetails,
     renderEmptyDetails,
+    initialSelectedId,
     selectFirstItemByDefault = false,
     onSelectedItemChange,
     clearSelectionWhenFilteredOut = true,
@@ -116,7 +117,13 @@ export function CardListMasterDetailsTemplate<T>(
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [draftFilters, setDraftFilters] = useState<Record<string, string[]>>({});
   const [appliedFilters, setAppliedFilters] = useState<Record<string, string[]>>({});
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(initialSelectedId ?? null);
+
+  // ── Lock body scroll when filter panel is open ─────────────────────────────
+  useEffect(() => {
+    document.body.style.overflow = isFiltersOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isFiltersOpen]);
 
   // ── Filter handlers ────────────────────────────────────────────────────────
 

@@ -17,9 +17,10 @@
 
 .app-shell__content {
   flex: 1;
-  padding: 0;
+  padding: $spacing-6 $spacing-12;
   background-color: var(--color-page-background, #{$color-page-background});
   overflow-y: auto;
+  @include ds-scrollbar;
 }
 
 .app-shell__review-btn {

@@ -60,6 +60,7 @@ No applicable global UI standard found.
 | [error-and-recovery.md](error-and-recovery.md) | error | active |
 | [buttons-and-actions.md](buttons-and-actions.md) | action | active |
 | [tables-and-split-views.md](tables-and-split-views.md) | table | active |
+| [table-column-order.md](table-column-order.md) | table | active |
 | [table-filter-and-summary-bar.md](table-filter-and-summary-bar.md) | table | active |
 | [table-interaction-animation-virtualization.md](table-interaction-animation-virtualization.md) | table | active |
 | [forms-and-validation.md](forms-and-validation.md) | form | active |

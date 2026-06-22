@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
-import { Button } from '@idira/design-system';
+import { Button, SeverityBadge } from '@idira/design-system';
 import { ManageTagsDialog } from '../../features/tags/ManageTagsDialog/ManageTagsDialog';
 import { MOCK_TAG_SUGGESTIONS } from '../../mock/tagsMockData';
 import type { Tag } from '../../features/tags/tag.types';
@@ -17,7 +17,8 @@ import {
 } from '@idira/design-system/icons';
 import { TableFiltersTemplate } from '../../prototype-templates/TableFiltersTemplate';
 import type { TableColumn } from '../../prototype-templates/TableFiltersTemplate';
-import type { ManagedAccount, ManagedAccountStatus, ManagedAccountPlatform } from '../../types/prototype.types';
+import { CardListMasterDetailsTemplate } from '../../prototype-templates/CardListMasterDetailsTemplate';
+import type { ManagedAccount, ManagedAccountPlatform } from '../../types/prototype.types';
 import { managedAccountsMock } from '../../mock/managedAccountsMockData';
 import { CreateManagedAccountWizard } from './CreateManagedAccountWizard';
 import './ManagedAccountsPage.scss';
@@ -304,6 +305,16 @@ const FILTER_GROUPS = [
     ],
   },
   {
+    id: 'organization', label: 'Organization', type: 'multi-select' as const,
+    options: [
+      { value: 'CyberArk', label: 'CyberArk' },
+      { value: 'Acme Corp', label: 'Acme Corp' },
+      { value: 'FinanceDiv', label: 'FinanceDiv' },
+      { value: 'IT-Ops', label: 'IT-Ops' },
+      { value: 'Security Team', label: 'Security Team' },
+    ],
+  },
+  {
     id: 'platform', label: 'Platform', type: 'multi-select' as const,
     options: [
       { value: 'Windows', label: 'Windows' }, { value: 'Linux', label: 'Linux' },
@@ -332,6 +343,16 @@ const FILTER_GROUPS = [
     options: [
       { value: 'active', label: 'Active' }, { value: 'inactive', label: 'Inactive' },
       { value: 'pending', label: 'Pending' }, { value: 'locked', label: 'Locked' },
+      { value: 'marked_for_deletion', label: 'Marked for deletion' }, { value: 'deleted', label: 'Deleted' },
+    ],
+  },
+  {
+    id: 'riskLevel', label: 'Risk', type: 'multi-select' as const,
+    options: [
+      { value: 'critical', label: 'Critical' },
+      { value: 'high', label: 'High' },
+      { value: 'medium', label: 'Medium' },
+      { value: 'low', label: 'Low' },
     ],
   },
 ];
@@ -342,12 +363,112 @@ function formatTime(d: Date): string {
   return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 }
 
+// ── Account details panel ──────────────────────────────────────────────────────
+
+const CloseDetailsIcon: React.FC = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M12.667 3.333L3.334 12.667M3.334 3.333l9.333 9.334" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+
+interface AccountDetailsPanelProps {
+  account: ManagedAccount;
+  onClose: () => void;
+  onManageTags: (account: ManagedAccount) => void;
+}
+
+const AccountDetailsPanel: React.FC<AccountDetailsPanelProps> = ({ account, onClose, onManageTags }) => {
+  const PlatformIconComp = PLATFORM_ICON_MAP[account.platform];
+  return (
+    <div className="ma-details-panel">
+      <div className="ma-details-panel__header">
+        <div className="ma-details-panel__title-row">
+          <span className="ma-details-panel__platform-icon">
+            {PlatformIconComp ? <PlatformIconComp size={28} /> : null}
+          </span>
+          <div className="ma-details-panel__title-text">
+            <span className="ma-details-panel__name">{account.name}</span>
+            <span className="ma-details-panel__platform">{account.platform}</span>
+          </div>
+        </div>
+        <button
+          type="button"
+          className="ma-details-panel__close"
+          onClick={onClose}
+          aria-label="Close details"
+        >
+          <CloseDetailsIcon />
+        </button>
+      </div>
+
+      <div className="ma-details-panel__body">
+        <dl className="ma-details-panel__grid">
+          <dt>Status</dt>
+          <dd><StatusIcon status={account.status} size={24} showLabel /></dd>
+
+          <dt>Risk</dt>
+          <dd><SeverityBadge severity={account.riskLevel} variant="fill" /></dd>
+
+          <dt>Safe</dt>
+          <dd>{account.safe}</dd>
+
+          <dt>Organization</dt>
+          <dd>{account.organization ?? '—'}</dd>
+
+          <dt>Address</dt>
+          <dd>{account.address || '—'}</dd>
+
+          <dt>Account ID</dt>
+          <dd className="ma-details-panel__mono">{account.id.toUpperCase()}</dd>
+
+          <dt>Type</dt>
+          <dd className="ma-details-panel__capitalize">{account.accountType}</dd>
+
+          <dt>Owner</dt>
+          <dd>{account.owner}</dd>
+
+          <dt>Last password change</dt>
+          <dd>{account.lastPasswordChange}</dd>
+
+          <dt>Created</dt>
+          <dd>{account.createdAt}</dd>
+        </dl>
+
+        {account.tags.length > 0 && (
+          <div className="ma-details-panel__tags-section">
+            <span className="ma-details-panel__section-label">Tags</span>
+            <div className="ma-details-panel__tags">
+              {account.tags.map((tag, i) => (
+                <TagChip key={`${tag}-${i}`} tag={tag} variant="callout" />
+              ))}
+            </div>
+            <button
+              type="button"
+              className="ma-details-panel__manage-tags-btn"
+              onClick={() => onManageTags(account)}
+            >
+              Manage tags
+            </button>
+          </div>
+        )}
+
+        {account.description && (
+          <p className="ma-details-panel__description">{account.description}</p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// ── ManagedAccountsPage ───────────────────────────────────────────────────────
+
 export const ManagedAccountsPage: React.FC = () => {
   const [wizardOpen, setWizardOpen] = useState(false);
   const [tagsDialogAccount, setTagsDialogAccount] = useState<ManagedAccount | null>(null);
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
   const [updatedAt, setUpdatedAt] = useState(() => formatTime(new Date()));
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [selectedAccountId, setSelectedAccountId] = useState<string | null>(null);
 
   // Close any open popover when the page scrolls (#8)
   useEffect(() => {
@@ -367,6 +488,12 @@ export const ManagedAccountsPage: React.FC = () => {
 
   const columns = useMemo<TableColumn<ManagedAccount>[]>(() => [
     {
+      id: 'status',
+      label: '',
+      narrow: true,
+      render: (row) => <StatusIcon status={row.status} size={24} />,
+    },
+    {
       id: 'identifiers',
       label: 'Identifiers',
       render: (row) => (
@@ -385,24 +512,30 @@ export const ManagedAccountsPage: React.FC = () => {
     {
       id: 'safe',
       label: 'Safe',
-      render: (row) => <span className="ma-cell-text">{row.safe}</span>,
+      render: (row) => <span className="ma-cell-text" title={row.safe}>{row.safe}</span>,
+    },
+    {
+      id: 'organization',
+      label: 'Organization',
+      render: (row) => <span className="ma-cell-text" title={row.organization ?? '—'}>{row.organization ?? '—'}</span>,
+      hideWhenNarrow: true,
     },
     {
       id: 'platform',
       label: 'Platform',
-      render: (row) => <span className="ma-cell-text">{row.platform}</span>,
+      render: (row) => <span className="ma-cell-text" title={row.platform}>{row.platform}</span>,
       hideWhenNarrow: true,
     },
     {
-      id: 'status',
-      label: 'Status',                          // was "Risk" (#3)
-      render: (row) => <StatusIcon status={row.status} size={24} showLabel />,
+      id: 'riskLevel',
+      label: 'Risk',
+      render: (row) => <SeverityBadge severity={row.riskLevel} variant="fill" />,
       hideWhenNarrow: true,
     },
     {
       id: 'subtype',
       label: 'Subtype',
-      render: (row) => <span className="ma-cell-text ma-cell-text--capitalize">{row.accountType}</span>,
+      render: (row) => <span className="ma-cell-text ma-cell-text--capitalize" title={row.accountType}>{row.accountType}</span>,
       hideWhenNarrow: true,
     },
     {
@@ -421,39 +554,112 @@ export const ManagedAccountsPage: React.FC = () => {
     },
   ], [openPopoverId]);
 
+  const sharedActions = (
+    <Button variant="main" size="sm" onClick={() => setWizardOpen(true)}>
+      Add account
+    </Button>
+  );
+
+  const sharedFilterGroups = FILTER_GROUPS;
+
+  const getFilterValue = useCallback((account: ManagedAccount, groupId: string) => {
+    if (groupId === 'safe') return account.safe;
+    if (groupId === 'organization') return account.organization ?? '';
+    if (groupId === 'platform') return account.platform;
+    if (groupId === 'accountType') return account.accountType;
+    if (groupId === 'status') return account.status;
+    if (groupId === 'riskLevel') return account.riskLevel;
+    return '';
+  }, []);
+
+  const searchableFields = useMemo(() => [
+    (a: ManagedAccount) => a.name,
+    (a: ManagedAccount) => a.address,
+    (a: ManagedAccount) => a.owner,
+    (a: ManagedAccount) => a.safe,
+    (a: ManagedAccount) => a.organization ?? '',
+    (a: ManagedAccount) => a.platform,
+  ], []);
+
+  // ── Master-details view ────────────────────────────────────────────────────
+
+  if (selectedAccountId) {
+    return (
+      <>
+        <CardListMasterDetailsTemplate<ManagedAccount>
+          title="Managed accounts"
+          description="Discover, connect, and monitor all AI agents across the organization."
+          items={managedAccountsMock}
+          getItemId={(a) => a.id}
+          getItemTitle={(a) => a.name}
+          getItemSubtitle={(a) => `${a.platform} · ${a.address || a.accountType}`}
+          getItemStatus={(a) => <StatusIcon status={a.status} size={24} />}
+          getItemIcon={(a) => {
+            const Icon = PLATFORM_ICON_MAP[a.platform];
+            return Icon ? <Icon size={20} /> : null;
+          }}
+          initialSelectedId={selectedAccountId}
+          onSelectedItemChange={(item) => {
+            if (!item) setSelectedAccountId(null);
+          }}
+          renderDetails={(account) => (
+            <AccountDetailsPanel
+              account={account}
+              onClose={() => setSelectedAccountId(null)}
+              onManageTags={setTagsDialogAccount}
+            />
+          )}
+          filterGroups={sharedFilterGroups}
+          getFilterValue={getFilterValue}
+          searchableFields={searchableFields}
+          searchPlaceholder="Search / Filter"
+          primaryAction={sharedActions}
+          updatedAt={updatedAt}
+          onRefresh={handleRefresh}
+          isLoading={isRefreshing}
+          emptyTitle="No managed accounts"
+          emptyDescription="Create your first managed account to get started."
+        />
+
+        {wizardOpen && (
+          <CreateManagedAccountWizard onClose={() => setWizardOpen(false)} />
+        )}
+        {tagsDialogAccount && (
+          <ManageTagsDialog
+            isOpen={!!tagsDialogAccount}
+            onClose={() => setTagsDialogAccount(null)}
+            entityName={tagsDialogAccount.name}
+            initialTags={accountTagsToTagModel(tagsDialogAccount.tags)}
+            suggestions={MOCK_TAG_SUGGESTIONS}
+            onSave={async (_tags: Tag[]) => { await new Promise(r => setTimeout(r, 600)); }}
+          />
+        )}
+      </>
+    );
+  }
+
+  // ── Table view (default) ───────────────────────────────────────────────────
+
   return (
     <>
       <TableFiltersTemplate<ManagedAccount>
         title="Managed accounts"
+        description="Discover, connect, and monitor all AI agents across the organization."
         rows={managedAccountsMock}
         columns={columns}
         getRowId={(a) => a.id}
+        selectable
         searchPlaceholder="Search / Filter"
-        searchableFields={[
-          (a) => a.name,
-          (a) => a.address,
-          (a) => a.owner,
-          (a) => a.safe,
-          (a) => a.platform,
-        ]}
+        searchableFields={searchableFields}
         filterGroups={FILTER_GROUPS}
-        getFilterValue={(account, groupId) => {
-          if (groupId === 'safe') return account.safe;
-          if (groupId === 'platform') return account.platform;
-          if (groupId === 'accountType') return account.accountType;
-          if (groupId === 'status') return account.status;
-          return '';
-        }}
-        primaryAction={
-          <Button variant="main" size="sm" onClick={() => setWizardOpen(true)}>
-            Add account
-          </Button>
-        }
+        getFilterValue={getFilterValue}
+        primaryAction={sharedActions}
         updatedAt={updatedAt}
         onRefresh={handleRefresh}
         isLoading={isRefreshing}
         emptyTitle="No managed accounts"
         emptyDescription="Create your first managed account to get started."
+        onRowClick={(account) => setSelectedAccountId(account.id)}
         rowActions={(account) => (
           <RowActionsMenu
             account={account}
@@ -468,7 +674,6 @@ export const ManagedAccountsPage: React.FC = () => {
       {wizardOpen && (
         <CreateManagedAccountWizard onClose={() => setWizardOpen(false)} />
       )}
-
       {tagsDialogAccount && (
         <ManageTagsDialog
           isOpen={!!tagsDialogAccount}
@@ -476,9 +681,7 @@ export const ManagedAccountsPage: React.FC = () => {
           entityName={tagsDialogAccount.name}
           initialTags={accountTagsToTagModel(tagsDialogAccount.tags)}
           suggestions={MOCK_TAG_SUGGESTIONS}
-          onSave={async (_tags: Tag[]) => {
-            await new Promise(r => setTimeout(r, 600));
-          }}
+          onSave={async (_tags: Tag[]) => { await new Promise(r => setTimeout(r, 600)); }}
         />
       )}
     </>

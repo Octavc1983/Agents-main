@@ -1,4 +1,5 @@
-import React, { useState, useRef, useCallback, useId } from 'react';
+import React, { useState, useRef, useCallback, useId, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { Chip } from '@idira/design-system';
 import type { Tag, TagSuggestion, TagValidationError } from '../tag.types';
 import { TAG_MAX_COUNT, TAG_VALIDATION_MESSAGES } from '../tag.types';
@@ -49,6 +50,8 @@ export const TagAutocompleteInput: React.FC<TagAutocompleteInputProps> = ({
   const [validationError, setValidationError] = useState<TagValidationError | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const fieldRef = useRef<HTMLDivElement>(null);
+  const [dropdownPos, setDropdownPos] = useState<{ top: number; left: number; width: number } | null>(null);
 
   const atLimit = tags.length >= maxCount;
 
@@ -174,6 +177,25 @@ export const TagAutocompleteInput: React.FC<TagAutocompleteInputProps> = ({
     setActiveIndex(-1);
   }, []);
 
+  // ── Portal dropdown positioning ───────────────────────────────────────────
+
+  const updatePos = useCallback(() => {
+    if (!fieldRef.current || !dropdownOpen) return;
+    const rect = fieldRef.current.getBoundingClientRect();
+    setDropdownPos({ top: rect.bottom + 4, left: rect.left, width: rect.width });
+  }, [dropdownOpen]);
+
+  useEffect(() => {
+    if (!dropdownOpen) { setDropdownPos(null); return; }
+    updatePos();
+    window.addEventListener('scroll', updatePos, true);
+    window.addEventListener('resize', updatePos);
+    return () => {
+      window.removeEventListener('scroll', updatePos, true);
+      window.removeEventListener('resize', updatePos);
+    };
+  }, [dropdownOpen, updatePos]);
+
   // ── Render ────────────────────────────────────────────────────────────────
 
   const errorMessage = validationError ? TAG_VALIDATION_MESSAGES[validationError] : null;
@@ -191,7 +213,8 @@ export const TagAutocompleteInput: React.FC<TagAutocompleteInputProps> = ({
 
       {/* ── Chip area + input ── */}
       <div
-        className={`tagInput__field${dropdownOpen && dropdownItems.length > 0 ? ' tagInput__field--open' : ''}`}
+        ref={fieldRef}
+        className="tagInput__field"
         onClick={() => !disabled && inputRef.current?.focus()}
       >
         {tags.map(tag => {
@@ -237,13 +260,14 @@ export const TagAutocompleteInput: React.FC<TagAutocompleteInputProps> = ({
         )}
       </div>
 
-      {/* ── Autocomplete dropdown ── */}
-      {dropdownOpen && dropdownItems.length > 0 && !disabled && (
+      {/* ── Autocomplete dropdown (portaled to body) ── */}
+      {dropdownOpen && dropdownItems.length > 0 && !disabled && dropdownPos && ReactDOM.createPortal(
         <ul
           id={listboxId}
           className="tagInput__dropdown"
           role="listbox"
           aria-label="Tag suggestions"
+          style={{ top: dropdownPos.top, left: dropdownPos.left, width: dropdownPos.width }}
         >
           {dropdownItems.map((item, idx) => {
             const isActive = idx === activeIndex;
@@ -282,7 +306,8 @@ export const TagAutocompleteInput: React.FC<TagAutocompleteInputProps> = ({
               </li>
             );
           })}
-        </ul>
+        </ul>,
+        document.body,
       )}
 
       {errorMessage && (

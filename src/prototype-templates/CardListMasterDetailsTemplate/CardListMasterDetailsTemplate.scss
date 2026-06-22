@@ -10,9 +10,8 @@
 
 .cardListMDT {
   @include flex-col;
-  background-color: $color-page-background;
   min-height: 100%;
-  padding: $spacing-6 $spacing-8;
+  padding: 0;
   gap: 0;
   position: relative; // establishes stacking context for filter panel
 
@@ -215,7 +214,7 @@
   align-items: center;
   gap: $spacing-1;
   padding: $spacing-1 $spacing-2;
-  background-color: rgba($color-primary, 0.12);
+  background-color: $color-badge-medium-bg;
   border: 1px solid rgba($color-primary, 0.3);
   border-radius: $border-radius-full;
   font-size: $font-size-xs;
@@ -268,14 +267,14 @@
 
 .cardListMDT__content {
   display: grid;
-  grid-template-columns: minmax(260px, 30%) minmax(0, 70%);
+  grid-template-columns: 3fr 7fr;
   gap: $spacing-4;
   flex: 1;
   min-height: 0;
   align-items: start;
 
   @include respond-to('md') {
-    grid-template-columns: minmax(220px, 35%) minmax(0, 65%);
+    grid-template-columns: 2fr 3fr;
   }
 
   @include respond-to('sm') {
@@ -283,30 +282,18 @@
   }
 }
 
-// ── Left: master card list ────────────────────────────────────────────────────
+// ── Left: master card list (FatLines style) ───────────────────────────────────
 
 .cardListMDT__masterList {
   @include flex-col;
-  gap: $spacing-2;
+  gap: 0;
   overflow-y: auto;
   max-height: calc(100vh - 220px);
-  padding-right: $spacing-1;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-base;
+  overflow: hidden auto; // clip corners, allow y-scroll
 
-  scrollbar-width: thin;
-  scrollbar-color: $color-divider-1 transparent;
-
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: $color-divider-1;
-    border-radius: $border-radius-full;
-  }
+  @include ds-scrollbar;
 }
 
 // ── No results (inside master list) ──────────────────────────────────────────
@@ -315,55 +302,56 @@
   padding: $spacing-6 $spacing-4;
 }
 
-// ── Card ──────────────────────────────────────────────────────────────────────
+// ── FatLine row (replaces "card" visual) ──────────────────────────────────────
 
 .cardListMDT__card {
   position: relative;
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
-  background-color: $color-surface-idle;
-  border: 1px solid $color-divider-1;
-  border-radius: $border-radius-base;
-  padding: $spacing-3 $spacing-4;
+  min-height: 56px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid $color-divider-1;
+  border-radius: 0;
+  padding: 0 $spacing-4;
   text-align: left;
   cursor: pointer;
-  transition: background-color $transition-fast, border-color $transition-fast;
+  transition: background-color $transition-fast;
   overflow: hidden;
+
+  &:last-child {
+    border-bottom: none;
+  }
 
   &:hover {
     background-color: $color-table-bg-hover;
-    border-color: $color-primary;
+  }
+
+  &:active {
+    background-color: $color-nav-bg-selected;
   }
 
   &--selected {
-    border-color: $color-primary;
     background-color: $color-table-bg-hover;
+    border-left: 3px solid $color-primary;
+
+    .cardListMDT__cardInner {
+      padding-left: 0;
+    }
   }
 }
 
 .cardListMDT__cardSelectedBar {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background-color: $color-primary;
-  border-radius: $border-radius-sm 0 0 $border-radius-sm;
-
-  @media (prefers-reduced-motion: no-preference) {
-    animation: selectedBarIn $transition-fast;
-  }
-}
-
-@keyframes selectedBarIn {
-  from { opacity: 0; transform: scaleY(0.5); }
-  to   { opacity: 1; transform: scaleY(1); }
+  display: none; // replaced by border-left on --selected
 }
 
 .cardListMDT__cardInner {
   display: flex;
+  align-items: center;
   gap: $spacing-3;
-  align-items: flex-start;
+  width: 100%;
+  min-width: 0;
 }
 
 .cardListMDT__cardIcon {
@@ -374,8 +362,9 @@
 }
 
 .cardListMDT__cardBody {
-  @include flex-col;
-  gap: $spacing-1;
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
   min-width: 0;
   flex: 1;
 }
@@ -383,7 +372,8 @@
 .cardListMDT__cardTitleRow {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  flex: 1;
+  min-width: 0;
   gap: $spacing-2;
 }
 
@@ -400,30 +390,16 @@
 
 .cardListMDT__cardStatus {
   flex-shrink: 0;
-}
-
-.cardListMDT__cardSubtitle {
-  font-size: $font-size-xs;
-  color: $color-nav-text-idle;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.cardListMDT__cardMeta {
   display: flex;
-  flex-wrap: wrap;
-  gap: $spacing-2;
-  font-size: $font-size-xs;
-  color: $color-nav-text-idle;
-  margin-top: $spacing-1;
+  align-items: center;
+  margin-left: auto;
 }
 
+// subtitle, meta, chips are hidden in FatLine row — content lives in details panel
+.cardListMDT__cardSubtitle,
+.cardListMDT__cardMeta,
 .cardListMDT__cardChips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $spacing-1;
-  margin-top: $spacing-1;
+  display: none;
 }
 
 // ── Right: details panel ──────────────────────────────────────────────────────
@@ -541,17 +517,7 @@
   flex-direction: column;
   gap: $spacing-6;
 
-  scrollbar-width: thin;
-  scrollbar-color: $color-divider-1 transparent;
-
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: $color-divider-1;
-    border-radius: $border-radius-full;
-  }
+  @include ds-scrollbar;
 }
 
 // ── Filter group ──────────────────────────────────────────────────────────────
@@ -586,11 +552,11 @@
   transition: background-color $transition-fast;
 
   &:hover {
-    background-color: rgba($color-text-light, 0.05);
+    background-color: $color-btn-hover-overlay;
   }
 
   &--checked {
-    background-color: rgba($color-primary, 0.08);
+    background-color: $color-annotation-primary-bg-subtle;
   }
 }
 

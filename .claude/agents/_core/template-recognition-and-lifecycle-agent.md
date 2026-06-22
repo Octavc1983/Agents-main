@@ -56,6 +56,20 @@ When no existing template matches:
 
 ---
 
+## Global UI Standards Preflight
+
+Before proposing or loading any template, read the applicable standards from:
+
+`.claude/architecture/global-ui-standards/`
+
+Identify which standards apply to the detected template type.
+
+The loaded template behavior must include any global standard that applies to it (e.g., status indicators, table filters, empty states, error states).
+
+Report applicable global standards in the template detection output.
+
+---
+
 ## Template Registry
 
 Before any detection, read:
@@ -70,6 +84,26 @@ Do not create a duplicate template when an existing one covers the pattern.
 ---
 
 ## Template Detection Rules
+
+### FATLINES List + Master Details
+
+Signals: dense rows, status icon per row, row click opens details panel, tabbed details (Overview/Details/Activities/Versions/Risk findings/Access), persistent list + details split, managed accounts, identities, inventory with inspection
+
+**Matched template:** `FatlinesListMasterDetailsTemplate`
+
+Auto-load:
+- Column order: Checkbox → 24px Status Icon → Primary identifier → Metadata → Risk (SeverityBadge) → Actions (GUS-016)
+- Persistent Summary Bar: Search, Filter trigger, chips, result count, selection summary, bulk actions
+- Row click opens Master Details — checkbox does NOT open details
+- Master Details tabs: Overview, Details, Activities, Versions, Dependents, Risk findings, Access & relationships
+- Filter/search/sort/scroll preserved when Master Details opens/closes
+- If selected entity is filtered out → close Master Details safely
+- Virtualization by default for large data sets
+- Status icons: 24px DS StatusIcon (GUS-001)
+- Risk column: SeverityBadge severity={row.riskLevel} variant="fill" — wired to Risk Management page
+- All required states: loading, empty, no-results, error, permission, selection, bulk, unavailable entity
+
+---
 
 ### Table / Management Page
 

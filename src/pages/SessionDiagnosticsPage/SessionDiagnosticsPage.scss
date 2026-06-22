@@ -1,4 +1,5 @@
 @use 'tokens' as *;
+@use '../../styles/mixins' as *;
 
 .session-diag-page {
   padding: $spacing-6 $spacing-8;
@@ -181,17 +182,32 @@
   padding: $spacing-3 $spacing-4;
   color: $color-text-primary;
   vertical-align: middle;
+  max-width: 0;
+  overflow: hidden;
 
   &--icon {
     width: 32px;
     padding: $spacing-3 $spacing-2;
     text-align: center;
+    max-width: none;
+    overflow: visible;
   }
 
   &--actions {
     width: 40px;
     text-align: center;
+    max-width: none;
+    overflow: visible;
   }
+
+  &--badge {
+    max-width: none;
+    overflow: visible;
+  }
+}
+
+.session-diag-table__cell-text {
+  @include table-cell-truncate;
 }
 
 .session-diag-table__action-btn {

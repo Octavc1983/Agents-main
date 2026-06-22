@@ -16,6 +16,22 @@ Use this agent after a prototype page, local component, or generated UI has been
 - Prioritize issues by severity
 - Recommend focused fixes
 
+## Global UI Standards Preflight
+
+Before reviewing any UI change, read the applicable standards from:
+
+`.claude/architecture/global-ui-standards/`
+
+Identify which standards apply to the target screen, state, component, or flow.
+
+A violation of a global standard is a **Critical** issue that blocks review completion.
+
+Report every global standard violation in the Critical Issues section of the review output.
+
+Do not approve a screen that violates an active global standard without explicit override approval from the user.
+
+---
+
 ## Must Do
 - Inspect the project and similar pages before reviewing
 - Prefer reuse over creation

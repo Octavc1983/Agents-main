@@ -67,6 +67,10 @@ export type CardListMasterDetailsTemplateProps<T> = {
 
   // ── Selection behaviour ──────────────────────────────────────────────────────
   /**
+   * Pre-selects a specific item by ID on mount. Takes priority over selectFirstItemByDefault.
+   */
+  initialSelectedId?: string;
+  /**
    * When true and items is non-empty, the first item is pre-selected.
    * Default: false — details panel starts in the empty state.
    */

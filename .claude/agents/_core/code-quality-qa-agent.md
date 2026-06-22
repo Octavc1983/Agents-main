@@ -55,6 +55,20 @@ Inspect and review:
 
 ---
 
+## Global UI Standards Preflight
+
+Before reviewing any UI, read the applicable standards from:
+
+`.claude/architecture/global-ui-standards/`
+
+Identify which standards apply to the target screen, state, component, or flow.
+
+**QA Blocking Rule:** The QA agent must block completion (choose "Not safe to continue" or "Needs targeted fixes") when a global standard is violated without an approved exception. Global standard violations are always **High** or **Critical** severity.
+
+Report every global standard violation in the **Style Consistency Issues** or **State and UX Safety Issues** section.
+
+---
+
 ## Primary Rule
 
 Preserve the existing project architecture.

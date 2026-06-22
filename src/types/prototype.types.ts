@@ -234,7 +234,8 @@ export interface MigrationOption {
 
 // --- Managed Accounts types ---------------------------------------------------
 
-export type ManagedAccountStatus = 'active' | 'inactive' | 'pending' | 'locked';
+export type ManagedAccountStatus = 'active' | 'inactive' | 'pending' | 'locked' | 'marked_for_deletion' | 'deleted';
+export type ManagedAccountRiskLevel = 'critical' | 'high' | 'medium' | 'low';
 export type ManagedAccountType = 'local' | 'domain' | 'service' | 'cloud';
 export type ManagedAccountPlatform =
   | 'Windows' | 'Linux' | 'AWS' | 'Azure' | 'GCP' | 'Oracle' | 'SAP'
@@ -253,8 +254,10 @@ export interface ManagedAccount {
   platform: ManagedAccountPlatform;
   address: string;
   status: ManagedAccountStatus;
+  riskLevel: ManagedAccountRiskLevel;
   owner: string;
   safe: string;
+  organization?: string;
   lastPasswordChange: string;
   createdAt: string;
   tags: string[];

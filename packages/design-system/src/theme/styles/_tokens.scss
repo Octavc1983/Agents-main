@@ -1,6 +1,109 @@
 // ─── IDIRA Design System — SCSS Tokens ───────────────────────────────────────
 // Single source of truth for all design tokens.
 // Application SCSS must use: @use '@idira/design-system/styles/tokens' as *;
+//
+// Theme support: tokens are exposed as CSS custom properties on :root (dark by default).
+// Light mode overrides are applied when [data-theme="light"] is set on <html>.
+
+// ── CSS Custom Properties — Dark (default) ────────────────────────────────────
+:root {
+  --color-primary:              #7a80ff;
+  --color-page-background:      #0F1827;
+  --color-background-dark:      #17243b;
+  --color-background-darker:    #223658;
+  --color-background-darkest:   #1d2d49;
+  --color-surface-idle:         #17243B;
+
+  --color-text-light:           #ffffff;
+  --color-text-muted:           #d6e3fb;
+  --color-border-dark:          #283f67;
+  --color-divider-1:            #283F67;
+
+  --color-nav-text-idle:        #BBC2D0;
+  --color-nav-text-selected:    #FFFFFF;
+  --color-nav-bg-selected:      #223658;
+  --color-nav-icon-idle:        #AEB8CC;
+  --color-nav-icon-selected:    #FFFFFF;
+
+  --color-btn-hover-overlay:    #283F67;
+  --color-btn-primary-idle:     #3E68FF;
+
+  --color-status-success:       #00C898;
+  --color-status-warning:       #FFB45D;
+  --color-status-error:         #F22267;
+  --color-status-idle:          #6C6E83;
+
+  --color-table-bg-hover:       #17243B;
+  --color-table-line-idle:      #283F67;
+
+  --color-input-bg:             #17243B;
+  --color-input-border:         #283F67;
+  --color-input-border-focused: #7a80ff;
+  --color-input-text:           #ffffff;
+  --color-input-placeholder:    #BBC2D0;
+
+  --color-dialog-bg:            #1D2D49;
+  --color-dialog-separator:     #395A93;
+  --color-dialog-text:          #ffffff;
+
+  --color-severity-critical:    #F22267;
+  --color-severity-high:        #FFB45D;
+  --color-severity-medium:      #7a80ff;
+  --color-severity-low:         #859FFF;
+
+  --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+}
+
+// ── CSS Custom Properties — Light overrides ───────────────────────────────────
+[data-theme="light"] {
+  --color-primary:              #4f54d6;
+  --color-page-background:      #f0f2f7;
+  --color-background-dark:      #ffffff;
+  --color-background-darker:    #f8f9fc;
+  --color-background-darkest:   #eef0f6;
+  --color-surface-idle:         #ffffff;
+
+  --color-text-light:           #0f1827;
+  --color-text-muted:           #3a4a6b;
+  --color-border-dark:          #c8d0e0;
+  --color-divider-1:            #d0d8e8;
+
+  --color-nav-text-idle:        #5a6a88;
+  --color-nav-text-selected:    #0f1827;
+  --color-nav-bg-selected:      #e4e8f5;
+  --color-nav-icon-idle:        #6a7a98;
+  --color-nav-icon-selected:    #0f1827;
+
+  --color-btn-hover-overlay:    #e8ecf8;
+  --color-btn-primary-idle:     #4f54d6;
+
+  --color-status-success:       #00a878;
+  --color-status-warning:       #e0922a;
+  --color-status-error:         #d41257;
+  --color-status-idle:          #7a849a;
+
+  --color-table-bg-hover:       #eef0f8;
+  --color-table-line-idle:      #d0d8e8;
+
+  --color-input-bg:             #ffffff;
+  --color-input-border:         #c8d0e0;
+  --color-input-border-focused: #4f54d6;
+  --color-input-text:           #0f1827;
+  --color-input-placeholder:    #8a96b0;
+
+  --color-dialog-bg:            #ffffff;
+  --color-dialog-separator:     #c8d0e0;
+  --color-dialog-text:          #0f1827;
+
+  --color-severity-critical:    #d41257;
+  --color-severity-high:        #c87020;
+  --color-severity-medium:      #4f54d6;
+  --color-severity-low:         #5a60c8;
+
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.06);
+}
 
 // ── Colors ───────────────────────────────────────────────────────────────────
 $color-primary:          #7a80ff;
@@ -273,6 +376,27 @@ $color-wizard-stroke-not-visited:     #BBC2D0;
 
 // ── Overlay ───────────────────────────────────────────────────────────────────
 $color-overlay-backdrop: rgba(0, 0, 0, 0.30);
+
+// ── Error state tokens ────────────────────────────────────────────────────────
+$color-error-bg-subtle:     rgba($color-status-error, 0.10);
+$color-error-border-subtle: rgba($color-status-error, 0.30);
+
+// ── Annotation feature tokens ─────────────────────────────────────────────────
+$color-annotation-primary-bg-subtle:  rgba(133, 159, 255, 0.08);
+$color-annotation-primary-bg-active:  rgba(133, 159, 255, 0.12);
+$color-annotation-primary-bg-strong:  rgba(133, 159, 255, 0.15);
+$color-annotation-success-bg:         rgba($color-status-success, 0.10);
+$color-annotation-error-bg:           rgba($color-status-error, 0.10);
+$color-annotation-btn-surface:        rgba(255, 255, 255, 0.06);
+$color-annotation-pin-border:         rgba(255, 255, 255, 0.85);
+$color-annotation-pin-pending-bg:     rgba(255, 255, 255, 0.20);
+$color-annotation-pin-pending-border: rgba(255, 255, 255, 0.60);
+
+$shadow-annotation-panel:    -4px 0 24px rgba(0, 0, 0, 0.35);
+$shadow-annotation-pin:       0 2px 8px rgba(0, 0, 0, 0.45);
+$shadow-annotation-pin-hover: 0 4px 14px rgba(0, 0, 0, 0.55);
+$shadow-annotation-pin-drag:  0 6px 20px rgba(0, 0, 0, 0.65);
+$shadow-annotation-callout:   0 8px 28px rgba(0, 0, 0, 0.55);
 
 // ── Shadows ───────────────────────────────────────────────────────────────────
 $shadow-xs:   0 1px 2px 0 rgba(0,0,0,0.05);

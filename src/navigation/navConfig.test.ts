@@ -250,8 +250,8 @@ describe('validateSpacesRegistry', () => {
 
   it('does not run in production', () => {
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
-    const originalEnv = process.env.NODE_ENV;
-    process.env.NODE_ENV = 'production';
+    const originalProd = import.meta.env.PROD;
+    (import.meta.env as Record<string, unknown>).PROD = true;
     const badRegistry: SpaceSchema[] = [
       {
         id: 'test',
@@ -262,7 +262,7 @@ describe('validateSpacesRegistry', () => {
     ];
     validateSpacesRegistry(badRegistry);
     expect(spy).not.toHaveBeenCalled();
-    process.env.NODE_ENV = originalEnv;
+    (import.meta.env as Record<string, unknown>).PROD = originalProd;
   });
 });
 

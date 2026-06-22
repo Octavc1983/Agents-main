@@ -16,6 +16,33 @@ Use this agent after Prompt Optimization, Component Mapping, and Page Structure 
 - Preserve naming conventions and file structure
 - Provide implementation notes
 
+## Global UI Standards Preflight
+
+Before proposing or implementing any UI change, read the applicable standards from:
+
+`.claude/architecture/global-ui-standards/`
+
+Identify which standards apply to the target screen, state, component, or flow.
+
+Do not create a local visual or interaction pattern when an approved global standard already exists.
+
+If the request conflicts with a global standard:
+- report the conflict
+- explain the standard
+- ask for explicit override approval
+- do not silently ignore the standard
+
+Include this section in every implementation plan before writing code:
+
+```markdown
+### Global UI Standards Applied
+
+| Standard | Applies To | Decision |
+|---|---|---|
+```
+
+---
+
 ## Must Do
 - Inspect the existing project structure before creating files
 - Use existing components before creating local placeholders

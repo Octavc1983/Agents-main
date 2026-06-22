@@ -243,3 +243,31 @@
 @mixin gap-uniform($size) {
   gap: $size;
 }
+
+// ── Table cell text — ellipsis + native tooltip ───────────────────────────────
+// Use for ALL string values in table cells.
+// Excluded: Tags, Buttons, Icons, Risk badges, Identifiers column (has its own +N logic).
+// Always pair with title={value} on the element for native browser tooltip.
+@mixin table-cell-truncate {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ── DS Scrollbar — must be used on every scrollable container in the system ───
+// Standard scrollbar style aligned to the Design System dark theme.
+// Apply with: @include ds-scrollbar;
+@mixin ds-scrollbar($width: 4px) {
+  scrollbar-width: thin;
+  scrollbar-color: $color-divider-1 transparent;
+
+  &::-webkit-scrollbar       { width: $width; height: $width; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-divider-1;
+    border-radius: $border-radius-full;
+
+    &:hover { background-color: $color-nav-text-idle; }
+  }
+}

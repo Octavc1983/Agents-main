@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: column;
   z-index: 400;
-  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.35);
+  box-shadow: $shadow-annotation-panel;
   overflow: hidden;
 }
 
@@ -78,7 +78,7 @@
   flex-wrap: wrap;
   gap: $spacing-2;
   padding: $spacing-3 $spacing-5;
-  background: rgba(133, 159, 255, 0.08);
+  background: $color-annotation-primary-bg-subtle;
   border-bottom: 1px solid $color-border-dark;
   font-size: $font-size-xs;
   color: $color-severity-low;
@@ -138,7 +138,7 @@
   border-radius: $border-radius-pill;
   font-size: $font-size-xs;
   font-weight: $font-weight-medium;
-  background: rgba(255, 255, 255, 0.04);
+  background: $color-chip-disabled-bg;
   color: $color-nav-text-idle;
   cursor: pointer;
   transition: background $transition-fast, color $transition-fast, border-color $transition-fast;
@@ -148,13 +148,13 @@
   &--active {
     color: $color-severity-low;
     border-color: $color-severity-low;
-    background: rgba(133, 159, 255, 0.12);
+    background: $color-annotation-primary-bg-active;
   }
 
   &--placed {
     color: $color-status-success;
     border-color: $color-status-success;
-    background: rgba(0, 200, 120, 0.10);
+    background: $color-annotation-success-bg;
   }
 
   &--remove {
@@ -163,7 +163,7 @@
     border-color: transparent;
     background: none;
 
-    &:hover { color: $color-status-error; background: rgba(242, 34, 103, 0.10); border-color: $color-status-error; }
+    &:hover { color: $color-status-error; background: $color-annotation-error-bg; border-color: $color-status-error; }
   }
 }
 
@@ -179,24 +179,24 @@
   font-weight: $font-weight-medium;
   border: 1px solid transparent;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.06);
+  background: $color-annotation-btn-surface;
   color: $color-nav-text-idle;
   transition: background $transition-fast, color $transition-fast, border-color $transition-fast;
 
   &:hover { color: $color-text-light; background: $color-btn-hover-overlay; }
 
   &--info.annotation-severity-btn--active {
-    background: rgba(133, 159, 255, 0.15);
+    background: $color-annotation-primary-bg-strong;
     color: $color-severity-low;
     border-color: $color-severity-low;
   }
   &--warning.annotation-severity-btn--active {
-    background: rgba(255, 180, 93, 0.15);
+    background: $color-badge-high-bg;
     color: $color-status-warning;
     border-color: $color-status-warning;
   }
   &--critical.annotation-severity-btn--active {
-    background: rgba(242, 34, 103, 0.15);
+    background: $color-badge-critical-bg;
     color: $color-status-error;
     border-color: $color-status-error;
   }
@@ -318,9 +318,9 @@
   padding: 1px $spacing-2;
   border-radius: $border-radius-pill;
 
-  &--info    { background: rgba(133, 159, 255, 0.15); color: $color-severity-low; }
-  &--warning { background: rgba(255, 180, 93, 0.15);  color: $color-status-warning; }
-  &--critical { background: rgba(242, 34, 103, 0.15); color: $color-status-error; }
+  &--info    { background: $color-annotation-primary-bg-strong; color: $color-severity-low; }
+  &--warning { background: $color-badge-high-bg;                color: $color-status-warning; }
+  &--critical { background: $color-badge-critical-bg;           color: $color-status-error; }
 }
 
 .annotation-item__text {

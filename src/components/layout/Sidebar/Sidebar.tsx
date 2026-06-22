@@ -42,7 +42,7 @@ import {
 } from '@idira/design-system/icons';
 import './Sidebar.scss';
 
-if (process.env.NODE_ENV !== 'production') {
+if (!import.meta.env.PROD) {
   validateSpacesRegistry(spacesRegistry);
 }
 
@@ -102,7 +102,7 @@ const NavItemRow: React.FC<NavItemRowProps> = ({
     `nav-item--depth-${Math.min(depth + 1, 4)}`,
   ].filter(Boolean).join(' ');
 
-  const iconEl = Icon ? <span className="nav-item__icon"><Icon size={16} /></span> : null;
+  const iconEl = Icon ? <span className="nav-item__icon"><Icon size={24} /></span> : null;
   const labelEl = <span className="nav-item__label">{item.label}</span>;
   const chevronEl = (
     <span className="nav-item__expand-indicator" aria-hidden="true">

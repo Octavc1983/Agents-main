@@ -161,17 +161,27 @@ export const SessionDiagnosticsPage: React.FC = () => {
                   </span>
                 )}
               </td>
-              <td className="session-diag-table__td">{session.sessionId}</td>
-              <td className="session-diag-table__td">{session.startDate}</td>
               <td className="session-diag-table__td">
+                <span className="session-diag-table__cell-text" title={session.sessionId}>{session.sessionId}</span>
+              </td>
+              <td className="session-diag-table__td">
+                <span className="session-diag-table__cell-text" title={session.startDate}>{session.startDate}</span>
+              </td>
+              <td className="session-diag-table__td session-diag-table__td--badge">
                 <Badge
                   color={session.connectionStatus === 'Failed' ? 'critical' : 'neutral'}
                   label={session.connectionStatus}
                 />
               </td>
-              <td className="session-diag-table__td">{session.connectionProfile}</td>
-              <td className="session-diag-table__td">{session.user}</td>
-              <td className="session-diag-table__td">{session.target}</td>
+              <td className="session-diag-table__td">
+                <span className="session-diag-table__cell-text" title={session.connectionProfile}>{session.connectionProfile}</span>
+              </td>
+              <td className="session-diag-table__td">
+                <span className="session-diag-table__cell-text" title={session.user}>{session.user}</span>
+              </td>
+              <td className="session-diag-table__td">
+                <span className="session-diag-table__cell-text" title={session.target}>{session.target}</span>
+              </td>
               <td className="session-diag-table__td session-diag-table__td--actions">
                 <button type="button" className="session-diag-table__action-btn" aria-label="More actions">
                   <DotsMenuIcon />

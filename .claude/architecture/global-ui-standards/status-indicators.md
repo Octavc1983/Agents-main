@@ -20,25 +20,29 @@
 
 ## Rule
 
-Whenever the UI shows an entity status, lifecycle state, operational state, risk state, health state, or result state, use the approved Design System status icon at **24px**.
+Whenever the UI shows an entity status, lifecycle state, operational state, risk state, health state, or result state, use the approved Design System status icon at **24×24px, stroke style, no circle background**.
+
+Status icons are bare SVG stroke icons at 24×24px. They must **not** be placed inside a colored circle, pill, or container background.
 
 ---
 
 ## Required Pattern
 
 ```text
-24px DS Status Icon + localized readable status label
+24×24px DS Status Icon (stroke, no background container)
 ```
+
+In table status columns — icon only, no label. The icon communicates status via shape + color.
 
 Implemented via the shared `StatusIcon` component:
 
 ```tsx
 import { StatusIcon } from '../../components/shared/StatusIcon';
 
-// Icon only
+// Icon only (table, card list, status column)
 <StatusIcon status={status} size={24} />
 
-// Icon + label
+// Icon + label (details panel, empty state, form field)
 <StatusIcon status={status} size={24} showLabel />
 ```
 
@@ -48,12 +52,14 @@ import { StatusIcon } from '../../components/shared/StatusIcon';
 
 ### Account / Entity Status
 
-| Value | Icon | Color |
-|---|---|---|
-| `active` | `StatusActiveIcon` | green `#00C898` |
-| `inactive` | `StatusInactiveIcon` | gray `#6C6E83` |
-| `pending` | `StatusPendingIcon` | gray `#6C6E83` |
-| `locked` | `StatusLockedIcon` | red `#F22267` |
+| Value | Icon | Visual | Semantic |
+|---|---|---|---|
+| `active` | `StatusActiveIcon` | Warning triangle amber `#FFB45D` | Active with alert |
+| `inactive` | `StatusInactiveIcon` | Error circle red `#F22267` | Inactive / errored |
+| `pending` | `StatusPendingIcon` | Three dots gray `#6C6E83` | Pending / unknown |
+| `locked` | `StatusLockedIcon` | Padlock white stroke | Locked |
+| `marked_for_deletion` | `StatusMarkedForDeletionIcon` | Flag amber `#FFB45D` | Marked for deletion |
+| `deleted` | `StatusDeletedIcon` | Trash bin white stroke | Deleted |
 
 ### Step / Operation Status
 
@@ -63,16 +69,6 @@ import { StatusIcon } from '../../components/shared/StatusIcon';
 | `in_progress` | `StatusRunningIcon` | blue `#3E68FF` |
 | `done` | `StatusCompletedIcon` | green `#00C898` |
 | `failed` | `StatusFailedIcon` | red `#F22267` |
-
-### Additional Available Icons
-
-| Icon | Color | Use for |
-|---|---|---|
-| `StatusStoppedIcon` | amber `#FFB45D` | stopped / paused |
-| `StatusCompletedIcon` | green | success / healthy |
-| `StatusFailedIcon` | red | failed / critical / unhealthy |
-| `StatusRunningIcon` | blue | running / in progress |
-| `StatusPendingIcon` | gray | pending / unknown / not started |
 
 ---
 
@@ -94,15 +90,17 @@ import { StatusIcon } from '../../components/shared/StatusIcon';
 
 ## Forbidden
 
+- **Circle or pill background behind status icon** — icons are bare strokes, no container fill
 - Colored dots as the primary status indicator
 - Local one-off SVG icons for status
 - Emoji as status indicators
 - Color-only status communication (color must be supplemented by shape + label)
-- Icon sizes other than 24px (except in space-constrained compact contexts — requires explicit exception)
+- Icon sizes other than 24×24px (except in space-constrained compact contexts — requires explicit exception)
 - Different icon mappings for the same semantic status across page types
 - Local icon recoloring
 - Generic unrelated icon substitutions
 - Text-only pill badges (e.g., colored border + text label only) when icons can be used
+- Old small-circle status icons (`viewBox="0 0 14 14"` with filled circle background) — these are deprecated
 
 ---
 
@@ -176,9 +174,10 @@ Claude must verify:
     'icon size other than 24px without exception',
   ],
   designSystemRequirements: [
-    'StatusActiveIcon, StatusInactiveIcon, StatusPendingIcon, StatusLockedIcon',
-    'StatusRunningIcon, StatusCompletedIcon, StatusFailedIcon, StatusStoppedIcon',
+    'Account: StatusActiveIcon, StatusInactiveIcon, StatusPendingIcon, StatusLockedIcon, StatusMarkedForDeletionIcon, StatusDeletedIcon',
+    'Step: StatusRunningIcon, StatusCompletedIcon, StatusFailedIcon, StatusStoppedIcon, StatusPendingIcon',
     'All in packages/design-system/src/icons/NavIcons.tsx',
+    'All icons are 24×24px stroke style — NO circle background, NO fill container',
   ],
   accessibilityRequirements: [
     'aria-hidden on icon when label present',

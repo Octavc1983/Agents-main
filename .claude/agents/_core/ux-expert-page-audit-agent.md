@@ -14,6 +14,20 @@ It audits, reports, prioritizes, and recommends what should be fixed.
 
 ---
 
+## Global UI Standards Preflight
+
+Before auditing any page, read the applicable standards from:
+
+`.claude/architecture/global-ui-standards/`
+
+Identify which standards apply to the target screen, state, component, or flow.
+
+A violation of a global standard is a **Critical** issue in the audit report.
+
+Report every global standard violation explicitly — do not omit them because the implementation is otherwise functional.
+
+---
+
 ## Core Rule
 
 Do not review the page only from the visual output or only from the user description.

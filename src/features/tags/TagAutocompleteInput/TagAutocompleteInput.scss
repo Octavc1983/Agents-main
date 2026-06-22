@@ -37,10 +37,6 @@
     border-color: $color-input-border-focused;
   }
 
-  &--open {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
 }
 
 // ── Text input inside field ───────────────────────────────────────────────────
@@ -65,19 +61,14 @@
 // ── Dropdown ──────────────────────────────────────────────────────────────────
 
 .tagInput__dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 200;
+  position: fixed;
+  z-index: 9999;
   list-style: none;
   margin: 0;
   padding: $spacing-1 0;
   background: $color-surface-idle;
   border: 1px solid $color-input-border-focused;
-  border-top: none;
-  border-bottom-left-radius: $border-radius-base;
-  border-bottom-right-radius: $border-radius-base;
+  border-radius: $border-radius-base;
   max-height: 260px;
   overflow-y: auto;
   box-shadow: $shadow-md;
@@ -126,12 +117,12 @@
   flex-shrink: 0;
 
   &--oob {
-    background: rgba(122, 128, 255, 0.15);
+    background: $color-badge-medium-bg;
     color: $color-primary;
   }
 
   &--external {
-    background: rgba(255, 255, 255, 0.08);
+    background: $color-chip-bg;
     color: $color-nav-text-idle;
   }
 }

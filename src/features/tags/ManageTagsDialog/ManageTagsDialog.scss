@@ -23,8 +23,8 @@
   justify-content: space-between;
   gap: $spacing-3;
   padding: $spacing-3;
-  background: rgba(231, 76, 76, 0.1);
-  border: 1px solid rgba(231, 76, 76, 0.3);
+  background: $color-error-bg-subtle;
+  border: 1px solid $color-error-border-subtle;
   border-radius: $border-radius-base;
   font-size: $font-size-sm;
   color: $color-status-error;

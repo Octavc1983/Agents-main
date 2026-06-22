@@ -14,7 +14,7 @@
  * No DS components were created. No new tokens were created. No inline styles used.
  */
 
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useRef } from 'react';
 import { Button, LoadingState, EmptyState, ErrorState } from '@idira/design-system';
 import { FilterIcon, SearchIcon, CloseIcon, RefreshIcon } from '@idira/design-system/icons';
 import type {
@@ -182,6 +182,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
 export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): React.ReactElement {
   const {
     title,
+    description,
     rows,
     columns,
     getRowId,
@@ -199,6 +200,7 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
     emptyTitle = 'No items found',
     emptyDescription,
     onRowClick,
+    selectable = false,
   } = props;
 
   // ── State ──────────────────────────────────────────────────────────────────
@@ -206,6 +208,8 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
   const [searchQuery, setSearchQuery] = useState('');
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState<Record<string, string[]>>({});
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const selectAllRef = useRef<HTMLInputElement>(null);
 
   // ── Filtering ──────────────────────────────────────────────────────────────
 
@@ -266,10 +270,52 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
     setAppliedFilters({});
   }, []);
 
+  // ── Selection ──────────────────────────────────────────────────────────────
+
+  const allFilteredIds = useMemo(() => filteredRows.map((r) => getRowId(r)), [filteredRows, getRowId]);
+  const allSelected = allFilteredIds.length > 0 && allFilteredIds.every((id) => selectedIds.has(id));
+  const someSelected = !allSelected && allFilteredIds.some((id) => selectedIds.has(id));
+
+  const toggleSelectAll = useCallback(() => {
+    setSelectedIds((prev) => {
+      if (allSelected) {
+        const next = new Set(prev);
+        allFilteredIds.forEach((id) => next.delete(id));
+        return next;
+      }
+      const next = new Set(prev);
+      allFilteredIds.forEach((id) => next.add(id));
+      return next;
+    });
+  }, [allSelected, allFilteredIds]);
+
+  const toggleSelectRow = useCallback((id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  }, []);
+
+  // Indeterminate state for select-all checkbox
+  React.useEffect(() => {
+    if (selectAllRef.current) {
+      selectAllRef.current.indeterminate = someSelected;
+    }
+  }, [someSelected]);
+
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
     <div className="tableFiltersTemplate">
+
+      {/* ── Page header ─────────────────────────────────────────────── */}
+      {(title || description) && (
+        <div className="tableFiltersTemplate__pageHeader">
+          {title && <h1 className="tableFiltersTemplate__pageTitle">{title}</h1>}
+          {description && <p className="tableFiltersTemplate__pageDesc">{description}</p>}
+        </div>
+      )}
 
       {/* ── Toolbar ─────────────────────────────────────────────────── */}
       <div className="tableFiltersTemplate__toolbar">
@@ -438,10 +484,26 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
               <table className="tableFiltersTemplate__tableEl" aria-label={title}>
                 <thead>
                   <tr>
+                    {selectable && (
+                      <th className="tableFiltersTemplate__th tableFiltersTemplate__th--checkbox">
+                        <input
+                          ref={selectAllRef}
+                          type="checkbox"
+                          className="tableFiltersTemplate__checkbox"
+                          checked={allSelected}
+                          onChange={toggleSelectAll}
+                          aria-label="Select all rows"
+                        />
+                      </th>
+                    )}
                     {columns.map((col) => (
                       <th
                         key={col.id}
-                        className={`tableFiltersTemplate__th${col.hideWhenNarrow && isFiltersOpen ? ' tableFiltersTemplate__th--hidden' : ''}`}
+                        className={[
+                          'tableFiltersTemplate__th',
+                          col.narrow ? 'tableFiltersTemplate__th--narrow' : '',
+                          col.hideWhenNarrow && isFiltersOpen ? 'tableFiltersTemplate__th--hidden' : '',
+                        ].filter(Boolean).join(' ')}
                       >
                         {col.label}
                       </th>
@@ -452,30 +514,56 @@ export function TableFiltersTemplate<T>(props: TableFiltersTemplateProps<T>): Re
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredRows.map((row) => (
-                    <tr
-                      key={getRowId(row)}
-                      className={`tableFiltersTemplate__row${onRowClick ? ' tableFiltersTemplate__row--clickable' : ''}`}
-                      onClick={onRowClick ? () => onRowClick(row) : undefined}
-                    >
-                      {columns.map((col) => (
-                        <td
-                          key={col.id}
-                          className={`tableFiltersTemplate__td${col.hideWhenNarrow && isFiltersOpen ? ' tableFiltersTemplate__td--hidden' : ''}`}
-                        >
-                          {col.render(row)}
-                        </td>
-                      ))}
-                      {rowActions && (
-                        <td
-                          className="tableFiltersTemplate__td tableFiltersTemplate__td--actions"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {rowActions(row)}
-                        </td>
-                      )}
-                    </tr>
-                  ))}
+                  {filteredRows.map((row) => {
+                    const rowId = getRowId(row);
+                    const isSelected = selectedIds.has(rowId);
+                    return (
+                      <tr
+                        key={rowId}
+                        className={[
+                          'tableFiltersTemplate__row',
+                          onRowClick ? 'tableFiltersTemplate__row--clickable' : '',
+                          isSelected ? 'tableFiltersTemplate__row--selected' : '',
+                        ].filter(Boolean).join(' ')}
+                        onClick={onRowClick ? () => onRowClick(row) : undefined}
+                      >
+                        {selectable && (
+                          <td
+                            className="tableFiltersTemplate__td tableFiltersTemplate__td--checkbox"
+                            onClick={(e) => { e.stopPropagation(); toggleSelectRow(rowId); }}
+                          >
+                            <input
+                              type="checkbox"
+                              className="tableFiltersTemplate__checkbox"
+                              checked={isSelected}
+                              onChange={() => toggleSelectRow(rowId)}
+                              aria-label="Select row"
+                            />
+                          </td>
+                        )}
+                        {columns.map((col) => (
+                          <td
+                            key={col.id}
+                            className={[
+                              'tableFiltersTemplate__td',
+                              col.narrow ? 'tableFiltersTemplate__td--narrow' : '',
+                              col.hideWhenNarrow && isFiltersOpen ? 'tableFiltersTemplate__td--hidden' : '',
+                            ].filter(Boolean).join(' ')}
+                          >
+                            {col.render(row)}
+                          </td>
+                        ))}
+                        {rowActions && (
+                          <td
+                            className="tableFiltersTemplate__td tableFiltersTemplate__td--actions"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {rowActions(row)}
+                          </td>
+                        )}
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

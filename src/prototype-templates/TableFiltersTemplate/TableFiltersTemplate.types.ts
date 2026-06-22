@@ -32,12 +32,14 @@ export type TableColumn<T> = {
   render: (row: T) => React.ReactNode;
   searchableValue?: (row: T) => string;
   hideWhenNarrow?: boolean;
+  /** Render as a minimal-width column (like actions) */
+  narrow?: boolean;
 };
 
 export type TableFiltersTemplateProps<T> = {
-  /** Page title shown in the header area */
+  /** Page title rendered inside the content area */
   title: string;
-  /** Optional subtitle below the title */
+  /** Optional subtitle rendered below the page title */
   description?: string;
 
   /** Full data set — filtering is applied locally */
@@ -83,4 +85,7 @@ export type TableFiltersTemplateProps<T> = {
 
   /** Callback fired when a row is clicked */
   onRowClick?: (row: T) => void;
+
+  /** When true, renders a checkbox column as the first column */
+  selectable?: boolean;
 };

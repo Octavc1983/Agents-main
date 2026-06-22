@@ -4,6 +4,8 @@ import {
   StatusInactiveIcon,
   StatusPendingIcon,
   StatusLockedIcon,
+  StatusMarkedForDeletionIcon,
+  StatusDeletedIcon,
   StatusCompletedIcon,
   StatusRunningIcon,
   StatusFailedIcon,
@@ -11,15 +13,17 @@ import {
 } from '@idira/design-system/icons';
 import './StatusIcon.scss';
 
-export type AccountStatusValue = 'active' | 'inactive' | 'pending' | 'locked';
+export type AccountStatusValue = 'active' | 'inactive' | 'pending' | 'locked' | 'marked_for_deletion' | 'deleted';
 export type StepStatusValue = 'not_performed' | 'in_progress' | 'done' | 'failed';
 export type StatusValue = AccountStatusValue | StepStatusValue;
 
 const ACCOUNT_STATUS_MAP: Record<AccountStatusValue, React.FC<{ size?: number }>> = {
-  active:   StatusActiveIcon,
-  inactive: StatusInactiveIcon,
-  pending:  StatusPendingIcon,
-  locked:   StatusLockedIcon,
+  active:               StatusActiveIcon,
+  inactive:             StatusInactiveIcon,
+  pending:              StatusPendingIcon,
+  locked:               StatusLockedIcon,
+  marked_for_deletion:  StatusMarkedForDeletionIcon,
+  deleted:              StatusDeletedIcon,
 };
 
 const STEP_STATUS_MAP: Record<StepStatusValue, React.FC<{ size?: number }>> = {
@@ -30,10 +34,12 @@ const STEP_STATUS_MAP: Record<StepStatusValue, React.FC<{ size?: number }>> = {
 };
 
 const ACCOUNT_STATUS_LABELS: Record<AccountStatusValue, string> = {
-  active:   'Active',
-  inactive: 'Inactive',
-  pending:  'Pending',
-  locked:   'Locked',
+  active:               'Active',
+  inactive:             'Inactive',
+  pending:              'Pending',
+  locked:               'Locked',
+  marked_for_deletion:  'Marked for deletion',
+  deleted:              'Deleted',
 };
 
 const STEP_STATUS_LABELS: Record<StepStatusValue, string> = {

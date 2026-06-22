@@ -9,10 +9,32 @@
 
 .tableFiltersTemplate {
   @include flex-col;
-  background-color: $color-page-background;
   min-height: 100%;
-  padding: 24px 48px;
+  padding: 0;
   gap: 0;
+}
+
+// ── Page header ───────────────────────────────────────────────────────────────
+
+.tableFiltersTemplate__pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+  margin-bottom: $spacing-4;
+}
+
+.tableFiltersTemplate__pageTitle {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.tableFiltersTemplate__pageDesc {
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  margin: 0;
 }
 
 // ── Toolbar ───────────────────────────────────────────────────────────────────
@@ -269,7 +291,8 @@
 }
 
 .tableFiltersTemplate__th {
-  padding: $spacing-2 $spacing-3;
+  height: 40px;
+  padding: 0 $spacing-3;
   text-align: left;
   font-size: $font-size-xs;
   font-weight: $font-weight-semibold;
@@ -281,19 +304,22 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  background-color: $color-page-background;
+  background-color: inherit;
 
   &--hidden {
     display: none;
   }
 
-  &--actions {
+  &--actions,
+  &--checkbox,
+  &--narrow {
     width: 1%;
     white-space: nowrap;
   }
 }
 
 .tableFiltersTemplate__row {
+  height: 50px;
   border-bottom: 1px solid $color-table-line-idle;
   transition: background-color $transition-fast;
 
@@ -303,23 +329,55 @@
     &:hover {
       background-color: $color-table-bg-hover;
     }
+
+    &:active {
+      background-color: $color-nav-bg-selected;
+    }
+  }
+
+  &--selected {
+    background-color: $color-table-bg-hover;
+    border-left: 3px solid $color-primary;
+
+    td:first-child {
+      padding-left: calc(#{$spacing-3} - 3px);
+    }
   }
 }
 
 .tableFiltersTemplate__td {
-  padding: $spacing-3;
+  padding: 0 $spacing-3;
   color: $color-text-light;
   vertical-align: middle;
+  max-width: 0; // allows text-overflow: ellipsis to work inside flex/grid table cells
+  overflow: hidden;
 
   &--hidden {
     display: none;
   }
 
-  &--actions {
+  &--actions,
+  &--checkbox,
+  &--narrow {
     width: 1%;
     white-space: nowrap;
+    max-width: none;
+    overflow: visible;
+  }
+
+  &--actions {
     text-align: right;
   }
+}
+
+// ── Checkbox ──────────────────────────────────────────────────────────────────
+
+.tableFiltersTemplate__checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: $color-primary;
+  cursor: pointer;
+  display: block;
 }
 
 // ── Filters panel ─────────────────────────────────────────────────────────────

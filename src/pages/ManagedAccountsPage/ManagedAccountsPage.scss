@@ -1,4 +1,5 @@
 @use 'tokens' as *;
+@use '../../styles/mixins' as *;
 
 // ── Platform icon ─────────────────────────────────────────────────────────────
 
@@ -44,6 +45,7 @@
 // ── Generic table cell text ───────────────────────────────────────────────────
 
 .ma-cell-text {
+  @include table-cell-truncate;
   color: $color-nav-text-idle;
   font-size: $font-size-base;
 
@@ -167,6 +169,168 @@
   padding: $spacing-3 $spacing-4;
   max-height: 240px;
   overflow-y: auto;
+}
+
+// ── Account details panel ─────────────────────────────────────────────────────
+
+.ma-details-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 400px;
+}
+
+.ma-details-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-4 $spacing-5;
+  border-bottom: 1px solid $color-border-dark;
+  gap: $spacing-3;
+  flex-shrink: 0;
+}
+
+.ma-details-panel__title-row {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  min-width: 0;
+}
+
+.ma-details-panel__platform-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.ma-details-panel__title-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ma-details-panel__name {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ma-details-panel__platform {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+}
+
+.ma-details-panel__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    background: $color-btn-hover-overlay;
+  }
+}
+
+.ma-details-panel__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: $spacing-4 $spacing-5;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-5;
+}
+
+.ma-details-panel__grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: $spacing-2 $spacing-5;
+  margin: 0;
+
+  dt {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-nav-text-idle;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-top: 3px;
+    white-space: nowrap;
+  }
+
+  dd {
+    font-size: $font-size-sm;
+    color: $color-text-light;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+  }
+}
+
+.ma-details-panel__mono {
+  font-family: $font-family-mono;
+  font-size: $font-size-xs !important;
+  color: $color-nav-text-idle !important;
+}
+
+.ma-details-panel__capitalize {
+  text-transform: capitalize;
+}
+
+.ma-details-panel__tags-section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.ma-details-panel__section-label {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-nav-text-idle;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ma-details-panel__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+}
+
+.ma-details-panel__manage-tags-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: $font-size-xs;
+  color: $color-primary;
+  cursor: pointer;
+  font-weight: $font-weight-medium;
+  transition: opacity $transition-fast;
+
+  &:hover { opacity: 0.8; }
+}
+
+.ma-details-panel__description {
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  line-height: $line-height-normal;
+  margin: 0;
 }
 
 // ── Row actions (3-dot menu) ──────────────────────────────────────────────────
