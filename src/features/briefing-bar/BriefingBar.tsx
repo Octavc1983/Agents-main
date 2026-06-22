@@ -134,10 +134,10 @@ const STATUS_LABELS: Record<SecretStatus, string> = {
   disabled: 'Disabled',
 };
 
-const RISK_BARS: Array<{ key: string; label: string; colorVar: string }> = [
-  { key: 'critical', label: 'Critical', colorVar: '--color-critical' },
-  { key: 'high', label: 'High', colorVar: '--color-high' },
-  { key: 'medium', label: 'Medium', colorVar: '--color-medium' },
+const RISK_BARS: Array<{ key: string; label: string }> = [
+  { key: 'critical', label: 'Critical' },
+  { key: 'high', label: 'High' },
+  { key: 'medium', label: 'Medium' },
 ];
 
 // ── BriefingBar ───────────────────────────────────────────────────────────────
@@ -155,8 +155,6 @@ export const BriefingBar: React.FC<BriefingBarProps> = ({
   const overflowBtnRef = useRef<HTMLButtonElement>(null);
 
   const sortedProviders = [...stats.byProvider].sort((a, b) => b.count - a.count);
-  const visibleProviders = sortedProviders.slice(0, MAX_VISIBLE_PROVIDERS);
-  const overflowProviders = sortedProviders.slice(MAX_VISIBLE_PROVIDERS);
 
   const enriched = sortedProviders.map(p => ({
     ...p,

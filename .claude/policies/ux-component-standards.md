@@ -1,7 +1,9 @@
 # Global UX Component Standards
 
 Standards for interaction patterns used across the prototype.
-Visual styling always comes from the active Design System theme — never from screenshots.
+
+Screenshots and Figma references are the **layout and behavior specification source**.
+Visual styling (colors, theme, typography, shadows, borders) always comes from the active Design System theme — never from screenshots.
 
 ---
 
@@ -11,19 +13,27 @@ Visual styling always comes from the active Design System theme — never from s
 
 This standard applies to any Accordion, collapsible panel, expandable section, grouped settings area, FAQ-style section, or disclosure pattern.
 
-The provided reference may be used only to understand:
+## Screenshot Layout and Behavior Rule
 
-* structure
-* hierarchy
-* interaction behavior
-* supported modes
-* accessibility expectations
-* content boundaries
-* expansion and collapse logic
+When a screenshot or Figma reference is provided, use it to understand:
 
-Do not use the reference as a source for colors, theme, typography styling, shadows, borders, spacing values, icon colors, hover colors, background colors, or dark/light mode decisions.
+- component purpose and interaction behavior
+- information hierarchy
+- layout composition
+- **spacing between accordion items**
+- **header height and internal padding**
+- **content indentation and section density**
+- **expanded-content spacing**
+- scroll ownership and overflow behavior
 
-All visual styling must come from the approved Design System and active theme tokens.
+Map all visible measurements to approved Design System spacing, sizing, and layout tokens.
+
+Do not copy or infer:
+- color palette, theme mode, typography styling
+- shadows, border colors, hover/focus colors
+- icon colors or local visual overrides
+
+The active Design System theme remains the visual source of truth.
 
 ---
 
@@ -139,9 +149,29 @@ Fails QA when:
 
 This standard applies to: Action menus, Context menus, Overflow menus, Row action menus, Entity action menus, Grouped actions, menus triggered by Icon Buttons or Split Buttons.
 
-The provided reference may be used only to understand: hierarchy, grouping, action order, trigger type, interaction behavior, permissions behavior, overflow behavior, scroll behavior, responsive behavior, accessibility expectations.
+## Screenshot Layout and Behavior Rule
 
-Do not use the reference as a source for colors, theme, typography, borders, shadows, spacing, icon colors, hover colors, background colors, dark/light mode decisions, or exact visual dimensions.
+When a screenshot or Figma reference is provided, use it to understand:
+
+- component purpose and interaction behavior
+- action hierarchy, grouping, and action order
+- trigger type and trigger placement
+- permissions behavior and overflow behavior
+- **menu placement and alignment relative to trigger**
+- **item density and row height**
+- **grouping spacing and separator placement**
+- **maximum visible items before scroll**
+- **menu width and content alignment**
+- scroll behavior and responsive behavior
+
+Map all visible measurements to approved Design System spacing, sizing, and layout tokens.
+
+Do not copy or infer:
+- color palette, theme mode, typography styling
+- shadows, border colors, hover/focus colors
+- icon colors or local visual overrides
+
+The active Design System theme remains the visual source of truth.
 
 ---
 
@@ -282,9 +312,29 @@ Fails QA when:
 
 This standard applies to: Alert notifications, Alert banners, System-level warning messages, Background-process notifications, Risk notifications, Persistent operational alerts, High-signal environment updates.
 
-The provided reference may be used only to understand: message hierarchy, severity behavior, stacking behavior, dismissal behavior, placement logic, persistence behavior, accessibility expectations, when the component should or should not be used.
+## Screenshot Layout and Behavior Rule
 
-Do not use the reference as a source for colors, theme, typography, borders, shadows, spacing, icon colors, background colors, exact dimensions, dark/light mode decisions, or animation timing.
+When a screenshot or Figma reference is provided, use it to understand:
+
+- component purpose and severity behavior
+- stacking behavior and dismissal behavior
+- message hierarchy and content structure
+- **alert placement (bottom-right, 20px from edge)**
+- **alert width (480px fixed) and height (84px fixed)**
+- **stack spacing between alerts (8px)**
+- **icon size (16px) and position within alert**
+- **internal padding (16px left/right, 24px close button area)**
+- **viewport collision and boundary behavior**
+- persistence behavior and accessibility expectations
+
+Map all visible measurements to approved Design System spacing, sizing, and layout tokens.
+
+Do not copy or infer:
+- color palette, theme mode, severity colors
+- shadows, border colors, hover/focus colors
+- typography styling or icon colors
+
+The active Design System theme remains the visual source of truth.
 
 ---
 
@@ -418,9 +468,29 @@ Fails QA when:
 
 This standard applies to: Anchor links, In-page section navigation, Long forms, Configuration pages, Details pages, Setup pages, Long tab content, Documentation-style content areas.
 
-The provided reference may be used only to understand: content hierarchy, linked section order, selected-state behavior, scroll synchronization, placement in the page structure, accessibility behavior, long-content navigation intent.
+## Screenshot Layout and Behavior Rule
 
-Do not use the reference as a source for colors, theme, typography, borders, shadows, spacing, selected-state colors, hover colors, exact width/height, dark/light mode decisions, or custom visual indicators.
+When a screenshot or Figma reference is provided, use it to understand:
+
+- content hierarchy and linked section order
+- selected-state behavior and scroll synchronization
+- placement in the page structure and accessibility behavior
+- **anchor list fixed width (280px)**
+- **item height (30px single row, 52px two rows)**
+- **label max width (228px) with ellipsis**
+- **padding: 8px top/bottom, 16px left/right per item**
+- **selected-state left stroke indicator placement**
+- **vertical separator line placement and height**
+- sticky behavior and scroll ownership
+
+Map all visible measurements to approved Design System spacing, sizing, and layout tokens.
+
+Do not copy or infer:
+- color palette, theme mode, typography styling
+- selected-state colors, hover colors
+- shadows, border colors, or local visual indicators
+
+The active Design System theme remains the visual source of truth.
 
 ---
 
@@ -525,9 +595,29 @@ Fails QA when:
 
 This standard applies to: Autocomplete inputs, Searchable dropdowns, Comboboxes, Tag selectors, Filter value selectors, Entity pickers, Multi-select suggestion inputs, Search inputs with suggested values.
 
-The provided reference may be used only to understand: suggestion behavior, matching behavior, dropdown placement, keyboard interactions, empty result behavior, grouping behavior, loading behavior, selection rules, list overflow behavior.
+## Screenshot Layout and Behavior Rule
 
-Do not use the reference as a source for colors, theme, typography, borders, shadows, spacing, hover colors, selected-state colors, exact widths/heights, or dark/light mode decisions.
+When a screenshot or Figma reference is provided, use it to understand:
+
+- suggestion behavior, matching behavior, and keyboard interactions
+- empty result behavior, grouping behavior, and loading behavior
+- selection rules and list overflow behavior
+- **dropdown width relative to input width**
+- **dropdown max height before scroll (260px)**
+- **option row height and internal padding**
+- **grouping spacing and separator placement**
+- **input-to-dropdown vertical alignment**
+- **chip/tag size in multi-select mode**
+- scroll behavior and viewport boundary behavior
+
+Map all visible measurements to approved Design System spacing, sizing, and layout tokens.
+
+Do not copy or infer:
+- color palette, theme mode, typography styling
+- shadows, border colors, hover/focus/selected-state colors
+- icon colors or local visual overrides
+
+The active Design System theme remains the visual source of truth.
 
 ---
 
@@ -645,3 +735,769 @@ Fails QA when:
 - Backend errors erase user input.
 - Keyboard navigation is inaccessible.
 - Local visual overrides or custom motion values introduced.
+
+---
+
+---
+
+# Global UX Component Standard — Avatar
+
+## Scope
+
+This standard applies to: User avatars, User identity indicators, Assignee displays, Owner fields, Reviewer indicators, Profile images, Initial-based avatars, Placeholder identity icons, Avatar status indicators.
+
+## Screenshot Layout and Behavior Rule
+
+When a screenshot or Figma reference is provided, use it to understand:
+
+- supported avatar content types and fallback hierarchy
+- optional status indicator behavior and placement
+- identity display intent
+- **size category selection (small / medium / large)**
+- **status indicator placement (bottom-right corner)**
+- **grouping layout and overlap in avatar groups**
+- **overflow count chip placement and sizing**
+- **spacing between avatar and adjacent label**
+- accessibility behavior
+
+Map visible size categories to approved DS size variants (small / medium / large). Do not hardcode pixel values from screenshots.
+
+Do not copy or infer:
+- color palette, theme mode, avatar background colors
+- border styling, status indicator colors, shadows
+- typography styling or local visual overrides
+
+The active Design System theme remains the visual source of truth.
+
+---
+
+## Component Purpose
+
+Use an Avatar to represent a person, user, owner, reviewer, assignee, or other identity-related entity.
+
+Do NOT use for: generic product status, risk severity, provider logos, system source indicators, navigation icons, or entity type indicators. Use Status Icons, Brand Icons, or Entity Icons instead.
+
+---
+
+## Avatar Content Priority (fallback order)
+
+```text
+1. Approved user image
+2. Approved identity icon
+3. Initials / text fallback
+```
+
+Do not show a broken image placeholder. Do not show raw user IDs as fallback.
+
+---
+
+## Supported Types
+
+```ts
+type AvatarContentType = 'image' | 'icon' | 'initials';
+```
+
+- **Image:** must have alt text; failed load falls back to icon or initials; do not distort aspect ratio.
+- **Icon:** use only approved DS icon assets — no local SVGs.
+- **Initials:** derived from display name, deterministic fallback. Example: `Olivia Parker → OP`.
+
+---
+
+## Size Rules
+
+```ts
+type AvatarSize = 'small' | 'medium' | 'large';
+```
+
+| Context | Size |
+|---|---|
+| Dense Table / FATLINES row | Small |
+| Standard list / details summary | Medium |
+| Profile / major ownership panel | Large |
+
+Do not hardcode pixel values from a screenshot.
+
+---
+
+## Status Indicator Rules
+
+An Avatar may include a status indicator only for identity-related state (Online / Offline / Unavailable / Disabled / Blocked).
+
+Do NOT use Avatar status indicators for risk severity, entity health, lifecycle status, or operational alerts — use the global Status Icon pattern instead.
+
+Status must not be the only way a state is communicated. Must have accessible text or visible label elsewhere.
+
+---
+
+## Avatar Interaction Rules
+
+By default, an Avatar is informational. Make it interactive only when it opens a meaningful user-related action (profile, owner details, reviewer info).
+
+When interactive: use approved DS behavior, provide localized accessible label, support keyboard. Do not make every Avatar clickable.
+
+---
+
+## Avatar Group Rules
+
+```text
+[Avatar] [Avatar] [Avatar] +4
+```
+
+Use approved DS grouping and overflow behavior. Do not render unlimited Avatars in a row. Overflow must expose remaining identities accessibly.
+
+---
+
+## Loading and Error
+
+- **Loading:** use DS skeleton — do not show random placeholder initials.
+- **Image error:** fall back to icon → initials — no broken-image UI.
+- **Missing name:** use approved generic identity fallback — do not derive initials from technical IDs.
+
+---
+
+## Design System Rules
+
+- Use the approved DS Avatar component through public APIs only.
+- Do not create a local Avatar component.
+- Do not copy screenshot colors, hardcode sizes, or attach custom status badges.
+- If a required capability is missing → create a DS Gap.
+
+---
+
+## QA Blocking Rules
+
+Fails QA when:
+- Screenshot colors/theme copied into implementation.
+- Avatar used as a generic status indicator.
+- Local Avatar component created while DS Avatar exists.
+- Local SVGs used as avatar fallback.
+- Avatar status is the only indicator of a critical state.
+- Profile image failure shows broken-image UI.
+- Initials are random or derived from hidden technical data.
+- Avatar is clickable without meaningful destination or accessible label.
+- Avatar sizes are hardcoded from screenshot values.
+- Local visual overrides or custom status badge styling introduced.
+
+---
+
+---
+
+# Global UX Component Standard — Bulk Action Bar
+
+## Scope
+
+This standard applies to: Table bulk actions, FATLINES list bulk actions, Card-list bulk actions, Multi-entity selection flows, Bulk tag management, Bulk state changes, Bulk export/assign/delete/update.
+
+## Screenshot Layout and Behavior Rule
+
+When a screenshot or Figma reference is provided, use it to understand:
+
+- selection behavior, action hierarchy, and information hierarchy
+- action overflow behavior and selection summary
+- filter context and bulk action lifecycle
+- **bar height (44px fixed)**
+- **bar width (fills sub-toolbar container width)**
+- **left section: Clear X + counter + Select All + filters counter spacing**
+- **right section: action buttons alignment and gap (33px gap before buttons when filters present)**
+- **separator placement between left and right sections**
+- **action button order and overflow trigger placement**
+- **fixed positioning above the scrollable list**
+- keyboard behavior and accessibility behavior
+
+Map all visible measurements to approved Design System spacing, sizing, and layout tokens.
+
+Do not copy or infer:
+- color palette, theme mode, button styling
+- shadows, border colors, hover/focus colors
+- typography styling or animation timing
+
+The active Design System theme remains the visual source of truth.
+
+---
+
+## Component Purpose
+
+Use a Bulk Action Bar when the user selects multiple entities and can apply one shared operation.
+
+Do NOT show when: no entities are selected, action applies to only one entity, selected entity type does not support shared actions, or action requires reviewing each item individually.
+
+---
+
+## Trigger Rule
+
+```text
+No selected rows → Standard Summary Bar visible
+One or more selected rows → Bulk Action Bar replaces the Summary Bar action area
+```
+
+Page header, filter context, navigation, and main content structure must remain unchanged. Do not open as modal, drawer, or separate route.
+
+---
+
+## Required Structure
+
+```text
+[Clear selection] [12 of 140 selected] [Select all] [3 filters]
+                                       [Primary Action] [Secondary] [More actions ▾]
+```
+
+---
+
+## Selection Rules
+
+- Checkbox click selects/deselects only — does not open FATLINES or row details.
+- **Select All** selects all visible eligible items in current filtered result set.
+- "Select all matching filters" (N,000 items) must be explicitly distinguished from "Select all visible".
+- Selection count must update immediately.
+
+---
+
+## Action Priority
+
+```text
+1. Most common safe action
+2. Secondary operational actions
+3. Contextual actions
+4. Destructive actions (last, separated)
+5. Overflow (approved DS Action Menu)
+```
+
+Do not duplicate visible actions in overflow.
+
+---
+
+## Action Availability
+
+- **Enabled:** all selected entities support the action.
+- **Disabled:** none support it — show explanation when safe.
+- **Partially applicable:** some items will be skipped — user must understand what will happen.
+- **Unavailable:** hide when permission/security policy requires.
+
+---
+
+## Bulk Action Execution Pattern
+
+| Bulk action type | Required pattern |
+|---|---|
+| Add/remove tags | Bulk Tag Dialog |
+| Destructive action | System Notice confirmation |
+| Multi-step config | Wizard or full form |
+| Long-running operation | Bulk Status Dialog |
+| Simple safe action | Toast or contextual feedback |
+
+---
+
+## Async Behavior
+
+Must support: Saving / Success / Partial success / Partial failure / All failure / Permission denied / Timeout.
+
+- **Partial success:** show succeeded, failed, skipped counts — do not show generic success.
+- **Timeout:** do not claim success or definite failure — offer status check before retry.
+
+---
+
+## Scroll Ownership
+
+```text
+Page Header
+Summary / Bulk Action Bar  ← stays visible
+Scrollable Table / FATLINES ← owns vertical scroll
+```
+
+Bulk Action Bar must not scroll with rows and must not create page-level scroll.
+
+---
+
+## Design System Rules
+
+Use approved DS: Checkbox, Button, Split Button, Action Menu, Status icon, Tooltip, Dialog, System Notice, Loading state.
+
+Do not create a local Bulk Action Bar, overflow menu, icon, or button styling. Do not copy screenshot colors. If capability is missing → create a DS Gap.
+
+---
+
+## QA Blocking Rules
+
+Fails QA when:
+- Bulk Action Bar appears without selected items.
+- Checkbox selection opens row details or FATLINES.
+- Selection count is stale or unclear.
+- Select All scope is ambiguous.
+- Visible actions are duplicated in overflow.
+- Destructive actions execute without confirmation.
+- Partial-success shows generic success.
+- Timeout treated as definite failure/success.
+- Bulk Action Bar scrolls with rows or creates page-level scroll.
+- Screenshot colors/theme copied.
+- Local component styling introduced.
+
+---
+
+---
+
+---
+
+# Global UX Component Standard — Bulk Action Dialog
+
+## Scope
+
+This standard applies to: Bulk asynchronous operations, Multi-entity updates, Bulk tag operations, Bulk import or export, Bulk rotation, Bulk onboarding, Bulk scan operations, Bulk remediation actions, Long-running operations with item-level results.
+
+Use this pattern only when one user action affects multiple entities and processing may continue asynchronously.
+
+## Screenshot Layout and Behavior Rule
+
+When a screenshot or Figma reference is provided, use it to understand:
+
+- maximized and minimized layout composition
+- item result list density and row structure
+- header and footer placement
+- **maximized dialog: width 575px, height 200px fixed**
+- **minimized dialog: width 248px, height 48px fixed**
+- **header height and internal padding (12px top/bottom, 20px left/right)**
+- **item row height and padding (12px top/bottom, 8px gap between label and status)**
+- **action text-button placement (right-aligned, up to 2 per row)**
+- **separator between item rows**
+- **scroll boundary: result list scrolls, header and footer stay fixed**
+- **draggable behavior and placement (bottom-right corner of viewport)**
+
+Map all visible measurements to approved Design System spacing, sizing, and layout tokens.
+
+Do not copy or infer:
+- color palette, theme mode, status badge colors
+- shadows, border colors, hover/focus colors
+- typography styling or local visual overrides
+
+The active Design System theme remains the visual source of truth.
+
+---
+
+## Component Purpose
+
+The Bulk Action Dialog provides persistent visibility into an asynchronous bulk operation.
+
+It allows the user to understand:
+- how many items are being processed
+- which actions succeeded, failed, are still pending, or were skipped
+- whether retry is available
+- whether the operation can be safely closed or minimized
+
+It is not a confirmation dialog. Use `SystemNoticeService` before the operation when confirmation is required. Use Bulk Action Dialog after the operation starts when progress or item-level results must remain visible.
+
+Do NOT use when the action is synchronous.
+
+---
+
+## Required States
+
+```ts
+type BulkActionDialogState =
+  | 'maximized'
+  | 'minimized'
+  | 'processing'
+  | 'completed'
+  | 'partial-success'
+  | 'failed'
+  | 'unknown-outcome';
+```
+
+---
+
+## Required Anatomy
+
+```text
+Bulk Action Dialog
+├── Header (fixed)
+│   ├── Operation title — "x/y Items" format
+│   ├── Minimize / maximize icon button
+│   └── Close icon button (disabled while processing)
+├── Content (scrollable)
+│   └── Item result rows
+│       ├── Item identifier (left, ellipsis)
+│       ├── Status icon (DS 16px) + Status label (right)
+│       ├── Optional summary sub-line (e.g. "200 Completed, 32 Failed...")
+│       └── Optional text-button actions (right-aligned, max 2: Info | Hide | Retry | Cancel)
+└── Minimized strip (alternative to full dialog)
+    ├── Operation title
+    ├── Maximize icon button
+    └── Close icon button
+```
+
+---
+
+## Header Format
+
+Title must use the format: `x/y Items` or `x/y Processes ended`.
+
+Do not use vague titles such as "Processing", "Operation", or "Please wait".
+
+The header must remain fixed while the item result list scrolls.
+
+---
+
+## Maximized State
+
+Default state when an operation begins.
+
+Shows: operation title, all item rows with current status, item-level action buttons.
+
+Up to 4 items visible without scroll. More than 4 items → result list becomes scrollable.
+
+---
+
+## Minimized State
+
+Compact persistent operation indicator. Must not block normal page interaction.
+
+Shows: operation title + compact progress summary + maximize + close controls.
+
+Must not disappear while processing unless operation is cancelled or completed per approved product behavior.
+
+---
+
+## Item Visibility — Hide Pattern
+
+Completed items that are no longer relevant may be hidden by the user via a "Hide" action.
+
+Hidden items collapse into a group: `▶ Hidden (2)` — expandable to `▼ Hidden (2)` with "Restore to list" per item.
+
+A "Restore all" control must be available when hidden items exist.
+
+---
+
+## Item Result Statuses
+
+```ts
+type BulkItemResultStatus =
+  | 'pending'
+  | 'in-progress'
+  | 'completed'
+  | 'failed'
+  | 'paused'
+  | 'partially'
+  | 'cancelled'
+  | 'unknown';
+```
+
+Status chips are DS status badges. Status icons are DS status icons at 16px.
+
+Do not use local badges, color-only indicators, or raw backend error text.
+
+---
+
+## Close Rules
+
+| State | Close behavior |
+|---|---|
+| Processing | Close disabled; minimize available |
+| Completed | Close enabled |
+| Partial success | Close enabled after results are available |
+| Failed | Close enabled |
+| Unknown outcome | Close enabled only after recovery guidance shown |
+
+---
+
+## Retry Rules
+
+Retry is allowed only when the backend explicitly marks the operation as retryable and idempotency is supported.
+
+Supported retry actions: `Retry`, `Try again`, `Renew`, `Check status`.
+
+Do not provide Retry for unknown outcome until the user first checks status.
+
+---
+
+## Scroll Ownership
+
+```text
+Bulk Action Dialog
+├── Fixed Header
+├── Scrollable Item Result List  ← owns scroll when > 4 items
+└── (no separate footer — actions are inline per row)
+```
+
+Do not make the full page, parent table, or parent FATLINES list scroll.
+
+---
+
+## Design System Rules
+
+Use approved DS components for: Modal/Dialog container, Status icons, Buttons, Icon buttons, Progress spinner, Virtualized list, Tooltip, Action menu, Loading state.
+
+Do not create a local bulk action dialog. Do not reuse a standard modal as a workaround. Do not copy screenshot theme or colors.
+
+If the DS does not support minimized/maximized bulk operation behavior → create a DS Gap.
+
+---
+
+## QA Blocking Rules
+
+Fails QA when:
+- Standard confirmation dialog used for bulk async progress.
+- Close enabled while active operation progress would be lost.
+- Minimize unavailable during long-running bulk operation.
+- Partial success presented as generic success.
+- Unknown outcome presented as definitive failure.
+- Retry exposed without idempotency confirmation.
+- Result list scroll causes page, table, or full-dialog scrolling.
+- Header scrolls away.
+- Large result lists render without virtualization.
+- Status uses local badges, dots, text-only indicators, or non-16px icons.
+- Screenshot colors or theme are copied.
+- Local visual overrides or local bulk-dialog implementation introduced.
+
+---
+
+---
+
+# Global UX Component Standard — Buttons
+
+## Scope
+
+This standard applies to: Primary buttons, Secondary buttons, Text buttons, Icon buttons, Split buttons, Button groups, Filter buttons, Timer / countdown buttons, Loading buttons, Contextual actions, Form actions, Wizard actions, Bulk action buttons.
+
+## Screenshot Layout and Behavior Rule
+
+When a screenshot or Figma reference is provided, use it to understand:
+
+- button hierarchy and placement
+- action alignment and grouping
+- **gap between grouped buttons (16px between button groups)**
+- **button height by size category: Large 40px, Medium 32px, Small 24px**
+- **icon placement within button (left side, 24px icon in 32px+ buttons)**
+- **filter button + label layout and active indicator placement**
+- **split-button composition: left action / right chevron divider**
+- **footer layout: sticky position, left Cancel / right Primary**
+- **overflow threshold (max 4 visible buttons before Action Menu)**
+- loading spinner placement and label preservation
+- responsive wrapping behavior
+
+Map all measurements to approved DS spacing, sizing, and layout tokens. Do not hardcode pixel values.
+
+Do not copy or infer:
+- colors, theme mode, shadows, border colors
+- hover/focus colors, typography styling, icon colors
+- local visual overrides
+
+The active Design System theme remains the visual source of truth.
+
+---
+
+## Core Rule
+
+A Button triggers a user action. Before rendering a button, Claude must determine:
+
+```text
+- Is this the primary user goal?
+- Is it a secondary action?
+- Is it a low-emphasis helper action?
+- Is it destructive?
+- Does it need confirmation?
+- Does it require loading or disabled behavior?
+```
+
+Do not use Buttons for navigation when a link, navigation item, or tab is the correct component.
+
+---
+
+## Button Types
+
+```ts
+type ButtonHierarchy = 'primary' | 'secondary' | 'text' | 'icon' | 'split' | 'filter' | 'timer';
+```
+
+### Primary Button
+Single highest-priority action in context. Only one per action group. Must not be hidden in overflow.
+
+### Secondary Button
+Meaningful but lower-priority actions (Cancel, Back, Export). Must not compete visually with Primary.
+
+### Text Button
+Low-emphasis actions within content context (View details, Clear, Retry). Not for main page action.
+
+### Icon Button
+When icon meaning is recognized or space constrained. Requires localized `aria-label`. DS icons only.
+
+### Split Button
+One default primary action + related alternatives in overflow.
+```text
+[ Create account ] [ ▾ ]   — left executes, right opens Action Menu
+```
+Do not repeat the primary action in the overflow menu.
+
+### Filter Button
+Reflects active filter state. Shows count when filters are applied (`Filters · 3`). Does not replace Summary Bar chips.
+
+### Timer / Countdown Button
+Only when action availability is intentionally time-based (`Retry in 20s`). Must be accessible. Do not use for ordinary loading.
+
+---
+
+## Button Group Order
+
+```text
+Primary → Secondary → Text → Destructive → More actions
+```
+
+When actions exceed available width: keep highest-priority visible, move lower-priority to Action Menu. Do not duplicate visible actions in overflow.
+
+---
+
+## Form and Wizard Footer Rules
+
+Footer is sticky — content scrolls, footer stays fixed.
+
+```text
+[Cancel]                     [Primary action]
+```
+
+Rules:
+- Footer must be outside the scroll region.
+- Primary Button on the action side per product directionality.
+- Cancel must not be visually stronger than Save.
+- Disabled primary must explain why when not obvious.
+
+---
+
+## Button State Rules
+
+Every button must support applicable states: `default`, `hover`, `focus`, `pressed`, `disabled`, `loading`.
+
+**Disabled:** use only when action is visible but currently unavailable. Must not be the only explanation — pair with helper text, tooltip, or inline validation.
+
+**Loading:** enter immediately on click, prevent duplicate requests, preserve button placement, disable repeated interaction.
+
+**After completion:** show Toast, inline update, or contextual result. Do not change button color to communicate outcome alone.
+
+---
+
+## Confirmation Rules
+
+Use `SystemNoticeService` before: destructive, irreversible, security-sensitive, multi-entity, or service-interrupting actions.
+
+Examples: Delete, Disable, Revoke, Rotate secrets, Bulk remove tags.
+
+---
+
+## Accessibility Requirements
+
+```text
+- Every Button has localized visible text or accessible name
+- Icon-only Buttons require aria-label
+- Disabled state exposed accessibly
+- Loading state announced meaningfully
+- Buttons remain keyboard operable
+- Label describes the outcome — not generic wording
+```
+
+Use: `Save changes`, `Create account`, `Apply filters`, `Retry failed items`
+Avoid: `Click here`, `Submit`, `Continue`, `OK` (unless context is unambiguous)
+
+---
+
+## Design System Rules
+
+Use only approved DS APIs: `Button`, `IconButton`, `SplitButton`, `ButtonGroup`, `ActionMenu`, `Tooltip`, loading state, System Notice.
+
+Do not: create local button components, override DS button colors, override internal padding/border-radius/height, copy screenshot theme, create custom hover/focus behavior, introduce arbitrary motion.
+
+---
+
+## QA Blocking Rules
+
+Fails QA when:
+- More than one competing Primary Button in a single action group.
+- Primary action hidden in Action Menu overflow.
+- Split Button duplicates its primary action in the menu.
+- Destructive action executes without confirmation.
+- Async action allows duplicate requests.
+- Button loading causes layout shift.
+- Sticky form footer scrolls away.
+- Screenshot colors or theme copied.
+- Local CSS overrides DS Button internals.
+- Icon-only Button lacks accessible label.
+- Generic labels used where outcome-specific labels are required.
+
+---
+
+---
+
+# Screenshot Layout Specification Rule
+
+## Updated Screenshot Usage Policy
+
+Screenshots and Figma references are the layout specification source.
+
+**Claude MUST use screenshots to infer and implement:**
+- spacing, padding, margins, gaps
+- component density
+- widths, heights, alignment, placement
+- content hierarchy and column order
+- row height, section spacing, container sizing
+- overflow behavior, sticky regions, scroll boundaries
+- responsive layout behavior
+
+**Claude MUST NOT copy from screenshots:**
+- color palette, theme mode, component colors
+- background/border/shadow values
+- typography family or weight
+- hover/focus colors
+- custom icon colors
+
+These must continue to come from the active Design System theme and approved APIs.
+
+---
+
+## DS Token Mapping Rule
+
+When a screenshot shows a spacing or sizing value, map it to the closest approved DS token first.
+
+```text
+Screenshot: 24px gap
+DS token: $spacing-6 = 24px → use $spacing-6
+
+Screenshot: 18px gap
+DS tokens: $spacing-4 = 16px, $spacing-5 = 20px
+→ use closest approved token, report mapping in implementation plan
+```
+
+Do not introduce page-local hardcoded values when a DS token exists.
+
+---
+
+## Required Screenshot Layout Analysis Output
+
+For every screenshot-driven implementation, Claude must include:
+
+```markdown
+### Screenshot Layout Analysis
+
+| Area | Screenshot Requirement | DS Mapping | Decision |
+|---|---|---|---|
+| Page header | 24px bottom spacing | $spacing-6 | Apply |
+| Summary Bar | Fixed above scroll | Existing Summary Bar pattern | Apply |
+| Table rows | Dense row height | DS dense table variant | Apply |
+```
+
+---
+
+## Component Boundary Rule
+
+Claude may update layout composition **around** a DS component (container padding, page grid, section gap, column width, placement, content density via approved variants).
+
+Claude must NOT change internal styling of DS components (internal padding, border-radius, colors, hover/focus state, typography, shadow).
+
+If a screenshot requires an internal component capability the DS does not expose → create a DS Gap. Do not force through CSS overrides.
+
+---
+
+## QA Rules
+
+Fails QA when:
+- Screenshot spacing/alignment ignored without explanation.
+- Page-local hardcoded spacing added when DS token exists.
+- DS gap exists but CSS override used instead.
+- DS component internal styling overridden to match screenshot.
+- Screenshot colors/theme copied.
+- Full-page scroll introduced where screenshot shows region-level scroll.
+- Layout density differs materially from screenshot intent without documented reason.
