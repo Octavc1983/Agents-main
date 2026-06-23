@@ -49,7 +49,6 @@ interface ValidationBadgeProps {
 const ValidationBadge: React.FC<ValidationBadgeProps> = ({
   issueCount, warningCount, hasTriggered, canvasState, isOpen, triggerRef, onToggle,
 }) => {
-  const isDraft       = canvasState === 'empty' || canvasState === 'draft';
   const isSaving      = canvasState === 'saving' || canvasState === 'activating';
   const isActive      = canvasState === 'active';
   const isSaved       = canvasState === 'saved';

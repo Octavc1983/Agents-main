@@ -1,3 +1,6 @@
+// LEGACY FIXTURE — no active page imports MOCK_TAG_SUGGESTIONS for the Accounts flow.
+// ManagedAccountsPage now consumes accountService.getTagSuggestions() via useManagedAccounts.
+// Scheduled for removal after all tag-consuming pages are migrated.
 import type { Tag, TagSuggestion } from '../features/tags/tag.types';
 
 export const MOCK_TAG_SUGGESTIONS: TagSuggestion[] = [

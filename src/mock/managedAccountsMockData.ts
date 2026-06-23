@@ -1,3 +1,6 @@
+// LEGACY FIXTURE — no active page imports this file.
+// ManagedAccountsPage now consumes accountService via useManagedAccounts.
+// Scheduled for removal after all Accounts-domain consumers are migrated.
 import type { ManagedAccount, ManagedAccountsStats, ManagedAccountRiskLevel } from '../types/prototype.types';
 
 // Risk levels derived from Risk Management aggregation logic:

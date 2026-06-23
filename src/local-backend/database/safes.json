@@ -1,0 +1,11 @@
+[
+  { "id": "safe-001", "name": "Prod-ServiceAccounts", "description": "Production service accounts" },
+  { "id": "safe-002", "name": "DomainAdmins", "description": "Domain administrator accounts" },
+  { "id": "safe-003", "name": "DBAdmins", "description": "Database administrator accounts" },
+  { "id": "safe-004", "name": "CloudAccounts", "description": "Cloud provider accounts" },
+  { "id": "safe-005", "name": "SAPAccounts", "description": "SAP system accounts" },
+  { "id": "safe-006", "name": "UnixAdmins", "description": "Unix/Linux administrator accounts" },
+  { "id": "safe-007", "name": "SaaSAccounts", "description": "SaaS application accounts" },
+  { "id": "safe-008", "name": "WorkstationAdmins", "description": "Workstation administrator accounts" },
+  { "id": "safe-009", "name": "SecurityAccounts", "description": "Security tooling accounts" }
+]

@@ -1,0 +1,17 @@
+[
+  { "id": "user-001", "name": "ops-team",       "displayName": "Ops Team" },
+  { "id": "user-002", "name": "infra-team",     "displayName": "Infrastructure Team" },
+  { "id": "user-003", "name": "dba-team",       "displayName": "DBA Team" },
+  { "id": "user-004", "name": "devops-team",    "displayName": "DevOps Team" },
+  { "id": "user-005", "name": "sap-team",       "displayName": "SAP Team" },
+  { "id": "user-006", "name": "web-team",       "displayName": "Web Team" },
+  { "id": "user-007", "name": "analytics-team", "displayName": "Analytics Team" },
+  { "id": "user-008", "name": "ml-team",        "displayName": "ML Team" },
+  { "id": "user-009", "name": "app-team",       "displayName": "App Team" },
+  { "id": "user-010", "name": "platform-team",  "displayName": "Platform Team" },
+  { "id": "user-011", "name": "crm-team",       "displayName": "CRM Team" },
+  { "id": "user-012", "name": "security-team",  "displayName": "Security Team" },
+  { "id": "user-013", "name": "it-team",        "displayName": "IT Team" },
+  { "id": "user-014", "name": "pm-team",        "displayName": "PM Team" },
+  { "id": "user-015", "name": "hr-team",        "displayName": "HR Team" }
+]

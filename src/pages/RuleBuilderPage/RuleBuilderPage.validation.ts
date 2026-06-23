@@ -14,7 +14,6 @@ import type {
   RuleBranchIssue,
 } from './RuleBuilderPage.types';
 import { RULE_BUILDER_STRINGS as S } from './RuleBuilderPage.strings';
-import { isConditionComplete, isActionComplete } from './RuleBuilderPage.branch';
 import { RULE_BUILDER_ENTITY_OPTIONS } from '../../mock/ruleBuilderMockData';
 
 // ── Structural-only validation (for Save Draft) ───────────────────────────────

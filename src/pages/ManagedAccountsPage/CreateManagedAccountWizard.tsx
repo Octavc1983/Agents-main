@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from '@idira/design-system';
 import { WizardTemplate } from '../../prototype-templates/WizardTemplate';
+import { accountService } from '../../local-backend/services/account.service';
+import { localDatabaseStore } from '../../local-backend/state/localDatabase.store';
 import type { ManagedAccountType, ManagedAccountPlatform } from '../../types/prototype.types';
 import './CreateManagedAccountWizard.scss';
 
@@ -192,10 +194,35 @@ export const CreateManagedAccountWizard: React.FC<Props> = ({ onClose }) => {
       setStep(s => (s + 1) as StepId);
     } else {
       setSaving(true);
-      setTimeout(() => {
+      const store = localDatabaseStore.get();
+      const safeEntry = store.safes.find(
+        (s) => s.name.toLowerCase() === state.safe.toLowerCase(),
+      ) ?? store.safes[0];
+      const ownerEntry = store.users.find(
+        (u) => u.name.toLowerCase() === state.owner.toLowerCase(),
+      ) ?? store.users[0];
+      accountService.create(
+        {
+          name: state.name,
+          accountType: state.accountType as string,
+          platform: state.platform as string,
+          address: state.address,
+          status: 'pending',
+          ownerId: ownerEntry.id,
+          safeId: safeEntry.id,
+          description: state.description || undefined,
+          tagIds: [],
+        },
+        {
+          requestId: `req-create-${state.name}`,
+          idempotencyKey: `create-${state.name}-${state.address}`,
+        },
+      ).then(() => {
         setSaving(false);
         setSaved(true);
-      }, 1200);
+      }).catch(() => {
+        setSaving(false);
+      });
     }
   };
 

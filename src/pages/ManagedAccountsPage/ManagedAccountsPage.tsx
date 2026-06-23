@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import ReactDOM from 'react-dom';
 import { Button, SeverityBadge } from '@idira/design-system';
 import { ManageTagsDialog } from '../../features/tags/ManageTagsDialog/ManageTagsDialog';
-import { MOCK_TAG_SUGGESTIONS } from '../../mock/tagsMockData';
-import type { Tag } from '../../features/tags/tag.types';
+import type { Tag, TagSuggestion } from '../../features/tags/tag.types';
+import { useManagedAccounts } from '../../local-backend/hooks/useManagedAccounts';
+import type { TagCatalogEntry } from '../../local-backend/types/common.types';
 import { StatusIcon } from '../../components/shared/StatusIcon';
 import {
   WindowsPlatformIcon, LinuxPlatformIcon, AWSPlatformIcon, AzurePlatformIcon,
@@ -19,7 +20,6 @@ import { TableFiltersTemplate } from '../../prototype-templates/TableFiltersTemp
 import type { TableColumn } from '../../prototype-templates/TableFiltersTemplate';
 import { FatlinesListMasterDetailsTemplate } from '../../prototype-templates/FatlinesListMasterDetailsTemplate';
 import type { ManagedAccount, ManagedAccountPlatform } from '../../types/prototype.types';
-import { managedAccountsMock } from '../../mock/managedAccountsMockData';
 import { CreateManagedAccountWizard } from './CreateManagedAccountWizard';
 import './ManagedAccountsPage.scss';
 
@@ -287,6 +287,21 @@ function accountTagsToTagModel(rawTags: string[]): Tag[] {
   });
 }
 
+// ── Convert local-backend TagCatalogEntry[] → legacy TagSuggestion[] for ManageTagsDialog ──
+
+function tagSuggestionsToLegacyFormat(entries: TagCatalogEntry[]): TagSuggestion[] {
+  return entries.map((e) => ({
+    id: e.id,
+    key: e.key,
+    value: e.value,
+    displayKey: e.displayKey,
+    displayValue: e.displayValue,
+    source: e.source,
+    usageCount: e.usageCount,
+    isSelectable: e.isSelectable,
+  }));
+}
+
 // ── Filter groups ─────────────────────────────────────────────────────────────
 
 const FILTER_GROUPS = [
@@ -463,14 +478,14 @@ const AccountDetailsPanel: React.FC<AccountDetailsPanelProps> = ({ account, onCl
 // ── ManagedAccountsPage ───────────────────────────────────────────────────────
 
 export const ManagedAccountsPage: React.FC = () => {
+  const { accounts, isLoading, tagSuggestions, refetch, updateAccountTags } = useManagedAccounts();
   const [wizardOpen, setWizardOpen] = useState(false);
   const [tagsDialogAccount, setTagsDialogAccount] = useState<ManagedAccount | null>(null);
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
   const [updatedAt, setUpdatedAt] = useState(() => formatTime(new Date()));
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const [selectedAccountId, setSelectedAccountId] = useState<string | null>(null);
 
-  // Close any open popover when the page scrolls (#8)
+  // Close any open popover when the page scrolls
   useEffect(() => {
     if (!openPopoverId) return;
     const close = () => setOpenPopoverId(null);
@@ -479,12 +494,9 @@ export const ManagedAccountsPage: React.FC = () => {
   }, [openPopoverId]);
 
   const handleRefresh = useCallback(() => {
-    setIsRefreshing(true);
-    setTimeout(() => {
-      setUpdatedAt(formatTime(new Date()));
-      setIsRefreshing(false);
-    }, 800);
-  }, []);
+    refetch();
+    setUpdatedAt(formatTime(new Date()));
+  }, [refetch]);
 
   const columns = useMemo<TableColumn<ManagedAccount>[]>(() => [
     {
@@ -582,7 +594,7 @@ export const ManagedAccountsPage: React.FC = () => {
   return (
     <>
       <FatlinesListMasterDetailsTemplate<ManagedAccount>
-        rows={managedAccountsMock}
+        rows={accounts}
         getRowId={(a) => a.id}
         selectedEntityId={selectedAccountId}
         onSelectedEntityChange={setSelectedAccountId}
@@ -590,7 +602,7 @@ export const ManagedAccountsPage: React.FC = () => {
           <TableFiltersTemplate<ManagedAccount>
             title="Managed accounts"
             description="Discover, connect, and monitor all AI agents across the organization."
-            rows={managedAccountsMock}
+            rows={accounts}
             columns={columns}
             getRowId={(a) => a.id}
             selectable
@@ -601,7 +613,7 @@ export const ManagedAccountsPage: React.FC = () => {
             primaryAction={sharedActions}
             updatedAt={updatedAt}
             onRefresh={handleRefresh}
-            isLoading={isRefreshing}
+            isLoading={isLoading}
             emptyTitle="No managed accounts"
             emptyDescription="Create your first managed account to get started."
             onRowClick={onRowClick}
@@ -634,8 +646,22 @@ export const ManagedAccountsPage: React.FC = () => {
           onClose={() => setTagsDialogAccount(null)}
           entityName={tagsDialogAccount.name}
           initialTags={accountTagsToTagModel(tagsDialogAccount.tags)}
-          suggestions={MOCK_TAG_SUGGESTIONS}
-          onSave={async (_tags: Tag[]) => { await new Promise(r => setTimeout(r, 600)); }}
+          suggestions={tagSuggestionsToLegacyFormat(tagSuggestions)}
+          onSave={async (tags: Tag[]) => {
+            if (!tagsDialogAccount) return;
+            const tagIds = tags
+              .map((t) => {
+                const entry = tagSuggestions.find(
+                  (s) => s.key === t.key && (s.value ?? undefined) === (t.value ?? undefined),
+                );
+                return entry?.id;
+              })
+              .filter((id): id is string => id !== undefined);
+            await updateAccountTags(tagsDialogAccount.id, tagIds, {
+              requestId: `req-tags-${tagsDialogAccount.id}`,
+              idempotencyKey: `tags-${tagsDialogAccount.id}-${Date.now()}`,
+            });
+          }}
         />
       )}
     </>

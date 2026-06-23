@@ -1,4 +1,4 @@
-import type { RuleBranchIssue, RuleBranchIssueKind, ConditionNodeData } from '../../RuleBuilderPage.types';
+import type { RuleBranchIssueKind } from '../../RuleBuilderPage.types';
 
 export interface ValidationIssueItem {
   branchId:    string;

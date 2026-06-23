@@ -19,7 +19,6 @@ import type {
 import type { ValidationIssueItem } from './components/RuleValidationPopover/RuleValidationPopover.types';
 import {
   getRuleBuilderEntityLabel,
-  makeStartNode,
   RULE_BUILDER_ACTION_OPTIONS,
   MOCK_SAVE_DELAY_MS,
   MOCK_ACTIVATE_DELAY_MS,
@@ -30,8 +29,6 @@ import {
 import {
   createDraftRuleBranch,
   getIncompleteBranch,
-  isRuleBranchComplete,
-  reindexBranchPositions,
   computeFanOutConnectors,
   resetBranchCounters,
 } from './RuleBuilderPage.branch';
@@ -139,11 +136,6 @@ export const RuleBuilderPage: React.FC = () => {
   const entityType  = (searchParams.get('entity') ?? 'accounts') as RuleEntityType;
   const entityLabel = getRuleBuilderEntityLabel(entityType);
 
-  const startNode = useMemo(
-    () => makeStartNode(entityType, entityLabel),
-    [entityType, entityLabel],
-  );
-
   // ── Graph state ────────────────────────────────────────────────────────────
 
   const [branches,        setBranches]        = useState<RuleBranch[]>(EMPTY_GRAPH_SNAPSHOT.branches);
@@ -185,7 +177,7 @@ export const RuleBuilderPage: React.FC = () => {
 
   // ── Viewport ───────────────────────────────────────────────────────────────
 
-  const { viewport, zoom, zoomPercent, zoomIn, zoomOut, panToNode, fitCanvas } =
+  const { viewport, zoomPercent, zoomIn, zoomOut, panToNode, fitCanvas } =
     useCanvasViewport(workspaceRef);
 
   const handleFitCanvas = useCallback(() => {
@@ -296,19 +288,6 @@ export const RuleBuilderPage: React.FC = () => {
     setIsDirty(true);
     if (branches.length === 0) setCanvasState('draft');
   }, [isAddRuleBlocked, branches, pushHistory, currentSnapshot]);
-
-  // ── Update condition node ──────────────────────────────────────────────────
-
-  const handleConditionChange = useCallback((
-    nodeId:      string,
-    field:       'propertyLabel' | 'operatorLabel' | 'valueLabel',
-    value:       string,
-  ) => {
-    setConditionNodes((prev) =>
-      prev.map((n) => n.id === nodeId ? { ...n, [field]: value } : n),
-    );
-    setIsDirty(true);
-  }, []);
 
   // ── Update action node ─────────────────────────────────────────────────────
 
@@ -508,7 +487,7 @@ export const RuleBuilderPage: React.FC = () => {
         <RuleValidationPopover
           isOpen={isValidationPopoverOpen}
           triggerRef={validationBtnRef}
-          anchorEl={validationBtnRef.current}
+          anchorEl={null}
           issueCount={issueCount}
           warningCount={warningCount}
           issues={validationIssueItems}

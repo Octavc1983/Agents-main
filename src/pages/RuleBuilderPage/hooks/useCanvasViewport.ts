@@ -1,12 +1,8 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import type { CanvasViewport } from '../RuleBuilderPage.types';
 import {
   ZOOM_STEP, ZOOM_MIN, ZOOM_MAX, ZOOM_DEFAULT,
   CANVAS_SAFETY_MARGIN,
-  CONDITION_NODE_W, CONDITION_NODE_H,
-  ACTION_NODE_W, ACTION_NODE_H,
-  START_NODE_W, START_NODE_H,
-  START_NODE_X, START_NODE_Y,
 } from '../RuleBuilderPage.constants';
 
 interface PanToNodeOptions {

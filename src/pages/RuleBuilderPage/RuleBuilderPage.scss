@@ -2,9 +2,6 @@
 @use '../../styles/mixins' as *;
 
 // ── Page shell ────────────────────────────────────────────────────────────────
-// CanvasTemplate sits inside the AppShell main content area.
-// Negative margin compensates for AppShell's inner padding so the canvas
-// fills the full available content area without a wrapper height assumption.
 
 .rb {
   display: flex;
@@ -16,610 +13,36 @@
   padding: 0;
 }
 
-// ── Rule Context Header ───────────────────────────────────────────────────────
+// ── Validation popover anchor ─────────────────────────────────────────────────
+// Positioned relative to the toolbar center so the popover appears below it.
 
-.rb__context-header {
-  display: flex;
-  align-items: center;
-  padding: $spacing-4 $spacing-6;
-  border-bottom: 1px solid $color-divider-1;
-  background: $color-page-background;
-  flex-shrink: 0;
-}
-
-.rb__title-row {
-  display: flex;
-  align-items: center;
-  gap: $spacing-3;
-  min-width: 0;
-}
-
-.rb__title {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-semibold;
-  color: $color-text-light;
-  margin: 0;
-  line-height: 1.2;
-  @include text-truncate;
-}
-
-.rb__title-input {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-semibold;
-  color: $color-text-light;
-  background: $color-surface-idle;
-  border: 1px solid $color-primary;
-  border-radius: $border-radius-sm;
-  padding: 2px $spacing-2;
-  min-width: 260px;
-  outline: none;
-}
-
-.rb__edit-title-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  background: none;
-  border: none;
-  color: $color-nav-text-idle;
-  cursor: pointer;
-  border-radius: $border-radius-sm;
-  flex-shrink: 0;
-  transition: color $transition-fast;
-
-  &:hover { color: $color-text-light; }
-}
-
-.rb__wip-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px $spacing-3;
-  border-radius: $border-radius-full;
-  background: rgba(122, 128, 255, 0.15);
-  border: 1px solid rgba(122, 128, 255, 0.35);
-  color: $color-primary;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-medium;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-// ── Canvas Toolbar ────────────────────────────────────────────────────────────
-
-.rb__toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: $spacing-4;
-  padding: 0 $spacing-6;
-  height: 48px;
-  background: $color-page-background;
-  border-bottom: 1px solid $color-divider-1;
-  flex-shrink: 0;
-}
-
-.rb__toolbar-left,
-.rb__toolbar-center,
-.rb__toolbar-right {
-  display: flex;
-  align-items: center;
-  gap: $spacing-2;
-}
-
-.rb__toolbar-divider {
-  display: inline-block;
-  width: 1px;
-  height: 16px;
-  background: $color-divider-1;
-  flex-shrink: 0;
-}
-
-// Search
-
-.rb__search-wrap {
+.rb__validation-popover-anchor {
   position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.rb__search-icon {
-  position: absolute;
-  left: $spacing-2;
-  color: $color-nav-text-idle;
-  pointer-events: none;
-}
-
-.rb__search-input {
-  background: $color-surface-idle;
-  border: 1px solid $color-divider-1;
-  border-radius: $border-radius-sm;
-  color: $color-text-light;
-  font-size: $font-size-sm;
-  padding: $spacing-1 $spacing-7 $spacing-1 $spacing-6;
-  width: 200px;
-  outline: none;
-
-  &::placeholder { color: $color-nav-text-idle; }
-  &:focus { border-color: $color-primary; }
-  &::-webkit-search-cancel-button { display: none; }
-}
-
-.rb__search-clear {
-  position: absolute;
-  right: $spacing-2;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-  background: none;
-  border: none;
-  color: $color-nav-text-idle;
-  cursor: pointer;
-  border-radius: $border-radius-full;
-  padding: 0;
-  transition: color $transition-fast;
-
-  &:hover { color: $color-text-light; }
-}
-
-// Match count label (RB-3)
-
-.rb__search-count {
-  font-size: $font-size-xs;
-  color: $color-nav-text-idle;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-// Search results popover (RB-1)
-
-.rb__search-popover {
-  position: absolute;
-  top: calc(100% + #{$spacing-1});
-  left: 0;
+  height: 0;
+  overflow: visible;
   z-index: 200;
-  min-width: 260px;
-  max-width: 360px;
-  background: $color-surface-idle;
-  border: 1px solid $color-divider-1;
-  border-radius: $border-radius-base;
-  box-shadow: $shadow-card;
-  list-style: none;
-  margin: 0;
-  padding: $spacing-1 0;
-  max-height: 240px;
-  overflow-y: auto;
-  @include ds-scrollbar;
-}
-
-.rb__search-popover__empty {
-  padding: $spacing-2 $spacing-4;
-  font-size: $font-size-sm;
-  color: $color-nav-text-idle;
-  cursor: default;
-}
-
-.rb__search-popover__item {
-  display: block;
-}
-
-.rb__search-popover__btn {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  width: 100%;
-  min-width: 0; // prevent flex child overflow
-  padding: $spacing-2 $spacing-4;
-  background: none;
-  border: none;
-  text-align: left;
-  cursor: pointer;
-  transition: background-color $transition-fast;
-
-  &:hover,
-  &:focus-visible {
-    background-color: $color-nav-bg-selected;
-    outline: none;
-  }
+  justify-content: center;
 }
 
-.rb__search-popover__node-type {
-  font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-  color: $color-nav-text-idle;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
+// ── Workspace row (canvas + sidebar) ─────────────────────────────────────────
 
-.rb__search-popover__summary {
-  font-size: $font-size-sm;
-  color: $color-text-light;
-  font-weight: $font-weight-medium;
-  @include text-truncate;
-  max-width: 320px;
-}
-
-.rb__search-popover__context {
-  font-size: $font-size-xs;
-  color: $color-nav-text-idle;
-  @include text-truncate;
-  max-width: 320px;
-}
-
-.rb__search-popover__highlight {
-  background: transparent;
-  color: $color-primary;
-  font-weight: $font-weight-semibold;
-}
-
-// Rule summary
-
-.rb__meta {
-  font-size: $font-size-sm;
-  color: $color-nav-text-idle;
-  white-space: nowrap;
-
-  strong {
-    color: $color-text-light;
-    font-weight: $font-weight-semibold;
-  }
-}
-
-// Validation status button
-
-.rb__validation-status-wrap {
-  position: relative;
-}
-
-.rb__status-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-1;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  background: none;
-  border: 1px solid transparent;
-  border-radius: $border-radius-sm;
-  padding: 2px $spacing-2;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background-color $transition-fast, border-color $transition-fast;
-
-  &:hover { background-color: $color-btn-hover-overlay; }
-
-  &--invalid, &--activation-failed, &--save-failed {
-    color: $color-status-error;
-    border-color: rgba(242, 34, 103, 0.3);
-    background: rgba(242, 34, 103, 0.08);
-    &:hover { background: rgba(242, 34, 103, 0.14); }
-  }
-
-  &--warning {
-    color: $color-status-warning;
-    border-color: rgba(255, 180, 93, 0.3);
-    background: rgba(255, 180, 93, 0.08);
-    &:hover { background: rgba(255, 180, 93, 0.14); }
-  }
-
-  &--active, &--valid, &--saved {
-    color: $color-status-success;
-    border-color: rgba(0, 200, 152, 0.3);
-    background: rgba(0, 200, 152, 0.08);
-    &:hover { background: rgba(0, 200, 152, 0.14); }
-  }
-
-  &--draft, &--empty, &--dirty, &--saving, &--activating, &--read-only {
-    color: $color-nav-text-idle;
-    border-color: $color-divider-1;
-    &:hover { background-color: $color-btn-hover-overlay; }
-  }
-}
-
-.rb__status-icon {
-  flex-shrink: 0;
-
-  &--invalid { color: $color-status-error; }
-  &--warning { color: $color-status-warning; }
-  &--valid   { color: $color-status-success; }
-  &--idle    { color: $color-nav-text-idle; }
-}
-
-// ── Validation popover ────────────────────────────────────────────────────────
-
-.rb__validation-popover {
-  position: absolute;
-  top: calc(100% + #{$spacing-2});
-  left: 0;
-  z-index: 100;
-  min-width: 280px;
-  max-width: 360px;
-  background: $color-surface-idle;
-  border: 1px solid $color-divider-1;
-  border-radius: $border-radius-base;
-  box-shadow: $shadow-card;
+.rb__workspace-row {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: row;
   overflow: hidden;
 }
 
-.rb__validation-popover__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: $spacing-3 $spacing-4 $spacing-2;
-  border-bottom: 1px solid $color-divider-1;
-}
+// ── Search sidebar ────────────────────────────────────────────────────────────
 
-.rb__validation-popover__title {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-semibold;
-  color: $color-text-light;
-}
-
-.rb__validation-popover__close {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  background: none;
-  border: none;
-  color: $color-nav-text-idle;
-  cursor: pointer;
-  font-size: $font-size-base;
-  border-radius: $border-radius-sm;
-  line-height: 1;
-  transition: color $transition-fast;
-
-  &:hover { color: $color-text-light; }
-}
-
-.rb__validation-popover__body {
-  padding: $spacing-2 0;
-  max-height: 260px;
-  overflow-y: auto;
-  @include ds-scrollbar;
-}
-
-.rb__validation-popover__empty {
-  font-size: $font-size-sm;
-  color: $color-nav-text-idle;
-  padding: $spacing-2 $spacing-4;
-  margin: 0;
-}
-
-.rb__validation-popover__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.rb__validation-popover__item {
-  display: block;
-}
-
-.rb__validation-popover__node-btn {
-  display: flex;
-  align-items: flex-start;
-  gap: $spacing-2;
-  width: 100%;
-  padding: $spacing-2 $spacing-4;
-  background: none;
-  border: none;
-  text-align: left;
-  font-size: $font-size-sm;
-  color: $color-text-light;
-  cursor: pointer;
-  transition: background-color $transition-fast;
-
-  &:hover { background-color: $color-nav-bg-selected; }
-}
-
-.rb__validation-popover__item--invalid .rb__validation-popover__item-icon {
-  color: $color-status-error;
+.rb__search-sidebar {
+  width: 240px;
   flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.rb__validation-popover__item--warning .rb__validation-popover__item-icon {
-  color: $color-status-warning;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.rb__validation-popover__item-prefix {
-  font-weight: $font-weight-medium;
-  color: $color-nav-text-idle;
-}
-
-// Enhanced item layout (RB-6)
-
-.rb__validation-popover__item-icon-wrap {
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.rb__validation-popover__item-icon {
-  flex-shrink: 0;
-
-  &--invalid { color: $color-status-error; }
-  &--warning { color: $color-status-warning; }
-}
-
-.rb__validation-popover__item-body {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
-.rb__validation-popover__item-header {
-  display: flex;
-  align-items: baseline;
-  gap: $spacing-2;
-  min-width: 0;
-}
-
-.rb__validation-popover__node-type {
-  font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-  color: $color-nav-text-idle;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.rb__validation-popover__node-summary {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  color: $color-text-light;
-  @include text-truncate;
-}
-
-.rb__validation-popover__item-problem {
-  font-size: $font-size-sm;
-  color: $color-text-light;
-  line-height: 1.4;
-}
-
-.rb__validation-popover__item-next {
-  font-size: $font-size-xs;
-  color: $color-nav-text-idle;
-  line-height: 1.4;
-}
-
-.rb__validation-popover__graph-error {
-  display: flex;
-  align-items: flex-start;
-  gap: $spacing-2;
-  padding: $spacing-3 $spacing-4;
-  font-size: $font-size-sm;
-  color: $color-status-error;
-  margin: 0;
-}
-
-// Zoom controls
-
-.rb__zoom-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  background: none;
-  border: 1px solid $color-divider-1;
-  border-radius: $border-radius-sm;
-  color: $color-nav-text-idle;
-  cursor: pointer;
-  transition: color $transition-fast, border-color $transition-fast;
-
-  &:hover:not(:disabled) {
-    color: $color-text-light;
-    border-color: $color-primary;
-  }
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-}
-
-.rb__zoom-value {
-  font-size: $font-size-sm;
-  color: $color-text-light;
-  min-width: 40px;
-  text-align: center;
-}
-
-// Undo / Redo icon buttons
-
-.rb__icon-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  background: none;
-  border: 1px solid $color-divider-1;
-  border-radius: $border-radius-sm;
-  color: $color-nav-text-idle;
-  cursor: pointer;
-  transition: color $transition-fast, border-color $transition-fast;
-
-  &:hover:not(:disabled) {
-    color: $color-text-light;
-    border-color: $color-primary;
-  }
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-}
-
-// Toolbar action buttons
-
-.rb__cancel-btn {
-  background: none;
-  border: 1px solid $color-btn-secondary-border;
-  border-radius: $border-radius-sm;
-  color: $color-btn-secondary-text;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  padding: $spacing-1 $spacing-3;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: opacity $transition-fast;
-
-  &:hover:not(:disabled) { opacity: 0.8; }
-  &:disabled { opacity: 0.4; cursor: not-allowed; }
-}
-
-.rb__draft-btn {
-  background: $color-background-darker;
-  border: 1px solid $color-divider-1;
-  border-radius: $border-radius-sm;
-  color: $color-text-light;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  padding: $spacing-1 $spacing-3;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: opacity $transition-fast;
-
-  &:hover:not(:disabled) { opacity: 0.8; }
-
-  &--disabled,
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-}
-
-.rb__activate-btn {
-  background: $color-btn-primary-idle;
-  border: none;
-  border-radius: $border-radius-sm;
-  color: $color-text-light;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  padding: $spacing-1 $spacing-4;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background-color $transition-fast;
-
-  &:hover:not(:disabled):not(.rb__activate-btn--disabled) {
-    background: $color-btn-primary-hover;
-  }
-
-  &--disabled,
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  padding: $spacing-3;
+  border-right: 1px solid $color-divider-1;
+  background: $color-page-background;
 }
 
 // ── Canvas Workspace ──────────────────────────────────────────────────────────
@@ -627,14 +50,17 @@
 .rb__workspace {
   flex: 1;
   min-height: 0;
+  min-width: 0;
   position: relative;
   overflow: hidden;
   background: $color-page-background;
+
+  &:focus {
+    outline: none;
+  }
 }
 
-// ── Dot grid — decorative background via CSS ──────────────────────────────────
-// Uses a radial-gradient to produce dots, coloured with a semantic token.
-// No SVG, no inline styles, no hardcoded hex.
+// ── Dot grid ──────────────────────────────────────────────────────────────────
 
 .rb__dot-grid {
   position: absolute;
@@ -660,11 +86,31 @@
   height: 100%;
   pointer-events: none;
   overflow: visible;
-  color: $color-divider-1;
 }
 
-.rb-canvas__connector {
-  // Individual connector paths inherit currentColor from the layer
+// ── Fan-out connectors ────────────────────────────────────────────────────────
+
+.rb-canvas__fanout-line {
+  stroke: $color-divider-1;
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.rb-canvas__fanout-dot {
+  fill: $color-divider-1;
+}
+
+// ── Condition → Action connector ─────────────────────────────────────────────
+
+.rb-canvas__connector-path {
+  stroke: $color-divider-1;
+  stroke-width: 1.5;
+  fill: none;
+  stroke-linecap: round;
+}
+
+.rb-canvas__connector-dot {
+  fill: $color-divider-1;
 }
 
 // ── Node wrappers ─────────────────────────────────────────────────────────────
@@ -676,145 +122,33 @@
     filter: drop-shadow(0 0 6px rgba(122, 128, 255, 0.6));
   }
 
-  // Invalid/warning node status always visually wins over search-match highlight.
-  // Search-match class is suppressed in TSX for these nodes (RB-8 primary guard),
-  // but this rule provides a CSS fallback if both classes ever co-exist.
+  // RB-8: CSS fallback — search match filter is always suppressed if the
+  // node has an invalid or warning visual state. The TSX class suppression
+  // is the primary guard; this is the CSS safety net.
   &--search-match:has(.condition-box--invalid),
   &--search-match:has(.condition-box--warning) {
     filter: none;
   }
 }
 
-// ── Start node ────────────────────────────────────────────────────────────────
+// ── Empty canvas hint ─────────────────────────────────────────────────────────
 
-.rb-start-node {
-  width: 300px;
-  background: $color-surface-idle;
-  border: 1px solid $color-divider-1;
-  border-radius: $border-radius-base;
-  box-shadow: $shadow-card;
-}
-
-.rb-start-node__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: $spacing-2 $spacing-3;
-  background: $color-background-darker;
-  border-radius: $border-radius-base $border-radius-base 0 0;
-  border-bottom: 1px solid $color-divider-1;
-}
-
-.rb-start-node__label {
-  font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-  color: $color-primary;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  background: rgba(122, 128, 255, 0.15);
-  border-radius: $border-radius-pill;
-  padding: 2px $spacing-2;
-}
-
-.rb-start-node__menu {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  background: none;
-  border: none;
-  color: $color-nav-text-idle;
-  cursor: pointer;
-  border-radius: $border-radius-sm;
-  transition: color $transition-fast;
-
-  &:hover { color: $color-text-light; }
-}
-
-.rb-start-node__body {
-  display: flex;
-  align-items: center;
-  gap: $spacing-2;
-  padding: $spacing-3;
-}
-
-.rb-start-node__field-label {
-  font-size: $font-size-xs;
-  color: $color-nav-text-idle;
-  min-width: 48px;
-}
-
-.rb-start-node__field-value {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  color: $color-text-light;
-}
-
-.rb-start-node__port-row {
-  display: flex;
-  align-items: center;
-  padding: 0 0 $spacing-2 0;
-}
-
-.rb-start-node__connector-line {
-  flex: 1;
-  height: 1px;
-  background: $color-divider-1;
-  margin-left: auto;
-}
-
-.rb-start-node__add-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  background: none;
-  border: none;
-  color: $color-primary;
-  cursor: pointer;
-  margin-right: -14px;
-  transition: opacity $transition-fast;
-
-  &:hover { opacity: 0.7; }
-}
-
-// ── Floating Add Condition ────────────────────────────────────────────────────
-// absolute inside .rb__workspace so it stays put regardless of canvas pan/zoom
-
-.rb__floating-add {
+.rb__empty-canvas {
   position: absolute;
-  top: $spacing-8;
-  right: $spacing-6;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $spacing-1;
-  z-index: 10;
+  pointer-events: none;
 }
 
-.rb__floating-add-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: $color-surface-idle;
-  border: 1px solid $color-primary;
-  border-radius: $border-radius-full;
-  color: $color-primary;
-  cursor: pointer;
-  box-shadow: $shadow-card;
-  transition: background-color $transition-fast, opacity $transition-fast;
-
-  &:hover { background: rgba(122, 128, 255, 0.1); }
-}
-
-.rb__floating-add-label {
+.rb__empty-canvas-hint {
   font-size: $font-size-xs;
   color: $color-nav-text-idle;
-  text-align: center;
-  white-space: pre;
-  line-height: 1.3;
+  background: $color-surface-idle;
+  border: 1px dashed $color-divider-1;
+  border-radius: $border-radius-base;
+  padding: $spacing-3 $spacing-4;
+  white-space: nowrap;
+
+  strong {
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+  }
 }

@@ -1,0 +1,7 @@
+[
+  { "id": "org-001", "name": "IT-Ops" },
+  { "id": "org-002", "name": "CyberArk" },
+  { "id": "org-003", "name": "FinanceDiv" },
+  { "id": "org-004", "name": "Security Team" },
+  { "id": "org-005", "name": "Acme Corp" }
+]
