@@ -58,6 +58,7 @@ Current active gaps:
 | DS-GAP-001 | Risk Status Icon semantic mapping | Open |
 | DS-GAP-002 | Risk Chart semantic token API | Open |
 | DS-GAP-003 | DS Stepper compatibility with Modal header (DialogFlowTemplate) | Open — needs verification |
+| DS-GAP-004 | No semantic token for neutral notice accent color (#7a80ff) — ModalProvider SystemNoticeRenderer | Open — neutral mapped to info treatment |
 
 ---
 

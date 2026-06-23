@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { accountService } from '../services/account.service';
+import { tagService } from '../services/tag.service';
 import { localDatabaseEvents } from '../state/localDatabase.events';
 import type { ManagedAccount } from '../../types/prototype.types';
 import type { AccountListQuery } from '../types/query.types';
@@ -26,38 +27,51 @@ export function useManagedAccounts(query?: AccountListQuery): UseManagedAccounts
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [tagSuggestions, setTagSuggestions] = useState<TagCatalogEntry[]>([]);
+  const [fetchKey, setFetchKey] = useState(0);
 
   const queryRef = useRef<AccountListQuery | undefined>(undefined);
   useEffect(() => {
     queryRef.current = query;
   });
 
-  const loadData = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const [listResult, tags] = await Promise.all([
-        accountService.list(queryRef.current),
-        accountService.getTagSuggestions(),
-      ]);
-      setAccounts(listResult.items);
-      setTotal(listResult.total);
-      setTagSuggestions(tags);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load accounts.');
-    } finally {
-      setIsLoading(false);
+  // Data fetch effect — no synchronous setState in body; all setState calls happen after awaits
+  useEffect(() => {
+    let cancelled = false;
+    async function run() {
+      try {
+        const [listResult, tags] = await Promise.all([
+          accountService.list(queryRef.current),
+          tagService.getSuggestions(),
+        ]);
+        if (cancelled) return;
+        setAccounts(listResult.items);
+        setTotal(listResult.total);
+        setTagSuggestions(tags);
+        setError(null);
+      } catch (err) {
+        if (cancelled) return;
+        setError(err instanceof Error ? err.message : 'Failed to load accounts.');
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
     }
+    run();
+    return () => { cancelled = true; };
+  }, [fetchKey]);
+
+  // Subscribe to domain events — trigger refetch on any account change
+  useEffect(() => {
+    const off = localDatabaseEvents.on('*', () => {
+      setIsLoading(true);
+      setFetchKey((n) => n + 1);
+    });
+    return off;
   }, []);
 
-  useEffect(() => {
-    void loadData();
-  }, [loadData]);
-
-  useEffect(() => {
-    const off = localDatabaseEvents.on('*', () => void loadData());
-    return off;
-  }, [loadData]);
+  const refetch = useCallback(() => {
+    setIsLoading(true);
+    setFetchKey((n) => n + 1);
+  }, []);
 
   const createAccount = useCallback(async (payload: CreateAccountPayload, meta: MutationMeta): Promise<ManagedAccount> => {
     const result = await accountService.create(payload, meta);
@@ -84,7 +98,7 @@ export function useManagedAccounts(query?: AccountListQuery): UseManagedAccounts
 
   return {
     accounts, total, isLoading, error, tagSuggestions,
-    refetch: loadData,
+    refetch,
     createAccount, updateAccount, removeAccount, updateAccountTags, bulkUpdateAccounts,
   };
 }

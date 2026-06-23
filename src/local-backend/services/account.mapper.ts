@@ -1,9 +1,9 @@
 import type { AccountEntity } from '../state/localDatabase.types';
 import type { LocalDatabaseStore } from '../state/localDatabase.types';
 import type { ManagedAccount, ManagedAccountRiskLevel, ManagedAccountStatus, ManagedAccountType, ManagedAccountPlatform } from '../../types/prototype.types';
-import type { TagCatalogEntry } from '../types/common.types';
+import type { TagEntity } from '../types/tag.types';
 
-function deriveRiskLevel(status: string, tags: TagCatalogEntry[]): ManagedAccountRiskLevel {
+function deriveRiskLevel(status: string, tags: TagEntity[]): ManagedAccountRiskLevel {
   if (status === 'locked' || status === 'marked_for_deletion' || status === 'deleted') return 'critical';
   const hasCriticalTier = tags.some((t) => t.key === 'tier' && t.value === 'critical');
   const hasSensitive = tags.some((t) => t.key === 'sensitive');
@@ -14,7 +14,7 @@ function deriveRiskLevel(status: string, tags: TagCatalogEntry[]): ManagedAccoun
   return 'low';
 }
 
-function resolvedTagLabel(entry: TagCatalogEntry): string {
+function resolvedTagLabel(entry: TagEntity): string {
   const key = entry.displayKey ?? entry.key;
   const value = entry.displayValue ?? entry.value;
   return value ? `${key}:${value}` : key;
@@ -26,7 +26,7 @@ export function mapAccountEntityToViewModel(entity: AccountEntity, store: LocalD
   const user = store.users.find((u) => u.id === entity.ownerId);
   const tagEntries = entity.tagIds
     .map((tid) => store.tags.find((t) => t.id === tid))
-    .filter((t): t is TagCatalogEntry => t !== undefined);
+    .filter((t): t is TagEntity => t !== undefined);
 
   return {
     id: entity.id,

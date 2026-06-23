@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Modal, Button } from '@idira/design-system';
 import { modalService } from './ModalService';
-import type { ActiveModal, FormDialogContentProps, SystemNoticeConfig } from './modal.types';
+import type { ActiveModal, FormDialogContentProps } from './modal.types';
 import '../../../prototype-templates/ConfirmationDialogTemplate/ConfirmationDialogTemplate.scss';
+import './ModalProvider.scss';
 
 // ── Form Dialog Renderer ──────────────────────────────────────────────────────
 
@@ -59,13 +60,9 @@ const FormDialogRenderer: React.FC<{
 
 // ── System Notice Renderer ────────────────────────────────────────────────────
 
-const TONE_COLORS: Record<NonNullable<SystemNoticeConfig['tone']>, string> = {
-  neutral:     '#7a80ff',
-  info:        '#3E68FF',
-  success:     '#00C898',
-  warning:     '#FFB45D',
-  destructive: '#F22267',
-};
+// DS GAP-004: No semantic token exists for the "neutral notice" accent shade (#7a80ff).
+// neutral is mapped to "info" treatment (closest approved DS semantic treatment) until
+// $color-notice-accent-neutral is approved. See .claude/architecture/decisions/DS-GAP-004.md.
 
 const SystemNoticeRenderer: React.FC<{
   modal: Extract<ActiveModal, { kind: 'notice' }>;
@@ -74,7 +71,9 @@ const SystemNoticeRenderer: React.FC<{
   const { config } = modal;
   const [isConfirming, setIsConfirming] = useState(false);
 
-  const accentColor = TONE_COLORS[config.tone ?? 'neutral'];
+  const tone = config.tone ?? 'neutral';
+  // neutral maps to info (closest existing DS semantic treatment — see DS GAP-004)
+  const accentTone = tone === 'neutral' ? 'info' : tone;
 
   const handleConfirm = useCallback(async () => {
     if (!config.onConfirm) { onClose(); return; }
@@ -127,7 +126,7 @@ const SystemNoticeRenderer: React.FC<{
       {typeof config.description !== 'string' && config.description ? (
         config.description
       ) : (
-        <span style={{ color: accentColor, display: 'flex', justifyContent: 'center', padding: '16px 0' }}>
+        <span className={`modal-notice-icon modal-notice-icon--${accentTone}`}>
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
           </svg>

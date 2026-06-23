@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { Button, SeverityBadge } from '@idira/design-system';
+import { usePopoverPosition } from '../../components/shared/hooks/usePopoverPosition';
 import { ManageTagsDialog } from '../../features/tags/ManageTagsDialog/ManageTagsDialog';
 import type { Tag, TagSuggestion } from '../../features/tags/tag.types';
 import { useManagedAccounts } from '../../local-backend/hooks/useManagedAccounts';
@@ -82,31 +83,22 @@ interface TagsCellProps {
 const TagsCell: React.FC<TagsCellProps> = ({
   tags, accountName, popoverId, openPopoverId, setOpenPopoverId,
 }) => {
-  const [calloutPos, setCalloutPos] = useState({ top: 0, left: 0 });
   const btnRef = useRef<HTMLButtonElement>(null);
   const calloutRef = useRef<HTMLDivElement>(null);
 
   const calloutOpen = openPopoverId === popoverId;
+
+  const calloutPos = usePopoverPosition(
+    { isOpen: calloutOpen, triggerRef: btnRef, placement: 'bottom-start' },
+    CALLOUT_WIDTH,
+    CALLOUT_MAX_HEIGHT,
+  );
 
   const visible = tags.slice(0, MAX_VISIBLE_TAGS);
   const overflow = tags.length - MAX_VISIBLE_TAGS;
   const calloutTags = tags.slice(0, MAX_CALLOUT_TAGS);
 
   const openCallout = useCallback(() => {
-    if (!btnRef.current) return;
-    const rect = btnRef.current.getBoundingClientRect();
-    let top = rect.bottom + 6;
-    let left = rect.left;
-
-    if (left + CALLOUT_WIDTH > window.innerWidth - 8) {
-      left = window.innerWidth - CALLOUT_WIDTH - 8;
-    }
-    if (top + CALLOUT_MAX_HEIGHT > window.innerHeight - 8) {
-      top = rect.top - CALLOUT_MAX_HEIGHT - 6;
-      if (top < 8) top = 8;
-    }
-
-    setCalloutPos({ top, left });
     setOpenPopoverId(popoverId);
   }, [popoverId, setOpenPopoverId]);
 
@@ -198,24 +190,18 @@ const DotsIcon: React.FC = () => (
 const RowActionsMenu: React.FC<RowActionsMenuProps> = ({
   account, onManageTags, popoverId, openPopoverId, setOpenPopoverId,
 }) => {
-  const [menuPos, setMenuPos] = useState({ top: 0, left: 0 });
   const btnRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
   const open = openPopoverId === popoverId;
 
+  const menuPos = usePopoverPosition(
+    { isOpen: open, triggerRef: btnRef, placement: 'bottom-end', offset: 4 },
+    MENU_WIDTH,
+    MENU_HEIGHT,
+  );
+
   const openMenu = useCallback(() => {
-    if (!btnRef.current) return;
-    const rect = btnRef.current.getBoundingClientRect();
-    let top = rect.bottom + 4;
-    let left = rect.right - MENU_WIDTH;
-
-    if (left < 8) left = 8;
-    if (top + MENU_HEIGHT > window.innerHeight - 8) {
-      top = rect.top - MENU_HEIGHT - 4;
-    }
-
-    setMenuPos({ top, left });
     setOpenPopoverId(popoverId);
   }, [popoverId, setOpenPopoverId]);
 

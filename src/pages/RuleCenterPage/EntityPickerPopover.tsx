@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import type { RuleEntityType } from './RuleCenterPage.types';
 import { RULE_ENTITY_OPTIONS } from '../../mock/ruleCenterMockData';
+import { computePopoverPosition } from '../../components/shared/hooks/usePopoverPosition';
 
 interface EntityPickerPopoverProps {
   anchorRect: DOMRect;
@@ -10,6 +11,7 @@ interface EntityPickerPopoverProps {
 }
 
 const POPOVER_WIDTH = 260;
+const POPOVER_MAX_HEIGHT = 200;
 
 export const EntityPickerPopover: React.FC<EntityPickerPopoverProps> = ({
   anchorRect,
@@ -18,10 +20,11 @@ export const EntityPickerPopover: React.FC<EntityPickerPopoverProps> = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  // Position: below the anchor button, right-aligned
-  const top  = anchorRect.bottom + 6;
-  let   left = anchorRect.right - POPOVER_WIDTH;
-  if (left < 8) left = 8;
+  const pos = computePopoverPosition(anchorRect, POPOVER_WIDTH, POPOVER_MAX_HEIGHT, {
+    placement: 'bottom-end',
+    offset: 6,
+    boundaryPadding: 8,
+  });
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -44,7 +47,7 @@ export const EntityPickerPopover: React.FC<EntityPickerPopoverProps> = ({
     <div
       ref={ref}
       className="rc-entity-picker"
-      style={{ top, left, width: POPOVER_WIDTH }}
+      style={{ top: pos.top, left: pos.left, width: POPOVER_WIDTH }}
       role="menu"
       aria-label="Select entity type"
     >

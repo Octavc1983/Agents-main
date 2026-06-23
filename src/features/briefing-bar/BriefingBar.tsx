@@ -2,59 +2,15 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { StatusIcon } from '../../components/shared/StatusIcon';
 import type { SecretStatusValue } from '../../components/shared/StatusIcon/StatusIcon';
+import { PROVIDER_ICON_MAP } from '../../components/shared/provider-icons';
+import { usePopoverPosition } from '../../components/shared/hooks/usePopoverPosition';
 import type { SecretsStats, SecretProvider, SecretStatus } from '../../types/prototype.types';
 import './BriefingBar.scss';
 
-// ── Provider icon map ─────────────────────────────────────────────────────────
-
-const ProviderIconAWS: React.FC<{ size?: number }> = ({ size = 16 }) => (
-  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-    <path d="M4.5 9.5C3.5 9.2 2.8 8.4 2.8 7.5c0-1.1.9-2 2.2-2.1C5.3 4.1 6.5 3 8 3s2.7 1.1 3 2.4c1.3.1 2.2 1 2.2 2.1 0 .9-.7 1.7-1.7 2" stroke="#FF9900" strokeWidth="1.2" strokeLinecap="round"/>
-    <path d="M5.5 12l1-1.5 1 1 1-2 1 2 1-1" stroke="#FF9900" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const ProviderIconAzure: React.FC<{ size?: number }> = ({ size = 16 }) => (
-  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-    <path d="M6 3L2.5 12.5h3L8 7.5 10 13h3.5L9.5 3H6z" fill="#0078D4"/>
-    <path d="M9.5 3L7 8.5 5.5 12.5H13.5L9.5 3z" fill="#50E6FF" fillOpacity="0.6"/>
-  </svg>
-);
-
-const ProviderIconGCP: React.FC<{ size?: number }> = ({ size = 16 }) => (
-  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-    <path d="M8 3.5h1.8L11 5H5L6.2 3.5H8z" fill="#EA4335"/>
-    <path d="M11 5l1.5 2.5H3.5L5 5h6z" fill="#FBBC04"/>
-    <path d="M12.5 7.5L11 10H5L3.5 7.5h9z" fill="#34A853"/>
-    <path d="M11 10L9.8 12.5H6.2L5 10h6z" fill="#4285F4"/>
-  </svg>
-);
-
-const ProviderIconHashiCorp: React.FC<{ size?: number }> = ({ size = 16 }) => (
-  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-    <path d="M8 2L4 4.5V7l4-2.5L12 7V4.5L8 2z" fill="#7B42BC"/>
-    <path d="M4 7v2.5L8 12l4-2.5V7L8 9.5 4 7z" fill="#7B42BC" fillOpacity="0.6"/>
-  </svg>
-);
-
-const ProviderIconCyberArk: React.FC<{ size?: number }> = ({ size = 16 }) => (
-  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-    <circle cx="8" cy="8" r="5" stroke="#265BFF" strokeWidth="1.5"/>
-    <path d="M6 8l1.5 1.5L10.5 6" stroke="#265BFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const PROVIDER_ICON_MAP: Record<SecretProvider, React.FC<{ size?: number }>> = {
-  AWS: ProviderIconAWS,
-  Azure: ProviderIconAzure,
-  GCP: ProviderIconGCP,
-  HashiCorp: ProviderIconHashiCorp,
-  CyberArk: ProviderIconCyberArk,
-};
-
-// ── Provider popover ─────────────────────────────────────────────────────────
+// ── Provider overflow popover ─────────────────────────────────────────────────
 
 const POPOVER_WIDTH = 220;
+const POPOVER_MAX_HEIGHT = 320;
 
 interface OverflowPopoverProps {
   providers: Array<{ provider: SecretProvider; count: number; percent: number }>;
@@ -68,15 +24,14 @@ const OverflowPopover: React.FC<OverflowPopoverProps> = ({
   providers, anchorRef, onClose, onProviderClick, activeProviders,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [pos, setPos] = useState({ top: 0, left: 0 });
+
+  const pos = usePopoverPosition(
+    { isOpen: true, triggerRef: anchorRef, placement: 'bottom-start' },
+    POPOVER_WIDTH,
+    POPOVER_MAX_HEIGHT,
+  );
 
   useEffect(() => {
-    if (anchorRef.current) {
-      const rect = anchorRef.current.getBoundingClientRect();
-      let left = rect.left;
-      if (left + POPOVER_WIDTH > window.innerWidth - 8) left = window.innerWidth - POPOVER_WIDTH - 8;
-      setPos({ top: rect.bottom + 6, left });
-    }
     const handler = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node) &&
           anchorRef.current && !anchorRef.current.contains(e.target as Node)) {
@@ -88,7 +43,11 @@ const OverflowPopover: React.FC<OverflowPopoverProps> = ({
   }, [anchorRef, onClose]);
 
   return ReactDOM.createPortal(
-    <div ref={ref} className="briefing-bar__overflow-popover" style={{ top: pos.top, left: pos.left }}>
+    <div
+      ref={ref}
+      className="briefing-bar__overflow-popover"
+      style={{ top: pos.top, left: pos.left }}
+    >
       {providers.map(({ provider, count, percent }) => {
         const Icon = PROVIDER_ICON_MAP[provider];
         const active = activeProviders.includes(provider);
@@ -194,16 +153,16 @@ export const BriefingBar: React.FC<BriefingBarProps> = ({
               </button>
             );
           })}
-          {overflowProviders.length > 0 && (
+          {overflowEnriched.length > 0 && (
             <button
               ref={overflowBtnRef}
               type="button"
               className={`briefing-bar__provider-overflow${popoverOpen ? ' briefing-bar__provider-overflow--active' : ''}`}
               onClick={handleOverflowClick}
               aria-expanded={popoverOpen}
-              aria-label={`${overflowProviders.length} more providers`}
+              aria-label={`${overflowEnriched.length} more providers`}
             >
-              +{overflowProviders.length}
+              +{overflowEnriched.length}
             </button>
           )}
           {popoverOpen && (

@@ -14,7 +14,6 @@ import { auditService } from '../safety/audit/audit.service';
 import type { AccountListQuery, ListResponse } from '../types/query.types';
 import type { CreateAccountPayload, UpdateAccountPayload, BulkAccountPayload, MutationMeta, MutationResult, BulkMutationResult, DeleteResponse } from '../types/mutation.types';
 import type { ManagedAccount } from '../../types/prototype.types';
-import type { TagCatalogEntry } from '../types/common.types';
 
 function matchesSearch(account: ManagedAccount, search: string): boolean {
   const s = search.toLowerCase();
@@ -181,7 +180,8 @@ export const accountService = {
     return { success: true, data: viewModel, idempotencyKey: meta.idempotencyKey };
   },
 
-  async bulkUpdate(ids: string[], payload: BulkAccountPayload, _meta: MutationMeta): Promise<BulkMutationResult<ManagedAccount>> {
+  async bulkUpdate(ids: string[], payload: BulkAccountPayload, meta: MutationMeta): Promise<BulkMutationResult<ManagedAccount>> {
+    void meta;
     permissionGuard.assert('accounts:bulk-update');
 
     const store = localDatabaseStore.get();
@@ -213,10 +213,5 @@ export const accountService = {
     }
 
     return { succeeded, failed };
-  },
-
-  async getTagSuggestions(): Promise<TagCatalogEntry[]> {
-    permissionGuard.assert('accounts:read');
-    return localDatabaseStore.get().tags;
   },
 };

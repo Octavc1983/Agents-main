@@ -1,12 +1,25 @@
-import type { LocalDatabaseStore } from './localDatabase.types';
-import type { AccountEntity } from './localDatabase.types';
+import type { LocalDatabaseStore, AccountEntity } from './localDatabase.types';
+import type { TagEntity } from '../types/tag.types';
 import accountsSeedRaw from '../database/accounts.json';
 import safesSeed from '../database/safes.json';
 import orgsSeed from '../database/organizations.json';
 import usersSeed from '../database/users.json';
-import tagsSeed from '../database/tags.json';
+import tagsSeedRaw from '../database/tags.json';
 
 const accountsSeed = accountsSeedRaw as AccountEntity[];
+
+// Inject versioning fields for seed tags that lack them (JSON stores catalog shape only)
+const TAG_SEED_DEFAULTS = {
+  version: 1,
+  createdAt: '2024-01-01T00:00:00Z',
+  updatedAt: '2024-01-01T00:00:00Z',
+  deletedAt: null,
+} as const;
+
+const tagsSeed = (tagsSeedRaw as unknown[]).map((t) => ({
+  ...TAG_SEED_DEFAULTS,
+  ...(t as object),
+})) as TagEntity[];
 
 export function buildSeedStore(): LocalDatabaseStore {
   return {

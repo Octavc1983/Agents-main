@@ -17,7 +17,14 @@
       "Bash(grep -n \"\\\\$\" '/c/Users/amiss/OneDrive - CyberArk Ltd/Apps/Agents-main/src/prototype-templates/CardListMasterDetailsTemplate/CardListMasterDetailsTemplate.scss')",
       "Bash(grep -n \"\\\\$\" '/c/Users/amiss/OneDrive - CyberArk Ltd/Apps/Agents-main/src/prototype-templates/TableFiltersTemplate/TableFiltersTemplate.scss')",
       "Bash(git worktree *)",
-      "Bash(npx eslint *)"
+      "Bash(npx eslint *)",
+      "Bash(xargs wc -l)",
+      "Bash(grep -r \"from.*\\\\\\\\.\\\\\\\\./\\\\\\\\.\\\\\\\\.\" src --include=\"*.tsx\" --include=\"*.ts\")",
+      "Bash(grep -r \"from.*\\\\\\\\.\\\\\\\\./\\\\\\\\.\\\\\\\\./\\\\\\\\.\\\\\\\\.\" src --include=\"*.tsx\" --include=\"*.ts\")",
+      "Bash(xargs -I {} sh -c 'echo \"{}:\" && find \"{}\" -type f \\\\\\( -name \"*.tsx\" -o -name \"*.ts\" \\\\\\) | wc -l')",
+      "Bash(xargs grep \"import.*pages\\\\|import.*components\\\\|import.*prototype-templates\")",
+      "Bash(grep '^$color')",
+      "Bash(grep -E '^$color-\\(success|warning|error|info|critical|primary\\)' 'c:\\\\Users\\\\amiss\\\\OneDrive - CyberArk Ltd\\\\Apps\\\\Agents-main\\\\packages\\\\design-system\\\\src\\\\theme\\\\styles\\\\_tokens.scss')"
     ],
     "additionalDirectories": [
       "c:\\Users\\amiss\\OneDrive - IDIRA Ltd\\Apps\\Agents-main\\.claude\\skills",

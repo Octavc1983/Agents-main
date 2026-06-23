@@ -1,5 +1,6 @@
-import type { Safe, Organization, User, TagCatalogEntry, AuditEvent, IdempotencyRecord } from '../types/common.types';
+import type { Safe, Organization, User, AuditEvent, IdempotencyRecord } from '../types/common.types';
 import type { SoftDeletable, Versioned } from '../types/common.types';
+import type { TagEntity } from '../types/tag.types';
 
 export interface AccountEntity extends SoftDeletable, Versioned {
   id: string;
@@ -21,7 +22,7 @@ export interface LocalDatabaseStore {
   safes: Safe[];
   organizations: Organization[];
   users: User[];
-  tags: TagCatalogEntry[];
+  tags: TagEntity[];
   auditLog: AuditEvent[];
   idempotencyLog: IdempotencyRecord[];
 }

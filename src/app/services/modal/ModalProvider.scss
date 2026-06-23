@@ -1,0 +1,20 @@
+@use 'tokens' as *;
+
+// ── System Notice tone accent icon ────────────────────────────────────────────
+// Used only when SystemNoticeRenderer receives no description content.
+
+.modal-notice-icon {
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+
+  &--info        { color: $color-btn-primary-idle; }
+  &--success     { color: $color-status-success; }
+  &--warning     { color: $color-status-warning; }
+  &--destructive { color: $color-status-error; }
+
+  // DS GAP: No semantic token exists for the "neutral notice" accent shade (#7a80ff).
+  // Pending token: $color-notice-accent-neutral.
+  // Until the token is approved, this shade is declared here as a documented gap.
+  &--neutral     { color: #7a80ff; } // stylelint-disable-line color-no-invalid-hex
+}
