@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Button } from '@idira/design-system';
+import { Button, Alert } from '@idira/design-system';
 import { StatusIcon } from '../../components/shared/StatusIcon';
 import type { StepStatusValue } from '../../components/shared/StatusIcon/StatusIcon';
 import { mockMigrationDetails } from '../../mock/migrationDetailMockData';
 import { useSetPageTitle } from '../../hooks/useSetPageTitle';
+import '../../prototype-templates/TableFiltersTemplate/TableFiltersTemplate.scss';
 import './MigrationDetailPage.scss';
 
 type StepStatus = 'not_performed' | 'in_progress' | 'done' | 'failed';
@@ -79,19 +80,18 @@ export const MigrationDetailPage: React.FC = () => {
 
   return (
     <div className="migration-detail-page">
-      <div className="migration-detail-page__notice" role="note">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5" />
-          <line x1="8" y1="4.5" x2="8" y2="8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          <circle cx="8" cy="11" r="0.75" fill="currentColor" />
-        </svg>
-        <p>
-          Note: Before getting started, review the{' '}
-          <a href="#documentation" className="migration-detail-page__link">documentation</a>{' '}
-          to learn about the migration process and prerequisites.
-          <br />
-          The migration goes through several steps and might take several hours
-        </p>
+      <div className="migration-detail-page__notice">
+        <Alert
+          variant="info"
+          message={
+            <>
+              Before getting started, review the{' '}
+              <a href="#documentation" className="migration-detail-page__link">documentation</a>{' '}
+              to learn about the migration process and prerequisites.
+              {' '}The migration goes through several steps and might take several hours.
+            </>
+          }
+        />
       </div>
 
       <div className="migration-detail-page__steps">
@@ -120,43 +120,40 @@ export const MigrationDetailPage: React.FC = () => {
               })()}
 
               {step.checks && step.checks.length > 0 && (
-                <table className="migration-checks-table" aria-label={`${step.title} readiness checks`}>
-                  <thead>
-                    <tr>
-                      <th className="migration-checks-table__th">Name</th>
-                      <th className="migration-checks-table__th">Description / Recommended action</th>
-                      <th className="migration-checks-table__th migration-checks-table__th--actions" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {step.checks.map(check => (
-                      <tr key={check.id} className="migration-checks-table__row">
-                        <td className="migration-checks-table__td migration-checks-table__td--name">
-                          <StatusIcon status={CHECK_STATUS_MAP[check.status]} size={14} />
-                          {check.name}
-                        </td>
-                        <td className="migration-checks-table__td">{check.description}</td>
-                        <td className="migration-checks-table__td migration-checks-table__td--actions">
-                          <Button
-                            variant="secondary"
-                            size="sm"
-                            isLoading={runningCheck === check.id}
-                            onClick={() => handleRunCheck(check.id)}
-                          >
-                            Run
-                          </Button>
-                          <button type="button" className="migration-checks-table__more-btn" aria-label="More actions">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                              <circle cx="8" cy="3" r="1.2" fill="currentColor" />
-                              <circle cx="8" cy="8" r="1.2" fill="currentColor" />
-                              <circle cx="8" cy="13" r="1.2" fill="currentColor" />
-                            </svg>
-                          </button>
-                        </td>
+                <div className="migration-checks-table-wrap">
+                  <table className="tableFiltersTemplate__tableEl" aria-label={`${step.title} readiness checks`}>
+                    <thead>
+                      <tr>
+                        <th className="tableFiltersTemplate__th">Name</th>
+                        <th className="tableFiltersTemplate__th">Description / Recommended action</th>
+                        <th className="tableFiltersTemplate__th tableFiltersTemplate__th--actions" />
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {step.checks.map(check => (
+                        <tr key={check.id} className="tableFiltersTemplate__row">
+                          <td className="tableFiltersTemplate__td migration-checks-td--name">
+                            <StatusIcon status={CHECK_STATUS_MAP[check.status]} size={14} />
+                            <span title={check.name}>{check.name}</span>
+                          </td>
+                          <td className="tableFiltersTemplate__td migration-checks-td--description">
+                            <span title={check.description}>{check.description}</span>
+                          </td>
+                          <td className="tableFiltersTemplate__td tableFiltersTemplate__td--actions migration-checks-td--actions">
+                            <Button
+                              variant="secondary"
+                              size="sm"
+                              isLoading={runningCheck === check.id}
+                              onClick={() => handleRunCheck(check.id)}
+                            >
+                              Run
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               )}
 
               {step.actionLabel && (

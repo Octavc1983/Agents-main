@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+import { WarningIcon, ErrorCircleIcon } from '@idira/design-system/icons';
 import type {
   ConditionBoxProps,
   ConditionBoxStateSummary,
@@ -37,29 +38,15 @@ function resolveMessage(key: string | undefined, fallback: string): string {
   return VALIDATION_MESSAGES[key] ?? fallback;
 }
 
-// ── Icons (inline SVG — no icon libraries) ────────────────────────────────────
+// ── Icons ─────────────────────────────────────────────────────────────────────
+// WarningIcon and ErrorCircleIcon come from the DS icon system.
+// MenuDotsIcon is a canvas interaction icon not available in the DS icon set.
 
 const MenuDotsIcon: React.FC = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
     <circle cx="7" cy="2.5" r="1.25" fill="currentColor" />
     <circle cx="7" cy="7"   r="1.25" fill="currentColor" />
     <circle cx="7" cy="11.5" r="1.25" fill="currentColor" />
-  </svg>
-);
-
-const InvalidIcon: React.FC = () => (
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-    <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M6 3.5V6.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="6" cy="8.5" r="0.75" fill="currentColor" />
-  </svg>
-);
-
-const WarningIcon: React.FC = () => (
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-    <path d="M6 1.5L11 10H1L6 1.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    <path d="M6 5V7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="6" cy="9" r="0.75" fill="currentColor" />
   </svg>
 );
 
@@ -223,7 +210,7 @@ export const ConditionBox: React.FC<ConditionBoxProps> = ({
         {isInvalid && (
           <div className="condition-box__validation" role="alert">
             <span className="condition-box__validation-icon" aria-hidden="true">
-              <InvalidIcon />
+              <ErrorCircleIcon size={12} />
             </span>
             <span className="condition-box__validation-text">
               {resolveMessage(validationMessageKey, CONTENT.validationFallback)}
@@ -235,7 +222,7 @@ export const ConditionBox: React.FC<ConditionBoxProps> = ({
         {isWarning && warningMessageKey && (
           <div className="condition-box__validation" role="status">
             <span className="condition-box__validation-icon" aria-hidden="true">
-              <WarningIcon />
+              <WarningIcon size={12} />
             </span>
             <span className="condition-box__validation-text">
               {resolveMessage(warningMessageKey, CONTENT.warningFallback)}

@@ -16,7 +16,8 @@
       "Read(//c/c/Users/amiss/OneDrive - CyberArk Ltd/Apps/**)",
       "Bash(grep -n \"\\\\$\" '/c/Users/amiss/OneDrive - CyberArk Ltd/Apps/Agents-main/src/prototype-templates/CardListMasterDetailsTemplate/CardListMasterDetailsTemplate.scss')",
       "Bash(grep -n \"\\\\$\" '/c/Users/amiss/OneDrive - CyberArk Ltd/Apps/Agents-main/src/prototype-templates/TableFiltersTemplate/TableFiltersTemplate.scss')",
-      "Bash(git worktree *)"
+      "Bash(git worktree *)",
+      "Bash(npx eslint *)"
     ],
     "additionalDirectories": [
       "c:\\Users\\amiss\\OneDrive - IDIRA Ltd\\Apps\\Agents-main\\.claude\\skills",

@@ -2,42 +2,22 @@
 @use '../../styles/mixins' as *;
 
 .migration-detail-page {
-  padding: $spacing-6 $spacing-8;
-  max-width: 1100px;
+  width: 100%;
 }
 
 // ── Info notice ───────────────────────────────────────────────────────────────
+// Uses DS Alert variant="info" — no custom notice styles needed.
 
 .migration-detail-page__notice {
-  display: flex;
-  align-items: flex-start;
-  gap: $spacing-3;
-  padding: $spacing-4 $spacing-5;
-  background-color: $color-background-darker;
-  border: 1px solid $color-border-dark;
-  border-radius: $border-radius-base;
   margin-bottom: $spacing-6;
-  color: $color-nav-text-idle;
-
-  svg {
-    flex-shrink: 0;
-    margin-top: 2px;
-    color: $color-severity-low;
-  }
-
-  p {
-    font-size: $font-size-sm;
-    line-height: $line-height-normal;
-    margin: 0;
-  }
 }
 
 .migration-detail-page__link {
-  color: $color-severity-low;
+  color: inherit;
   text-decoration: underline;
   text-underline-offset: 2px;
 
-  &:hover { color: $color-text-light; }
+  &:hover { opacity: 0.8; }
 }
 
 // ── Steps ─────────────────────────────────────────────────────────────────────
@@ -61,7 +41,7 @@
 }
 
 .migration-step__title {
-  font-size: $font-size-lg;
+  font-size: $font-size-2xl;
   font-weight: $font-weight-semibold;
   color: $color-text-light;
   margin: 0;
@@ -98,6 +78,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  align-self: stretch;
   gap: $spacing-4;
   padding-left: $spacing-1;
 }
@@ -125,76 +106,35 @@
 }
 
 // ── Readiness checks table ────────────────────────────────────────────────────
+// Uses tableFiltersTemplate__tableEl / __row / __td / __th from the shared template.
+// The table wrapper stretches to full available width.
 
-.migration-checks-table {
+.migration-checks-table-wrap {
   width: 100%;
   align-self: stretch;
-  border-collapse: collapse;
-  border: 1px solid $color-border-dark;
-  border-radius: $border-radius-base;
-  overflow: hidden;
+  overflow-x: auto;
+  @include ds-scrollbar;
 }
 
-.migration-checks-table__th {
-  padding: $spacing-3 $spacing-5;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-  color: $color-nav-text-idle;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  text-align: left;
-  background-color: $color-background-darkest;
-  border-bottom: 1px solid $color-border-dark;
-
-  &--actions { width: 120px; }
-}
-
-.migration-checks-table__row {
-  background-color: $color-background-dark;
-
-  & + & { border-top: 1px solid $color-border-dark; }
-
-  &:hover { background-color: $color-background-darker; }
-}
-
-.migration-checks-table__td {
-  padding: $spacing-4 $spacing-5;
-  font-size: $font-size-sm;
-  color: $color-nav-text-idle;
-  vertical-align: middle;
-
-  &--name {
-    display: flex;
-    align-items: center;
-    gap: $spacing-3;
-    color: $color-text-light;
-    white-space: nowrap;
-  }
-
-  &--actions {
-    display: flex;
-    align-items: center;
-    gap: $spacing-2;
-    justify-content: flex-end;
-  }
-}
-
-
-.migration-checks-table__more-btn {
-  display: inline-flex;
+.migration-checks-td--name {
+  // override tableFiltersTemplate__td max-width:0 / overflow:hidden so the icon+label fit
+  max-width: none;
+  overflow: visible;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border: none;
-  background: transparent;
-  color: $color-nav-text-idle;
-  border-radius: $border-radius-sm;
-  cursor: pointer;
-  transition: background-color $transition-fast, color $transition-fast;
+  gap: $spacing-3;
+  color: $color-text-light;
+  white-space: nowrap;
+}
 
-  &:hover {
-    background-color: $color-background-darker;
-    color: $color-text-light;
+.migration-checks-td--description {
+  // td keeps max-width:0 from tableFiltersTemplate__td — truncation lives on the inner span
+  span {
+    @include table-cell-truncate;
   }
+}
+
+.migration-checks-td--actions {
+  // tableFiltersTemplate__td--actions already sets max-width:none
+  white-space: nowrap;
 }

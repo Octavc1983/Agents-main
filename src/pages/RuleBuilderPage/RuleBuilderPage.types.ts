@@ -6,8 +6,10 @@ export type RuleBuilderCanvasState =
   | 'dirty'
   | 'valid'
   | 'invalid'
+  | 'warning'
   | 'saving'
   | 'saved'
+  | 'save-failed'
   | 'activating'
   | 'active'
   | 'activation-failed'
@@ -36,7 +38,53 @@ export type ConditionNodeData = {
 
 export type CanvasNode = StartNodeData | ConditionNodeData;
 
-export type RuleBuilderPageProps = {
-  entityType: RuleEntityType;
-  entityLabel: string;
+export type CanvasConnectionPort = 'output' | 'input' | 'true' | 'false';
+
+export type CanvasConnection = {
+  id: string;
+  fromNodeId: string;
+  fromPort: CanvasConnectionPort;
+  toNodeId: string;
+  toPort: CanvasConnectionPort;
+};
+
+export type RuleGraphSnapshot = {
+  nodes: CanvasNode[];
+  connections: CanvasConnection[];
+};
+
+export type RuleBuilderToolbarState = {
+  ruleId?: string;
+  ruleName: string;
+
+  canvasZoom: number;
+  selectedNodeId: string | null;
+
+  totalNodes: number;
+  totalConditions: number;
+  invalidNodeCount: number;
+  warningNodeCount: number;
+
+  isDirty: boolean;
+  isSaving: boolean;
+  isActivating: boolean;
+  isReadOnly: boolean;
+
+  canUndo: boolean;
+  canRedo: boolean;
+  canSaveDraft: boolean;
+  canActivate: boolean;
+};
+
+export type RuleValidationResult = {
+  isValid: boolean;
+  invalidNodeIds: string[];
+  warningNodeIds: string[];
+  errorMessage?: string;
+};
+
+export type CanvasViewport = {
+  x: number;
+  y: number;
+  zoom: number;
 };
