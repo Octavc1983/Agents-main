@@ -1,0 +1,487 @@
+@use 'tokens' as *;
+@use '../../styles/_mixins' as *;
+
+// ── Page wrapper ──────────────────────────────────────────────────────────────
+
+.scans-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.scans-refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-sm;
+  padding: $spacing-1;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  line-height: 0;
+  transition: background-color $transition-fast, color $transition-fast;
+
+  &:hover {
+    background-color: $color-table-bg-hover;
+    color: $color-text-light;
+  }
+}
+
+// ── Name cell ─────────────────────────────────────────────────────────────────
+
+.scan-name-cell {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  min-width: 0;
+}
+
+.scan-name-cell__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.scan-name-cell__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.scan-name-cell__name {
+  @include table-cell-truncate;
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+}
+
+.scan-name-cell__meta {
+  @include table-cell-truncate;
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  margin-top: 1px;
+}
+
+.scan-name-cell__extra {
+  color: $color-btn-primary-idle;
+  font-weight: $font-weight-semibold;
+}
+
+// ── Generic text cell ─────────────────────────────────────────────────────────
+
+.scan-cell-text {
+  @include table-cell-truncate;
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+
+  &--muted {
+    color: $color-nav-text-idle;
+    opacity: 0.45;
+  }
+}
+
+// ── Status cell ───────────────────────────────────────────────────────────────
+
+.scan-status-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2;
+  font-size: $font-size-sm;
+
+  &__label {
+    @include table-cell-truncate;
+  }
+}
+
+.scan-status--failed    { color: $color-status-error; }
+.scan-status--completed { color: $color-status-warning; }
+.scan-status--pending   { color: $color-nav-text-idle; }
+.scan-status--running   { color: $color-status-success; }
+.scan-status--success   { color: $color-status-success; }
+
+// ── Row actions ───────────────────────────────────────────────────────────────
+
+.scan-row-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  opacity: 0;
+  transition: opacity $transition-fast;
+
+  .tableFT__row:hover &,
+  .tableFT__row:focus-within & {
+    opacity: 1;
+  }
+}
+
+.scan-row-actions__resolve {
+  background: none;
+  border: 0;
+  padding: 0 $spacing-1;
+  color: $color-btn-primary-idle;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: opacity $transition-fast;
+
+  &:hover { opacity: 0.8; }
+}
+
+.scan-row-actions__run-stop {
+  background: none;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-sm;
+  padding: 3px $spacing-3;
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+
+  &:hover { background-color: $color-table-bg-hover; }
+}
+
+.scan-row-actions__menu {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0;
+  padding: $spacing-1;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  border-radius: $border-radius-sm;
+  transition: background-color $transition-fast, color $transition-fast;
+
+  &:hover { background-color: $color-table-bg-hover; color: $color-text-light; }
+}
+
+// ── Card meta ─────────────────────────────────────────────────────────────────
+
+.scan-card-meta {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+}
+
+// ── Detail panel ─────────────────────────────────────────────────────────────
+
+.scan-detail-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.scan-detail-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-4;
+  border-bottom: 1px solid $color-divider-1;
+  gap: $spacing-3;
+  min-width: 0;
+}
+
+.scan-detail-panel__header-left {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  min-width: 0;
+}
+
+.scan-detail-panel__provider-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.scan-detail-panel__name {
+  @include table-cell-truncate;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+}
+
+.scan-detail-panel__header-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  flex-shrink: 0;
+}
+
+.scan-detail-panel__menu-btn,
+.scan-detail-panel__close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0;
+  padding: $spacing-1;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  border-radius: $border-radius-sm;
+  transition: background-color $transition-fast, color $transition-fast;
+  line-height: 0;
+
+  &:hover { background-color: $color-table-bg-hover; color: $color-text-light; }
+}
+
+// ── Meta row ──────────────────────────────────────────────────────────────────
+
+.scan-detail-panel__meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+  padding: $spacing-3 $spacing-4;
+  border-bottom: 1px solid $color-divider-1;
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+}
+
+.scan-detail-panel__status {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  font-weight: $font-weight-medium;
+}
+
+.scan-detail-panel__status-label { }
+
+.scan-detail-panel__meta-sep {
+  width: 1px;
+  height: 12px;
+  background-color: $color-divider-1;
+  flex-shrink: 0;
+}
+
+.scan-detail-panel__last-run { }
+
+.scan-detail-panel__occurrence {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+}
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+
+.scan-detail-panel__tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 $spacing-4;
+  border-bottom: 1px solid $color-divider-1;
+}
+
+.scan-detail-panel__tab {
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: $spacing-3 $spacing-4;
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  transition: color $transition-fast, border-color $transition-fast;
+  margin-bottom: -1px;
+
+  &:hover { color: $color-text-light; }
+
+  &--active {
+    color: $color-btn-primary-idle;
+    border-bottom-color: $color-btn-primary-idle;
+    font-weight: $font-weight-medium;
+  }
+}
+
+// ── Tab content ───────────────────────────────────────────────────────────────
+
+.scan-detail-panel__tab-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  @include ds-scrollbar;
+}
+
+// ── Overview ──────────────────────────────────────────────────────────────────
+
+.scan-detail-panel__overview {
+  padding: $spacing-4;
+}
+
+.scan-detail-panel__fields {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  margin: 0;
+  padding: 0;
+}
+
+.scan-detail-panel__field {
+  display: flex;
+  gap: $spacing-2;
+  font-size: $font-size-sm;
+
+  dt {
+    color: $color-nav-text-idle;
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+
+  dd {
+    @include table-cell-truncate;
+    color: $color-text-light;
+    margin: 0;
+  }
+}
+
+// ── Instances ─────────────────────────────────────────────────────────────────
+
+.scan-detail-panel__instances {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: $spacing-3 0;
+}
+
+// ── Insights placeholder ──────────────────────────────────────────────────────
+
+.scan-detail-panel__insights-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-8;
+  color: $color-nav-text-idle;
+  font-size: $font-size-sm;
+}
+
+// ── Instance card ─────────────────────────────────────────────────────────────
+
+.scan-instance-card {
+  border-bottom: 1px solid $color-divider-1;
+
+  &:first-child { border-top: 1px solid $color-divider-1; }
+}
+
+.scan-instance-card__header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  width: 100%;
+  background: none;
+  border: 0;
+  padding: $spacing-3 $spacing-4;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+
+  &:hover { background-color: $color-table-bg-hover; }
+}
+
+.scan-instance-card__status {
+  display: inline-flex;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.scan-instance-card__label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+}
+
+.scan-instance-card__timestamp {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  margin-left: auto;
+}
+
+.scan-instance-card__chevron {
+  color: $color-nav-text-idle;
+  line-height: 0;
+  flex-shrink: 0;
+  transition: transform $transition-fast;
+
+  .scan-instance-card--open & {
+    transform: rotate(0deg);
+  }
+}
+
+.scan-instance-card__body {
+  padding: $spacing-2 $spacing-4 $spacing-4;
+  background-color: $color-page-background;
+}
+
+.scan-instance-card__fields {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  margin: 0;
+  padding: 0;
+}
+
+.scan-instance-card__field {
+  display: flex;
+  gap: $spacing-3;
+  font-size: $font-size-sm;
+}
+
+.scan-instance-card__field-label {
+  color: $color-nav-text-idle;
+  min-width: 140px;
+  flex-shrink: 0;
+}
+
+.scan-instance-card__field-value {
+  @include table-cell-truncate;
+  color: $color-text-light;
+}
+
+// ── Resolve modal ─────────────────────────────────────────────────────────────
+
+.resolve-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+}
+
+.resolve-modal__text {
+  font-size: $font-size-sm;
+  color: $color-nav-text-idle;
+  margin: 0;
+
+  &--link-row { }
+}
+
+.resolve-modal__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-2;
+  font-size: $font-size-sm;
+  color: $color-text-light;
+  cursor: pointer;
+}
+
+.resolve-modal__checkbox {
+  accent-color: $color-btn-primary-idle;
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.resolve-modal__link {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: $color-btn-primary-idle;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: opacity $transition-fast;
+
+  &:hover { opacity: 0.8; }
+}

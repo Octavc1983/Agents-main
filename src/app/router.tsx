@@ -10,6 +10,7 @@ import { RiskManagementPage } from '../pages/RiskManagementPage/RiskManagementPa
 import { SecretsPage } from '../pages/SecretsPage/SecretsPage';
 import { RuleCenterPage } from '../pages/RuleCenterPage/RuleCenterPage';
 import { RuleBuilderPage } from '../pages/RuleBuilderPage/RuleBuilderPage';
+import { ScansPage } from '../pages/ScansPage/ScansPage';
 import { getDefaultPathForSpace } from '../navigation/navConfig';
 
 const defaultPath = getDefaultPathForSpace('access');
@@ -30,6 +31,7 @@ export const router = createBrowserRouter([
       { path: 'manage/inventory/means-of-access/managed-accounts', element: <ManagedAccountsPage /> },
       { path: 'manage/inventory/means-of-access/secrets', element: <SecretsPage /> },
       { path: 'risk/risk-management', element: <RiskManagementPage /> },
+      { path: 'manage/scans', element: <ScansPage /> },
       { path: 'manage/rules-center', element: <RuleCenterPage /> },
       { path: 'manage/rules-center/new', element: <RuleBuilderPage /> },
       { path: 'manage/rules-center/:ruleId', element: <RuleBuilderPage /> },

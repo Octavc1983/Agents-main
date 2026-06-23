@@ -228,7 +228,7 @@ export const spacesRegistry: SpaceSchema[] = [
                     id: "manage-inv-identities-machines-identities-cp-applications",
                     label: "CP applications",
                     type: "button",
-                    path: "/manage/inventory/identities/users",
+                    path: "/manage/inventory/identities/machine-identities/cp-applications",
                   },
                 ],
               },
