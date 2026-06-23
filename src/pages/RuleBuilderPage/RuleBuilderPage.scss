@@ -212,6 +212,7 @@
   align-items: flex-start;
   gap: 2px;
   width: 100%;
+  min-width: 0; // prevent flex child overflow
   padding: $spacing-2 $spacing-4;
   background: none;
   border: none;
@@ -673,6 +674,14 @@
 
   &--search-match {
     filter: drop-shadow(0 0 6px rgba(122, 128, 255, 0.6));
+  }
+
+  // Invalid/warning node status always visually wins over search-match highlight.
+  // Search-match class is suppressed in TSX for these nodes (RB-8 primary guard),
+  // but this rule provides a CSS fallback if both classes ever co-exist.
+  &--search-match:has(.condition-box--invalid),
+  &--search-match:has(.condition-box--warning) {
+    filter: none;
   }
 }
 

@@ -27,10 +27,10 @@ const CONTENT = {
 // ── Localized validation messages ─────────────────────────────────────────────
 
 const VALIDATION_MESSAGES: Record<string, string> = {
-  'condition.validation.value_required':    'A value is required for this operator.',
-  'condition.validation.operator_required': 'An operator is required.',
-  'condition.validation.property_required': 'A property must be selected.',
-  'condition.warning.false_branch_missing': 'The False branch is not connected.',
+  'condition.validation.value_required':    'Enter a value to complete this condition.',
+  'condition.validation.operator_required': 'Select an operator to continue.',
+  'condition.validation.property_required': 'Select a property to define what this condition checks.',
+  'condition.warning.false_branch_missing': 'The False branch has no connection. The rule will stop here when the condition is not met.',
 };
 
 function resolveMessage(key: string | undefined, fallback: string): string {

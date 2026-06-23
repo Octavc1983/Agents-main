@@ -1,0 +1,292 @@
+// ActionBox — Rule Builder Canvas Action Node
+// Product-specific canvas node. Not a DS component.
+
+@use 'tokens' as *;
+@use '../../../../styles/mixins' as *;
+
+// ── Node constants ────────────────────────────────────────────────────────────
+
+$node-min-width: 260px;
+$port-size:      12px;
+$port-offset:    -7px;
+
+// ── Node wrapper ──────────────────────────────────────────────────────────────
+
+.action-box {
+  position: relative;
+  min-width: $node-min-width;
+  background: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-card;
+  cursor: default;
+  user-select: none;
+  transition:
+    border-color $transition-fast,
+    box-shadow $transition-fast;
+
+  &--selected {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 2px rgba(122, 128, 255, 0.25), $shadow-card;
+  }
+
+  &--invalid {
+    border-color: $color-status-error;
+  }
+
+  &--read-only {
+    cursor: not-allowed;
+    opacity: 0.75;
+  }
+
+  &--disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+}
+
+// ── Selection surface ─────────────────────────────────────────────────────────
+
+.action-box__selection-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  cursor: pointer;
+  border-radius: inherit;
+
+  .action-box--read-only & {
+    cursor: not-allowed;
+  }
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+
+.action-box__header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-2 $spacing-3;
+  background: $color-background-darker;
+  border-radius: $border-radius-base $border-radius-base 0 0;
+  border-bottom: 1px solid $color-divider-1;
+  min-height: 36px;
+}
+
+.action-box__type-label {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  @include text-truncate;
+}
+
+.action-box__menu-trigger {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color $transition-fast, background-color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    background-color: $color-btn-hover-overlay;
+  }
+}
+
+// ── Body ──────────────────────────────────────────────────────────────────────
+
+.action-box__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+  padding: $spacing-3;
+}
+
+// ── Field row ─────────────────────────────────────────────────────────────────
+
+.action-box__field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+  min-width: 0;
+}
+
+.action-box__field-label {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-normal;
+  color: $color-nav-text-idle;
+}
+
+// ── Action selector ───────────────────────────────────────────────────────────
+
+.action-box__selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-2;
+  width: 100%;
+  padding: $spacing-1 $spacing-2;
+  background: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-xs;
+  color: $color-text-light;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color $transition-fast;
+
+  &:hover:not(:disabled) {
+    border-color: $color-primary;
+  }
+
+  &--open {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 2px rgba(122, 128, 255, 0.2);
+  }
+
+  &--placeholder {
+    color: $color-nav-text-idle;
+    font-style: italic;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  svg {
+    flex-shrink: 0;
+    color: $color-nav-text-idle;
+  }
+}
+
+.action-box__selector-label {
+  @include text-truncate;
+  flex: 1;
+}
+
+// ── Dropdown ──────────────────────────────────────────────────────────────────
+
+.action-box__dropdown {
+  position: absolute;
+  top: calc(100% + #{$spacing-1});
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-card;
+  list-style: none;
+  margin: 0;
+  padding: $spacing-1 0;
+  max-height: 240px;
+  overflow-y: auto;
+  @include ds-scrollbar;
+}
+
+.action-box__dropdown-item {
+  display: block;
+
+  &--selected .action-box__dropdown-btn {
+    background: $color-nav-bg-selected;
+
+    .action-box__dropdown-label {
+      color: $color-primary;
+    }
+  }
+}
+
+.action-box__dropdown-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: $spacing-2 $spacing-3;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: $color-nav-bg-selected;
+  }
+}
+
+.action-box__dropdown-label {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $color-text-light;
+  @include text-truncate;
+}
+
+.action-box__dropdown-desc {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  line-height: 1.4;
+  white-space: normal;
+}
+
+// ── Validation message ────────────────────────────────────────────────────────
+
+.action-box__validation {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-1;
+  margin-top: $spacing-1;
+  padding-top: $spacing-2;
+  border-top: 1px solid $color-divider-1;
+}
+
+.action-box__validation-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  color: $color-status-error;
+}
+
+.action-box__validation-text {
+  font-size: $font-size-xs;
+  color: $color-status-error;
+  line-height: 1.4;
+}
+
+// ── Input port ────────────────────────────────────────────────────────────────
+
+.action-box__port {
+  position: absolute;
+  z-index: 3;
+  width: $port-size;
+  height: $port-size;
+  border-radius: $border-radius-full;
+  background: $color-page-background;
+  border: 2px solid $color-divider-1;
+  pointer-events: none;
+
+  &--connected {
+    border-color: $color-primary;
+    background: $color-primary;
+  }
+}
+
+.action-box__input-port {
+  top: 50%;
+  left: $port-offset;
+  transform: translateY(-50%);
+}

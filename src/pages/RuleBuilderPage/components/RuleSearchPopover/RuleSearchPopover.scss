@@ -1,0 +1,131 @@
+@use 'tokens' as *;
+@use '../../../../styles/mixins' as *;
+
+.rb-search {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Input row ─────────────────────────────────────────────────────────────────
+
+.rb-search__input-row {
+  display: flex;
+  align-items: center;
+  gap: $spacing-1;
+  height: 30px;
+  padding: 0 $spacing-2;
+  background: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-sm;
+  transition: border-color $transition-fast;
+
+  &:focus-within {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 2px rgba(122, 128, 255, 0.2);
+  }
+}
+
+.rb-search__icon {
+  display: inline-flex;
+  align-items: center;
+  color: $color-nav-text-idle;
+  flex-shrink: 0;
+}
+
+.rb-search__input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: $font-size-xs;
+  color: $color-text-light;
+
+  &::placeholder {
+    color: $color-nav-text-idle;
+  }
+}
+
+.rb-search__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: none;
+  border: none;
+  border-radius: $border-radius-full;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color $transition-fast, background-color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    background: $color-btn-hover-overlay;
+  }
+}
+
+.rb-search__match-count {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+// ── Results popover ───────────────────────────────────────────────────────────
+
+.rb-search__popover {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-card;
+  max-height: 260px;
+  overflow-y: auto;
+  padding: $spacing-1 0;
+  @include ds-scrollbar;
+}
+
+.rb-search__no-results {
+  padding: $spacing-3 $spacing-3;
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  text-align: center;
+}
+
+.rb-search__result {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: $spacing-2 $spacing-3;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background: $color-btn-hover-overlay;
+  }
+}
+
+.rb-search__result-type {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $color-primary;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rb-search__result-summary {
+  font-size: $font-size-xs;
+  color: $color-text-light;
+  @include text-truncate;
+}

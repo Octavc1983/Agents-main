@@ -1,0 +1,290 @@
+@use 'tokens' as *;
+@use '../../../../styles/mixins' as *;
+
+.rb-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-3;
+  height: 52px;
+  padding: 0 $spacing-4;
+  background: $color-page-background;
+  border-bottom: 1px solid $color-divider-1;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+// ── Sections ──────────────────────────────────────────────────────────────────
+
+.rb-toolbar__left,
+.rb-toolbar__right {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.rb-toolbar__left {
+  flex: 1;
+}
+
+.rb-toolbar__center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+// ── Divider ───────────────────────────────────────────────────────────────────
+
+.rb-toolbar__divider {
+  width: 1px;
+  height: 20px;
+  background: $color-divider-1;
+  flex-shrink: 0;
+  margin: 0 $spacing-1;
+}
+
+// ── Title area ────────────────────────────────────────────────────────────────
+
+.rb-toolbar__title-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  max-width: 240px;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  padding: $spacing-1 $spacing-1;
+  cursor: pointer;
+  color: $color-text-light;
+
+  &:hover .rb-toolbar__title-edit-icon {
+    opacity: 1;
+  }
+}
+
+.rb-toolbar__title-text {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  @include text-truncate;
+}
+
+.rb-toolbar__title-edit-icon {
+  display: inline-flex;
+  align-items: center;
+  color: $color-nav-text-idle;
+  opacity: 0;
+  flex-shrink: 0;
+  transition: opacity $transition-fast;
+}
+
+.rb-toolbar__title-input {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  background: $color-surface-idle;
+  border: 1px solid $color-primary;
+  border-radius: $border-radius-sm;
+  padding: $spacing-1 $spacing-2;
+  max-width: 240px;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(122, 128, 255, 0.2);
+}
+
+// ── Icon buttons ──────────────────────────────────────────────────────────────
+
+.rb-toolbar__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color $transition-fast, background-color $transition-fast;
+
+  &:hover:not(:disabled) {
+    color: $color-text-light;
+    background-color: $color-btn-hover-overlay;
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+}
+
+// ── Zoom group ────────────────────────────────────────────────────────────────
+
+.rb-toolbar__zoom-group {
+  display: flex;
+  align-items: center;
+  gap: $spacing-1;
+}
+
+.rb-toolbar__zoom-pct {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  min-width: 36px;
+  text-align: center;
+}
+
+// ── Action buttons ────────────────────────────────────────────────────────────
+
+.rb-toolbar__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  height: 30px;
+  padding: 0 $spacing-3;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition:
+    background-color $transition-fast,
+    border-color $transition-fast,
+    color $transition-fast,
+    opacity $transition-fast;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &--primary {
+    background: $color-primary;
+    border-color: $color-primary;
+    color: $color-text-inverse;
+
+    &:hover:not(:disabled) {
+      opacity: 0.88;
+    }
+  }
+
+  &--secondary {
+    background: $color-surface-idle;
+    border-color: $color-divider-1;
+    color: $color-text-light;
+
+    &:hover:not(:disabled) {
+      background: $color-btn-hover-overlay;
+    }
+  }
+
+  &--ghost {
+    background: none;
+    border-color: transparent;
+    color: $color-nav-text-idle;
+
+    &:hover:not(:disabled) {
+      color: $color-text-light;
+      background: $color-btn-hover-overlay;
+    }
+  }
+}
+
+// ── Validation badge ──────────────────────────────────────────────────────────
+
+.rb-toolbar__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  height: 24px;
+  padding: 0 $spacing-2;
+  border-radius: $border-radius-full;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color $transition-fast,
+    border-color $transition-fast,
+    opacity $transition-fast;
+
+  &--static {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &--draft {
+    background: $color-background-darker;
+    border-color: $color-divider-1;
+    color: $color-nav-text-idle;
+  }
+
+  &--saving {
+    background: $color-background-darker;
+    border-color: $color-divider-1;
+    color: $color-nav-text-idle;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &--valid {
+    background: rgba(55, 178, 130, 0.12);
+    border-color: rgba(55, 178, 130, 0.35);
+    color: $color-status-success;
+
+    &:hover {
+      background: rgba(55, 178, 130, 0.18);
+    }
+  }
+
+  &--active {
+    background: rgba(55, 178, 130, 0.12);
+    border-color: rgba(55, 178, 130, 0.35);
+    color: $color-status-success;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &--saved {
+    background: rgba(55, 178, 130, 0.12);
+    border-color: rgba(55, 178, 130, 0.35);
+    color: $color-status-success;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &--error {
+    background: rgba(231, 76, 60, 0.1);
+    border-color: rgba(231, 76, 60, 0.3);
+    color: $color-status-error;
+
+    &:hover {
+      background: rgba(231, 76, 60, 0.16);
+    }
+  }
+
+  &--warning {
+    background: rgba(230, 162, 60, 0.1);
+    border-color: rgba(230, 162, 60, 0.3);
+    color: $color-status-warning;
+
+    &:hover {
+      background: rgba(230, 162, 60, 0.16);
+    }
+  }
+
+  &--failed {
+    background: rgba(231, 76, 60, 0.1);
+    border-color: rgba(231, 76, 60, 0.3);
+    color: $color-status-error;
+  }
+
+  &--open {
+    outline: 2px solid rgba(122, 128, 255, 0.4);
+    outline-offset: 1px;
+  }
+}

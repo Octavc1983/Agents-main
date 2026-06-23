@@ -1,5 +1,7 @@
 import type { RuleEntityType } from '../RuleCenterPage/RuleCenterPage.types';
 
+// ── Canvas state ──────────────────────────────────────────────────────────────
+
 export type RuleBuilderCanvasState =
   | 'empty'
   | 'draft'
@@ -15,17 +17,21 @@ export type RuleBuilderCanvasState =
   | 'activation-failed'
   | 'read-only';
 
-export type CanvasNodeType = 'start' | 'condition';
+// ── Node position ─────────────────────────────────────────────────────────────
 
 export type CanvasNodePosition = { x: number; y: number };
 
+// ── Start Point ───────────────────────────────────────────────────────────────
+
 export type StartNodeData = {
-  id: string;
+  id: 'start-node';
   type: 'start';
   entityType: RuleEntityType;
   entityLabel: string;
   position: CanvasNodePosition;
 };
+
+// ── Condition node ────────────────────────────────────────────────────────────
 
 export type ConditionNodeData = {
   id: string;
@@ -36,52 +42,81 @@ export type ConditionNodeData = {
   position: CanvasNodePosition;
 };
 
-export type CanvasNode = StartNodeData | ConditionNodeData;
+// ── Action node ───────────────────────────────────────────────────────────────
 
-export type CanvasConnectionPort = 'output' | 'input' | 'true' | 'false';
+export type ActionNodeData = {
+  id: string;
+  type: 'action';
+  actionId: string | null;
+  actionLabel: string;
+  position: CanvasNodePosition;
+};
+
+export type CanvasNode = StartNodeData | ConditionNodeData | ActionNodeData;
+
+// ── Connections ───────────────────────────────────────────────────────────────
+
+export type CanvasConnectionKind = 'start-to-condition' | 'condition-to-action';
 
 export type CanvasConnection = {
   id: string;
-  fromNodeId: string;
-  fromPort: CanvasConnectionPort;
-  toNodeId: string;
-  toPort: CanvasConnectionPort;
+  sourceNodeId: string;
+  sourcePort: 'output' | 'true-output' | 'condition-out';
+  targetNodeId: string;
+  targetPort: 'input';
+  ruleId: string;
+  kind: CanvasConnectionKind;
 };
 
+// ── Rule Branch ───────────────────────────────────────────────────────────────
+
+export type RuleBranchStatus = 'draft' | 'complete' | 'invalid' | 'warning';
+
+export type RuleBranch = {
+  id: string;
+  conditionNodeId: string;
+  actionNodeId: string;
+  startToConditionConnId: string;
+  conditionToActionConnId: string;
+  status: RuleBranchStatus;
+};
+
+// ── Graph snapshot (for undo/redo) ────────────────────────────────────────────
+
 export type RuleGraphSnapshot = {
-  nodes: CanvasNode[];
+  branches: RuleBranch[];
+  conditionNodes: ConditionNodeData[];
+  actionNodes: ActionNodeData[];
   connections: CanvasConnection[];
 };
 
-export type RuleBuilderToolbarState = {
-  ruleId?: string;
-  ruleName: string;
+// ── Validation ────────────────────────────────────────────────────────────────
 
-  canvasZoom: number;
-  selectedNodeId: string | null;
+export type RuleBranchIssueKind =
+  | 'no-property'
+  | 'no-operator'
+  | 'no-value'
+  | 'no-action'
+  | 'missing-start-to-condition'
+  | 'missing-condition-to-action';
 
-  totalNodes: number;
-  totalConditions: number;
-  invalidNodeCount: number;
-  warningNodeCount: number;
-
-  isDirty: boolean;
-  isSaving: boolean;
-  isActivating: boolean;
-  isReadOnly: boolean;
-
-  canUndo: boolean;
-  canRedo: boolean;
-  canSaveDraft: boolean;
-  canActivate: boolean;
+export type RuleBranchIssue = {
+  branchId: string;
+  conditionNodeId: string;
+  kind: RuleBranchIssueKind;
+  isWarning: boolean;
 };
 
-export type RuleValidationResult = {
+export type RuleSetValidationResult = {
   isValid: boolean;
-  invalidNodeIds: string[];
-  warningNodeIds: string[];
-  errorMessage?: string;
+  invalidBranchIds: string[];
+  warningBranchIds: string[];
+  branchIssues: RuleBranchIssue[];
+  graphErrorMessage?: string;
+  broadScopeWarning?: string;
 };
+
+// ── Viewport ──────────────────────────────────────────────────────────────────
 
 export type CanvasViewport = {
   x: number;

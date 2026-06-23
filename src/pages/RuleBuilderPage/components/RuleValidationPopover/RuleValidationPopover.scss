@@ -1,0 +1,154 @@
+@use 'tokens' as *;
+@use '../../../../styles/mixins' as *;
+
+.rb-vpopover {
+  position: absolute;
+  z-index: 100;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  background: $color-surface-idle;
+  border: 1px solid $color-divider-1;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-card;
+  display: flex;
+  flex-direction: column;
+  max-height: 480px;
+  overflow: hidden;
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+
+.rb-vpopover__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-3 $spacing-3 $spacing-2;
+  border-bottom: 1px solid $color-divider-1;
+  flex-shrink: 0;
+}
+
+.rb-vpopover__header-left {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  min-width: 0;
+}
+
+.rb-vpopover__header-icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  &--error   { color: $color-status-error; }
+  &--warning { color: $color-status-warning; }
+  &--valid   { color: $color-status-success; }
+}
+
+.rb-vpopover__title {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-light;
+  @include text-truncate;
+}
+
+.rb-vpopover__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $color-nav-text-idle;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color $transition-fast, background-color $transition-fast;
+
+  &:hover {
+    color: $color-text-light;
+    background-color: $color-btn-hover-overlay;
+  }
+}
+
+// ── Body ──────────────────────────────────────────────────────────────────────
+
+.rb-vpopover__body {
+  overflow-y: auto;
+  padding: $spacing-2 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  @include ds-scrollbar;
+}
+
+.rb-vpopover__all-valid {
+  padding: $spacing-3 $spacing-3;
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+}
+
+// ── Issue rows ────────────────────────────────────────────────────────────────
+
+.rb-vpopover__issue {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-2;
+  width: 100%;
+  padding: $spacing-2 $spacing-3;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background: $color-btn-hover-overlay;
+  }
+
+  &--static {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.rb-vpopover__issue-icon {
+  display: inline-flex;
+  align-items: flex-start;
+  padding-top: 2px;
+  flex-shrink: 0;
+
+  .rb-vpopover__issue--error   & { color: $color-status-error; }
+  .rb-vpopover__issue--warning & { color: $color-status-warning; }
+}
+
+.rb-vpopover__issue-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.rb-vpopover__issue-node {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $color-text-light;
+}
+
+.rb-vpopover__issue-node-summary {
+  font-weight: $font-weight-normal;
+  color: $color-nav-text-idle;
+}
+
+.rb-vpopover__issue-problem {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+}
+
+.rb-vpopover__issue-next {
+  font-size: $font-size-xs;
+  color: $color-nav-text-idle;
+  font-style: italic;
+}
