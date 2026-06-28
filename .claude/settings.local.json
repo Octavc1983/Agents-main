@@ -25,7 +25,9 @@
       "Bash(grep -E '^$spacing-[0-9]+' packages/design-system/src/theme/styles/_tokens.scss)",
       "Bash(grep '^$spacing' packages/design-system/src/theme/styles/_tokens.scss)",
       "Bash(grep \"^\\\\$\")",
-      "Bash(curl -s http://localhost:5176/manage/inventory/means-of-access/discovered-accounts)"
+      "Bash(curl -s http://localhost:5176/manage/inventory/means-of-access/discovered-accounts)",
+      "Bash(git checkout *)",
+      "Bash(git commit *)"
     ],
     "additionalDirectories": [
       "c:\\Users\\amiss\\OneDrive - IDIRA Ltd\\Apps\\Agents-main\\.claude"
