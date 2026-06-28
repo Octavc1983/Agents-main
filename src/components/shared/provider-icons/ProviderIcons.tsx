@@ -41,3 +41,43 @@ export const ProviderIconCyberArk: React.FC<ProviderIconProps> = ({ size = 16 })
     <path d="M6 8l1.5 1.5L10.5 6" stroke="#265BFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
+
+export const ProviderIconWindows: React.FC<ProviderIconProps> = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M2 3L7 2.5V7.5H2V3z" fill="#00A4EF"/>
+    <path d="M8 2.3L14 1.5V7.5H8V2.3z" fill="#00A4EF"/>
+    <path d="M2 8.5H7V13.5L2 13V8.5z" fill="#00A4EF"/>
+    <path d="M8 8.5H14V14.5L8 13.7V8.5z" fill="#00A4EF"/>
+  </svg>
+);
+
+export const ProviderIconLinux: React.FC<ProviderIconProps> = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <circle cx="8" cy="7" r="4" stroke="currentColor" strokeWidth="1.2"/>
+    <path d="M6 10c0 .5.5 1 1 1h2c.5 0 1-.5 1-1" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+    <path d="M6.5 6.5v1M9.5 6.5v1" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+  </svg>
+);
+
+export const ProviderIconMacOS: React.FC<ProviderIconProps> = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M8 2C6.3 2 5 3.3 5 5c0 1.2.7 2.2 1.7 2.7C6.3 8.2 6 9 6 10c0 1.7 1.3 3 3 3h2c1.7 0 3-1.3 3-3 0-1-.3-1.8-.7-2.3 1-.5 1.7-1.5 1.7-2.7 0-1.7-1.3-3-3-3H8z" stroke="currentColor" strokeWidth="1.2"/>
+    <path d="M10 2V1" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+  </svg>
+);
+
+export const ProviderIconUbuntu: React.FC<ProviderIconProps> = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <circle cx="8" cy="8" r="5.5" stroke="#E95420" strokeWidth="1.2"/>
+    <circle cx="8" cy="3.5" r="1" fill="#E95420"/>
+    <circle cx="12" cy="11" r="1" fill="#E95420"/>
+    <circle cx="4" cy="11" r="1" fill="#E95420"/>
+  </svg>
+);
+
+export const ProviderIconRHEL: React.FC<ProviderIconProps> = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M8 3L4 5.5V10.5L8 13L12 10.5V5.5L8 3z" stroke="#EE0000" strokeWidth="1.2"/>
+    <path d="M6 7h4v2H6z" fill="#EE0000"/>
+  </svg>
+);

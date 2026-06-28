@@ -6,6 +6,7 @@ import { SessionDiagnosticsPage } from '../pages/SessionDiagnosticsPage/SessionD
 import { MigrationsPage } from '../pages/MigrationsPage/MigrationsPage';
 import { MigrationDetailPage } from '../pages/MigrationDetailPage/MigrationDetailPage';
 import { ManagedAccountsPage } from '../pages/ManagedAccountsPage/ManagedAccountsPage';
+import { DiscoveredAccountsPage } from '../pages/DiscoveredAccountsPage/DiscoveredAccountsPage';
 import { RiskManagementPage } from '../pages/RiskManagementPage/RiskManagementPage';
 import { SecretsPage } from '../pages/SecretsPage/SecretsPage';
 import { RuleCenterPage } from '../pages/RuleCenterPage/RuleCenterPage';
@@ -29,6 +30,7 @@ export const router = createBrowserRouter([
       { path: 'setup/migrations', element: <MigrationsPage /> },
       { path: 'setup/migrations/:migrationId', element: <MigrationDetailPage /> },
       { path: 'manage/inventory/means-of-access/managed-accounts', element: <ManagedAccountsPage /> },
+      { path: 'manage/inventory/means-of-access/discovered-accounts', element: <DiscoveredAccountsPage /> },
       { path: 'manage/inventory/means-of-access/secrets', element: <SecretsPage /> },
       { path: 'risk/risk-management', element: <RiskManagementPage /> },
       { path: 'manage/scans', element: <ScansPage /> },

@@ -16,7 +16,8 @@ import './StatusIcon.scss';
 export type AccountStatusValue = 'active' | 'inactive' | 'pending' | 'locked' | 'marked_for_deletion' | 'deleted';
 export type StepStatusValue = 'not_performed' | 'in_progress' | 'done' | 'failed';
 export type SecretStatusValue = 'onboarded' | 'not_rotated' | 'idle' | 'expired' | 'disabled';
-export type StatusValue = AccountStatusValue | StepStatusValue | SecretStatusValue;
+export type DiscoveredAccountStatusValue = 'onboarded' | 'not_rotated' | 'idle' | 'rule_set_error' | 'disabled';
+export type StatusValue = AccountStatusValue | StepStatusValue | SecretStatusValue | DiscoveredAccountStatusValue;
 
 const ACCOUNT_STATUS_MAP: Record<AccountStatusValue, React.FC<{ size?: number }>> = {
   active:               StatusActiveIcon,
@@ -40,6 +41,14 @@ const SECRET_STATUS_MAP: Record<SecretStatusValue, React.FC<{ size?: number }>> 
   idle:        StatusInactiveIcon,
   expired:     StatusDeletedIcon,
   disabled:    StatusLockedIcon,
+};
+
+const DISCOVERED_ACCOUNT_STATUS_MAP: Record<DiscoveredAccountStatusValue, React.FC<{ size?: number }>> = {
+  onboarded:       StatusActiveIcon,
+  not_rotated:     StatusStoppedIcon,
+  idle:            StatusInactiveIcon,
+  rule_set_error:  StatusFailedIcon,
+  disabled:        StatusLockedIcon,
 };
 
 const ACCOUNT_STATUS_LABELS: Record<AccountStatusValue, string> = {
@@ -66,11 +75,24 @@ const SECRET_STATUS_LABELS: Record<SecretStatusValue, string> = {
   disabled:    'Disabled',
 };
 
+const DISCOVERED_ACCOUNT_STATUS_LABELS: Record<DiscoveredAccountStatusValue, string> = {
+  onboarded:       'Onboarded',
+  not_rotated:     'Not rotated',
+  idle:            'Idle',
+  rule_set_error:  'Rule set error',
+  disabled:        'Disabled',
+};
+
 const SECRET_STATUS_SET = new Set<string>(['onboarded', 'not_rotated', 'idle', 'expired', 'disabled']);
+const DISCOVERED_ACCOUNT_STATUS_SET = new Set<string>(['onboarded', 'not_rotated', 'idle', 'rule_set_error', 'disabled']);
 const STEP_STATUS_SET = new Set<string>(['not_performed', 'in_progress', 'done', 'failed']);
 
 function isSecretStatus(v: StatusValue): v is SecretStatusValue {
   return SECRET_STATUS_SET.has(v);
+}
+
+function isDiscoveredAccountStatus(v: StatusValue): v is DiscoveredAccountStatusValue {
+  return DISCOVERED_ACCOUNT_STATUS_SET.has(v);
 }
 
 function isStepStatus(v: StatusValue): v is StepStatusValue {
@@ -88,7 +110,10 @@ export const StatusIcon: React.FC<StatusIconProps> = ({ status, size = 24, showL
   let Icon: React.FC<{ size?: number }>;
   let label: string;
 
-  if (isSecretStatus(status)) {
+  if (isDiscoveredAccountStatus(status)) {
+    Icon = DISCOVERED_ACCOUNT_STATUS_MAP[status];
+    label = DISCOVERED_ACCOUNT_STATUS_LABELS[status];
+  } else if (isSecretStatus(status)) {
     Icon = SECRET_STATUS_MAP[status];
     label = SECRET_STATUS_LABELS[status];
   } else if (isStepStatus(status)) {

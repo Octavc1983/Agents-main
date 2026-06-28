@@ -301,3 +301,66 @@ export interface SecretsStats {
   byStatus: Record<SecretStatus, number>;
   byRisk: { critical: number; high: number; medium: number; low: number };
 }
+
+// --- Discovered Accounts types ------------------------------------------------
+
+export type DiscoveredAccountStatus = 'onboarded' | 'not_rotated' | 'idle' | 'rule_set_error' | 'disabled';
+export type DiscoveredAccountRiskLevel = 'critical' | 'high' | 'medium' | 'low';
+export type DiscoveredAccountPlatform = 'Windows' | 'Linux' | 'AWS' | 'Azure' | 'GCP' | 'MacOS' | 'Ubuntu' | 'RHEL';
+export type DiscoveredAccountType = 'Local' | 'Domain' | 'Service' | 'Cloud';
+export type DiscoveredAccountSource = 'EPM' | 'Scanner' | 'API' | 'Manual';
+
+export interface DiscoveredAccountDependency {
+  id: string;
+  name: string;
+  type: string;
+  status: DiscoveredAccountStatus;
+  riskLevel: DiscoveredAccountRiskLevel;
+  relationship: string;
+}
+
+export interface DiscoveredAccountRiskFinding {
+  id: string;
+  riskType: string;
+  severity: DiscoveredAccountRiskLevel;
+  detectedAt: string;
+  status: 'open' | 'mitigated' | 'acknowledged';
+  recommendation: string;
+}
+
+export interface DiscoveredAccount {
+  id: string;
+  name: string;
+  type: DiscoveredAccountType;
+  subtype: string;
+  platform: DiscoveredAccountPlatform;
+  address: string;
+  source: DiscoveredAccountSource;
+  status: DiscoveredAccountStatus;
+  riskLevel: DiscoveredAccountRiskLevel;
+  riskFindings: number;
+  username: string;
+  tags: string[];
+  lastDiscovered: string;
+  createdAt: string;
+  // Additional details
+  sid?: string;
+  osVersion?: string;
+  osFamily?: string;
+  enabled: boolean;
+  privileged: boolean;
+  lockedOut: boolean;
+  passTheHashVulnerable: boolean;
+  description?: string;
+  // Related data
+  dependencies: DiscoveredAccountDependency[];
+  riskFindingDetails: DiscoveredAccountRiskFinding[];
+}
+
+export interface DiscoveredAccountsStats {
+  total: number;
+  byPlatform: Array<{ platform: DiscoveredAccountPlatform; count: number }>;
+  byStatus: Record<DiscoveredAccountStatus, number>;
+  byRisk: { critical: number; high: number; medium: number; low: number };
+  bySource: Record<DiscoveredAccountSource, number>;
+}

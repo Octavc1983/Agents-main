@@ -13,7 +13,16 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(git config *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(npm install *)",
+      "Bash(grep -E \"\\\\.\\(tsx|ts\\)$\")",
+      "Bash(grep -E \"\\\\.\\(tsx?|scss\\)$\")",
+      "Bash(curl -s http://localhost:5176)",
+      "Bash(grep -E \"\\\\.\\(scss|sass\\)$\")",
+      "Bash(grep -E '^$spacing-[0-9]+' packages/design-system/src/theme/styles/_tokens.scss)",
+      "Bash(grep '^$spacing' packages/design-system/src/theme/styles/_tokens.scss)",
+      "Bash(grep \"^\\\\$\")",
+      "Bash(curl -s http://localhost:5176/manage/inventory/means-of-access/discovered-accounts)"
     ],
     "additionalDirectories": [
       "c:\\Users\\amiss\\OneDrive - IDIRA Ltd\\Apps\\Agents-main\\.claude"
